@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DramaLuxe • Viral Mini-Series & Uncensored Drama Stories</title>
+  <meta name="description" content="Read full episodes and uncensored stories of trending viral drama shorts, billionaire romance, mafia intrigue, and dramatic revenge.">
+  
+  <!-- Google Fonts: Outfit (Brand) + Lora & Merriweather (Ultra-readable for 45-65 age group) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:wght@300;400;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dark-theme">
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="navbar" id="mainNavbar">
+    <div class="nav-container">
+      <div class="nav-brand" onclick="navigateTo('home')">
+        <div class="logo-icon"><i class="fa-solid fa-clapperboard"></i></div>
+        <div class="logo-text">
+          <span class="brand-name">Drama<span>Luxe</span></span>
+          <span class="brand-tagline">US Drama Network</span>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs (Public vs Creator) -->
+      <nav class="nav-tabs" id="navTabs">
+        <button class="nav-tab active" id="tab-reader" onclick="navigateTo('home')">
+          <i class="fa-solid fa-book-open"></i> <span>Drama Reader</span>
+        </button>
+        <button class="nav-tab" id="tab-marketing" onclick="navigateTo('marketing')">
+          <i class="fa-solid fa-photo-film"></i> <span>Dashboard 1: Video & Captions</span>
+          <span class="tab-badge pulse" id="videoCountBadge">4</span>
+        </button>
+        <button class="nav-tab" id="tab-analytics" onclick="navigateTo('analytics')">
+          <i class="fa-solid fa-chart-line"></i> <span>Dashboard 2: Analytics</span>
+          <span class="tab-badge-gold">74% US</span>
+        </button>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="nav-actions">
+        <button class="btn-pill" id="btnToggleVisitorView" onclick="toggleVisitorPreview()" style="background: rgba(245, 197, 24, 0.15); color: var(--accent-gold); border-color: rgba(245, 197, 24, 0.4);">
+          <i class="fa-solid fa-eye"></i> <span id="visitorToggleText">Switch to US Visitor View</span>
+        </button>
+        <button class="btn-icon" onclick="openSettingsModal()" title="AdSense & AI Settings" id="btnSettingsNav">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <button class="btn-accent" onclick="openUploadModal()" id="btnUploadNav">
+          <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload Video</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <main class="main-content">
+
+    <!-- ================= VIEW 1: PUBLIC DRAMA READER (HOME) ================= -->
+    <section id="view-reader" class="app-view active">
+      
+      <!-- Top AdSense Responsive Leaderboard Banner (728x90 / Responsive) -->
+      <div class="adsense-banner-container">
+        <div class="adsense-slot leaderboard" id="adSlotHeader">
+          <div class="ad-label">SPONSORED / GOOGLE ADSENSE</div>
+          <div class="ad-content">
+            <div class="ad-mockup">
+              <span class="ad-title">🌟 Top Rated Streaming & Novel Deals in US</span>
+              <span class="ad-desc">Binge trending mini-dramas and viral series on demand. High US RPM Ad Slot.</span>
+              <button class="ad-cta">Explore Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Drama Hero Section -->
+      <div class="featured-hero" id="featuredHero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="badge-gold"><i class="fa-solid fa-fire"></i> TOP TRENDING TODAY</span>
+          <h1 class="hero-title" id="heroTitle">The Discarded Heiress: Billionaire's Secret Vow</h1>
+          <p class="hero-desc" id="heroDesc">
+            Thrown out in the pouring rain by her arrogant in-laws, Maya thought her life was over. They had no idea she was the sole heiress of the $90 Billion Vance Empire.
+          </p>
+          <div class="hero-meta">
+            <span><i class="fa-regular fa-clock"></i> 6 min read</span>
+            <span><i class="fa-solid fa-eye"></i> 14,280 readers</span>
+            <span><i class="fa-solid fa-location-dot"></i> 74% US Traffic</span>
+          </div>
+          <div class="hero-buttons">
+            <button class="btn-primary" onclick="openStory('the-discarded-heiress-billionaires-secret-vow')">
+              <i class="fa-solid fa-book-open"></i> Read Full Episode
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drama Feed Container -->
+      <div class="container section-feed">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🔥 Viral Episodes & Full Stories</h2>
+            <p class="section-subtitle">Click on any video story to read the full chapter and cliffhanger</p>
+          </div>
+          <div class="filter-pills">
+            <button class="pill active" onclick="filterStories('all')">All Tropes</button>
+            <button class="pill" onclick="filterStories('Billionaire')">Billionaire</button>
+            <button class="pill" onclick="filterStories('Mafia')">Mafia</button>
+            <button class="pill" onclick="filterStories('Revenge')">Revenge</button>
+          </div>
+        </div>
+
+        <div class="story-grid" id="storyGrid">
+          <!-- Story Cards dynamically loaded -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 1.1: SINGLE STORY FULL READER ================= -->
+    <section id="view-story-detail" class="app-view">
+      <div class="container reader-container">
+        
+        <!-- Back Button & Breadcrumbs -->
+        <div class="reader-nav">
+          <button class="btn-secondary" onclick="navigateTo('home')">
+            <i class="fa-solid fa-arrow-left"></i> Back to All Dramas
+          </button>
+          <div class="share-actions">
+            <button class="btn-pill" onclick="copyCurrentStoryLink()"><i class="fa-solid fa-link"></i> Copy Link</button>
+            <button class="btn-pill" onclick="shareOnSocial('tiktok')"><i class="fa-brands fa-tiktok"></i></button>
+            <button class="btn-pill" onclick="shareOnSocial('instagram')"><i class="fa-brands fa-instagram"></i></button>
+          </div>
+        </div>
+
+        <!-- Story Article -->
+        <article class="drama-article" id="dramaArticle">
+          
+          <!-- Senior / Accessibility Reading Preferences Toolbar -->
+          <div class="reading-controls-bar">
+            <div class="read-control-group">
+              <span class="ctrl-label"><i class="fa-solid fa-text-height"></i> Text Size:</span>
+              <button class="btn-text-size" onclick="changeFontSize('normal')" id="btnFontNormal" title="Normal Font">A</button>
+              <button class="btn-text-size active" onclick="changeFontSize('large')" id="btnFontLarge" title="Large Font (Recommended for Easy Reading)">A+</button>
+              <button class="btn-text-size" onclick="changeFontSize('xlarge')" id="btnFontXLarge" title="Extra Large Font">A++</button>
+            </div>
+
+            <div class="read-control-group">
+              <span class="ctrl-label"><i class="fa-solid fa-palette"></i> Reading Mode:</span>
+              <button class="btn-theme-mode active" onclick="setReadingTheme('dark')" id="themeBtnDark" title="Dark Obsidian">🌙 Dark</button>
+              <button class="btn-theme-mode" onclick="setReadingTheme('sepia')" id="themeBtnSepia" title="Warm Cozy Sepia (Easy on Eyes)">📖 Sepia</button>
+              <button class="btn-theme-mode" onclick="setReadingTheme('light')" id="themeBtnLight" title="Classic Clean Light">☀️ Light</button>
+            </div>
+
+            <!-- Audio Narration for 45-65 Readers -->
+            <div class="read-control-group audio-narration-group">
+              <button class="btn-listen" id="btnListenStory" onclick="toggleAudioNarration()">
+                <i class="fa-solid fa-circle-play"></i> <span>Listen to Episode (Audio)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="article-header">
+            <div class="article-tags" id="detailTags">
+              <span class="badge-genre">Billionaire Romance</span>
+              <span class="badge-views"><i class="fa-solid fa-eye"></i> 14,280 Views</span>
+            </div>
+            <h1 class="article-title" id="detailTitle">The Discarded Heiress: Billionaire's Secret Vow</h1>
+            <p class="article-synopsis" id="detailSynopsis">
+              Thrown out in the pouring rain by her arrogant in-laws, Maya thought her life was over. They had no idea she was the sole heiress of the $90 Billion Vance Empire.
+            </p>
+          </div>
+
+          <!-- Hero Cover Image -->
+          <div class="article-cover-wrap">
+            <img src="/images/story1_cover.svg" id="detailCoverImage" alt="Drama Cover" class="article-cover">
+          </div>
+
+          <!-- Top In-Article Ad -->
+          <div class="in-article-ad-box">
+            <div class="ad-label">ADVERTISEMENT • GOOGLE ADSENSE</div>
+            <div class="ad-mockup in-content">
+              <span class="ad-title">💎 Read Millions of Chapters Unlocked</span>
+              <span class="ad-desc">Join millions of US readers binging viral novels.</span>
+              <button class="ad-cta">Install Free</button>
+            </div>
+          </div>
+
+          <!-- Paragraphs and Scenes rendered dynamically -->
+          <div class="article-body" id="detailBody">
+            <!-- Paragraphs and scenes injected by JS -->
+          </div>
+
+          <!-- Middle In-Article Ad Slot -->
+          <div class="in-article-ad-box">
+            <div class="ad-label">SPONSORED STORY RECOMMENDATION</div>
+            <div class="ad-mockup in-content middle-ad">
+              <span class="ad-title">🔥 Discover The #1 Drama Series of 2026</span>
+              <span class="ad-desc">High RPM Ad Placement for 70% US Viewers</span>
+              <button class="ad-cta">Read Next</button>
+            </div>
+          </div>
+
+          <!-- Cliffhanger Next Chapter CTA Box -->
+          <div class="cliffhanger-box">
+            <div class="cliff-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="cliff-text">
+              <h3>⚡ Uncensored Chapter 2 Is Coming Next!</h3>
+              <p>Will Julian crawl back begging for mercy when Blackwood Capital executes the foreclosure? Bookmark this page or check our next reels!</p>
+            </div>
+            <button class="btn-accent" onclick="navigateTo('home')">Browse More Dramas</button>
+          </div>
+        </article>
+
+        <!-- Sticky Mobile Bottom Ad Banner -->
+        <div class="sticky-mobile-ad" id="stickyMobileAd">
+          <div class="sticky-ad-content">
+            <span class="ad-tag">Ad</span>
+            <span class="sticky-ad-text">🔥 Trending US Drama Novels: Free Access Today!</span>
+            <button class="sticky-ad-btn">Read Now</button>
+          </div>
+          <button class="sticky-close" onclick="closeStickyAd()">×</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= VIEW 2: DASHBOARD 1 (VIDEO & MARKETING HUB) ================= -->
+    <section id="view-marketing" class="app-view">
+      <div class="container dashboard-container">
+        
+        <!-- Dashboard Top Control Header -->
+        <div class="dashboard-header">
+          <div>
+            <div class="dashboard-tag"><i class="fa-solid fa-photo-film"></i> CREATOR DASHBOARD 1</div>
+            <h2 class="dash-title">Video & Social Marketing Control Center</h2>
+            <p class="dash-subtitle">Video preview player, auto-generated viral captions, 2-3 hashtags, 1-click story links, and high-CTR pinned comments for your 6 pages.</p>
+          </div>
+          <div class="dash-action-group">
+            <div class="watcher-status-badge">
+              <span class="status-dot pulse"></span>
+              <span>Folder Watcher: <code>input_videos/</code></span>
+            </div>
+            <button class="btn-secondary" onclick="triggerFolderScan()">
+              <i class="fa-solid fa-rotate"></i> Scan Folder
+            </button>
+            <button class="btn-accent" onclick="openUploadModal()">
+              <i class="fa-solid fa-plus"></i> Process New Video
+            </button>
+          </div>
+        </div>
+
+        <!-- Marketing Items List Container -->
+        <div class="marketing-list" id="marketingList">
+          <!-- Video Cards dynamically loaded -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= VIEW 3: DASHBOARD 2 (WEBSITE ANALYTICS HUB) ================= -->
+    <section id="view-analytics" class="app-view">
+      <div class="container dashboard-container">
+        
+        <!-- Analytics Header -->
+        <div class="dashboard-header">
+          <div>
+            <div class="dashboard-tag-gold"><i class="fa-solid fa-chart-line"></i> CREATOR DASHBOARD 2</div>
+            <h2 class="dash-title">Website Analytics & AdSense Revenue</h2>
+            <p class="dash-subtitle">Real-time traffic performance, USA audience share (70%+ target), top performing stories, and estimated AdSense earnings.</p>
+          </div>
+          <div class="dash-action-group">
+            <span class="badge-live"><i class="fa-solid fa-circle pulse-red"></i> LIVE TRACKING</span>
+            <button class="btn-secondary" onclick="refreshAnalytics()">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Primary KPI Stat Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Total Pageviews</span>
+              <div class="kpi-icon blue"><i class="fa-solid fa-eye"></i></div>
+            </div>
+            <div class="kpi-value" id="kpiPageviews">24,130</div>
+            <div class="kpi-sub positive"><i class="fa-solid fa-arrow-trend-up"></i> +28.4% from your 6 pages today</div>
+          </div>
+
+          <div class="kpi-card gold-border">
+            <div class="kpi-header">
+              <span class="kpi-title">USA Audience Share</span>
+              <div class="kpi-icon gold"><i class="fa-solid fa-flag-usa"></i></div>
+            </div>
+            <div class="kpi-value gold-text" id="kpiUsShare">74.2%</div>
+            <div class="kpi-sub positive"><i class="fa-solid fa-star"></i> High AdSense CPM Tier ($25-$35 RPM)</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Avg. Reading Time</span>
+              <div class="kpi-icon purple"><i class="fa-solid fa-stopwatch"></i></div>
+            </div>
+            <div class="kpi-value" id="kpiReadTime">3m 35s</div>
+            <div class="kpi-sub neutral"><i class="fa-solid fa-check-double"></i> High reader retention & ad viewability</div>
+          </div>
+
+          <div class="kpi-card green-border">
+            <div class="kpi-header">
+              <span class="kpi-title">Estimated AdSense Revenue</span>
+              <div class="kpi-icon green"><i class="fa-solid fa-dollar-sign"></i></div>
+            </div>
+            <div class="kpi-value green-text" id="kpiRevenue">$486.20</div>
+            <div class="kpi-sub positive"><i class="fa-solid fa-chart-pie"></i> Avg. RPM: $20.15 across all slots</div>
+          </div>
+        </div>
+
+        <!-- Analytics Breakdown 2-Column Grid -->
+        <div class="analytics-split-grid">
+          
+          <!-- Column 1: Country Traffic & Sources -->
+          <div class="dash-panel">
+            <h3 class="panel-title"><i class="fa-solid fa-globe"></i> Geographic Breakdown (US High-Value Focus)</h3>
+            <div class="geo-list" id="geoList">
+              <!-- Dynamically populated -->
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 class="panel-title"><i class="fa-solid fa-share-nodes"></i> Traffic Acquisition Sources (Your 6 Pages)</h3>
+            <div class="traffic-sources-list" id="sourcesList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Column 2: Top Performing Stories & AdSense Slot Health -->
+          <div class="dash-panel">
+            <h3 class="panel-title"><i class="fa-solid fa-ranking-star"></i> Top Performing Stories (Highest Clicks)</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Story Title</th>
+                    <th>Genre</th>
+                    <th>Reads</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="topStoriesTable">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 class="panel-title"><i class="fa-solid fa-rectangle-ad"></i> AdSense Slot Performance Simulation</h3>
+            <div class="ad-stats-grid">
+              <div class="ad-stat-box">
+                <span class="ad-slot-name">Header Billboard (728x90)</span>
+                <span class="ad-slot-stat">24,130 Views • <strong>3.8% CTR</strong></span>
+              </div>
+              <div class="ad-stat-box">
+                <span class="ad-slot-name">In-Article Mid Ad (300x250)</span>
+                <span class="ad-slot-stat">21,800 Views • <strong>4.2% CTR</strong></span>
+              </div>
+              <div class="ad-stat-box">
+                <span class="ad-slot-name">Sticky Mobile Banner (320x50)</span>
+                <span class="ad-slot-stat">16,808 Views • <strong>2.9% CTR</strong></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live Real-Time Visitor Activity Stream -->
+        <div class="dash-panel full-width">
+          <h3 class="panel-title"><i class="fa-solid fa-tower-broadcast pulse-red"></i> Real-Time Reader Activity (From Your Reels/Shorts)</h3>
+          <div class="live-activity-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Drama Story Opened</th>
+                  <th>Visitor Location</th>
+                  <th>Device / Browser</th>
+                  <th>Source / Page</th>
+                </tr>
+              </thead>
+              <tbody id="recentVisitorsTable">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= UPLOAD / PROCESS MODAL ================= -->
+  <div class="modal-backdrop" id="uploadModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-cloud-arrow-up"></i> Process Video from Folder or Upload</h3>
+        <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="folder-instructions">
+          <div class="folder-icon"><i class="fa-solid fa-folder-open"></i></div>
+          <div class="folder-text">
+            <h4>Direct Folder Processing:</h4>
+            <p>Simply paste or drop any <code>.mp4</code> short video into your local folder: <br>
+            <strong class="folder-path">c:\Users\HP\Downloads\Drama Online\input_videos\</strong></p>
+            <p class="small-text">The watcher will automatically detect it, analyze the plot, write the full story with scene illustrations, and publish it!</p>
+          </div>
+        </div>
+
+        <div class="modal-divider"><span>OR UPLOAD DIRECTLY</span></div>
+
+        <form id="uploadForm" class="upload-dropzone">
+          <input type="file" id="videoFileInput" accept="video/mp4,video/mov,video/webm" style="display:none;" onchange="handleFileSelected(this)">
+          <div class="dropzone-content" onclick="document.getElementById('videoFileInput').click()">
+            <i class="fa-solid fa-film drop-icon"></i>
+            <p class="drop-text" id="dropzoneText">Click or Drag & Drop Short Drama Video (.mp4)</p>
+            <span class="drop-sub">Max size: 100MB</span>
+          </div>
+          <button type="button" id="btnStartProcess" class="btn-accent full-width" onclick="submitVideoUpload()" style="display:none; margin-top: 15px;">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Video & Auto-Publish Story
+          </button>
+        </form>
+
+        <div id="processingLoader" class="processing-loader" style="display:none;">
+          <div class="spinner"></div>
+          <div class="processing-status-text">
+            <h4 id="processStepTitle">🤖 Analyzing Video with Gemini Vision...</h4>
+            <p id="processStepDesc">Extracting characters, dialogue, dramatic tension & cliffhangers...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SETTINGS & ADSENSE MODAL ================= -->
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear"></i> Settings & Monetization Configuration</h3>
+        <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="settingsForm" onsubmit="saveSettingsForm(event)">
+          <div class="form-group">
+            <label><i class="fa-solid fa-key"></i> Google Gemini API Key</label>
+            <input type="password" id="settingApiKey" placeholder="AIzaSy..." class="form-input">
+            <span class="form-hint">Used to watch & analyze video clips and write long-reading stories automatically. (Leave blank to use Smart Local AI Synthesizer)</span>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-brands fa-google"></i> Google AdSense Publisher ID</label>
+            <input type="text" id="settingAdsenseId" placeholder="ca-pub-XXXXXXXXXXXXXXXX" class="form-input">
+            <span class="form-hint">Your Google AdSense Client ID. Placements are pre-configured for high US RPM.</span>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-globe"></i> Custom / Free Live Domain URL</label>
+            <input type="text" id="settingDomainUrl" placeholder="https://yourdramadomain.com" class="form-input">
+            <span class="form-hint">The base domain used for story links in your social media pinned comments.</span>
+          </div>
+
+          <div class="divider"></div>
+          <h4 style="color: var(--accent-gold); margin-bottom: 12px; font-size: 0.95rem;"><i class="fa-brands fa-wordpress"></i> WordPress Auto-Sync (Optional / When Upgrading)</h4>
+
+          <div class="form-group">
+            <label>WordPress Site URL</label>
+            <input type="text" id="settingWpUrl" placeholder="https://yourblog.com" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>WordPress Username</label>
+            <input type="text" id="settingWpUser" placeholder="admin" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>WordPress Application Password</label>
+            <input type="password" id="settingWpPass" placeholder="xxxx xxxx xxxx xxxx" class="form-input">
+            <span class="form-hint">Generate in WordPress: Users → Profile → Application Passwords</span>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="closeSettingsModal()">Cancel</button>
+            <button type="submit" class="btn-accent"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript -->
+  <script src="/js/app.js"></script>
+</body>
+</html>

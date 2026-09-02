@@ -1,0 +1,9 @@
+{
+  "geminiApiKey": "",
+  "siteName": "DramaLuxe",
+  "siteTagline": "Viral Mini-Series & Uncensored Drama Stories",
+  "domainUrl": "http://localhost:3000",
+  "adsenseClientId": "ca-pub-XXXXXXXXXXXX",
+  "enableAdSenseSimulation": true,
+  "autoProcessFolder": true
+}

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="100%" height="100%">
+    <defs>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#110508" />
+        <stop offset="50%" stop-color="#2B0A12" />
+        <stop offset="100%" stop-color="#050608" />
+      </linearGradient>
+      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#FF3366" />
+        <stop offset="100%" stop-color="#E60039" />
+      </linearGradient>
+      <radialGradient id="glowGrad" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="rgba(255, 51, 102, 0.25)" />
+        <stop offset="100%" stop-color="transparent" />
+      </radialGradient>
+      <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.8"/>
+      </filter>
+    </defs>
+    
+    <!-- Background & Cinematic Glow -->
+    <rect width="1200" height="700" fill="url(#bgGrad)"/>
+    <circle cx="600" cy="233.33333333333334" r="420" fill="url(#glowGrad)"/>
+    
+    <!-- Architectural Silhouette Accents -->
+    <g opacity="0.15">
+      <rect x="150" y="420" width="90" height="280" fill="#FF3366"/>
+      <rect x="270" y="350" width="120" height="350" fill="#FF3366"/>
+      <rect x="420" y="460" width="80" height="240" fill="#FF3366"/>
+      <rect x="700" y="380" width="110" height="320" fill="#FF3366"/>
+      <rect x="840" y="300" width="130" height="400" fill="#FF3366"/>
+      <rect x="1000" y="440" width="90" height="260" fill="#FF3366"/>
+    </g>
+
+    <!-- Cinematic Vignette Frame -->
+    <rect x="30" y="30" width="1140" height="640" fill="none" stroke="#FF3366" stroke-width="1.5" stroke-opacity="0.3" rx="16"/>
+    
+    <!-- Badges -->
+    <g transform="translate(60, 65)">
+      <rect width="160" height="32" rx="16" fill="#FF3366" fill-opacity="0.15" stroke="#FF3366" stroke-width="1"/>
+      <text x="80" y="21" fill="#FF3366" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="2">DRAMA EXCLUSIVE</text>
+    </g>
+    
+    <!-- Center Typography -->
+    <g filter="url(#shadow)" text-anchor="middle">
+      <text x="600" y="340" fill="url(#textGrad)" font-family="'Outfit', 'Inter', sans-serif" font-size="44" font-weight="900" letter-spacing="1">
+        His Hidden Mafia Queen
+      </text>
+      <text x="600" y="400" fill="#E0E6ED" font-family="'Inter', sans-serif" font-size="20" font-weight="400" opacity="0.85" letter-spacing="0.5">
+        The Undercover Waitress
+      </text>
+    </g>
+    
+    <!-- Bottom Bar / Watermark -->
+    <text x="1140" y="650" fill="#8E9AA8" font-family="'Inter', sans-serif" font-size="14" font-weight="600" text-anchor="end" opacity="0.6">
+      DramaLuxe • Full Episode Story
+    </text>
+  </svg>

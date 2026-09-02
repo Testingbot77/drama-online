@@ -1,0 +1,9 @@
+node_modules/
+.env
+input_videos/*.mp4
+input_videos/*.mov
+input_videos/*.webm
+public/videos/*.mp4
+public/videos/*.mov
+.DS_Store
+Thumbs.db
