@@ -302,12 +302,39 @@ async function showStoryReader(slug) {
       }
     });
 
-    // PART CONTINUATION & CLIMAX SYSTEM
+    // PART CONTINUATION & PREVIOUS EPISODE SYSTEM
     const part2Box = document.getElementById('partContinuationCard');
     const partBadge = document.getElementById('partCardBadge') || part2Box.querySelector('.part-card-badge');
     const partDesc = document.getElementById('partCardDesc') || part2Box.querySelector('.part-card-desc');
     const nextPartHook = document.getElementById('nextPartHook');
     const btnReadPart2 = document.getElementById('btnReadPart2');
+    const btnReadPrevPart = document.getElementById('btnReadPrevPart');
+
+    // Top Quick Access Previous Episode Banner
+    const prevBanner = document.getElementById('prevEpisodeTopBanner');
+    const btnTopReadPrev = document.getElementById('btnTopReadPrev');
+    const prevChapterNum = document.getElementById('prevChapterNum');
+
+    if (story.previousPartSlug) {
+      const prevNum = Math.max(1, (story.partNumber || 2) - 1);
+      if (prevBanner) {
+        prevBanner.style.display = 'flex';
+        if (prevChapterNum) prevChapterNum.innerText = prevNum;
+        if (btnTopReadPrev) {
+          btnTopReadPrev.href = `/story/${story.previousPartSlug}`;
+          btnTopReadPrev.onclick = (e) => handleNavClick(e, `/story/${story.previousPartSlug}`);
+        }
+      }
+      if (btnReadPrevPart) {
+        btnReadPrevPart.style.display = 'inline-flex';
+        btnReadPrevPart.innerHTML = `<i class="fa-solid fa-arrow-left"></i> ← READ CHAPTER ${prevNum}`;
+        btnReadPrevPart.href = `/story/${story.previousPartSlug}`;
+        btnReadPrevPart.onclick = (e) => handleNavClick(e, `/story/${story.previousPartSlug}`);
+      }
+    } else {
+      if (prevBanner) prevBanner.style.display = 'none';
+      if (btnReadPrevPart) btnReadPrevPart.style.display = 'none';
+    }
 
     if (story.nextPartSlug) {
       part2Box.style.display = 'block';

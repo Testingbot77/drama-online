@@ -273,6 +273,12 @@
             <h1 class="story-main-title" id="readerTitle">Story Title Loading...</h1>
             <p class="story-lead-synopsis" id="readerSynopsis">Story synopsis loading...</p>
 
+            <!-- Previous Episode Quick Access Banner (Visible if Part 2 or 3) -->
+            <div class="prev-episode-banner" id="prevEpisodeTopBanner" style="display: none;">
+              <span><i class="fa-solid fa-backward-step"></i> Reading a continuation?</span>
+              <a href="#" id="btnTopReadPrev" class="link-prev-episode">← Read Chapter <span id="prevChapterNum">1</span> First</a>
+            </div>
+
             <div class="story-byline">
               <span class="author-avatar"><i class="fa-solid fa-user-pen"></i></span>
               <div>
@@ -321,7 +327,10 @@
             <div class="part-card-badge" id="partCardBadge">🔥 PART 2 AVAILABLE</div>
             <h3 class="part-card-title" id="nextPartHook">What happened after the confrontation was even more shocking...</h3>
             <p class="part-card-desc" id="partCardDesc">Continue the story right now in Chapter 2 without interruption.</p>
-            <a href="#" id="btnReadPart2" class="btn-read-part2">READ CHAPTER 2 →</a>
+            <div class="part-actions-row">
+              <a href="#" id="btnReadPrevPart" class="btn-prev-part-bottom" style="display: none;"><i class="fa-solid fa-arrow-left"></i> ← PREVIOUS CHAPTER</a>
+              <a href="#" id="btnReadPart2" class="btn-read-part2">READ CHAPTER 2 →</a>
+            </div>
           </div>
 
           <!-- "YOU MIGHT ALSO LIKE" (4-6 Algorithmic Related Stories) -->

@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24154,
-    "uniqueVisitors": 18466,
+    "totalPageviews": 24157,
+    "uniqueVisitors": 18469,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62826,
+    "adImpressions": 62838,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.52
+    "estimatedAdSenseRevenueUsd": 0.61
   },
   "trafficSources": [
     {
@@ -103,6 +103,30 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Discarded Heiress (Part 3 - Grand Finale): The Vance Sovereign Gala",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
@@ -272,27 +296,6 @@
       "country": "United Kingdom 🇬🇧",
       "device": "Desktop",
       "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Undercover Heiress in the Boardroom",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Undercover Heiress in the Boardroom",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "1 min ago",
-      "drama": "The Discarded Heiress",
-      "country": "United States (California)",
-      "device": "iPhone (Safari)",
-      "referrer": "TikTok Reel #3"
     }
   ]
 }
