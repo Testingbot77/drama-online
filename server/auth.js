@@ -13,11 +13,12 @@ function generateToken() {
 }
 
 function verifyAdminCredentials(inputPassword) {
+  const input = String(inputPassword || '').trim();
   const settings = db.getSettings();
-  const configuredPass = settings.adminPasswordHash || '1234';
+  const configuredPass = String(settings.adminPasswordHash || '1234').trim();
 
   // Support standard master PIN '1234', '993355', or custom configured PIN
-  if (inputPassword === '1234' || inputPassword === '993355' || configuredPass === inputPassword || hashPassword(inputPassword) === configuredPass) {
+  if (input === '1234' || input === '993355' || configuredPass === input || hashPassword(input) === configuredPass) {
     const token = generateToken();
     activeTokens.set(token, {
       createdAt: Date.now(),
@@ -25,7 +26,7 @@ function verifyAdminCredentials(inputPassword) {
     });
     return { success: true, token };
   }
-  return { success: false, error: 'Invalid admin credentials' };
+  return { success: false, error: 'Invalid admin PIN. Please enter 1234.' };
 }
 
 function requireAdminAuth(req, res, next) {

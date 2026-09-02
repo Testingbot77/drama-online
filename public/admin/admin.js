@@ -331,10 +331,6 @@ function exportSubscribersCSV() {
     showToast('Subscribers CSV Exported!');
   });
 }
-      liveWrap.appendChild(div);
-    });
-  }
-}
 
 function renderStoryLibrary(stories) {
   const table = document.getElementById('storyLibraryTable');

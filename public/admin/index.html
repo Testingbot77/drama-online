@@ -13,7 +13,7 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/admin/admin.css?v=2.0.4">
 </head>
 <body class="admin-body">
 
@@ -26,12 +26,12 @@
       <h2>Taleonix Editorial Cockpit</h2>
       <p class="login-sub">Internal Control Center for US Drama Network & Facebook Funnels</p>
       
-      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event); return false;">
         <div class="login-group">
           <label><i class="fa-solid fa-lock"></i> Master Access PIN</label>
-          <input type="password" id="loginPinInput" placeholder="Enter PIN (Default: 1234)" class="login-input" required autofocus>
+          <input type="password" id="loginPinInput" placeholder="Enter PIN (1234)" class="login-input" required autofocus onkeydown="if(event.key==='Enter'){event.preventDefault();handleAdminLogin(event);}">
         </div>
-        <button type="submit" class="btn-login" id="btnLoginSubmit">
+        <button type="button" onclick="handleAdminLogin(event)" class="btn-login" id="btnLoginSubmit">
           <i class="fa-solid fa-arrow-right-to-bracket"></i> Authenticate & Enter
         </button>
       </form>
@@ -373,6 +373,9 @@
           <div class="fb-assets-grid" id="fbAssetsContainer">
             <!-- Dynamically populated -->
           </div>
+        </div>
+      </section>
+
       <!-- TAB: LINK TRACKER & CAMPAIGN CLICKS -->
       <section id="tab-link-tracker" class="admin-section">
         <div class="panel-card">
@@ -544,6 +547,6 @@
 
   <div id="adminToast" class="admin-toast"></div>
 
-  <script src="/admin/admin.js"></script>
+  <script src="/admin/admin.js?v=2.0.4"></script>
 </body>
 </html>
