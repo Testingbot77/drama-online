@@ -82,6 +82,10 @@ function startFolderWatcher() {
     handleNewVideoFile(filePath);
   });
 
+  watcher.on('error', (err) => {
+    console.warn('[Watcher] FS Notice:', err.message);
+  });
+
   return watcher;
 }
 
