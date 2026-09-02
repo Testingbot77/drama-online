@@ -26,11 +26,9 @@ function handleNavClick(e, path) {
 }
 
 function handleRoute(path, shouldScroll = true) {
-  // Close mobile drawer if open
   const drawer = document.getElementById('mobileDrawer');
   if (drawer) drawer.classList.remove('open');
 
-  // Cancel any playing speech
   if (isAudioPlaying && window.speechSynthesis) {
     window.speechSynthesis.cancel();
     isAudioPlaying = false;
@@ -38,7 +36,6 @@ function handleRoute(path, shouldScroll = true) {
     if (btn) btn.innerHTML = '<i class="fa-solid fa-circle-play"></i> <span>Listen to Story (Audio)</span>';
   }
 
-  // Update active category tab
   document.querySelectorAll('.category-nav .nav-item').forEach(item => {
     const href = item.getAttribute('href');
     if (href === path || (path.startsWith('/category') && href.includes(path.split('/')[2]))) {
@@ -80,12 +77,81 @@ async function loadAllStories() {
     const data = await res.json();
     if (data.success && data.stories) {
       allPubStories = data.stories;
-      // Re-render current route now that stories are loaded
       handleRoute(window.location.pathname, false);
     }
   } catch (err) {
     console.error('Error fetching stories:', err);
   }
+}
+
+// ================= HOMEPAGE RENDERING =================
+function renderHomeComponents(stories) {
+  if (!stories || stories.length === 0) return;
+
+  // 1. Hero Featured Story
+  const heroStory = stories[0];
+  const heroContainer = document.getElementById('heroCard');
+  if (heroContainer) {
+    const heroImg = heroStory.coverImage || `/images/${heroStory.slug}.jpg`;
+    heroContainer.innerHTML = `
+      <div class="hero-content-col">
+        <div class="hero-badge-row">
+          <span class="badge-gold"><i class="fa-solid fa-fire"></i> TOP TRENDING TODAY</span>
+          <span class="badge-cat">${heroStory.category || 'Drama'}</span>
+        </div>
+        <h1 class="hero-title">${heroStory.title}</h1>
+        <p class="hero-synopsis">${heroStory.hookSummary || ''}</p>
+        <div class="hero-meta-row">
+          <span><i class="fa-regular fa-clock"></i> ${heroStory.readTime || '7 min read'}</span>
+          <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 34000).toLocaleString()} readers</span>
+          <span><i class="fa-regular fa-calendar"></i> ${new Date(heroStory.publicationDate || Date.now()).toLocaleDateString()}</span>
+        </div>
+        <a href="/story/${heroStory.slug}" class="btn-read-hero" onclick="handleNavClick(event, '/story/${heroStory.slug}')">
+          <i class="fa-solid fa-book-open"></i> READ STORY
+        </a>
+      </div>
+      <div class="hero-image-col">
+        <img src="${heroImg}" alt="${heroStory.title}" loading="lazy">
+      </div>
+    `;
+  }
+
+  // 2. Trending Now Grid (sorted by trendingScore or views)
+  const trendingStories = [...stories].sort((a, b) => (b.trendingScore || b.views) - (a.trendingScore || a.views)).slice(0, 6);
+  renderCardGrid('trendingStoriesGrid', trendingStories);
+
+  // 3. Most Read Today Sidebar
+  const mostReadStories = [...stories].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
+  const mostReadContainer = document.getElementById('mostReadSidebarList');
+  if (mostReadContainer) {
+    mostReadContainer.innerHTML = '';
+    mostReadStories.forEach((s, idx) => {
+      const item = document.createElement('a');
+      item.className = 'most-read-item';
+      item.href = `/story/${s.slug}`;
+      item.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
+      item.innerHTML = `
+        <span class="most-read-num">0${idx + 1}</span>
+        <div>
+          <div class="most-read-title">${s.title}</div>
+          <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
+        </div>
+      `;
+      mostReadContainer.appendChild(item);
+    });
+  }
+
+  // 4. Category Grids
+  const marriage = stories.filter(s => matchCat(s, 'marriage') || matchCat(s, 'relationships'));
+  const betrayal = stories.filter(s => matchCat(s, 'betrayal') || matchCat(s, 'revenge'));
+  const inheritance = stories.filter(s => matchCat(s, 'inheritance') || matchCat(s, 'money'));
+  const billionaire = stories.filter(s => matchCat(s, 'billionaire') || matchCat(s, 'mafia'));
+
+  renderCardGrid('gridMarriage', marriage.length ? marriage.slice(0, 4) : stories.slice(0, 4));
+  renderCardGrid('gridBetrayal', betrayal.length ? betrayal.slice(0, 4) : stories.slice(1, 5));
+  renderCardGrid('gridInheritance', inheritance.length ? inheritance.slice(0, 4) : stories.slice(2, 6));
+  renderCardGrid('gridBillionaire', billionaire.length ? billionaire.slice(0, 4) : stories.slice(0, 4));
+  renderCardGrid('gridMoreStories', [...stories].reverse().slice(0, 4));
 }
 
 function renderCardGrid(elementId, storiesList) {
@@ -94,7 +160,7 @@ function renderCardGrid(elementId, storiesList) {
   container.innerHTML = '';
 
   if (!storiesList || storiesList.length === 0) {
-    container.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">No stories found in this section.</p>';
+    container.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">No stories available in this category.</p>';
     return;
   }
 
@@ -104,11 +170,11 @@ function renderCardGrid(elementId, storiesList) {
     card.href = `/story/${s.slug}`;
     card.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
     
-    const coverSrc = s.coverImage || `/images/${s.slug}-cover.svg`;
+    const coverSrc = s.coverImage || `/images/${s.slug}.jpg`;
 
     card.innerHTML = `
       <div class="card-thumb-wrap">
-        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.onerror=null; this.src='/images/the-discarded-heiress-billionaires-secret-vow-cover.svg';">
+        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/the-discarded-heiress-billionaires-secret-vow.jpg'">
         <div class="card-thumb-overlay">
           <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
         </div>
@@ -181,7 +247,6 @@ async function showStoryReader(slug) {
     const story = data.story;
     currentViewingStory = story;
 
-    // Track View & Attribution with UTM Campaign Parameters
     const urlParams = new URLSearchParams(window.location.search);
     const utmCampaign = urlParams.get('utm_campaign') || 'direct';
     const utmSource = urlParams.get('utm_source') || (document.referrer.includes('facebook') ? 'facebook' : 'direct');
@@ -197,16 +262,14 @@ async function showStoryReader(slug) {
       })
     });
 
-    // Populate Reader Header
     document.getElementById('readerTitle').innerText = story.title;
     document.getElementById('readerSynopsis').innerText = story.hookSummary || '';
     document.getElementById('readerCategory').innerText = story.category || 'Billionaire Drama';
     document.getElementById('readerReadTime').innerText = story.readTime || '7 min read';
     document.getElementById('readerDate').innerText = new Date(story.publicationDate || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     document.getElementById('readerAuthor').innerText = story.author || 'Elena Vance';
-    document.getElementById('readerCoverImg').src = story.coverImage || '/images/story1_cover.svg';
+    document.getElementById('readerCoverImg').src = story.coverImage || `/images/${story.slug}.jpg`;
 
-    // Populate Paragraphs and Inline Cinematic Scenes
     const bodyEl = document.getElementById('readerBody');
     bodyEl.innerHTML = '';
 
@@ -218,7 +281,6 @@ async function showStoryReader(slug) {
       p.innerText = pText;
       bodyEl.appendChild(p);
 
-      // Check if a scene illustration belongs after this paragraph
       const matchedScene = scenes.find(s => s.insertAfterParagraph === idx);
       if (matchedScene) {
         const sceneBox = document.createElement('div');
@@ -231,7 +293,6 @@ async function showStoryReader(slug) {
       }
     });
 
-    // PART 2 CONTINUATION BOX
     const part2Box = document.getElementById('partContinuationCard');
     const nextPartHook = document.getElementById('nextPartHook');
     const btnReadPart2 = document.getElementById('btnReadPart2');
@@ -249,7 +310,6 @@ async function showStoryReader(slug) {
       btnReadPart2.onclick = (e) => handleNavClick(e, '/trending');
     }
 
-    // Related Stories Grid (4-6 recommendations)
     const relatedContainer = document.getElementById('relatedStoriesGrid');
     if (relatedContainer) {
       relatedContainer.innerHTML = '';
@@ -261,7 +321,7 @@ async function showStoryReader(slug) {
         item.onclick = (e) => handleNavClick(e, `/story/${r.slug}`);
         item.innerHTML = `
           <div class="card-thumb-wrap" style="height: 140px;">
-            <img src="${r.coverImage || '/images/story1_cover.svg'}" alt="${r.title}" loading="lazy">
+            <img src="${r.coverImage || `/images/${r.slug}.jpg`}" alt="${r.title}" loading="lazy">
           </div>
           <div class="card-body" style="padding: 12px;">
             <span class="badge-cat" style="font-size: 0.65rem;">${r.category || 'Drama'}</span>

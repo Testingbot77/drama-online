@@ -1,13 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24138,
-    "uniqueVisitors": 18450,
+    "totalPageviews": 24139,
+    "uniqueVisitors": 18451,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62762,
-    "adCtr": "3.42%"
+    "adImpressions": 62766,
+    "adCtr": "3.42%",
+    "estimatedAdSenseRevenueUsd": 0.04
   },
   "trafficSources": [
     {
@@ -102,6 +103,14 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
