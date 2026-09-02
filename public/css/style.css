@@ -1868,3 +1868,161 @@ body.theme-light .story-content-body p { color: #1E293B; }
   color: #0A0C14;
   border-color: var(--accent-gold);
 }
+
+/* ================= 1-CLICK CARD BOOKMARK BUTTONS ================= */
+.story-card-container {
+  position: relative;
+}
+
+.btn-card-save {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  background: rgba(9, 10, 16, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-card-save:hover {
+  background: var(--accent-gold);
+  color: #0A0C14;
+  border-color: var(--accent-gold);
+  transform: scale(1.12);
+}
+
+.btn-card-save.saved {
+  background: var(--accent-gold);
+  color: #0A0C14;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 12px rgba(245, 197, 24, 0.5);
+}
+
+/* Hero CTA Row */
+.hero-cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-bookmark {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-hero-bookmark:hover {
+  background: rgba(245, 197, 24, 0.15);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.btn-hero-bookmark.saved {
+  background: var(--accent-gold);
+  color: #0A0C14;
+  border-color: var(--accent-gold);
+  font-weight: 800;
+}
+
+/* Sidebar item bookmark */
+.most-read-item-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.most-read-item-wrapper .most-read-item {
+  flex: 1;
+  padding: 0;
+  border: none;
+}
+
+.btn-sidebar-save {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.btn-sidebar-save:hover, .btn-sidebar-save.saved {
+  color: var(--accent-gold);
+}
+
+/* Google Sign-in Box */
+.google-signin-form-box {
+  background: rgba(66, 133, 244, 0.04);
+  border: 1px solid rgba(66, 133, 244, 0.25);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.google-auth-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: #f87171;
+  transform: rotate(90deg);
+}
+

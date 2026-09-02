@@ -106,9 +106,15 @@ function renderHomeComponents(stories) {
           <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 34000).toLocaleString()} readers</span>
           <span><i class="fa-regular fa-calendar"></i> ${new Date(heroStory.publicationDate || Date.now()).toLocaleDateString()}</span>
         </div>
-        <a href="/story/${heroStory.slug}" class="btn-read-hero" onclick="handleNavClick(event, '/story/${heroStory.slug}')">
-          <i class="fa-solid fa-book-open"></i> READ STORY
-        </a>
+        <div class="hero-cta-actions">
+          <a href="/story/${heroStory.slug}" class="btn-read-hero" onclick="handleNavClick(event, '/story/${heroStory.slug}')">
+            <i class="fa-solid fa-book-open"></i> READ STORY
+          </a>
+          <button class="btn-hero-bookmark ${userBookmarks.includes(heroStory.slug) ? 'saved' : ''}" onclick="toggleSaveStory('${heroStory.slug}', '${heroStory.title.replace(/'/g, "\\'")}')">
+            <i class="${userBookmarks.includes(heroStory.slug) ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
+            <span>${userBookmarks.includes(heroStory.slug) ? 'Saved' : 'Save Story'}</span>
+          </button>
+        </div>
       </div>
       <div class="hero-image-col">
         <img src="${heroImg}" alt="${heroStory.title}" loading="lazy">
@@ -126,16 +132,20 @@ function renderHomeComponents(stories) {
   if (mostReadContainer) {
     mostReadContainer.innerHTML = '';
     mostReadStories.forEach((s, idx) => {
-      const item = document.createElement('a');
-      item.className = 'most-read-item';
-      item.href = `/story/${s.slug}`;
-      item.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
+      const isSaved = userBookmarks.includes(s.slug);
+      const item = document.createElement('div');
+      item.className = 'most-read-item-wrapper';
       item.innerHTML = `
-        <span class="most-read-num">0${idx + 1}</span>
-        <div>
-          <div class="most-read-title">${s.title}</div>
-          <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
-        </div>
+        <a href="/story/${s.slug}" class="most-read-item" onclick="handleNavClick(event, '/story/${s.slug}')">
+          <span class="most-read-num">0${idx + 1}</span>
+          <div>
+            <div class="most-read-title">${s.title}</div>
+            <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
+          </div>
+        </a>
+        <button class="btn-sidebar-save ${isSaved ? 'saved' : ''}" onclick="toggleSaveStory('${s.slug}', '${s.title.replace(/'/g, "\\'")}')" title="${isSaved ? 'Remove from Saved' : 'Save to Library'}">
+          <i class="${isSaved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
+        </button>
       `;
       mostReadContainer.appendChild(item);
     });
@@ -165,30 +175,35 @@ function renderCardGrid(elementId, storiesList) {
   }
 
   storiesList.forEach(s => {
-    const card = document.createElement('a');
-    card.className = 'story-card';
-    card.href = `/story/${s.slug}`;
-    card.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
+    const isSaved = userBookmarks.includes(s.slug);
+    const card = document.createElement('div');
+    card.className = 'story-card-container';
     
     const coverSrc = s.coverImage || `/images/${s.slug}.jpg`;
 
     card.innerHTML = `
-      <div class="card-thumb-wrap">
-        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/the-discarded-heiress-billionaires-secret-vow.jpg'">
-        <div class="card-thumb-overlay">
-          <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
+      <div class="story-card">
+        <div class="card-thumb-wrap" onclick="handleNavClick(event, '/story/${s.slug}')">
+          <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/the-discarded-heiress-billionaires-secret-vow.jpg'">
+          <div class="card-thumb-overlay">
+            <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
+          </div>
+          <!-- 1-Click Bookmark Action Button on Card -->
+          <button class="btn-card-save ${isSaved ? 'saved' : ''}" onclick="event.preventDefault(); event.stopPropagation(); toggleSaveStory('${s.slug}', '${s.title.replace(/'/g, "\\'")}')" title="${isSaved ? 'Remove from Saved' : 'Save to Library'}">
+            <i class="${isSaved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
+          </button>
         </div>
-      </div>
-      <div class="card-body">
-        <div class="card-meta-row">
-          <span class="badge-cat">${s.category || 'Drama'}</span>
-          <span style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.readTime || '6 min read'}</span>
-        </div>
-        <h3 class="card-title">${s.title}</h3>
-        <p class="card-hook">${s.hookSummary || ''}</p>
-        <div class="card-footer">
-          <span>Part ${s.partNumber || 1} • <strong style="color: var(--accent-gold);">${s.views ? s.views.toLocaleString() + ' reads' : '🔥 Trending'}</strong></span>
-          <span style="color: var(--accent-gold); font-weight:700;">Read Chapter →</span>
+        <div class="card-body" onclick="handleNavClick(event, '/story/${s.slug}')">
+          <div class="card-meta-row">
+            <span class="badge-cat">${s.category || 'Drama'}</span>
+            <span style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.readTime || '6 min read'}</span>
+          </div>
+          <h3 class="card-title">${s.title}</h3>
+          <p class="card-hook">${s.hookSummary || ''}</p>
+          <div class="card-footer">
+            <span>Part ${s.partNumber || 1} • <strong style="color: var(--accent-gold);">${s.views ? s.views.toLocaleString() + ' reads' : '🔥 Trending'}</strong></span>
+            <span style="color: var(--accent-gold); font-weight:700;">Read Chapter →</span>
+          </div>
         </div>
       </div>
     `;
@@ -962,20 +977,24 @@ function renderReadingHistory() {
       </div>
     </div>
   `).join('');
-}
+// Google Sign-In with User's Own Account
+function handleGoogleAuthSubmit(e) {
+  if (e) e.preventDefault();
+  const nameInput = document.getElementById('googleNameInput');
+  const emailInput = document.getElementById('googleEmailInput');
 
-// Google Sign-In Flow
-function triggerGoogleSignIn() {
-  // Generate authentic Google session simulation
-  const randomNames = ["Eleanor Vance", "Marcus Hayes", "Sarah Jenkins", "Julian Davis", "Chloe Sterling", "David Miller"];
-  const selectedName = randomNames[Math.floor(Math.random() * randomNames.length)];
-  const emailPrefix = selectedName.toLowerCase().replace(' ', '.');
-  const googleEmail = `${emailPrefix}${Math.floor(Math.random() * 89 + 10)}@gmail.com`;
-  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(selectedName)}`;
+  if (!emailInput || !emailInput.value) {
+    showToast('Please enter your Google Email address');
+    return;
+  }
+
+  const name = (nameInput && nameInput.value) ? nameInput.value.trim() : emailInput.value.split('@')[0];
+  const email = emailInput.value.trim();
+  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=f5c518&textColor=090a10`;
 
   completeAuthentication({
-    name: selectedName,
-    email: googleEmail,
+    name: name,
+    email: email,
     provider: 'google',
     avatar: avatarUrl
   });
@@ -991,14 +1010,15 @@ function handleEmailAuth(e) {
     return;
   }
 
-  const name = (nameInput && nameInput.value) ? nameInput.value : emailInput.value.split('@')[0];
+  const name = (nameInput && nameInput.value) ? nameInput.value.trim() : emailInput.value.split('@')[0];
   const email = emailInput.value.trim();
+  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=3b82f6&textColor=ffffff`;
 
   completeAuthentication({
     name: name,
     email: email,
     provider: 'email',
-    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`
+    avatar: avatarUrl
   });
 }
 
@@ -1022,12 +1042,12 @@ function completeAuthentication(userPayload) {
 
       updateNavProfileState();
       openUserProfileModal();
-      showToast(`Welcome, ${currentUser.name}! Profile connected 🎉`);
+      showToast(`Signed in as ${currentUser.name}! Profile connected 🎉`);
     }
   })
   .catch(err => {
     console.error('Auth error:', err);
-    // Offline fallback
+    // Offline / persistent fallback
     currentUser = userPayload;
     localStorage.setItem('taleonix_user', JSON.stringify(currentUser));
     updateNavProfileState();
@@ -1044,8 +1064,18 @@ function handleUserLogout() {
   showToast('Signed out of Taleonix Library.');
 }
 
+// Global Keydown Listener for Escape key (Close modal & back to reader)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeUserProfileModal();
+    closeSearchModal();
+    closeSearchDropdown();
+  }
+});
+
 // Hook profile initialization on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   initUserProfile();
 });
+
 
