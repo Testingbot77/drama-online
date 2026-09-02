@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24160,
-    "uniqueVisitors": 18472,
+    "totalPageviews": 24162,
+    "uniqueVisitors": 18474,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62850,
+    "adImpressions": 62858,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.73
+    "estimatedAdSenseRevenueUsd": 0.81
   },
   "trafficSources": [
     {
@@ -103,6 +103,22 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
@@ -283,20 +299,6 @@
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
       "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
-      "country": "United States 🇺🇸",
       "device": "Desktop",
       "referrer": "Social Short / Video Link"
     }
