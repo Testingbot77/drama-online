@@ -111,6 +111,41 @@ function escapeXml(unsafe) {
 }
 
 /**
+ * Photorealistic Scene Image Generator using Google Imagen 3 API
+ */
+async function generateRealisticImagenCover(sceneDescription, apiKey, outFilename) {
+  if (!apiKey) return null;
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+    const fullPrompt = `Cinematic photorealistic movie still, 8k resolution, dramatic lighting, shot on 35mm Arri Alexa lens, cinematic color grading, hyper-detailed, emotional depth, Hollywood drama scene: ${sceneDescription}. Ultra-detailed facial expressions, realistic clothing textures, movie poster quality, masterpiece, no text, no watermark.`;
+
+    const response = await ai.models.generateImages({
+      model: 'imagen-3.0-generate-002',
+      prompt: fullPrompt,
+      config: {
+        numberOfImages: 1,
+        outputMimeType: 'image/jpeg',
+        aspectRatio: '16:9'
+      }
+    });
+
+    if (response.generatedImages && response.generatedImages[0]) {
+      const base64Bytes = response.generatedImages[0].image.imageBytes;
+      const buffer = Buffer.from(base64Bytes, 'base64');
+      const imgDir = path.join(__dirname, '..', 'public', 'images');
+      if (!fs.existsSync(imgDir)) fs.mkdirSync(imgDir, { recursive: true });
+      const imgPath = path.join(imgDir, outFilename);
+      fs.writeFileSync(imgPath, buffer);
+      console.log(`[Imagen 3] Successfully generated photorealistic scene image: ${outFilename}`);
+      return `/images/${outFilename}`;
+    }
+  } catch (err) {
+    console.warn(`[Imagen 3 Generation Warning]: ${err.message}.`);
+  }
+  return null;
+}
+
+/**
  * Multi-Pass Iterative AI Agent (Taleonix Refinement Engine)
  * Pass 1: Raw Draft & Outline
  * Pass 2: Critical Hook & Structural Analysis (Recommendations)
@@ -306,6 +341,17 @@ Return strictly JSON matching this schema:
   const coverFilePath = path.join(publicImagesDir, coverFileName);
   fs.writeFileSync(coverFilePath, generateSceneSVG(finalizedStory.title, finalizedStory.subcategory || finalizedStory.category, 'cover', 'gold'), 'utf8');
 
+  let coverImageUrl = `/images/${coverFileName}`;
+  if (apiKey) {
+    try {
+      const scenePrompt = `${finalizedStory.title}. ${finalizedStory.hookSummary || ''}`;
+      const aiImg = await generateRealisticImagenCover(scenePrompt, apiKey, `${cleanSlug}-cover.jpg`);
+      if (aiImg) coverImageUrl = aiImg;
+    } catch(err) {
+      console.warn('Imagen 3 cover generation fallback to poster:', err.message);
+    }
+  }
+
   const processedScenes = (finalizedStory.scenes || []).map((scene, idx) => {
     const sceneFileName = `${cleanSlug}-scene-${idx + 1}.svg`;
     const sceneFilePath = path.join(publicImagesDir, sceneFileName);
@@ -344,7 +390,7 @@ Return strictly JSON matching this schema:
     trendingScore: 85.0,
     readTime: `${readTimeMin} min read`,
     originalVideoName: originalName,
-    coverImage: `/images/${coverFileName}`,
+    coverImage: coverImageUrl,
     hookSummary: finalizedStory.hookSummary,
     paragraphs: finalizedStory.paragraphs,
     scenes: processedScenes,
@@ -352,7 +398,7 @@ Return strictly JSON matching this schema:
     seoDescription: finalizedStory.seoDescription || finalizedStory.hookSummary,
     socialTitle: finalizedStory.facebookAssets?.caption || finalizedStory.title,
     socialDescription: finalizedStory.hookSummary,
-    socialImage: `/images/${coverFileName}`
+    socialImage: coverImageUrl
   };
 
   const marketingObject = {
@@ -449,5 +495,6 @@ function synthesizeMultiPassDrama(filename) {
 
 module.exports = {
   processDramaVideo,
-  generateSceneSVG
+  generateSceneSVG,
+  generateRealisticImagenCover
 };

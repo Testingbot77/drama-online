@@ -425,6 +425,40 @@ app.post('/api/admin/settings', requireAdminAuth, (req, res) => {
   res.json({ success: true, message: 'Settings saved successfully' });
 });
 
+// Admin On-Demand Google Imagen 3 Photorealistic Story Cover Generation
+app.post('/api/admin/stories/:slug/generate-ai-image', requireAdminAuth, async (req, res) => {
+  const stories = db.getStories();
+  const story = stories.find(s => s.slug === req.params.slug);
+  if (!story) {
+    return res.status(404).json({ success: false, error: 'Story not found' });
+  }
+
+  const settings = db.getSettings();
+  const apiKey = (req.body.geminiApiKey || settings.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
+  if (!apiKey) {
+    return res.status(400).json({ success: false, error: 'Gemini API Key required to generate Imagen 3 images. Please add your key in Settings.' });
+  }
+
+  const customPrompt = req.body.prompt || `${story.title}. ${story.hookSummary || ''}`;
+  const outFilename = `${story.slug}-ai-cover-${Date.now()}.jpg`;
+
+  try {
+    const { generateRealisticImagenCover } = require('./geminiEngine');
+    const imgUrl = await generateRealisticImagenCover(customPrompt, apiKey, outFilename);
+    if (!imgUrl) {
+      return res.status(500).json({ success: false, error: 'Google Imagen API did not return an image. Please check API key quota.' });
+    }
+
+    story.coverImage = imgUrl;
+    story.socialImage = imgUrl;
+    db.saveStories(stories);
+
+    res.json({ success: true, message: 'Photorealistic AI Cover generated successfully!', coverImage: imgUrl });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Helper to generate short alphanumeric code
 function generateShortCode(len = 5) {
   const chars = 'abcdefghjkmnpqrstuvwxyz23456789';
