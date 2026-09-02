@@ -292,18 +292,6 @@ async function showStoryReader(slug) {
       const p = document.createElement('p');
       p.innerText = pText;
       bodyEl.appendChild(p);
-
-      // Check if a scene illustration belongs after this paragraph
-      const matchedScene = scenes.find(s => s.insertAfterParagraph === idx);
-      if (matchedScene) {
-        const sceneBox = document.createElement('div');
-        sceneBox.className = 'inline-scene-box';
-        sceneBox.innerHTML = `
-          <img src="${matchedScene.image}" alt="Scene Illustration" loading="lazy" onerror="this.style.display='none'">
-          <div class="inline-scene-caption"><i class="fa-solid fa-camera"></i> ${matchedScene.caption}</div>
-        `;
-        bodyEl.appendChild(sceneBox);
-      }
     });
 
     // PART CONTINUATION & PREVIOUS EPISODE SYSTEM

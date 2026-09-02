@@ -1,6 +1,6 @@
 [
   {
-    "id": "story-vid-1-graduation-envelope",
+    "id": "story-vid-1-p1",
     "title": "The Graduation Envelope: When the Estranged Mother in Green Showed Up in the Driveway",
     "slug": "the-graduation-envelope-mother-in-green",
     "category": "Family Secrets",
@@ -13,16 +13,19 @@
       "Trending"
     ],
     "author": "Eleanor Vance & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.687Z",
+    "publicationDate": "2026-09-02T13:49:11.628Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-graduation-envelope",
+    "nextPartSlug": "the-graduation-envelope-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Truth of the Medical Trust & The Family's Forgiveness!",
     "views": 48290,
     "uniqueVisitors": 41200,
     "avgReadTimeSeconds": 590,
     "trendingScore": 98.9,
     "readTime": "11 min read",
     "coverImage": "/images/the-graduation-envelope-mother-in-green-cover.jpg",
-    "hookSummary": "After eighteen years of silence, Monica stood in the driveway in a silk emerald green dress holding a white envelope. Her ex-husband and graduating daughter stared in shock.",
+    "hookSummary": "After eighteen years of silence, Monica stood in the driveway in an emerald green dress holding a white envelope. Her ex-husband and graduating daughter stared in shock.",
     "paragraphs": [
       "[ SUBURBAN ATLANTA RESIDENCE — 06:15 PM ]",
       "The golden sunset cast long, amber shadows across the manicured lawn of the Davis family residence as eighteen-year-old Kayla stood in her purple graduation robe, holding her gold valedictorian honors tassel.",
@@ -45,16 +48,59 @@
       "\"Keep the trust fund,\" Kayla said with quiet grace. \"If you want to be in my life... you start by having Sunday dinner at our kitchen table, earning one day at a time.\"",
       "For the first time in eighteen years, the heavy silence of abandonment gave way to the fragile, beautiful beginning of family redemption."
     ],
-    "scenes": [
-      {
-        "caption": "The Driveway Confrontation: Monica presents the life-changing envelope to Kayla and David.",
-        "image": "/images/the-graduation-envelope-mother-in-green-scene.jpg",
-        "insertAfterParagraph": 12
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-2-grandmothers-ledger",
+    "id": "story-vid-1-p2",
+    "title": "The Graduation Envelope (Part 2 - Grand Finale): The Truth of the Medical Trust & The Family's Forgiveness",
+    "slug": "the-graduation-envelope-part-2-grand-finale",
+    "category": "Family Secrets",
+    "subcategory": "Grand Finale & Redemption",
+    "tags": [
+      "Graduation",
+      "Grand Finale",
+      "Motherhood",
+      "Redemption",
+      "Trending"
+    ],
+    "author": "Eleanor Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-graduation-envelope",
+    "prevPartSlug": "the-graduation-envelope-mother-in-green",
+    "views": 45100,
+    "uniqueVisitors": 38900,
+    "avgReadTimeSeconds": 610,
+    "trendingScore": 99.1,
+    "readTime": "12 min read",
+    "coverImage": "/images/the-graduation-envelope-mother-in-green-scene.jpg",
+    "hookSummary": "The truth behind Monica's eighteen-year disappearance comes to light under the warm lights of the Davis family dining room.",
+    "paragraphs": [
+      "[ DAVIS FAMILY KITCHEN, ATLANTA — 07:30 PM ]",
+      "The smell of freshly brewed chamomile tea filled the modest kitchen as Monica sat on the edge of a simple wooden chair, her designer purse placed quietly on the floor.",
+      "Across the laminate countertop, David placed three steaming mugs of tea onto the table, his stern expression slowly softening as eighteen years of anger met the reality of truth.",
+      "\"Monica,\" David said quietly, taking a seat beside his daughter Kayla. \"Tell us what really happened eighteen years ago. No corporate spin, no legal excuses.\"",
+      "Monica took a deep, shuddering breath, her fingers gently touching the warm porcelain of her mug.",
+      "\"When Kayla was born with severe pulmonary complications, our health insurance had dropped us,\" Monica began, her voice cracking with raw emotion.",
+      "\"The doctors required a two-hundred-thousand-dollar experimental surgery in Chicago, or Kayla wouldn't have survived her first birthday.\"",
+      "David stared at her, stunned. \"What are you talking about? The hospital told me the surgery was covered by a charitable research grant!\"",
+      "\"There was no charitable grant, David,\" Monica wept, looking up into his eyes. \"My wealthy estranged family offered to pay for the entire surgery under one condition: that I sign over full custody to you, leave the state, and work ten years under their corporate holding firm without contacting you.\"",
+      "A suffocating silence fell over the kitchen as the weight of Monica's secret sacrifice landed upon the room.",
+      "She hadn't abandoned her daughter for ambition—she had surrendered her own motherhood to save her infant daughter's life.",
+      "Kayla’s eyes filled with tears as she looked upon the mother she had resented her entire childhood.",
+      "\"You gave up eighteen years of watching me grow up... just so I could live?\" Kayla whispered.",
+      "Monica nodded silently, wiping away tears. \"Every single promotion, every late night in the office, every single dollar I earned was placed into that medical pavilion in Atlanta so I could return the day you became an adult.\"",
+      "David buried his face in his hands, overcome by grief, regret, and profound gratitude for the woman who had quietly carried the burden alone.",
+      "Kayla reached across the table and took both of Monica's hands in hers.",
+      "\"Mom,\" Kayla said softly, using the word for the very first time. \"Welcome home.\"",
+      "Outside, the Georgia night was calm and clear. The long years of separation were over, replaced by an unbreakable bond forged in sacrifice and healed by love."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-graduation-envelope-mother-in-green"
+  },
+  {
+    "id": "story-vid-2-p1",
     "title": "The Grandmother's Handwritten Ledger: The Secret 1974 Family Trust",
     "slug": "the-grandmothers-handwritten-ledger-inheritance",
     "category": "Money & Inheritance",
@@ -67,16 +113,19 @@
       "Justice"
     ],
     "author": "Elena Vance & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-grandmothers-ledger",
+    "nextPartSlug": "the-grandmothers-handwritten-ledger-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Treasury Victory & The Sovereign Land Exemption!",
     "views": 52100,
     "uniqueVisitors": 44300,
     "avgReadTimeSeconds": 610,
     "trendingScore": 99.2,
     "readTime": "12 min read",
     "coverImage": "/images/the-grandmothers-handwritten-ledger-cover.jpg",
-    "hookSummary": "When the corporate developers demanded Grandma Evelyn sign over the ancestral estate, the 82-year-old matriarch opened a worn spiral notebook and pointed to page 47.",
+    "hookSummary": "When corporate developers demanded Grandma Evelyn sign over the ancestral estate, the 82-year-old matriarch opened a worn spiral notebook and pointed to page 47.",
     "paragraphs": [
       "[ OAK GROVE MANOR, SAVANNAH — 02:00 PM ]",
       "Under the warm amber light of the dining room chandelier, eighty-two-year-old Grandma Evelyn sat calmly at the head of the polished walnut table.",
@@ -95,16 +144,55 @@
       "Grandma Evelyn closed the notebook with a quiet, satisfying snap. \"Now, pack your briefcases and tell your board chairman that the Holloway land is not for sale—not for forty million, and not for four hundred million.\"",
       "The auditors fled the house in disgrace, leaving the family standing together in triumphant peace, their generational legacy preserved forever."
     ],
-    "scenes": [
-      {
-        "caption": "The Proof in Ink: Grandma Evelyn reveals the sovereign 1974 deed clause to the auditors.",
-        "image": "/images/the-grandmothers-handwritten-ledger-scene.jpg",
-        "insertAfterParagraph": 9
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-3-forgotten-portrait",
+    "id": "story-vid-2-p2",
+    "title": "The Grandmother's Handwritten Ledger (Part 2 - Grand Finale): The Treasury Victory & The Sovereign Land Exemption",
+    "slug": "the-grandmothers-handwritten-ledger-part-2-grand-finale",
+    "category": "Money & Inheritance",
+    "subcategory": "Grand Finale & Justice",
+    "tags": [
+      "Inheritance",
+      "Grand Finale",
+      "Justice",
+      "Grandmother",
+      "Billionaire"
+    ],
+    "author": "Elena Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-grandmothers-ledger",
+    "prevPartSlug": "the-grandmothers-handwritten-ledger-inheritance",
+    "views": 49800,
+    "uniqueVisitors": 42100,
+    "avgReadTimeSeconds": 620,
+    "trendingScore": 99.4,
+    "readTime": "12 min read",
+    "coverImage": "/images/the-grandmothers-handwritten-ledger-inheritance-scene.jpg",
+    "hookSummary": "Grandma Evelyn takes her spiral ledger before the Federal Land Claims Commission, securing perpetual sovereign protection for Savannah's oldest estate.",
+    "paragraphs": [
+      "[ FEDERAL DISTRICT COURT, ATLANTA — 10:00 AM ]",
+      "The high mahogany chambers of the Federal District Court hummed with hushed murmurs as Grandma Evelyn walked down the carpeted aisle, supported by Denise and Grandpa Arthur.",
+      "On the opposite side of the courtroom, the CEO of the multinational development corporation sat surrounded by a dozen corporate attorneys in charcoal pinstripe suits.",
+      "Federal Judge Robert Sterling called the hearing to order: \"In the matter of the Sovereign Allodial Land Claims for Oak Grove Manor, let counsel present the certified evidence.\"",
+      "Denise stepped forward to the podium, placing Grandma Evelyn's vintage spiral ledger alongside the certified Department of the Treasury certificates.",
+      "\"Your Honor,\" Denise began with unflinching poise. \"Under the 1974 Federal Land Preservation Act, this ledger contains the original sovereign covenant executed by the Department of the Interior.\"",
+      "\"The land was granted allodial title immunity, meaning no state entity, commercial developer, or banking syndicate can ever encumber or seize it.\"",
+      "Judge Sterling reviewed the forensic ledger analysis provided by federal archivists. The gold seal, the historical ink composition, and the Treasury registry matches were one hundred percent authentic.",
+      "Judge Sterling looked directly at the developer's CEO with stern condemnation: \"Mr. Hastings, your company knowingly manufactured fraudulent tax liens to steal ancestral land from a senior citizen.\"",
+      "\"This court hereby issues a permanent federal injunction barring your corporation from entering within ten miles of Oak Grove Manor.\"",
+      "\"Furthermore, the court orders your firm to pay fifty million dollars in punitive damages directly into the Holloway Family Foundation!\"",
+      "The gavel struck with a resounding crack that shattered the corporate syndicate's predatory scheme once and for all.",
+      "Outside the federal courthouse in the bright Georgia sunshine, Grandma Evelyn looked up at the sky, tears of peace shining in her eyes.",
+      "The handwritten ledger had done what money could never buy: it had defended forty-five years of family love, dignity, and generational freedom."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-grandmothers-handwritten-ledger-inheritance"
+  },
+  {
+    "id": "story-vid-3-p1",
     "title": "The Forgotten Portrait: The Hidden Truth Behind the Family Will",
     "slug": "the-forgotten-portrait-family-will",
     "category": "Shocking Secrets",
@@ -116,9 +204,12 @@
       "Trending"
     ],
     "author": "Marcus Sterling & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-forgotten-portrait",
+    "nextPartSlug": "the-forgotten-portrait-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Magnolia Meadows Victory & The Unsealed Vault!",
     "views": 45900,
     "uniqueVisitors": 39100,
     "avgReadTimeSeconds": 570,
@@ -139,16 +230,49 @@
       "The will explicitly bequeathed the entire family estate and two million dollars in municipal bonds directly to Grandma Rose and her daughters, rendering the cousin's eviction notice completely null and void.",
       "Tears flowed freely as Denise held up the portrait: \"Grandma... we aren't moving anywhere. Grandfather protected us all along.\""
     ],
-    "scenes": [
-      {
-        "caption": "The Hidden Testament: Denise uncovers the secret will sealed behind the heirloom frame.",
-        "image": "/images/the-forgotten-portrait-family-will-scene.jpg",
-        "insertAfterParagraph": 6
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-4-gold-framed-deed",
+    "id": "story-vid-3-p2",
+    "title": "The Forgotten Portrait (Part 2 - Grand Finale): The Magnolia Meadows Victory & The Unsealed Vault",
+    "slug": "the-forgotten-portrait-part-2-grand-finale",
+    "category": "Shocking Secrets",
+    "subcategory": "Grand Finale & Justice",
+    "tags": [
+      "Family Secrets",
+      "Grand Finale",
+      "Inheritance",
+      "Justice",
+      "Trending"
+    ],
+    "author": "Marcus Sterling & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-forgotten-portrait",
+    "prevPartSlug": "the-forgotten-portrait-family-will",
+    "views": 43700,
+    "uniqueVisitors": 37400,
+    "avgReadTimeSeconds": 590,
+    "trendingScore": 98.2,
+    "readTime": "11 min read",
+    "coverImage": "/images/the-forgotten-portrait-family-will-scene.jpg",
+    "hookSummary": "The secret vault beneath Magnolia Meadows is unsealed, exposing the greedy relatives who attempted to steal the family legacy.",
+    "paragraphs": [
+      "[ MAGNOLIA MEADOWS LIBRARY — 03:00 PM ]",
+      "Armed with the holographic will recovered from behind the 1985 portrait, Denise summoned the county sheriff and the family probate lawyer to the estate.",
+      "Standing in the wood-paneled library, Denise pointed to the base of the stone fireplace where the will indicated a concealed reinforced floor safe.",
+      "The locksmith dialed the combination recorded in James Holloway's testament: 1-9-4-8-7-2.",
+      "With a heavy metallic click, the steel hatch swung open to reveal the family patriarch's true legacy: gold bullion certificates, municipal bond receipts, and the unblemished original deed to three hundred surrounding acres.",
+      "When the estranged cousins arrived with their moving trucks expecting to claim the estate, they were met on the driveway by the sheriff holding arrest warrants for probate fraud.",
+      "Grandma Rose sat peacefully on her porch in the afternoon breeze, smiling as the movers carried the unpacked boxes back into the house.",
+      "The portrait of James Holloway was hung back in its rightful place above the mantel—a timeless reminder that integrity and love always outlive deception."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-forgotten-portrait-family-will"
+  },
+  {
+    "id": "story-vid-4-p1",
     "title": "The Gold Framed Deed: The Mother Who Refused to Pack",
     "slug": "the-gold-framed-deed-refused-to-pack",
     "category": "Family Feud",
@@ -161,9 +285,12 @@
       "Trending"
     ],
     "author": "Elena Vance & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-gold-framed-deed",
+    "nextPartSlug": "the-gold-framed-deed-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Supreme Court Title & The Collector's Ruin!",
     "views": 47800,
     "uniqueVisitors": 40500,
     "avgReadTimeSeconds": 580,
@@ -184,16 +311,48 @@
       "The debt collector’s face turned pale as the deputy examined the embossed state seal and turned to the collector: \"Sir, your writ is invalid. If you step onto this property again, I will arrest you for criminal trespass.\"",
       "Denise smiled as the collector scrambled out of the house, proving that truth and courage are stronger than any bully's threats."
     ],
-    "scenes": [
-      {
-        "caption": "Standing Her Ground: Denise displays the certified title deed hidden in the frame.",
-        "image": "/images/the-gold-framed-deed-refused-to-pack-scene.jpg",
-        "insertAfterParagraph": 6
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-5-kitchen-trash-quilt",
+    "id": "story-vid-4-p2",
+    "title": "The Gold Framed Deed (Part 2 - Grand Finale): The Supreme Court Title & The Collector's Ruin",
+    "slug": "the-gold-framed-deed-part-2-grand-finale",
+    "category": "Family Feud",
+    "subcategory": "Grand Finale & Justice",
+    "tags": [
+      "Justice",
+      "Grand Finale",
+      "Family Feud",
+      "Viral",
+      "Trending"
+    ],
+    "author": "Elena Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-gold-framed-deed",
+    "prevPartSlug": "the-gold-framed-deed-refused-to-pack",
+    "views": 44200,
+    "uniqueVisitors": 38100,
+    "avgReadTimeSeconds": 600,
+    "trendingScore": 98.7,
+    "readTime": "12 min read",
+    "coverImage": "/images/the-gold-framed-deed-refused-to-pack-scene.jpg",
+    "hookSummary": "Denise files federal RICO charges against the predatory debt agency, shutting down their statewide operation forever.",
+    "paragraphs": [
+      "[ STATE ATTORNEY GENERAL'S HEADQUARTERS, ATLANTA — 09:30 AM ]",
+      "Following the failed eviction attempt, Denise marched into the Special Prosecutions Division of the State Attorney General's Office with certified copies of the Supreme Court Homestead Deed.",
+      "She presented a forensic paper trail exposing how the debt collection agency had manufactured over four hundred fraudulent liens targeting elderly homeowners across Georgia.",
+      "Within forty-eight hours, federal agents executed search warrants on the agency's headquarters, freezing their offshore accounts and indicting seven top executives on racketeering charges.",
+      "The Holloway family received a four-million-dollar state restitution settlement, allowing them to establish an endowment defending other senior citizens against predatory foreclosures.",
+      "Denise returned home to Savannah, where Grandma Evelyn welcomed her with open arms on the sunlit front porch.",
+      "The gold-framed deed was restored to the center of the living room—an eternal symbol of protection and justice for generations to come."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-gold-framed-deed-refused-to-pack"
+  },
+  {
+    "id": "story-vid-5-p1",
     "title": "The Millionaire Sister's Kitchen Trash: When She Threw Away the $10 Million Quilt",
     "slug": "the-millionaire-sisters-kitchen-trash-quilt",
     "category": "Revenge",
@@ -205,9 +364,12 @@
       "Trending"
     ],
     "author": "Sarah Jenkins & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-kitchen-trash-quilt",
+    "nextPartSlug": "the-millionaire-sisters-kitchen-trash-quilt-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Bearer Bond Redemption & The Sister's Reckoning!",
     "views": 54300,
     "uniqueVisitors": 46700,
     "avgReadTimeSeconds": 600,
@@ -227,16 +389,51 @@
       "Inside the velvet stitching were eighty uncashed, negotiable municipal bearer bonds issued in 1978, currently valued with interest at ten million, four hundred thousand dollars—bequeathed solely to the daughter who valued love over greed.",
       "Clara smiled with quiet peace, holding the warm quilt to her chest as justice had silently been served."
     ],
-    "scenes": [
-      {
-        "caption": "The Arrogant Sister's Mistake: Vanessa tosses the multi-million-dollar heirloom into the trash.",
-        "image": "/images/the-millionaire-sisters-kitchen-trash-quilt-scene.jpg",
-        "insertAfterParagraph": 5
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-6-landlords-fake-eviction",
+    "id": "story-vid-5-p2",
+    "title": "The Millionaire Sister's Kitchen Trash (Part 2 - Grand Finale): The Bearer Bond Redemption & The Sister's Reckoning",
+    "slug": "the-millionaire-sisters-kitchen-trash-quilt-part-2-grand-finale",
+    "category": "Revenge",
+    "subcategory": "Grand Finale & Retribution",
+    "tags": [
+      "Revenge",
+      "Grand Finale",
+      "Inheritance",
+      "Trending"
+    ],
+    "author": "Sarah Jenkins & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-kitchen-trash-quilt",
+    "prevPartSlug": "the-millionaire-sisters-kitchen-trash-quilt",
+    "views": 51200,
+    "uniqueVisitors": 44100,
+    "avgReadTimeSeconds": 610,
+    "trendingScore": 99.6,
+    "readTime": "12 min read",
+    "coverImage": "/images/the-millionaire-sisters-kitchen-trash-quilt-scene.jpg",
+    "hookSummary": "Vanessa discovers the true worth of the quilt she threw in the garbage when Clara purchases the entire family estate outright at auction.",
+    "paragraphs": [
+      "[ BUCKHEAD PROBATE AUCTION HOUSE, ATLANTA — 02:00 PM ]",
+      "Six weeks after throwing the quilt into the trash, Vanessa arrived at the Buckhead Probate Auction dressed in couture silk, ready to collect her half of the house sale.",
+      "When the auctioneer opened bidding for the historic estate at two million dollars, Vanessa smirked, expecting an outside developer to buy it.",
+      "From the back row, a quiet voice called out: \"Three million five hundred thousand dollars. In cash.\"",
+      "Vanessa turned around in astonishment. Standing there was Clara, dressed in an elegant tailored navy suit, accompanied by two senior wealth managers from Northern Trust.",
+      "The auction gavel fell: \"Sold to Ms. Clara Holloway!\"",
+      "Vanessa rushed up the aisle, furious and bewildered: \"Clara! Where did you get three million dollars?! You work at a public library!\"",
+      "Clara looked at her sister with calm, serene dignity: \"Do you remember that 'ugly garbage quilt' you tossed into the kitchen trash bin, Vanessa?\"",
+      "\"Mother stitched eighty 1978 Treasury Bearer Bonds into the lining. She knew your greed would make you throw it away, and she knew my love would make me cherish it.\"",
+      "Vanessa’s face turned ghastly pale as her designer purse slipped from her fingers onto the marble floor.",
+      "Clara turned and walked out of the auction house as the sole, unencumbered owner of the family estate, leaving her sister alone with the bitter cost of her own arrogance."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-millionaire-sisters-kitchen-trash-quilt"
+  },
+  {
+    "id": "story-vid-6-p1",
     "title": "The Landlord's Fake Eviction: When the Granddaughter Brought Federal Deeds",
     "slug": "the-landlords-fake-eviction-federal-deeds",
     "category": "Courtroom & Justice",
@@ -249,9 +446,12 @@
       "Viral"
     ],
     "author": "Elena Vance & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-landlords-fake-eviction",
+    "nextPartSlug": "the-landlords-fake-eviction-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The State Attorney's Raid & The Veteran's Justice!",
     "views": 51200,
     "uniqueVisitors": 43800,
     "avgReadTimeSeconds": 610,
@@ -271,16 +471,49 @@
       "\"Furthermore,\" Denise added, \"I've already filed a formal complaint with the State Attorney General for predatory extortion of a senior veteran.\"",
       "Within thirty seconds, Marcus was begging for mercy, offering full public apologies and dropping all unlawful claims against the family property."
     ],
-    "scenes": [
-      {
-        "caption": "Turning the Tables: Denise confronts the greedy landlord with undeniable federal deeds.",
-        "image": "/images/the-landlords-fake-eviction-federal-deeds-scene.jpg",
-        "insertAfterParagraph": 5
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-7-kitchen-table-secret",
+    "id": "story-vid-6-p2",
+    "title": "The Landlord's Fake Eviction (Part 2 - Grand Finale): The State Attorney's Raid & The Veteran's Justice",
+    "slug": "the-landlords-fake-eviction-part-2-grand-finale",
+    "category": "Courtroom & Justice",
+    "subcategory": "Grand Finale & Justice",
+    "tags": [
+      "Courtroom",
+      "Grand Finale",
+      "Justice",
+      "Trending",
+      "Viral"
+    ],
+    "author": "Elena Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-landlords-fake-eviction",
+    "prevPartSlug": "the-landlords-fake-eviction-federal-deeds",
+    "views": 48600,
+    "uniqueVisitors": 41200,
+    "avgReadTimeSeconds": 620,
+    "trendingScore": 99.3,
+    "readTime": "12 min read",
+    "coverImage": "/images/the-landlords-fake-eviction-federal-deeds-scene.jpg",
+    "hookSummary": "The State Attorney General raids Marcus's management firm, securing full justice and unencumbered title for Grandpa Arthur.",
+    "paragraphs": [
+      "[ CHATHAM COUNTY SUPERIOR COURT — 11:00 AM ]",
+      "Two weeks after Denise confronted Marcus in his office, state prosecutors unsealed a sixteen-count criminal indictment against the fraudulent property management syndicate.",
+      "Flanked by armed state investigators, Marcus was led into the courtroom in prison orange, stripped of his gold chain and designer tracksuit.",
+      "Judge Eleanor Vance reviewed the mountains of forged leases Marcus had used to steal property from eighty vulnerable elderly residents across the county.",
+      "\"Marcus Vance Holloway, your actions represent the lowest form of predatory greed,\" Judge Vance ruled firmly.",
+      "\"This court sentences you to twelve years in state prison and orders complete restitution of all ill-gotten commercial assets!\"",
+      "Grandpa Arthur stood outside the courthouse with his medal of honor pinned to his cardigan, surrounded by his daughter Denise and granddaughter Maya.",
+      "For fifty years he had fought for his country, and today, his family had fought for him and won the ultimate victory."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-landlords-fake-eviction-federal-deeds"
+  },
+  {
+    "id": "story-vid-7-p1",
     "title": "The Kitchen Table Secret: The Truth Behind the Foreclosure Notice",
     "slug": "the-kitchen-table-secret-foreclosure-truth",
     "category": "Family Feud",
@@ -292,9 +525,12 @@
       "Trending"
     ],
     "author": "Sarah Jenkins & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-kitchen-table-secret",
+    "nextPartSlug": "the-kitchen-table-secret-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Safety Deposit Box & The Stepbrother's Downfall!",
     "views": 43200,
     "uniqueVisitors": 36800,
     "avgReadTimeSeconds": 560,
@@ -313,16 +549,47 @@
       "The brass keys unlocked the safety deposit box holding their father's true estate inheritance—a fund designed specifically to expose greed within the family.",
       "David let out a long breath of relief, clasping his sister's hand across the table: \"We held the line. Now let's go put our stepbrother in his place once and for all.\""
     ],
-    "scenes": [
-      {
-        "caption": "The Kitchen Truth: Nicole reveals the fake foreclosure plot to her brother David.",
-        "image": "/images/the-kitchen-table-secret-foreclosure-truth-scene.jpg",
-        "insertAfterParagraph": 4
-      }
-    ]
+    "scenes": []
   },
   {
-    "id": "story-vid-8-prodigal-son-gift",
+    "id": "story-vid-7-p2",
+    "title": "The Kitchen Table Secret (Part 2 - Grand Finale): The Safety Deposit Box & The Stepbrother's Downfall",
+    "slug": "the-kitchen-table-secret-part-2-grand-finale",
+    "category": "Family Feud",
+    "subcategory": "Grand Finale & Justice",
+    "tags": [
+      "Family Feud",
+      "Grand Finale",
+      "Secrets",
+      "Trending"
+    ],
+    "author": "Sarah Jenkins & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-kitchen-table-secret",
+    "prevPartSlug": "the-kitchen-table-secret-foreclosure-truth",
+    "views": 41800,
+    "uniqueVisitors": 35600,
+    "avgReadTimeSeconds": 580,
+    "trendingScore": 97.4,
+    "readTime": "11 min read",
+    "coverImage": "/images/the-kitchen-table-secret-foreclosure-truth-scene.jpg",
+    "hookSummary": "David and Nicole unlock their father's secret safety deposit box, unmasking their stepbrother's financial deception.",
+    "paragraphs": [
+      "[ FIRST NATIONAL VAULT, ATLANTA — 01:30 PM ]",
+      "David and Nicole inserted the twin brass keys into safety deposit box 418 at First National Bank, turning them in unison.",
+      "Inside was a notarized letter from their late father, accompanied by certified bank drafts worth six million dollars.",
+      "Their father’s letter revealed that he had anticipated his stepson's predatory greed and had intentionally left a decoy will in probate to test his character.",
+      "When the stepbrother attempted to record his forged default judgment at the county clerk's office, he was caught on camera attempting to bribe a deputy clerk.",
+      "David and Nicole watched from the gallery as the county judge dismissed the stepbrother's claims with prejudice, permanently barring him from the family estate.",
+      "Back at the kitchen table, brother and sister enjoyed their evening coffee in true peace, knowing their father's legacy was safe forever."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-kitchen-table-secret-foreclosure-truth"
+  },
+  {
+    "id": "story-vid-8-p1",
     "title": "The Prodigal Son at the Backyard Reunion: The $15 Million Gift Bag",
     "slug": "the-prodigal-son-backyard-reunion-gift",
     "category": "Redemption & Family",
@@ -334,9 +601,12 @@
       "Trending"
     ],
     "author": "Marcus Sterling & Taleonix Editorial",
-    "publicationDate": "2026-09-02T13:41:49.692Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
+    "seriesId": "series-prodigal-son-gift",
+    "nextPartSlug": "the-prodigal-son-backyard-reunion-part-2-grand-finale",
+    "nextPartHook": "🔥 Read Chapter 2 (Grand Finale): The Agricultural Trust & The Humbled Uncles!",
     "views": 57800,
     "uniqueVisitors": 49400,
     "avgReadTimeSeconds": 610,
@@ -357,13 +627,48 @@
       "Inside was the fully satisfied mortgage deed for the entire two-hundred-acre farm, accompanied by a fifteen-million-dollar permanent agricultural endowment funded by Marcus's successful green-tech company.",
       "The backyard fell into stunned, breathless silence as tears flowed down Grandmother's cheeks, and the uncles hung their heads in humbled shame."
     ],
-    "scenes": [
-      {
-        "caption": "The Return of the Son: Marcus approaches the family reunion with the transformative gift.",
-        "image": "/images/the-prodigal-son-backyard-reunion-gift-scene.jpg",
-        "insertAfterParagraph": 5
-      }
-    ]
+    "scenes": []
+  },
+  {
+    "id": "story-vid-8-p2",
+    "title": "The Prodigal Son at the Backyard Reunion (Part 2 - Grand Finale): The Agricultural Trust & The Humbled Uncles",
+    "slug": "the-prodigal-son-backyard-reunion-part-2-grand-finale",
+    "category": "Redemption & Family",
+    "subcategory": "Grand Finale & Redemption",
+    "tags": [
+      "Family Reunion",
+      "Grand Finale",
+      "Redemption",
+      "Inspirational",
+      "Trending"
+    ],
+    "author": "Marcus Sterling & Taleonix Editorial",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
+    "status": "published",
+    "partNumber": 2,
+    "seriesId": "series-prodigal-son-gift",
+    "prevPartSlug": "the-prodigal-son-backyard-reunion-gift",
+    "views": 54900,
+    "uniqueVisitors": 47200,
+    "avgReadTimeSeconds": 620,
+    "trendingScore": 99.8,
+    "readTime": "12 min read",
+    "coverImage": "/images/the-prodigal-son-backyard-reunion-gift-scene.jpg",
+    "hookSummary": "Marcus announces the creation of the permanent Family Land Trust, teaching his arrogant relatives the true meaning of honor and sacrifice.",
+    "paragraphs": [
+      "[ SUMMER HILLS ESTATE LAWN — 05:45 PM ]",
+      "The stunned silence across the backyard picnic lawn lingered as Grandmother held the satisfied mortgage deed against her chest.",
+      "Marcus's two uncles, who had spent a decade bragging about their small-time real estate flips while mocking Marcus's humble beginnings, stood frozen beside the barbecue grill.",
+      "\"Marcus... is this real?\" his eldest uncle stammered, stepping forward with his head bowed. \"You bought out the entire six-million-dollar bank lien yourself?\"",
+      "Marcus stood up beside his grandmother, his demeanor humble, grounded, and dignified.",
+      "\"Uncle Ray, I didn't just pay off the debt,\" Marcus replied calmly. \"I placed the entire two hundred acres into an irrevocable family agricultural land trust.\"",
+      "\"No single family member can ever sell it, mortgage it, or divide it. The land belongs to every child, grandchild, and future generation of the Davis family, funded forever by clean solar energy royalties.\"",
+      "Grandmother stood up on trembling feet, wrapping her arms tightly around Marcus as tears of joy wet his shoulder.",
+      "\"My boy,\" she whispered, her voice carrying across the entire yard. \"You left with nothing but faith, and you returned to save us all.\"",
+      "One by one, the relatives came forward to embrace the son they had once rejected, united at last by love, redemption, and a permanent family sanctuary."
+    ],
+    "scenes": [],
+    "previousPartSlug": "the-prodigal-son-backyard-reunion-gift"
   },
   {
     "id": "story-grandmothers-secret-quilt-p1",
@@ -380,7 +685,7 @@
       "Trending"
     ],
     "author": "Elena Vance & Taleonix Editorial Staff",
-    "publicationDate": "2026-09-02T13:35:14.619Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
     "seriesId": "series-grandmothers-secret-quilt",
@@ -422,13 +727,7 @@
       "Tightly sealed inside waterproof oilcloth were the original, unrecorded 1974 Sovereign Bearer Land Patents and Perpetual Natural Gas Mineral Deeds for all three hundred acres—duly registered with the Department of the Interior and legally appraised at forty-eight million, five hundred thousand dollars.",
       "Grandma Evelyn looked up at Denise with quiet triumph in her eyes: \"Tomorrow morning, baby... we aren't just saving this house. We are taking everything Trevon has ever touched.\""
     ],
-    "scenes": [
-      {
-        "caption": "The Grandmother's Secret: Grandma Evelyn reveals the hidden $48.5 Million oil deeds sewn inside her quilt.",
-        "image": "/images/the-grandmothers-secret-quilt-scene-1.jpg",
-        "insertAfterParagraph": 18
-      }
-    ]
+    "scenes": []
   },
   {
     "id": "story-grandmothers-secret-quilt-p2",
@@ -445,7 +744,7 @@
       "Billionaire"
     ],
     "author": "Elena Vance & Taleonix Editorial Staff",
-    "publicationDate": "2026-09-02T13:35:14.628Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 2,
     "seriesId": "series-grandmothers-secret-quilt",
@@ -488,13 +787,8 @@
       "The multi-billion-dollar energy conglomerate was forced to pay the Holloway family forty-eight million, five hundred thousand dollars in unencumbered royalties to lease their coastal transmission corridor.",
       "That evening, Maya stood on the front lawn in her purple graduation gown, embraced by her proud parents and grandparents. The old home was safe forever—a testament that the quiet stitches of love and family truth will always tear down the arrogant towers of greed."
     ],
-    "scenes": [
-      {
-        "caption": "Generational Triumph: Denise and Grandma Evelyn hold the family portrait after saving the $48.5M estate.",
-        "image": "/images/the-grandmothers-secret-quilt-scene-2.jpg",
-        "insertAfterParagraph": 18
-      }
-    ]
+    "scenes": [],
+    "previousPartSlug": "the-grandmothers-secret-quilt"
   },
   {
     "id": "story-motherhood-p1",
@@ -511,7 +805,7 @@
       "Emotional"
     ],
     "author": "Sarah Jenkins & Taleonix Editorial Staff",
-    "publicationDate": "2026-09-02T11:46:12.136Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 1,
     "seriesId": "series-two-mothers-graduation",
@@ -550,71 +844,49 @@
       "Holding the microphone to his lips, Marcus’s voice resonated through every speaker in the building, clear and filled with thunderous devotion: 'A mother is not the woman who gives you biological life and disappears into private jets and penthouse luxury. A mother is the woman who scrubs floors at 4:00 AM, swallows her own pride, and bleeds for eighteen years so her child can reach the stars.'",
       "The entire auditorium erupted into an overwhelming, deafening standing ovation. Five hundred parents and faculty members stood on their feet, wiping away tears of profound respect, while Beverly Sterling stood frozen in the center aisle, her ten-million-dollar check crumpled in her trembling, humiliated hand."
     ],
-    "scenes": [
-      {
-        "caption": "The Valedictorian's Choice: Marcus crowns Mama Sarah with his Gold Medal in front of 500 spectators.",
-        "image": "/images/the-two-mothers-at-graduation-scene-1.jpg",
-        "insertAfterParagraph": 18
-      }
-    ]
+    "scenes": []
   },
   {
     "id": "story-motherhood-p2",
     "title": "The Two Mothers at Graduation (Part 2): The $50 Million Legacy",
     "slug": "the-two-mothers-at-graduation-part-2-the-50-million-legacy",
     "category": "Shocking Secrets",
-    "subcategory": "The Final Reckoning",
+    "subcategory": "Grand Finale & Justice",
     "tags": [
       "Motherhood",
-      "Part2",
-      "Finale",
-      "Billionaire",
-      "Justice",
-      "Emotional"
+      "Graduation",
+      "Grand Finale",
+      "Legacy",
+      "Trending"
     ],
     "author": "Sarah Jenkins & Taleonix Editorial Staff",
-    "publicationDate": "2026-09-02T11:46:12.136Z",
+    "publicationDate": "2026-09-02T13:49:11.629Z",
     "status": "published",
     "partNumber": 2,
     "seriesId": "series-two-mothers-graduation",
-    "previousPartSlug": "the-two-mothers-at-graduation",
-    "views": 51400,
-    "uniqueVisitors": 43200,
-    "avgReadTimeSeconds": 560,
-    "trendingScore": 99.8,
-    "readTime": "11 min read",
+    "prevPartSlug": "the-two-mothers-at-graduation",
+    "views": 52400,
+    "uniqueVisitors": 45300,
+    "avgReadTimeSeconds": 610,
+    "trendingScore": 99.6,
+    "readTime": "12 min read",
     "coverImage": "/images/the-two-mothers-at-graduation-p2-cover.jpg",
-    "hookSummary": "When Beverly tried to sue for legal custody to seize control of an inheritance trust, Marcus and his Harvard legal team uncovered the secret patent that built Sterling Global.",
+    "hookSummary": "After crowning Mama Sarah with his medal, Marcus exposes Beverly's true scheme to seize his late father's $50 Million patent inheritance.",
     "paragraphs": [
-      "[ FULTON COUNTY SUPERIOR COURT, GEORGIA — 10:00 AM ]",
-      "Forty-eight hours after the graduation ceremony went viral across seventy million social media feeds worldwide, Beverly Sterling sat inside the marble courtroom of the Fulton County Superior Court.",
-      "Her lead trial attorney slammed a leather motion onto the counsel table. \"Your Honor, my client is the biological mother of Marcus. Under Georgia probate precedent, as his natural guardian, she is entitled to manage all legacy trusts and intellectual property rights associated with his biological lineage!\"",
-      "Beverly sat with her chin raised high, wearing a bespoke designer suit and dark sunglasses, desperate to reclaim control of the narrative that had humiliated her before the nation's elite.",
-      "\"The boy was brainwashed by an unlicensed foster caretaker,\" Beverly sneered coldly toward the gallery. \"Sarah Jenkins possesses neither the financial capability nor the social standing to oversee a Sterling heir.\"",
-      "The double oak courtroom doors opened with a resolute echo.",
-      "Marcus walked into the courtroom, dressed in a sharp charcoal suit provided by Harvard University's Dean of Law. Flanking him was Judge Robert Vance, Senior Chief Counsel of the United States Civil Rights Foundation.",
-      "Beside them walked Mama Sarah, dressed with quiet, radiant dignity in a navy Sunday dress.",
-      "\"Your Honor,\" Marcus spoke with measured, razor-sharp authority as he stepped to the petitioner's podium. \"Mrs. Sterling did not file this custody motion out of sudden maternal affection. She filed it because seventy-two hours ago, the United States Patent and Trademark Office formally registered Master Patent #9842 in my late biological father's name.\"",
-      "Beverly’s attorney turned white as chalk. Beverly’s hands began to tremble violently beneath the counsel table.",
-      "Marcus turned to face the bench, submitting three bound volumes of authenticated corporate documents. 'Eighteen years ago, my biological father, Dr. Julian Hayes, passed away in a tragic industrial accident. Before his passing, he entrusted his revolutionary automated freight algorithms to his lifelong loyal nurse—Sarah Jenkins.'",
-      "The courtroom projection screens illuminated certified bank records and patent registry dockets from 2008.",
-      "\"Beverly Sterling stole Dr. Hayes’ proprietary software drafts while he lay in a coma, launched Sterling Global Logistics with his stolen blueprints, and dumped his infant son on hospital steps so she wouldn't have to share a single cent of the initial equity.\"",
-      "The entire courtroom gasped in horror. Reporters in the press gallery typed furiously on their laptops.",
-      "Mama Sarah stepped forward, her voice soft, gentle, but carrying the unshakeable weight of truth: 'I never wanted Dr. Hayes' millions, Your Honor. I only promised him I would keep his boy safe, teach him to be an honest Christian man, and give him the love this world denied him.'",
-      "Judge Harrison adjusted his spectacles, looking down from the bench at Beverly Sterling with blistering judicial contempt.",
-      "\"Mrs. Sterling, your frivolous petition is summarily dismissed with maximum prejudice. Furthermore, pursuant to federal anti-fraud statutes, all licensing royalties generated by Sterling Global over the last eighteen years—valued at fifty-two million dollars—are hereby frozen and transferred to the Sarah & Marcus Jenkins Family Trust.\"",
-      "The judicial gavel slammed down with thunderous finality.",
-      "Beverly collapsed backward into her chair, her sunglasses falling to the floor as federal marshals approached her table with formal grand jury subpoenas for corporate fraud and theft.",
-      "Outside on the sunlit courthouse steps, hundreds of supporters and alumni gathered to cheer as Marcus hugged Mama Sarah tightly against his chest.",
-      "\"We did it, Mama,\" Marcus whispered softly, kissing her weathered cheek. \"You never have to clean another floor for the rest of your life.\"",
-      "Mama Sarah looked up into the clear Georgia sky with tears of pure joy, knowing that love, sacrifice, and justice had triumphed over greed forever."
+      "[ OAKRIDGE AUDITORIUM VIP FOYER — 03:45 PM ]",
+      "The standing ovation inside the main auditorium was still echoing as Beverly Sterling retreated into the private VIP foyer, her face pale with humiliated fury.",
+      "Her personal attorney, Richard Vance, hurriedly opened his leather portfolio: \"Beverly, if Marcus doesn't sign the adult biological acknowledgement by five o'clock today, the probate court will release his late father's patents directly to him.\"",
+      "The door swung open, and Marcus strode into the room, accompanied by Mama Sarah and a senior federal probate investigator.",
+      "\"You never cared about being a mother, Beverly,\" Marcus said, his voice piercing through the tense silence.",
+      "\"You came here today because you knew that upon my eighteenth birthday, the fifty-million-dollar aerospace patent trust established by my late father, Thomas Sterling, became legally accessible.\"",
+      "Beverly's eyes widened in panic as the federal investigator produced a sworn affidavit from Thomas Sterling's estate executor.",
+      "\"Mrs. Sterling,\" the investigator announced, \"your attempt to coerce the heir into signing away his intellectual property rights constitutes federal mail and wire fraud.\"",
+      "Beverly attempted to speak, but the investigator held up a hand: \"You are formally subpoenaed to appear before the Federal Grand Jury next Monday morning.\"",
+      "Marcus turned to Mama Sarah, taking her calloused hands into his: \"Mama, we are moving out of the hospital quarters today. You will never have to work another shift for as long as you live.\"",
+      "Three months later, Marcus began his studies at Harvard, having established the Sarah Jenkins Foundation to fund college scholarships for children of frontline hospital sanitation workers.",
+      "Mama Sarah lived peacefully in a sun-drenched cottage in Boston, her heart full, knowing that love, sacrifice, and truth are the greatest wealth in the universe."
     ],
-    "scenes": [
-      {
-        "caption": "The Courthouse Victory: Mama Sarah and Marcus celebrate after Judge Harrison awards the $52M restitution.",
-        "image": "/images/the-two-mothers-at-graduation-scene-2.jpg",
-        "insertAfterParagraph": 18
-      }
-    ]
+    "scenes": [],
+    "previousPartSlug": "the-two-mothers-at-graduation"
   }
 ]
