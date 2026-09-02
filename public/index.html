@@ -54,11 +54,32 @@
         <a href="/category/secrets" class="nav-item" onclick="handleNavClick(event, '/category/secrets')">Secrets</a>
       </nav>
 
-      <!-- Search & Share Trigger -->
+      <!-- Live Search Bar & Suggestions Dropdown -->
+      <div class="nav-search-container" id="navSearchContainer">
+        <div class="nav-search-input-box">
+          <i class="fa-solid fa-magnifying-glass nav-search-icon"></i>
+          <input type="text" id="navSearchInput" placeholder="Search 30+ drama stories..." oninput="handleNavbarSearch(this.value)" onfocus="handleNavbarSearchFocus()" autocomplete="off">
+          <button class="nav-search-clear" id="navSearchClearBtn" onclick="clearNavbarSearch()" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <!-- LIVE CONTENT DROPDOWN -->
+        <div class="search-live-dropdown" id="searchLiveDropdown" style="display:none;">
+          <div class="dropdown-header">
+            <span id="dropdownMatchCount">30 Stories Available</span>
+            <button class="btn-close-dropdown" onclick="closeSearchDropdown()"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="dropdown-quick-tags">
+            <button class="d-tag" onclick="applyDropdownTag('Graduation')">🎓 Graduation</button>
+            <button class="d-tag" onclick="applyDropdownTag('Billionaire')">💎 Billionaire</button>
+            <button class="d-tag" onclick="applyDropdownTag('Revenge')">🔥 Revenge</button>
+            <button class="d-tag" onclick="applyDropdownTag('Mafia')">🕶️ Mafia</button>
+          </div>
+          <div class="dropdown-results-list" id="dropdownResultsList"></div>
+        </div>
+      </div>
+
+      <!-- User Profile Trigger -->
       <div class="nav-right-actions">
-        <button class="btn-search-trigger" onclick="focusSearch()" aria-label="Search stories">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
         <button class="btn-profile-trigger" onclick="openUserProfileModal()" aria-label="My Library">
           <i class="fa-regular fa-bookmark"></i>
           <span class="profile-btn-label" id="navProfileText">My Library</span>

@@ -521,6 +521,101 @@ function closeStickyFooterAd() {
   if (ad) ad.style.display = 'none';
 }
 
+// ================= NAVBAR LIVE SEARCH & CONTENT DROPDOWN =================
+function handleNavbarSearchFocus() {
+  const dropdown = document.getElementById('searchLiveDropdown');
+  const input = document.getElementById('navSearchInput');
+  if (dropdown) dropdown.style.display = 'block';
+  renderDropdownResults(allPubStories, input ? input.value : '');
+}
+
+function handleNavbarSearch(query) {
+  const dropdown = document.getElementById('searchLiveDropdown');
+  const clearBtn = document.getElementById('navSearchClearBtn');
+  if (dropdown) dropdown.style.display = 'block';
+  if (clearBtn) clearBtn.style.display = query ? 'flex' : 'none';
+
+  const q = (query || '').toLowerCase().trim();
+  if (!q) {
+    renderDropdownResults(allPubStories, '');
+    return;
+  }
+
+  const filtered = allPubStories.filter(s => {
+    const titleMatch = (s.title || '').toLowerCase().includes(q);
+    const catMatch = (s.category || '').toLowerCase().includes(q);
+    const tagMatch = (s.tags || []).some(t => t.toLowerCase().includes(q));
+    const hookMatch = (s.hookSummary || '').toLowerCase().includes(q);
+    return titleMatch || catMatch || tagMatch || hookMatch;
+  });
+
+  renderDropdownResults(filtered, q);
+}
+
+function renderDropdownResults(stories, query = '') {
+  const listEl = document.getElementById('dropdownResultsList');
+  const countEl = document.getElementById('dropdownMatchCount');
+  if (!listEl) return;
+
+  if (countEl) {
+    countEl.innerText = query ? `${stories.length} Stories Matched for "${query}"` : `${stories.length} Stories Available`;
+  }
+
+  if (stories.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-dropdown-state">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>No matching stories found for "${query}"</span>
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = stories.slice(0, 8).map(s => `
+    <div class="dropdown-story-item" onclick="closeSearchDropdown(); handleNavClick(event, '/story/${s.slug}')">
+      <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" class="dropdown-story-thumb">
+      <div class="dropdown-story-info">
+        <div class="dropdown-story-meta">
+          <span class="dropdown-cat">${s.category || 'Drama'}</span>
+          ${s.partNumber ? `<span class="dropdown-part">Part ${s.partNumber}</span>` : ''}
+          <span class="dropdown-time">${s.readTime || '8 min read'}</span>
+        </div>
+        <div class="dropdown-story-title">${highlightQuery(s.title, query)}</div>
+      </div>
+      <i class="fa-solid fa-chevron-right dropdown-arrow"></i>
+    </div>
+  `).join('');
+}
+
+function applyDropdownTag(tag) {
+  const input = document.getElementById('navSearchInput');
+  if (input) {
+    input.value = tag;
+    handleNavbarSearch(tag);
+  }
+}
+
+function clearNavbarSearch() {
+  const input = document.getElementById('navSearchInput');
+  const clearBtn = document.getElementById('navSearchClearBtn');
+  if (input) input.value = '';
+  if (clearBtn) clearBtn.style.display = 'none';
+  renderDropdownResults(allPubStories, '');
+}
+
+function closeSearchDropdown() {
+  const dropdown = document.getElementById('searchLiveDropdown');
+  if (dropdown) dropdown.style.display = 'none';
+}
+
+// Close search dropdown on click outside
+document.addEventListener('click', (e) => {
+  const container = document.getElementById('navSearchContainer');
+  if (container && !container.contains(e.target)) {
+    closeSearchDropdown();
+  }
+});
+
 // ================= INTERACTIVE SEARCH OVERLAY =================
 function focusSearch() {
   openSearchModal();
