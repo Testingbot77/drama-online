@@ -11,7 +11,7 @@ let speechSynthUtterance = null;
 document.addEventListener('DOMContentLoaded', () => {
   initRouting();
   initReadingPreferences();
-  initCreatorMode();
+  initEnvironmentMode();
   loadStories();
   loadMarketing();
   loadAnalytics();
@@ -150,55 +150,25 @@ function navigateTo(viewName, updateHash = true) {
   }
 }
 
-let isCreatorUnlocked = false;
-
-function initCreatorMode() {
-  const savedState = localStorage.getItem('dramaluxe_creator_unlocked');
-  if (savedState === 'true') {
-    unlockCreatorUI();
-  }
-}
-
-function toggleCreatorAccess() {
-  if (isCreatorUnlocked) {
-    // Lock back to public audience view
-    isCreatorUnlocked = false;
-    localStorage.setItem('dramaluxe_creator_unlocked', 'false');
-    lockCreatorUI();
-    showToast('Locked: Viewing as Public US Audience');
-    if (window.location.hash === '#marketing' || window.location.hash === '#analytics') {
-      navigateTo('home');
-    }
+// ================= ENVIRONMENT-BASED ACCESS =================
+function initEnvironmentMode() {
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  if (isLocalhost) {
+    // Enable Creator Dashboard & Tools on your local machine
+    document.querySelectorAll('.creator-local-only').forEach(el => {
+      el.style.display = el.tagName === 'BUTTON' && el.classList.contains('nav-tab') ? 'inline-flex' : 'inline-flex';
+    });
   } else {
-    // Prompt for 4-digit PIN (default 1234)
-    const pin = prompt('Enter Creator Cockpit PIN (Default: 1234):');
-    if (pin === '1234' || pin === 'admin') {
-      isCreatorUnlocked = true;
-      localStorage.setItem('dramaluxe_creator_unlocked', 'true');
-      unlockCreatorUI();
-      showToast('Creator Mode Unlocked: All Dashboards Visible');
-    } else if (pin !== null) {
-      alert('Incorrect PIN.');
+    // On Live Render Website: Strictly Public Reader (No Creator tabs, No Admin controls)
+    document.querySelectorAll('.creator-local-only').forEach(el => {
+      el.style.display = 'none';
+    });
+    // Redirect if someone tries to manually type #marketing or #analytics on live public website
+    if (window.location.hash === '#marketing' || window.location.hash === '#analytics') {
+      navigateTo('home', true);
     }
   }
-}
-
-function unlockCreatorUI() {
-  isCreatorUnlocked = true;
-  document.querySelectorAll('.creator-only').forEach(el => {
-    el.style.display = el.tagName === 'BUTTON' && el.classList.contains('nav-tab') ? 'inline-flex' : 'inline-flex';
-  });
-  const loginText = document.getElementById('creatorLoginText');
-  if (loginText) loginText.innerText = 'Lock Creator Mode';
-}
-
-function lockCreatorUI() {
-  isCreatorUnlocked = false;
-  document.querySelectorAll('.creator-only').forEach(el => {
-    el.style.display = 'none';
-  });
-  const loginText = document.getElementById('creatorLoginText');
-  if (loginText) loginText.innerText = 'Creator Login';
 }
 
 // ================= API: FETCH & RENDER STORIES =================

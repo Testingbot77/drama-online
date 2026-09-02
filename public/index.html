@@ -30,34 +30,29 @@
         </div>
       </div>
 
-      <!-- Main Navigation Tabs (Public Reader Navigation) -->
+      <!-- Main Navigation Tabs (Clean Public Reader Navigation) -->
       <nav class="nav-tabs" id="navTabs">
         <button class="nav-tab active" id="tab-reader" onclick="navigateTo('home')">
           <i class="fa-solid fa-book-open"></i> <span>Drama Stories</span>
         </button>
-        <!-- Creator tabs hidden from public audience by default -->
-        <button class="nav-tab creator-only" id="tab-marketing" onclick="navigateTo('marketing')" style="display: none;">
+        <!-- Creator tabs only visible locally on your PC -->
+        <button class="nav-tab creator-local-only" id="tab-marketing" onclick="navigateTo('marketing')" style="display: none;">
           <i class="fa-solid fa-photo-film"></i> <span>Dashboard 1: Video & Captions</span>
           <span class="tab-badge pulse" id="videoCountBadge">4</span>
         </button>
-        <button class="nav-tab creator-only" id="tab-analytics" onclick="navigateTo('analytics')" style="display: none;">
+        <button class="nav-tab creator-local-only" id="tab-analytics" onclick="navigateTo('analytics')" style="display: none;">
           <i class="fa-solid fa-chart-line"></i> <span>Dashboard 2: Analytics</span>
           <span class="tab-badge-gold">74% US</span>
         </button>
       </nav>
 
-      <!-- Right Header Actions (Public Audience vs Creator Lock) -->
+      <!-- Right Header Actions -->
       <div class="nav-actions">
-        <!-- Discreet Owner / Creator Login Button -->
-        <button class="btn-pill" id="btnCreatorLogin" onclick="toggleCreatorAccess()" style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: var(--border-color); font-size: 0.78rem;">
-          <i class="fa-solid fa-lock"></i> <span id="creatorLoginText">Creator Login</span>
-        </button>
-        
-        <!-- Private Creator controls (Hidden from public) -->
-        <button class="btn-icon creator-only" onclick="openSettingsModal()" title="AdSense & AI Settings" id="btnSettingsNav" style="display: none;">
+        <!-- Private Creator controls (Only visible locally on localhost) -->
+        <button class="btn-icon creator-local-only" onclick="openSettingsModal()" title="AdSense & AI Settings" id="btnSettingsNav" style="display: none;">
           <i class="fa-solid fa-gear"></i>
         </button>
-        <button class="btn-accent creator-only" onclick="openUploadModal()" id="btnUploadNav" style="display: none;">
+        <button class="btn-accent creator-local-only" onclick="openUploadModal()" id="btnUploadNav" style="display: none;">
           <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload Video</span>
         </button>
       </div>
