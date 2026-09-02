@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": "track-1788364242719",
+    "name": "The Graduation Envelope (Chapter 1): The Driveway Confrontation (facebook)",
+    "storySlug": "the-graduation-envelope-mother-in-green",
+    "storyTitle": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
+    "source": "facebook",
+    "medium": "video",
+    "campaign": "fb_reels_grad1",
+    "shortCode": "grad1",
+    "shortUrl": "/s/grad1",
+    "fullShortUrl": "https://drama-online.onrender.com/s/grad1",
+    "trackedUrl": "/story/the-graduation-envelope-mother-in-green?utm_source=facebook&utm_medium=video&utm_campaign=fb_reels_grad1",
+    "fullTrackedUrl": "https://drama-online.onrender.com/story/the-graduation-envelope-mother-in-green?utm_source=facebook&utm_medium=video&utm_campaign=fb_reels_grad1",
+    "clicks": 0,
+    "uniqueReaders": 0,
+    "usPercentage": 85,
+    "createdAt": "2026-09-02T15:50:42.719Z"
+  }
+]

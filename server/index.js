@@ -435,25 +435,74 @@ function generateShortCode(len = 5) {
   return code;
 }
 
-// URL Shortener Redirection Route (/s/:code)
+// URL Shortener Redirection Route (/s/:code) with OpenGraph Social Crawler Support
 app.get('/s/:code', (req, res) => {
   const code = (req.params.code || '').toLowerCase().trim();
   const links = db.getTrackingLinks();
   const matched = links.find(l => (l.shortCode || '').toLowerCase() === code);
 
-  if (!matched) {
-    const stories = db.getStories();
-    const matchedStory = stories.find(s => s.slug.includes(code) || code.includes(s.slug));
-    if (matchedStory) {
-      return res.redirect(`/story/${matchedStory.slug}`);
-    }
+  const stories = db.getStories();
+  let story = null;
+  if (matched) {
+    story = stories.find(s => s.slug === matched.storySlug);
+  } else {
+    story = stories.find(s => s.slug.includes(code) || code.includes(s.slug));
+  }
+
+  if (!matched && !story) {
     return res.redirect('/');
   }
 
+  const targetUrl = matched ? matched.trackedUrl : `/story/${story.slug}`;
+  const targetStory = story || stories[0];
+
+  const userAgent = (req.headers['user-agent'] || '').toLowerCase();
+  const isCrawler = /facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|bingbot|googlebot/i.test(userAgent);
+
+  // If social crawler, return full OpenGraph HTML so Facebook generates the rich preview card
+  if (isCrawler && targetStory) {
+    const settings = db.getSettings();
+    const domain = (settings.domainUrl && !settings.domainUrl.includes('localhost'))
+      ? settings.domainUrl.replace(/\/+$/, '')
+      : (process.env.RENDER_EXTERNAL_URL || 'https://drama-online.onrender.com');
+
+    const fullUrl = `${domain}${targetUrl}`;
+    const fullImg = targetStory.coverImage?.startsWith('http') ? targetStory.coverImage : `${domain}${targetStory.coverImage || '/images/grad_frame_01.jpg'}`;
+    const safeTitle = (targetStory.title || 'Taleonix Viral Drama').replace(/"/g, '&quot;');
+    const safeDesc = (targetStory.hookSummary || targetStory.seoDescription || '').replace(/"/g, '&quot;');
+
+    return res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${safeTitle}</title>
+  <meta name="description" content="${safeDesc}">
+  <link rel="canonical" href="${fullUrl}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Taleonix">
+  <meta property="og:title" content="${safeTitle}">
+  <meta property="og:description" content="${safeDesc}">
+  <meta property="og:image" content="${fullImg}">
+  <meta property="og:url" content="${fullUrl}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${safeTitle}">
+  <meta name="twitter:description" content="${safeDesc}">
+  <meta name="twitter:image" content="${fullImg}">
+  <meta http-equiv="refresh" content="0;url=${targetUrl}">
+</head>
+<body>
+  <script>window.location.replace("${targetUrl}");</script>
+  <p>Redirecting to <a href="${targetUrl}">${safeTitle}</a>...</p>
+</body>
+</html>`);
+  }
+
   // Increment live clicks & unique visitors for this short link
-  matched.clicks = (matched.clicks || 0) + 1;
-  matched.uniqueReaders = (matched.uniqueReaders || 0) + 1;
-  db.saveTrackingLinks(links);
+  if (matched) {
+    matched.clicks = (matched.clicks || 0) + 1;
+    matched.uniqueReaders = (matched.uniqueReaders || 0) + 1;
+    db.saveTrackingLinks(links);
+  }
 
   // Record in real-time analytics
   try {
@@ -464,11 +513,11 @@ app.get('/s/:code', (req, res) => {
     const isUS = Math.random() < 0.85;
     analytics.recentVisitors.unshift({
       time: 'Just now',
-      drama: matched.storyTitle || 'Taleonix Saga',
+      drama: (matched && matched.storyTitle) || (targetStory && targetStory.title) || 'Taleonix Saga',
       country: isUS ? 'United States 🇺🇸' : 'United Kingdom 🇬🇧',
       device: 'Mobile (Short Link / Bio)',
-      referrer: `${matched.source || 'Facebook'} (${matched.shortCode || code})`,
-      campaign: matched.campaign || 'short_link'
+      referrer: `${(matched && matched.source) || 'Facebook'} (${(matched && matched.shortCode) || code})`,
+      campaign: (matched && matched.campaign) || 'short_link'
     });
     if (analytics.recentVisitors.length > 25) analytics.recentVisitors.pop();
     db.saveAnalytics(analytics);
@@ -477,7 +526,7 @@ app.get('/s/:code', (req, res) => {
   }
 
   // Instant redirect to full story URL with UTM tracking
-  res.redirect(matched.trackedUrl);
+  res.redirect(targetUrl);
 });
 
 // Admin Tracking Links Management
