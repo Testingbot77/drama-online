@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24144,
-    "uniqueVisitors": 18456,
+    "totalPageviews": 24146,
+    "uniqueVisitors": 18458,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62786,
+    "adImpressions": 62794,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.18
+    "estimatedAdSenseRevenueUsd": 0.26
   },
   "trafficSources": [
     {
@@ -103,6 +103,22 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
