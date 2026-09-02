@@ -449,6 +449,39 @@
       </div>
     </div>
 
+    <!-- ================= INTERACTIVE SEARCH OVERLAY MODAL ================= -->
+    <div id="searchModal" class="taleonix-modal" style="display: none;">
+      <div class="modal-backdrop" onclick="closeSearchModal()"></div>
+      <div class="modal-card search-modal-card">
+        <button class="modal-close" onclick="closeSearchModal()"><i class="fa-solid fa-xmark"></i></button>
+        
+        <div class="search-header">
+          <h2 class="search-modal-title"><i class="fa-solid fa-magnifying-glass"></i> Search Taleonix Stories</h2>
+          <p class="search-modal-sub">Instant search across all 28 novel chapters, characters, and categories</p>
+        </div>
+
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+          <input type="text" id="globalSearchInput" placeholder="Search by story title, character, billionaire, graduation..." oninput="handleLiveSearch(this.value)" autofocus>
+          <button class="search-clear-btn" id="btnSearchClear" onclick="clearSearch()" style="display: none;"><i class="fa-solid fa-circle-xmark"></i></button>
+        </div>
+
+        <div class="search-quick-tags">
+          <span class="quick-label">Trending:</span>
+          <button class="quick-tag-btn" onclick="applyQuickTag('Graduation')">🎓 Graduation</button>
+          <button class="quick-tag-btn" onclick="applyQuickTag('Billionaire')">💎 Billionaire</button>
+          <button class="quick-tag-btn" onclick="applyQuickTag('Revenge')">🔥 Revenge</button>
+          <button class="quick-tag-btn" onclick="applyQuickTag('Mafia')">🕶️ Mafia</button>
+          <button class="quick-tag-btn" onclick="applyQuickTag('Secret Identity')">🎭 Secret Identity</button>
+        </div>
+
+        <div class="search-results-wrapper">
+          <div id="searchResultsCount" class="search-results-count">Showing all 28 stories</div>
+          <div id="searchResultsList" class="search-results-list"></div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ================= EDITORIAL FOOTER ================= -->

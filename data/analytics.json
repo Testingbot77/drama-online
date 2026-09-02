@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24162,
-    "uniqueVisitors": 18474,
+    "totalPageviews": 24163,
+    "uniqueVisitors": 18475,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62858,
+    "adImpressions": 62862,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.81
+    "estimatedAdSenseRevenueUsd": 0.85
   },
   "trafficSources": [
     {
@@ -103,6 +103,14 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Two Mothers at Graduation: When the Billionaire Heiress Claimed the Valedictorian",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
@@ -294,13 +302,6 @@
       "device": "Desktop",
       "referrer": "http://localhost:3000/",
       "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
     }
   ]
 }

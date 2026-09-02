@@ -521,9 +521,108 @@ function closeStickyFooterAd() {
   if (ad) ad.style.display = 'none';
 }
 
+// ================= INTERACTIVE SEARCH OVERLAY =================
 function focusSearch() {
-  showToast('Search indexing trending stories...');
-  handleNavClick(null, '/trending');
+  openSearchModal();
+}
+
+function openSearchModal() {
+  const modal = document.getElementById('searchModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  const input = document.getElementById('globalSearchInput');
+  if (input) {
+    input.value = '';
+    setTimeout(() => input.focus(), 50);
+  }
+  renderSearchResults(allPubStories);
+}
+
+function closeSearchModal() {
+  const modal = document.getElementById('searchModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function clearSearch() {
+  const input = document.getElementById('globalSearchInput');
+  const btnClear = document.getElementById('btnSearchClear');
+  if (input) input.value = '';
+  if (btnClear) btnClear.style.display = 'none';
+  renderSearchResults(allPubStories);
+}
+
+function applyQuickTag(tag) {
+  const input = document.getElementById('globalSearchInput');
+  if (input) {
+    input.value = tag;
+    handleLiveSearch(tag);
+  }
+}
+
+function handleLiveSearch(query) {
+  const btnClear = document.getElementById('btnSearchClear');
+  if (btnClear) btnClear.style.display = query ? 'block' : 'none';
+
+  const q = (query || '').toLowerCase().trim();
+  if (!q) {
+    renderSearchResults(allPubStories);
+    return;
+  }
+
+  const filtered = allPubStories.filter(s => {
+    const titleMatch = (s.title || '').toLowerCase().includes(q);
+    const catMatch = (s.category || '').toLowerCase().includes(q);
+    const subMatch = (s.subcategory || '').toLowerCase().includes(q);
+    const tagMatch = (s.tags || []).some(t => t.toLowerCase().includes(q));
+    const hookMatch = (s.hookSummary || '').toLowerCase().includes(q);
+    const authorMatch = (s.author || '').toLowerCase().includes(q);
+    return titleMatch || catMatch || subMatch || tagMatch || hookMatch || authorMatch;
+  });
+
+  renderSearchResults(filtered, q);
+}
+
+function renderSearchResults(stories, query = '') {
+  const listEl = document.getElementById('searchResultsList');
+  const countEl = document.getElementById('searchResultsCount');
+  if (!listEl) return;
+
+  if (countEl) {
+    countEl.innerText = query ? `Found ${stories.length} stories for "${query}"` : `Showing all ${stories.length} stories`;
+  }
+
+  if (stories.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-library-state">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <h4>No Stories Found</h4>
+        <p>Try searching for "Graduation", "Billionaire", "Revenge", or "Heiress".</p>
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = stories.map(s => `
+    <div class="search-result-card" onclick="closeSearchModal(); handleNavClick(event, '/story/${s.slug}')">
+      <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" class="search-result-thumb">
+      <div class="search-result-details">
+        <div class="search-result-meta">
+          <span class="search-cat-badge">${s.category || 'Drama'}</span>
+          <span class="search-readtime"><i class="fa-regular fa-clock"></i> ${s.readTime || '8 min read'}</span>
+          ${s.partNumber ? `<span class="search-part-badge">Part ${s.partNumber}</span>` : ''}
+        </div>
+        <h4 class="search-result-title">${highlightQuery(s.title, query)}</h4>
+        <p class="search-result-desc">${s.hookSummary ? highlightQuery(s.hookSummary.slice(0, 120) + '...', query) : ''}</p>
+      </div>
+      <button class="btn-read-search-arrow"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  `).join('');
+}
+
+function highlightQuery(text, query) {
+  if (!query || !text) return text || '';
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark class="search-highlight">$1</mark>');
 }
 
 function showToast(msg) {
