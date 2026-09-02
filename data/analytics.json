@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24157,
-    "uniqueVisitors": 18469,
+    "totalPageviews": 24159,
+    "uniqueVisitors": 18471,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62838,
+    "adImpressions": 62846,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.61
+    "estimatedAdSenseRevenueUsd": 0.69
   },
   "trafficSources": [
     {
@@ -103,6 +103,22 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
@@ -280,20 +296,6 @@
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
       "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Social Short / Video Link"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
-      "country": "United Kingdom 🇬🇧",
       "device": "Desktop",
       "referrer": "Social Short / Video Link"
     }

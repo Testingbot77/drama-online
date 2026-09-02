@@ -48,6 +48,12 @@ app.get('/robots.txt', (req, res) => {
   res.send(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/admin\nSitemap: ${domain}/sitemap.xml`);
 });
 
+// Google AdSense ads.txt
+app.get('/ads.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('google.com, pub-2510739755298896, DIRECT, f08c47fec0942fa0\n');
+});
+
 // Dynamic sitemap.xml
 app.get('/sitemap.xml', (req, res) => {
   const settings = db.getSettings();
