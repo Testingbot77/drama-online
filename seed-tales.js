@@ -1,33 +1,52 @@
-[
+const fs = require('fs');
+const path = require('path');
+const db = require('./server/db');
+const { generateSceneSVG } = require('./server/geminiEngine');
+
+const publicImagesDir = path.join(__dirname, 'public', 'images');
+if (!fs.existsSync(publicImagesDir)) {
+  fs.mkdirSync(publicImagesDir, { recursive: true });
+}
+
+function createCover(slug, title, subtitle, colorScheme = 'gold') {
+  const fileName = `${slug}-cover.svg`;
+  const filePath = path.join(publicImagesDir, fileName);
+  fs.writeFileSync(filePath, generateSceneSVG(title, subtitle, 'cover', colorScheme), 'utf8');
+  return `/images/${fileName}`;
+}
+
+function createScene(slug, idx, title, caption, colorScheme = 'crimson') {
+  const fileName = `${slug}-scene-${idx}.svg`;
+  const filePath = path.join(publicImagesDir, fileName);
+  fs.writeFileSync(filePath, generateSceneSVG(title, caption, 'scene', colorScheme), 'utf8');
+  return `/images/${fileName}`;
+}
+
+const stories = [
+  // 1. Billionaire Drama
   {
-    "id": "story-1",
-    "title": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
-    "slug": "the-discarded-heiress-billionaires-secret-vow",
-    "category": "Billionaire Drama",
-    "subcategory": "Secret Identity & Revenge",
-    "tags": [
-      "Billionaire",
-      "Secret Identity",
-      "Revenge",
-      "Marriage",
-      "Trending"
-    ],
-    "author": "Elena Vance",
-    "publicationDate": "2026-09-01T09:29:15.486Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-vance-heiress",
-    "nextPartSlug": "the-discarded-heiress-part-2-the-takeover",
-    "nextPartHook": "Julian Crawford thought his five-hundred-million-dollar credit line was secure until he stepped into the Vance Global headquarters...",
-    "views": 34890,
-    "uniqueVisitors": 28320,
-    "avgReadTimeSeconds": 310,
-    "trendingScore": 98.9,
-    "readTime": "7 min read",
-    "originalVideoName": "ceo_wife_secret_reveal.mp4",
-    "coverImage": "/images/the-discarded-heiress-billionaires-secret-vow-cover.svg",
-    "hookSummary": "Thrown out in the pouring rain by her arrogant husband and his mistress, Maya was treated like a penniless charity case. They had no idea she was the sole heiress of the $90 Billion Vance Empire.",
-    "paragraphs": [
+    id: "story-1",
+    title: "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
+    slug: "the-discarded-heiress-billionaires-secret-vow",
+    category: "Billionaire Drama",
+    subcategory: "Secret Identity & Revenge",
+    tags: ["Billionaire", "Secret Identity", "Revenge", "Marriage", "Trending"],
+    author: "Elena Vance",
+    publicationDate: new Date(Date.now() - 86400000 * 1).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-vance-heiress",
+    nextPartSlug: "the-discarded-heiress-part-2-the-takeover",
+    nextPartHook: "Julian Crawford thought his five-hundred-million-dollar credit line was secure until he stepped into the Vance Global headquarters...",
+    views: 34890,
+    uniqueVisitors: 28320,
+    avgReadTimeSeconds: 310,
+    trendingScore: 98.9,
+    readTime: "7 min read",
+    originalVideoName: "ceo_wife_secret_reveal.mp4",
+    coverImage: createCover("the-discarded-heiress-billionaires-secret-vow", "THE DISCARDED HEIRESS", "Vance Global Empire Secret Return", "gold"),
+    hookSummary: "Thrown out in the pouring rain by her arrogant husband and his mistress, Maya was treated like a penniless charity case. They had no idea she was the sole heiress of the $90 Billion Vance Empire.",
+    paragraphs: [
       "The torrential November rain whipped across the limestone driveway of the Crawford Manor in Greenwich, Connecticut. Maya stood shivering on the wet gravel, clutching a solitary frayed suitcase that held five years of unacknowledged sacrifice.",
       "\"Sign the dissolution contract and get off my property, Maya,\" Julian Crawford sneered, adjusting his bespoke platinum cufflinks under the shelter of the grand portico. \"You were always just a low-class charity case my mother took pity on. Evelyn is back from London, and the Crawford bloodline deserves a woman with an authentic pedigree.\"",
       "Evelyn stood nestled beside him under a cashmere umbrella, her ruby lips curving into a venomous smirk. She conspicuously stroked the five-carat emerald-cut diamond ring on her left hand—a ring Julian had charged to the Crawford Group corporate account that very morning.",
@@ -41,48 +60,36 @@
       "Julian's smirk evaporated. Before he could speak, his phone began vibrating violently against his chest. When he pulled it from his pocket, his chief financial officer was screaming hysterically on speakerphone: 'Julian, our primary institutional lender just declared us in default! Vance Global Capital just bought all our outstanding debt—and they're calling in the entire five hundred million dollar balance right now!'",
       "Maya stepped into the warm leather interior of the lead Maybach. Lowering the tinted window by a single inch, she locked eyes with Julian's petrified gaze. 'Thank you for signing, Julian. The real liquidation begins at dawn.'"
     ],
-    "scenes": [
-      {
-        "caption": "Julian hands Maya the cruel separation contract during the storm.",
-        "image": "/images/the-discarded-heiress-billionaires-secret-vow-scene-1.svg",
-        "insertAfterParagraph": 2
-      },
-      {
-        "caption": "The Vance diplomatic convoy arrives at the gates to salute their matriarch.",
-        "image": "/images/the-discarded-heiress-billionaires-secret-vow-scene-2.svg",
-        "insertAfterParagraph": 8
-      }
+    scenes: [
+      { caption: "Julian hands Maya the cruel separation contract during the storm.", image: createScene("the-discarded-heiress-billionaires-secret-vow", 1, "THE CONFRONTATION", "Julian demands Maya sign the separation agreement.", "crimson"), insertAfterParagraph: 2 },
+      { caption: "The Vance diplomatic convoy arrives at the gates to salute their matriarch.", image: createScene("the-discarded-heiress-billionaires-secret-vow", 2, "THE SOVEREIGN ARRIVAL", "Six diplomatic Maybachs arrive to escort Supreme Commander Maya.", "cyan"), insertAfterParagraph: 8 }
     ]
   },
+
+  // 2. Betrayal & Revenge
   {
-    "id": "story-2",
-    "title": "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
-    "slug": "the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city",
-    "category": "Betrayal & Revenge",
-    "subcategory": "Wall Street Power Play",
-    "tags": [
-      "Betrayal",
-      "Revenge",
-      "Billionaire",
-      "Money",
-      "Trending"
-    ],
-    "author": "Marcus Vance",
-    "publicationDate": "2026-08-31T09:29:15.490Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-shadow-billionaire",
-    "nextPartSlug": "the-shadow-billionaire-divorce-part-2",
-    "nextPartHook": "When Damian rushed to the Federal Reserve bankruptcy hearing, he found Victoria sitting on the judicial panel...",
-    "views": 42100,
-    "uniqueVisitors": 32450,
-    "avgReadTimeSeconds": 345,
-    "trendingScore": 99.4,
-    "readTime": "8 min read",
-    "originalVideoName": "billionaire_silent_divorce_climax.mp4",
-    "coverImage": "/images/the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city-cover.svg",
-    "hookSummary": "For three years, Damian treated Victoria like an insignificant housewife while flaunting his new supermodel mistress. The moment he signed the divorce papers, his $1.2 Billion conglomerate was liquidated in twelve minutes.",
-    "paragraphs": [
+    id: "story-2",
+    title: "The Shadow Billionaire Divorce: When She Walked Away with Half the City",
+    slug: "the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city",
+    category: "Betrayal & Revenge",
+    subcategory: "Wall Street Power Play",
+    tags: ["Betrayal", "Revenge", "Billionaire", "Money", "Trending"],
+    author: "Marcus Vance",
+    publicationDate: new Date(Date.now() - 86400000 * 2).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-shadow-billionaire",
+    nextPartSlug: "the-shadow-billionaire-divorce-part-2",
+    nextPartHook: "When Damian rushed to the Federal Reserve bankruptcy hearing, he found Victoria sitting on the judicial panel...",
+    views: 42100,
+    uniqueVisitors: 32450,
+    avgReadTimeSeconds: 345,
+    trendingScore: 99.4,
+    readTime: "8 min read",
+    originalVideoName: "billionaire_silent_divorce_climax.mp4",
+    coverImage: createCover("the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city", "SHADOW BILLIONAIRE DIVORCE", "Wall Street's Most Ruthless Retribution", "crimson"),
+    hookSummary: "For three years, Damian treated Victoria like an insignificant housewife while flaunting his new supermodel mistress. The moment he signed the divorce papers, his $1.2 Billion conglomerate was liquidated in twelve minutes.",
+    paragraphs: [
       "The autumn wind whistled against the floor-to-ceiling glass of the 80th-floor penthouse overlooking Central Park. Damian Sterling tossed an engraved black fountain pen onto the marble conference table, looking down at his wife of three years with unmistakable condescension.",
       "\"Sign it, Victoria,\" Damian ordered, his voice clipped and devoid of warmth. \"Chloe is carrying my heir, and she represents the social elite this family belongs to. You’ve been nothing more than a quiet ghost in this penthouse. Be grateful I’m offering you a five-million-dollar settlement.\"",
       "Standing behind him in an haute couture crimson gown, Chloe smiled with triumphant malice, resting a manicured hand upon Damian’s shoulder. \"Accept reality, Victoria. Some women are destined for the kitchen, and others are born for the throne.\"",
@@ -97,48 +104,36 @@
       "Damian’s face drained of every drop of color. His trembling gaze pivoted slowly from the panic-stricken CFO back to Victoria, who was now being received at the penthouse elevator by four federal security officers bowing in absolute silence.",
       "\"You always wondered who the anonymous founder of Ares Capital was, Damian,\" Victoria whispered softly as the elevator doors began to glide shut. \"Thank you for signing the divorce. You just lost half the city.\""
     ],
-    "scenes": [
-      {
-        "caption": "Damian and Chloe demanding Victoria sign the five-million-dollar separation.",
-        "image": "/images/the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city-scene-1.svg",
-        "insertAfterParagraph": 2
-      },
-      {
-        "caption": "Victoria activates Ares Private Equity as Damian’s empire collapses.",
-        "image": "/images/the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city-scene-2.svg",
-        "insertAfterParagraph": 8
-      }
+    scenes: [
+      { caption: "Damian and Chloe demanding Victoria sign the five-million-dollar separation.", image: createScene("the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city", 1, "THE CRUEL OFFER", "Damian pushes the $5M settlement across the penthouse table.", "gold"), insertAfterParagraph: 2 },
+      { caption: "Victoria activates Ares Private Equity as Damian’s empire collapses.", image: createScene("the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city", 2, "OPTION DELTA", "The satellite command that liquidated Sterling Holdings in 12 minutes.", "cyan"), insertAfterParagraph: 8 }
     ]
   },
+
+  // 3. Mafia & Power
   {
-    "id": "story-3",
-    "title": "His Hidden Mafia Queen: The Undercover Waitress of Diner 54",
-    "slug": "his-hidden-mafia-queen-the-undercover-waitress",
-    "category": "Mafia & Power",
-    "subcategory": "Undercover Action Romance",
-    "tags": [
-      "Mafia",
-      "Undercover",
-      "Action",
-      "Romance",
-      "Trending"
-    ],
-    "author": "Dominic Rossi",
-    "publicationDate": "2026-08-30T09:29:15.493Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-hidden-mafia-queen",
-    "nextPartSlug": "his-hidden-mafia-queen-part-2",
-    "nextPartHook": "Dante woke up in an underground medical bunker to find Elena loading a sniper rifle...",
-    "views": 29450,
-    "uniqueVisitors": 22890,
-    "avgReadTimeSeconds": 280,
-    "trendingScore": 95.8,
-    "readTime": "6 min read",
-    "originalVideoName": "mafia_boss_saves_waitress.mp4",
-    "coverImage": "/images/his-hidden-mafia-queen-the-undercover-waitress-cover.svg",
-    "hookSummary": "When rival hitmen ambushed mafia kingpin Dante in a 2 AM downtown diner, he expected a bloody end. He never anticipated the shy waitress pouring his coffee would neutralize five armed enforcers in twelve seconds.",
-    "paragraphs": [
+    id: "story-3",
+    title: "His Hidden Mafia Queen: The Undercover Waitress of Diner 54",
+    slug: "his-hidden-mafia-queen-the-undercover-waitress",
+    category: "Mafia & Power",
+    subcategory: "Undercover Action Romance",
+    tags: ["Mafia", "Undercover", "Action", "Romance", "Trending"],
+    author: "Dominic Rossi",
+    publicationDate: new Date(Date.now() - 86400000 * 3).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-hidden-mafia-queen",
+    nextPartSlug: "his-hidden-mafia-queen-part-2",
+    nextPartHook: "Dante woke up in an underground medical bunker to find Elena loading a sniper rifle...",
+    views: 29450,
+    uniqueVisitors: 22890,
+    avgReadTimeSeconds: 280,
+    trendingScore: 95.8,
+    readTime: "6 min read",
+    originalVideoName: "mafia_boss_saves_waitress.mp4",
+    coverImage: createCover("his-hidden-mafia-queen-the-undercover-waitress", "HIS HIDDEN MAFIA QUEEN", "The Lethal Protector of Diner 54", "crimson"),
+    hookSummary: "When rival hitmen ambushed mafia kingpin Dante in a 2 AM downtown diner, he expected a bloody end. He never anticipated the shy waitress pouring his coffee would neutralize five armed enforcers in twelve seconds.",
+    paragraphs: [
       "The flickering neon sign outside Diner 54 hummed softly in the damp 2 AM Manhattan fog. Dante Rossi, the undisputed heir to the Eastern Syndicate, sat nursing a black coffee in a corner booth, pressing a cloth against a fresh gunshot graze along his ribs.",
       "Elena approached with the glass coffee pot, her oversized diner apron and loose hair concealing a silhouette that moved with lethal fluidity. 'More coffee, Mr. Rossi?' she asked in a quiet, unassuming voice.",
       "Before Dante could answer, the glass front doors of the diner shattered into thousands of glittering shards. Five masked mercenaries clad in tactical gear and armed with suppressed automatic weapons stormed into the dining room.",
@@ -151,42 +146,34 @@
       "Dante stared at her in stunned disbelief, his gun half-drawn. 'Who... who the hell are you?'",
       "Elena reached into her apron pocket and tossed a solid titanium signet ring bearing the crest of the phantom Ghost Syndicate onto his table. 'I’m the guardian your father contracted ten years ago to make sure you lived to take the throne. Now get up—their secondary squad is two minutes out.'"
     ],
-    "scenes": [
-      {
-        "caption": "Elena neutralizing the tactical ambush in Diner 54.",
-        "image": "/images/his-hidden-mafia-queen-the-undercover-waitress-scene-1.svg",
-        "insertAfterParagraph": 6
-      }
+    scenes: [
+      { caption: "Elena neutralizing the tactical ambush in Diner 54.", image: createScene("his-hidden-mafia-queen-the-undercover-waitress", 1, "DINER 54 AMBUSH", "Elena takes down five armed enforcers in twelve seconds.", "gold"), insertAfterParagraph: 6 }
     ]
   },
+
+  // 4. Marriage & Relationships
   {
-    "id": "story-4",
-    "title": "The Contract Marriage: When the Crippled CEO Walked",
-    "slug": "the-contract-marriage-when-the-crippled-ceo-walked",
-    "category": "Marriage & Relationships",
-    "subcategory": "Secret Billionaire & Devotion",
-    "tags": [
-      "Marriage",
-      "CEO",
-      "SecretBillionaire",
-      "Romance",
-      "Trending"
-    ],
-    "author": "Charlotte Hayes",
-    "publicationDate": "2026-08-31T09:29:15.495Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-crippled-ceo",
-    "nextPartSlug": "the-contract-marriage-part-2",
-    "nextPartHook": "When Liam's treacherous uncle stood up to take over the annual shareholders assembly, the double doors flew open...",
-    "views": 31200,
-    "uniqueVisitors": 24800,
-    "avgReadTimeSeconds": 320,
-    "trendingScore": 97.2,
-    "readTime": "7 min read",
-    "coverImage": "/images/the-contract-marriage-when-the-crippled-ceo-walked-cover.svg",
-    "hookSummary": "Forced by her cruel stepfamily to marry a crippled, reclusive heir who supposedly had zero power, Hannah protected him with genuine warmth. She had no idea his wheelchair was a three-year test for his enemies.",
-    "paragraphs": [
+    id: "story-4",
+    title: "The Contract Marriage: When the Crippled CEO Walked",
+    slug: "the-contract-marriage-when-the-crippled-ceo-walked",
+    category: "Marriage & Relationships",
+    subcategory: "Secret Billionaire & Devotion",
+    tags: ["Marriage", "CEO", "SecretBillionaire", "Romance", "Trending"],
+    author: "Charlotte Hayes",
+    publicationDate: new Date(Date.now() - 86400000 * 2).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-crippled-ceo",
+    nextPartSlug: "the-contract-marriage-part-2",
+    nextPartHook: "When Liam's treacherous uncle stood up to take over the annual shareholders assembly, the double doors flew open...",
+    views: 31200,
+    uniqueVisitors: 24800,
+    avgReadTimeSeconds: 320,
+    trendingScore: 97.2,
+    readTime: "7 min read",
+    coverImage: createCover("the-contract-marriage-when-the-crippled-ceo-walked", "THE CONTRACT MARRIAGE", "When the 'Wheelchair Billionaire' Stood Up", "gold"),
+    hookSummary: "Forced by her cruel stepfamily to marry a crippled, reclusive heir who supposedly had zero power, Hannah protected him with genuine warmth. She had no idea his wheelchair was a three-year test for his enemies.",
+    paragraphs: [
       "The winter banquet at the Grand Plaza was filled with the mockery of high society. Hannah stood beside Liam’s wheelchair, gently adjusting the wool blanket over his legs while her stepsister Grace laughed with malicious delight.",
       "\"Hannah, you truly got the jackpot,\" Grace sneered loudly before the assembled guests. \"While I marry the heir to the Montgomery bank, you get to push a useless cripple around for the rest of your pitiful life!\"",
       "Liam’s wealthy uncle, George, stepped forward with a condescending sneer. \"Hannah, give up the proxy voting rights for Liam’s shares. A paralyzed invalid has no business holding forty percent of the Horizon Group.\"",
@@ -198,46 +185,35 @@
       "\"Three years ago, my plane crashed because someone cut the hydraulic lines,\" Liam's deep, commanding voice resonated across the ballroom like rolling thunder. \"I remained in this wheelchair to see exactly which wolves in my family would show their teeth.\"",
       "Liam reached down, gently took Hannah’s trembling hand, and placed a fifty-carat royal sapphire ring upon her finger. \"Thank you for protecting me when you thought I had nothing, my wife. Now watch me take back everything.\""
     ],
-    "scenes": [
-      {
-        "caption": "Hannah fiercely defending Liam against his mocking family.",
-        "image": "/images/the-contract-marriage-when-the-crippled-ceo-walked-scene-1.svg",
-        "insertAfterParagraph": 3
-      },
-      {
-        "caption": "Liam stands up to reveal his full commanding strength.",
-        "image": "/images/the-contract-marriage-when-the-crippled-ceo-walked-scene-2.svg",
-        "insertAfterParagraph": 7
-      }
+    scenes: [
+      { caption: "Hannah fiercely defending Liam against his mocking family.", image: createScene("the-contract-marriage-when-the-crippled-ceo-walked", 1, "THE DEFIANT WIFE", "Hannah stands between the vultures and her husband.", "crimson"), insertAfterParagraph: 3 },
+      { caption: "Liam stands up to reveal his full commanding strength.", image: createScene("the-contract-marriage-when-the-crippled-ceo-walked", 2, "THE SOVEREIGN AWAKENING", "Liam stands up and claims his rightful throne.", "gold"), insertAfterParagraph: 7 }
     ]
   },
+
+  // 5. Money & Inheritance
   {
-    "id": "story-5",
-    "title": "The Stolen Inheritance: The Billionaire's Secret Will",
-    "slug": "the-stolen-inheritance-the-billionaires-secret-will",
-    "category": "Money & Inheritance",
-    "subcategory": "Family Power Struggle",
-    "tags": [
-      "Inheritance",
-      "Money",
-      "Family",
-      "Drama"
-    ],
-    "author": "Arthur Blackwood",
-    "publicationDate": "2026-08-29T09:29:15.497Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-stolen-inheritance",
-    "nextPartSlug": "the-stolen-inheritance-part-2",
-    "nextPartHook": "When the safe deposit box was opened in Geneva, the family discovered a second video recording...",
-    "views": 22400,
-    "uniqueVisitors": 17800,
-    "avgReadTimeSeconds": 275,
-    "trendingScore": 91.2,
-    "readTime": "6 min read",
-    "coverImage": "/images/the-stolen-inheritance-the-billionaires-secret-will-cover.svg",
-    "hookSummary": "After billionaire patriarch Charles passed away, his greedy stepchildren locked out his biological daughter, claiming she was written out of the will. Then the true executor arrived.",
-    "paragraphs": [
+    id: "story-5",
+    title: "The Stolen Inheritance: The Billionaire's Secret Will",
+    slug: "the-stolen-inheritance-the-billionaires-secret-will",
+    category: "Money & Inheritance",
+    subcategory: "Family Power Struggle",
+    tags: ["Inheritance", "Money", "Family", "Drama"],
+    author: "Arthur Blackwood",
+    publicationDate: new Date(Date.now() - 86400000 * 4).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-stolen-inheritance",
+    nextPartSlug: "the-stolen-inheritance-part-2",
+    nextPartHook: "When the safe deposit box was opened in Geneva, the family discovered a second video recording...",
+    views: 22400,
+    uniqueVisitors: 17800,
+    avgReadTimeSeconds: 275,
+    trendingScore: 91.2,
+    readTime: "6 min read",
+    coverImage: createCover("the-stolen-inheritance-the-billionaires-secret-will", "THE STOLEN INHERITANCE", "The Blackwood Holographic Testament", "gold"),
+    hookSummary: "After billionaire patriarch Charles passed away, his greedy stepchildren locked out his biological daughter, claiming she was written out of the will. Then the true executor arrived.",
+    paragraphs: [
       "The mahogany reading room at the Blackwood Estate fell dead silent as the family gathered for the official reading of late patriarch Charles Blackwood's last will and testament.",
       "His eldest stepson, Richard, adjusted his silk tie with arrogant confidence, smirking at Charles’s biological daughter, Clara, who sat quietly in the back row wearing a modest black dress.",
       "\"Clara, there is no need for you to be here,\" Richard sneered loudly. \"Father realized before his passing that the Blackwood shipping empire belongs in capable hands, not with an ungrateful artist.\"",
@@ -249,41 +225,34 @@
       "Beatrice gasped and collapsed into her chair. Richard lunged forward in disbelief: 'This is impossible! He told me I was his heir!'",
       "Clara stood up and buttoned her tailored black overcoat. 'Father knew you were stealing from the shipyard accounts, Richard. The forensic audit begins this afternoon.'"
     ],
-    "scenes": [
-      {
-        "caption": "The London executor reveals the authentic holographic will to the stunned family.",
-        "image": "/images/the-stolen-inheritance-the-billionaires-secret-will-scene-1.svg",
-        "insertAfterParagraph": 7
-      }
+    scenes: [
+      { caption: "The London executor reveals the authentic holographic will to the stunned family.", image: createScene("the-stolen-inheritance-the-billionaires-secret-will", 1, "THE MASTER WILL", "The genuine holographic testament disinherits the stepfamily.", "cyan"), insertAfterParagraph: 7 }
     ]
   },
+
+  // 6. Shocking Secrets
   {
-    "id": "story-6",
-    "title": "Shocking Secrets: The DNA Test in the Ballroom",
-    "slug": "shocking-secrets-the-dna-test-in-the-ballroom",
-    "category": "Shocking Secrets",
-    "subcategory": "High Society Scandals",
-    "tags": [
-      "Secrets",
-      "Family",
-      "Scandal",
-      "Trending"
-    ],
-    "author": "Clarissa Hayes",
-    "publicationDate": "2026-08-28T09:29:15.499Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-dna-ballroom",
-    "nextPartSlug": "shocking-secrets-part-2",
-    "nextPartHook": "The governor stepped up to the microphone, but his microphone had been routed to the district attorney's recording...",
-    "views": 26900,
-    "uniqueVisitors": 21800,
-    "avgReadTimeSeconds": 290,
-    "trendingScore": 94.8,
-    "readTime": "6 min read",
-    "coverImage": "/images/shocking-secrets-the-dna-test-in-the-ballroom-cover.svg",
-    "hookSummary": "At the prestigious annual charity gala, the high-society governor announced his adoptive son as the sole heir—until an anonymous guest projected certified genetic records across the crystal hall.",
-    "paragraphs": [
+    id: "story-6",
+    title: "Shocking Secrets: The DNA Test in the Ballroom",
+    slug: "shocking-secrets-the-dna-test-in-the-ballroom",
+    category: "Shocking Secrets",
+    subcategory: "High Society Scandals",
+    tags: ["Secrets", "Family", "Scandal", "Trending"],
+    author: "Clarissa Hayes",
+    publicationDate: new Date(Date.now() - 86400000 * 5).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-dna-ballroom",
+    nextPartSlug: "shocking-secrets-part-2",
+    nextPartHook: "The governor stepped up to the microphone, but his microphone had been routed to the district attorney's recording...",
+    views: 26900,
+    uniqueVisitors: 21800,
+    avgReadTimeSeconds: 290,
+    trendingScore: 94.8,
+    readTime: "6 min read",
+    coverImage: createCover("shocking-secrets-the-dna-test-in-the-ballroom", "SHOCKING SECRETS", "The Gala DNA Revelation", "crimson"),
+    hookSummary: "At the prestigious annual charity gala, the high-society governor announced his adoptive son as the sole heir—until an anonymous guest projected certified genetic records across the crystal hall.",
+    paragraphs: [
       "The Grand Ballroom at the Plaza was filled with over five hundred dignitaries, governors, and Fortune 500 executives for the prestigious annual Hayes Foundation Charity Gala.",
       "Governor Thomas Hayes took the podium beneath the crystal chandeliers, raising a champagne flute to his adopted son, Bradley. \"Tonight, I proudly name Bradley as the future chairman of Hayes Holdings and the sole steward of our family foundation.\"",
       "Bradley stood beside him, beaming with smug triumph, raising his glass toward the applauding high-society crowd.",
@@ -294,41 +263,34 @@
       "\"Governor Hayes,\" Rachel's voice resonated through the wireless microphone system. \"Perhaps you should explain to your donors why you sent your real daughter to an orphanage twenty-two years ago to protect your political campaign.\"",
       "Thomas turned ashen white, clutching the podium as the media press photographers unleashed a barrage of camera flashes that illuminated the room like lightning."
     ],
-    "scenes": [
-      {
-        "caption": "Rachel confronts Governor Hayes as the genetic records display across the ballroom.",
-        "image": "/images/shocking-secrets-the-dna-test-in-the-ballroom-scene-1.svg",
-        "insertAfterParagraph": 5
-      }
+    scenes: [
+      { caption: "Rachel confronts Governor Hayes as the genetic records display across the ballroom.", image: createScene("shocking-secrets-the-dna-test-in-the-ballroom", 1, "THE TRUTH EXPOSED", "20 years of political deception unraveled in front of 500 guests.", "gold"), insertAfterParagraph: 5 }
     ]
   },
+
+  // 7. Betrayal & Revenge (New)
   {
-    "id": "story-7",
-    "title": "When She Foreclosed Her Ex-Husband's $40M Hamptons Estate",
-    "slug": "when-she-foreclosed-her-ex-husbands-hamptons-estate",
-    "category": "Betrayal & Revenge",
-    "subcategory": "Real Estate Retribution",
-    "tags": [
-      "Revenge",
-      "RealEstate",
-      "Betrayal",
-      "Billionaire"
-    ],
-    "author": "Genevieve Thorne",
-    "publicationDate": "2026-08-30T09:29:15.500Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-hamptons-foreclosure",
-    "nextPartSlug": "when-she-foreclosed-part-2",
-    "nextPartHook": "When Trevor tried to transfer his remaining offshore liquid assets, his Swiss banker revealed the accounts were frozen by court order...",
-    "views": 19800,
-    "uniqueVisitors": 15400,
-    "avgReadTimeSeconds": 295,
-    "trendingScore": 93.1,
-    "readTime": "6 min read",
-    "coverImage": "/images/when-she-foreclosed-her-ex-husbands-hamptons-estate-cover.svg",
-    "hookSummary": "Trevor flaunted his lavish Hamptons mansion with his new socialite bride, completely unaware that his bankrupt hedge fund had mortgaged the deed to a phantom private lender owned by his quiet ex-wife.",
-    "paragraphs": [
+    id: "story-7",
+    title: "When She Foreclosed Her Ex-Husband's $40M Hamptons Estate",
+    slug: "when-she-foreclosed-her-ex-husbands-hamptons-estate",
+    category: "Betrayal & Revenge",
+    subcategory: "Real Estate Retribution",
+    tags: ["Revenge", "RealEstate", "Betrayal", "Billionaire"],
+    author: "Genevieve Thorne",
+    publicationDate: new Date(Date.now() - 86400000 * 3).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-hamptons-foreclosure",
+    nextPartSlug: "when-she-foreclosed-part-2",
+    nextPartHook: "When Trevor tried to transfer his remaining offshore liquid assets, his Swiss banker revealed the accounts were frozen by court order...",
+    views: 19800,
+    uniqueVisitors: 15400,
+    avgReadTimeSeconds: 295,
+    trendingScore: 93.1,
+    readTime: "6 min read",
+    coverImage: createCover("when-she-foreclosed-her-ex-husbands-hamptons-estate", "THE HAMPTONS FORECLOSURE", "When the Quiet Ex-Wife Bought the Mortgage", "emerald"),
+    hookSummary: "Trevor flaunted his lavish Hamptons mansion with his new socialite bride, completely unaware that his bankrupt hedge fund had mortgaged the deed to a phantom private lender owned by his quiet ex-wife.",
+    paragraphs: [
       "The summer sun glistened over the infinity pool of the forty-million-dollar oceanfront estate in Southampton. Trevor stood poolside holding a glass of vintage champagne, laughing with his new socialite wife, Bianca.",
       "\"To the finest address on Meadow Lane,\" Trevor toasted loudly before fifty high-society guests. \"Built on pure ambition!\"",
       "At that moment, two Suffolk County sheriff cruisers and a matte-black armored Cadillac Escalade pulled up along the manicured cobblestone driveway.",
@@ -338,41 +300,34 @@
       "The rear door of the Escalade opened. Genevieve stepped out onto the gravel in a pristine cream linen suit and dark sunglasses, holding the master deed in her hand.",
       "\"Apex Trust was acquired by Thorne International two weeks ago, Trevor,\" Genevieve said in a cool, collected tone. \"And I just called in the note. You and your guests have fifteen minutes to vacate my property.\""
     ],
-    "scenes": [
-      {
-        "caption": "Genevieve presents the certified foreclosure deed to Trevor at his summer party.",
-        "image": "/images/when-she-foreclosed-her-ex-husbands-hamptons-estate-scene-1.svg",
-        "insertAfterParagraph": 4
-      }
+    scenes: [
+      { caption: "Genevieve presents the certified foreclosure deed to Trevor at his summer party.", image: createScene("when-she-foreclosed-her-ex-husbands-hamptons-estate", 1, "THE SEIZURE", "Sheriffs arrive to enforce immediate foreclosure on the Hamptons estate.", "crimson"), insertAfterParagraph: 4 }
     ]
   },
+
+  // 8. Billionaire Drama (New)
   {
-    "id": "story-8",
-    "title": "The Undercover Janitor at Vance Global",
-    "slug": "the-undercover-janitor-at-vance-global",
-    "category": "Billionaire Drama",
-    "subcategory": "Secret Founder & Humiliation",
-    "tags": [
-      "Billionaire",
-      "Undercover",
-      "SecretFounder",
-      "Revenge"
-    ],
-    "author": "Julian Vance",
-    "publicationDate": "2026-08-31T09:29:15.501Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-undercover-janitor",
-    "nextPartSlug": "undercover-janitor-part-2",
-    "nextPartHook": "When the regional vice president called estate security to beat the janitor, the chief of security saluted him instead...",
-    "views": 28400,
-    "uniqueVisitors": 23100,
-    "avgReadTimeSeconds": 310,
-    "trendingScore": 96.5,
-    "readTime": "7 min read",
-    "coverImage": "/images/the-undercover-janitor-at-vance-global-cover.svg",
-    "hookSummary": "Dressed in an ordinary grey maintenance uniform to inspect his new headquarters branch, the multi-billionaire founder was kicked into a mop bucket by an arrogant VP. Three minutes later, the executive board arrived.",
-    "paragraphs": [
+    id: "story-8",
+    title: "The Undercover Janitor at Vance Global",
+    slug: "the-undercover-janitor-at-vance-global",
+    category: "Billionaire Drama",
+    subcategory: "Secret Founder & Humiliation",
+    tags: ["Billionaire", "Undercover", "SecretFounder", "Revenge"],
+    author: "Julian Vance",
+    publicationDate: new Date(Date.now() - 86400000 * 2).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-undercover-janitor",
+    nextPartSlug: "undercover-janitor-part-2",
+    nextPartHook: "When the regional vice president called estate security to beat the janitor, the chief of security saluted him instead...",
+    views: 28400,
+    uniqueVisitors: 23100,
+    avgReadTimeSeconds: 310,
+    trendingScore: 96.5,
+    readTime: "7 min read",
+    coverImage: createCover("the-undercover-janitor-at-vance-global", "THE UNDERCOVER JANITOR", "The Secret Founder of Vance Global", "gold"),
+    hookSummary: "Dressed in an ordinary grey maintenance uniform to inspect his new headquarters branch, the multi-billionaire founder was kicked into a mop bucket by an arrogant VP. Three minutes later, the executive board arrived.",
+    paragraphs: [
       "The sparkling 60-story Vance Global tower in Chicago was holding its grand reopening. Ethan Vance, who built the empire from nothing before disappearing from public view five years ago, walked quietly down the executive corridor wearing a standard gray maintenance jumpsuit.",
       "He was carrying a mop and bucket, observing firsthand how his newly appointed regional managers treated frontline staff.",
       "\"Hey, trash! Get out of my way!\" barked Bradley Stone, the arrogant newly hired regional Vice President, kicking the water bucket and spilling dirty soapy water across Ethan's worn boots.",
@@ -385,41 +340,34 @@
       "\"Founder Vance... on behalf of the five hundred thousand employees of Vance Global worldwide, we are deeply honored by your presence.\"",
       "Bradley's smile froze. The blood drained completely from his face as his fiancée stumbled backward into the wall."
     ],
-    "scenes": [
-      {
-        "caption": "CEO Williams and the Board of Directors bow before Founder Ethan.",
-        "image": "/images/the-undercover-janitor-at-vance-global-scene-1.svg",
-        "insertAfterParagraph": 8
-      }
+    scenes: [
+      { caption: "CEO Williams and the Board of Directors bow before Founder Ethan.", image: createScene("the-undercover-janitor-at-vance-global", 1, "FOUNDER VANCE", "The entire executive board salutes the undercover founder.", "gold"), insertAfterParagraph: 8 }
     ]
   },
+
+  // 9. Mafia & Power (New)
   {
-    "id": "story-9",
-    "title": "The Don's Silent Guardian: The 10-Year Debt",
-    "slug": "the-dons-silent-guardian-the-10-year-debt",
-    "category": "Mafia & Power",
-    "subcategory": "Underworld Loyalty & Vengeance",
-    "tags": [
-      "Mafia",
-      "Loyalty",
-      "Action",
-      "Drama"
-    ],
-    "author": "Matteo Corvo",
-    "publicationDate": "2026-08-29T09:29:15.502Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-silent-guardian",
-    "nextPartSlug": "silent-guardian-part-2",
-    "nextPartHook": "When the rival cartel surrounded the safehouse, Gabriel unlocked the titanium vault in the basement...",
-    "views": 17900,
-    "uniqueVisitors": 13900,
-    "avgReadTimeSeconds": 270,
-    "trendingScore": 91.8,
-    "readTime": "6 min read",
-    "coverImage": "/images/the-dons-silent-guardian-the-10-year-debt-cover.svg",
-    "hookSummary": "When old Don Salvatore was betrayed by his ambitious capos at his 70th birthday gala, only his quiet chauffeur stood between him and twenty drawn weapons.",
-    "paragraphs": [
+    id: "story-9",
+    title: "The Don's Silent Guardian: The 10-Year Debt",
+    slug: "the-dons-silent-guardian-the-10-year-debt",
+    category: "Mafia & Power",
+    subcategory: "Underworld Loyalty & Vengeance",
+    tags: ["Mafia", "Loyalty", "Action", "Drama"],
+    author: "Matteo Corvo",
+    publicationDate: new Date(Date.now() - 86400000 * 4).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-silent-guardian",
+    nextPartSlug: "silent-guardian-part-2",
+    nextPartHook: "When the rival cartel surrounded the safehouse, Gabriel unlocked the titanium vault in the basement...",
+    views: 17900,
+    uniqueVisitors: 13900,
+    avgReadTimeSeconds: 270,
+    trendingScore: 91.8,
+    readTime: "6 min read",
+    coverImage: createCover("the-dons-silent-guardian-the-10-year-debt", "THE DON'S SILENT GUARDIAN", "The 10-Year Blood Oath", "crimson"),
+    hookSummary: "When old Don Salvatore was betrayed by his ambitious capos at his 70th birthday gala, only his quiet chauffeur stood between him and twenty drawn weapons.",
+    paragraphs: [
       "The private dining room at the Villa Paradiso in Staten Island was bathed in dim amber lighting. Don Salvatore sat at the head of the long oak table, surrounded by his six senior capos who had sworn blood loyalty twenty years prior.",
       "As the vintage Chianti was poured, Capo Roberto set his glass down with an ominous click. \"Salvatore, the times have changed. The port shipments belong to the new generation. Sign over the territory rights peacefully, or you won't leave this room alive.\"",
       "Twenty armed syndicate soldiers stepped from the shadows behind the curtains, leveling suppressed pistols at the elderly Don.",
@@ -431,41 +379,34 @@
       "When the emergency backup generator kicked in eight seconds later, all twenty armed soldiers were on the floor. Gabriel stood beside Don Salvatore's chair, replacing a fresh magazine into his sidearm.",
       "Roberto fell to his knees in terror, staring up at the legendary operative known only in underworld whispers as 'The Phantom of Corsica.'"
     ],
-    "scenes": [
-      {
-        "caption": "Gabriel takes down the mutinous capos in the dark villa.",
-        "image": "/images/the-dons-silent-guardian-the-10-year-debt-scene-1.svg",
-        "insertAfterParagraph": 8
-      }
+    scenes: [
+      { caption: "Gabriel takes down the mutinous capos in the dark villa.", image: createScene("the-dons-silent-guardian-the-10-year-debt", 1, "THE OATH FULFILLED", "The silent guardian neutralizes 20 armed enforcers in 8 seconds.", "crimson"), insertAfterParagraph: 8 }
     ]
   },
+
+  // 10. Marriage & Relationships (New)
   {
-    "id": "story-10",
-    "title": "The 5-Year Silent Wife: The Hamptons Gala Revenge",
-    "slug": "the-5-year-silent-wife-hamptons-gala-revenge",
-    "category": "Marriage & Relationships",
-    "subcategory": "High Society Divorce & Rebirth",
-    "tags": [
-      "Marriage",
-      "Revenge",
-      "Gala",
-      "Secrets"
-    ],
-    "author": "Vivian Sinclair",
-    "publicationDate": "2026-09-01T09:29:15.504Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-silent-wife-revenge",
-    "nextPartSlug": "silent-wife-part-2",
-    "nextPartHook": "When Carter tried to liquidate his offshore investments, he discovered Vivian held all master cryptographic keys...",
-    "views": 26400,
-    "uniqueVisitors": 20900,
-    "avgReadTimeSeconds": 305,
-    "trendingScore": 95.1,
-    "readTime": "7 min read",
-    "coverImage": "/images/the-5-year-silent-wife-hamptons-gala-revenge-cover.svg",
-    "hookSummary": "For five years, Carter forced Vivian to cook, clean, and stay silent while he flaunted mistresses across New York. At his 30th birthday gala, she arrived wearing the imperial Romanov diamond.",
-    "paragraphs": [
+    id: "story-10",
+    title: "The 5-Year Silent Wife: The Hamptons Gala Revenge",
+    slug: "the-5-year-silent-wife-hamptons-gala-revenge",
+    category: "Marriage & Relationships",
+    subcategory: "High Society Divorce & Rebirth",
+    tags: ["Marriage", "Revenge", "Gala", "Secrets"],
+    author: "Vivian Sinclair",
+    publicationDate: new Date(Date.now() - 86400000 * 1).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-silent-wife-revenge",
+    nextPartSlug: "silent-wife-part-2",
+    nextPartHook: "When Carter tried to liquidate his offshore investments, he discovered Vivian held all master cryptographic keys...",
+    views: 26400,
+    uniqueVisitors: 20900,
+    avgReadTimeSeconds: 305,
+    trendingScore: 95.1,
+    readTime: "7 min read",
+    coverImage: createCover("the-5-year-silent-wife-hamptons-gala-revenge", "THE 5-YEAR SILENT WIFE", "The Hamptons Gala Rebirth", "emerald"),
+    hookSummary: "For five years, Carter forced Vivian to cook, clean, and stay silent while he flaunted mistresses across New York. At his 30th birthday gala, she arrived wearing the imperial Romanov diamond.",
+    paragraphs: [
       "The ballroom at the Pierre Hotel in Manhattan glittered with New York's wealthiest real estate moguls. Carter stood at the center of the crowd, his arm wrapped around his latest socialite lover, laughing about how he had trapped a submissive country girl at home.",
       "\"She doesn't even know how to order wine at a restaurant,\" Carter boasted loudly to his friends. \"I give her five hundred dollars a week and she thinks I'm a god.\"",
       "Suddenly, the heavy double doors of the ballroom swung open. A collective hush fell over the three hundred guests.",
@@ -476,41 +417,34 @@
       "\"Welcome to New York, Madam Sinclair,\" the NYSE Chairman announced with immense respect. \"We are thrilled that Sinclair Global Private Equity has completed the acquisition of Carter's real estate group this evening.\"",
       "Carter felt the room spinning. His phone buzzed with an emergency notification: his equity holdings had been reduced to zero, transferred entirely to the woman he had treated like a maid for five years."
     ],
-    "scenes": [
-      {
-        "caption": "Vivian arrives at the gala wearing the imperial sapphire.",
-        "image": "/images/the-5-year-silent-wife-hamptons-gala-revenge-scene-1.svg",
-        "insertAfterParagraph": 4
-      }
+    scenes: [
+      { caption: "Vivian arrives at the gala wearing the imperial sapphire.", image: createScene("the-5-year-silent-wife-hamptons-gala-revenge", 1, "THE RETURN OF SINCLAIR", "Vivian stuns high society with her true global pedigree.", "gold"), insertAfterParagraph: 4 }
     ]
   },
+
+  // 11. Money & Inheritance (New)
   {
-    "id": "story-11",
-    "title": "The Black Card in the Pawnshop",
-    "slug": "the-black-card-in-the-pawnshop",
-    "category": "Money & Inheritance",
-    "subcategory": "Secret Wealth & Street Justice",
-    "tags": [
-      "Money",
-      "Inheritance",
-      "SecretBillionaire",
-      "Trending"
-    ],
-    "author": "Austin Reed",
-    "publicationDate": "2026-08-31T09:29:15.506Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-black-card-pawnshop",
-    "nextPartSlug": "black-card-pawnshop-part-2",
-    "nextPartHook": "When the regional bank president arrived in a police cruiser, he arrested the pawnbroker on the spot...",
-    "views": 24100,
-    "uniqueVisitors": 19200,
-    "avgReadTimeSeconds": 285,
-    "trendingScore": 93.9,
-    "readTime": "6 min read",
-    "coverImage": "/images/the-black-card-in-the-pawnshop-cover.svg",
-    "hookSummary": "Trying to pawn his grandmother's antique watch for his daughter's medical bills, an unassuming veteran was beaten and insulted by a crooked shop owner. Then he dropped an unissued Centurion Sovereign card on the counter.",
-    "paragraphs": [
+    id: "story-11",
+    title: "The Black Card in the Pawnshop",
+    slug: "the-black-card-in-the-pawnshop",
+    category: "Money & Inheritance",
+    subcategory: "Secret Wealth & Street Justice",
+    tags: ["Money", "Inheritance", "SecretBillionaire", "Trending"],
+    author: "Austin Reed",
+    publicationDate: new Date(Date.now() - 86400000 * 2).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-black-card-pawnshop",
+    nextPartSlug: "black-card-pawnshop-part-2",
+    nextPartHook: "When the regional bank president arrived in a police cruiser, he arrested the pawnbroker on the spot...",
+    views: 24100,
+    uniqueVisitors: 19200,
+    avgReadTimeSeconds: 285,
+    trendingScore: 93.9,
+    readTime: "6 min read",
+    coverImage: createCover("the-black-card-in-the-pawnshop", "THE BLACK CARD IN THE PAWNSHOP", "The Centurion Sovereign Reveal", "cyan"),
+    hookSummary: "Trying to pawn his grandmother's antique watch for his daughter's medical bills, an unassuming veteran was beaten and insulted by a crooked shop owner. Then he dropped an unissued Centurion Sovereign card on the counter.",
+    paragraphs: [
       "The neon lights of Downtown Manhattan's grimiest pawnshop flickered against the damp evening rain. Noah, a combat veteran wearing a faded army surplus jacket, placed a silver pocket watch onto the scratch-resistant glass counter.",
       "\"I just need five hundred dollars for my daughter's insulin tonight,\" Noah said in a polite, humble tone.",
       "The crooked pawnshop owner, Lenny, picked up the watch, smirked with contempt, and tossed it into the trash can behind him. \"This rusted junk isn't worth five bucks, loser. Get out before I have my boys break your knees.\"",
@@ -523,41 +457,34 @@
       "The terminal screen displayed: [ACCOUNT VERIFIED: SUPREME COMMANDER NOAH VANCE • AVAILABLE BALANCE: UNLIMITED • J.P. MORGAN PRIVATE EXECUTIVE DISPATCH ACTIVATED].",
       "Outside the shop, the sirens of twelve federal escorts and a convoy of black Suburbans arrived, screeching to a halt outside the storefront."
     ],
-    "scenes": [
-      {
-        "caption": "Noah places the Centurion Sovereign card on the pawnshop counter.",
-        "image": "/images/the-black-card-in-the-pawnshop-scene-1.svg",
-        "insertAfterParagraph": 6
-      }
+    scenes: [
+      { caption: "Noah places the Centurion Sovereign card on the pawnshop counter.", image: createScene("the-black-card-in-the-pawnshop", 1, "THE CENTURION SOVEREIGN", "The unlimited sovereign card overrides the terminal.", "gold"), insertAfterParagraph: 6 }
     ]
   },
+
+  // 12. Shocking Secrets (New)
   {
-    "id": "story-12",
-    "title": "The Governor's Hidden Daughter: Exposed at the Senate Hearing",
-    "slug": "the-governors-hidden-daughter-senate-hearing",
-    "category": "Shocking Secrets",
-    "subcategory": "Political Scandal & Truth",
-    "tags": [
-      "Secrets",
-      "Politics",
-      "Family",
-      "Drama"
-    ],
-    "author": "Clarissa Hayes",
-    "publicationDate": "2026-08-30T09:29:15.507Z",
-    "status": "published",
-    "partNumber": 1,
-    "seriesId": "series-senate-hearing-daughter",
-    "nextPartSlug": "senate-hearing-part-2",
-    "nextPartHook": "When the live television broadcast zoomed into the genetic affidavit, the governor's campaign manager pulled the fire alarm...",
-    "views": 20100,
-    "uniqueVisitors": 16100,
-    "avgReadTimeSeconds": 290,
-    "trendingScore": 92.4,
-    "readTime": "6 min read",
-    "coverImage": "/images/the-governors-hidden-daughter-senate-hearing-cover.svg",
-    "hookSummary": "Nominated for the US Senate, Governor Harrison presented his picture-perfect political family on national television. Then a young public defender stepped up to the podium with certified hospital records.",
-    "paragraphs": [
+    id: "story-12",
+    title: "The Governor's Hidden Daughter: Exposed at the Senate Hearing",
+    slug: "the-governors-hidden-daughter-senate-hearing",
+    category: "Shocking Secrets",
+    subcategory: "Political Scandal & Truth",
+    tags: ["Secrets", "Politics", "Family", "Drama"],
+    author: "Clarissa Hayes",
+    publicationDate: new Date(Date.now() - 86400000 * 3).toISOString(),
+    status: "published",
+    partNumber: 1,
+    seriesId: "series-senate-hearing-daughter",
+    nextPartSlug: "senate-hearing-part-2",
+    nextPartHook: "When the live television broadcast zoomed into the genetic affidavit, the governor's campaign manager pulled the fire alarm...",
+    views: 20100,
+    uniqueVisitors: 16100,
+    avgReadTimeSeconds: 290,
+    trendingScore: 92.4,
+    readTime: "6 min read",
+    coverImage: createCover("the-governors-hidden-daughter-senate-hearing", "THE GOVERNOR'S HIDDEN DAUGHTER", "The Senate Chamber Reckoning", "crimson"),
+    hookSummary: "Nominated for the US Senate, Governor Harrison presented his picture-perfect political family on national television. Then a young public defender stepped up to the podium with certified hospital records.",
+    paragraphs: [
       "The United States Senate Judiciary Committee hearing room was packed to maximum capacity with national television cameras and major news anchors. Governor Donald Harrison stood before the microphones, beaming with political triumph as he introduced his wealthy donors.",
       "\"My career has always been built on unwavering family values, transparency, and integrity,\" Harrison proclaimed to thunderous applause.",
       "From the back of the chamber, a young woman with sharp emerald eyes, dressed in an unpretentious dark suit, walked down the center aisle holding a sealed legal brief.",
@@ -568,12 +495,12 @@
       "\"And who are you to bring these charges?\" Harrison stammered, clutching the edge of the witness table in cold sweat.",
       "Maya looked directly into the main television camera broadcasting to thirty million American households. \"I am that daughter, Governor. And your confirmation hearing is over.\""
     ],
-    "scenes": [
-      {
-        "caption": "Maya presents Exhibit 94 before the live Senate hearing cameras.",
-        "image": "/images/the-governors-hidden-daughter-senate-hearing-scene-1.svg",
-        "insertAfterParagraph": 5
-      }
+    scenes: [
+      { caption: "Maya presents Exhibit 94 before the live Senate hearing cameras.", image: createScene("the-governors-hidden-daughter-senate-hearing", 1, "EXHIBIT 94", "Maya exposes twenty-four years of political deception on national TV.", "gold"), insertAfterParagraph: 5 }
     ]
   }
-]
+];
+
+// Save all updated stories
+db.saveStories(stories);
+console.log(`Successfully seeded ${stories.length} rich editorial stories into Taleonix!`);

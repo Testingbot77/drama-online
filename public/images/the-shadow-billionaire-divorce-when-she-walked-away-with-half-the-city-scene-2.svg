@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 450" width="100%" height="100%">
+    <defs>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#050E14" />
+        <stop offset="50%" stop-color="#0D2735" />
+        <stop offset="100%" stop-color="#050608" />
+      </linearGradient>
+      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#00F0FF" />
+        <stop offset="100%" stop-color="#0084FF" />
+      </linearGradient>
+      <radialGradient id="glowGrad" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="rgba(0, 240, 255, 0.25)" />
+        <stop offset="100%" stop-color="transparent" />
+      </radialGradient>
+      <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.8"/>
+      </filter>
+    </defs>
+    
+    <!-- Background & Cinematic Glow -->
+    <rect width="1200" height="450" fill="url(#bgGrad)"/>
+    <circle cx="600" cy="150" r="270" fill="url(#glowGrad)"/>
+    
+    <!-- Architectural Silhouette Accents -->
+    <g opacity="0.15">
+      <rect x="150" y="170" width="90" height="280" fill="#00F0FF"/>
+      <rect x="270" y="100" width="120" height="350" fill="#00F0FF"/>
+      <rect x="420" y="210" width="80" height="240" fill="#00F0FF"/>
+      <rect x="700" y="130" width="110" height="320" fill="#00F0FF"/>
+      <rect x="840" y="50" width="130" height="400" fill="#00F0FF"/>
+      <rect x="1000" y="190" width="90" height="260" fill="#00F0FF"/>
+    </g>
+
+    <!-- Cinematic Vignette Frame -->
+    <rect x="30" y="30" width="1140" height="390" fill="none" stroke="#00F0FF" stroke-width="1.5" stroke-opacity="0.3" rx="16"/>
+    
+    <!-- Badges -->
+    <g transform="translate(60, 65)">
+      <rect width="180" height="32" rx="16" fill="#00F0FF" fill-opacity="0.15" stroke="#00F0FF" stroke-width="1"/>
+      <text x="90" y="21" fill="#00F0FF" font-family="'Outfit', sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="2">TALEONIX ORIGINAL</text>
+    </g>
+    
+    <!-- Center Typography -->
+    <g filter="url(#shadow)" text-anchor="middle">
+      <text x="600" y="215" fill="url(#textGrad)" font-family="'Outfit', 'Inter', sans-serif" font-size="36" font-weight="900" letter-spacing="1">
+        OPTION DELTA
+      </text>
+      <text x="600" y="275" fill="#E0E6ED" font-family="'Lora', 'Inter', sans-serif" font-size="20" font-weight="400" opacity="0.85" letter-spacing="0.5">
+        The satellite command that liquidated Sterling Holdings in 12 minutes.
+      </text>
+    </g>
+    
+    <!-- Bottom Bar / Watermark -->
+    <text x="1140" y="400" fill="#8E9AA8" font-family="'Inter', sans-serif" font-size="14" font-weight="600" text-anchor="end" opacity="0.6">
+      Taleonix Media • US Digital Publication
+    </text>
+  </svg>
