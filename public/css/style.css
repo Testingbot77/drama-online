@@ -94,6 +94,15 @@ body {
   .container { padding: 0 16px; }
 }
 
+/* ================= SPA VIEW MANAGEMENT ================= */
+.pub-view {
+  display: none !important;
+}
+
+.pub-view.active {
+  display: block !important;
+}
+
 /* ================= READING PROGRESS BAR ================= */
 #readingProgressBar {
   position: fixed;

@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 8,
-    "uniqueVisitors": 8,
+    "totalPageviews": 12,
+    "uniqueVisitors": 12,
     "usTrafficPercentage": 85,
     "avgReadTimeSeconds": 0,
     "estimatedRevenueUsd": 0,
     "averageRpmUsd": 24.5,
-    "adImpressions": 24,
+    "adImpressions": 40,
     "adCtr": "0.00%",
-    "estimatedAdSenseRevenueUsd": 0.21
+    "estimatedAdSenseRevenueUsd": 0.34
   },
   "trafficSources": [
     {
@@ -53,6 +53,38 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/story/the-gold-framed-deed-refused-to-pack",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/story/the-gold-framed-deed-refused-to-pack",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/story/the-gold-framed-deed-refused-to-pack",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
