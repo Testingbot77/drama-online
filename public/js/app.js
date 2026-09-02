@@ -302,29 +302,61 @@ async function showStoryReader(slug) {
       }
     });
 
-    // PART 2 CONTINUATION BOX
+    // PART CONTINUATION & CLIMAX SYSTEM
     const part2Box = document.getElementById('partContinuationCard');
+    const partBadge = document.getElementById('partCardBadge') || part2Box.querySelector('.part-card-badge');
+    const partDesc = document.getElementById('partCardDesc') || part2Box.querySelector('.part-card-desc');
     const nextPartHook = document.getElementById('nextPartHook');
     const btnReadPart2 = document.getElementById('btnReadPart2');
 
     if (story.nextPartSlug) {
       part2Box.style.display = 'block';
-      part2Box.querySelector('.part-card-badge').innerText = '🔥 PART 2 AVAILABLE';
-      nextPartHook.innerText = story.nextPartHook || 'What happened next in Chapter 2 shook the entire city...';
-      btnReadPart2.innerText = 'READ PART 2 →';
+      const currentPartNum = story.partNumber || 1;
+      const nextPartNum = currentPartNum + 1;
+      const isGrandFinale = nextPartNum >= 3;
+
+      if (partBadge) {
+        partBadge.innerHTML = isGrandFinale
+          ? '<i class="fa-solid fa-crown"></i> CHAPTER 3 (GRAND FINALE) AVAILABLE'
+          : `<i class="fa-solid fa-fire"></i> CHAPTER ${nextPartNum} AVAILABLE`;
+      }
+
+      nextPartHook.innerText = story.nextPartHook || `What happened in Chapter ${nextPartNum} shook the entire city...`;
+
+      if (partDesc) {
+        partDesc.innerText = isGrandFinale
+          ? 'Experience the shocking conclusion and emotional climax in the Grand Finale.'
+          : `Continue the gripping story right now in Chapter ${nextPartNum} without interruption.`;
+      }
+
+      btnReadPart2.innerHTML = isGrandFinale
+        ? `READ CHAPTER ${nextPartNum} (GRAND FINALE) →`
+        : `READ CHAPTER ${nextPartNum} →`;
+
       btnReadPart2.href = `/story/${story.nextPartSlug}`;
       btnReadPart2.onclick = (e) => handleNavClick(e, `/story/${story.nextPartSlug}`);
     } else if (story.previousPartSlug) {
       part2Box.style.display = 'block';
-      part2Box.querySelector('.part-card-badge').innerText = '🎉 SERIES CLIMAX COMPLETED';
-      nextPartHook.innerText = 'You have finished Chapter 2 of this drama saga!';
-      btnReadPart2.innerText = 'BINGE NEXT VIRAL STORY →';
+      if (partBadge) {
+        partBadge.innerHTML = '<i class="fa-solid fa-trophy"></i> SERIES CLIMAX COMPLETED';
+      }
+      nextPartHook.innerText = 'You have completed this entire drama saga!';
+      if (partDesc) {
+        partDesc.innerText = 'Binge another bestselling viral drama series from our trending collection.';
+      }
+      btnReadPart2.innerHTML = 'BINGE NEXT VIRAL DRAMA →';
       btnReadPart2.href = '/trending';
       btnReadPart2.onclick = (e) => handleNavClick(e, '/trending');
     } else {
       part2Box.style.display = 'block';
-      nextPartHook.innerText = '⚡ Chapter 2 is currently in editorial production.';
-      btnReadPart2.innerText = 'EXPLORE MORE STORIES →';
+      if (partBadge) {
+        partBadge.innerHTML = '<i class="fa-solid fa-book-open"></i> NEXT EPISODE COMING SOON';
+      }
+      nextPartHook.innerText = '⚡ Next chapter is currently in editorial production.';
+      if (partDesc) {
+        partDesc.innerText = 'Explore our top trending serialized stories while the next chapter is prepared.';
+      }
+      btnReadPart2.innerHTML = 'EXPLORE MORE STORIES →';
       btnReadPart2.href = '/trending';
       btnReadPart2.onclick = (e) => handleNavClick(e, '/trending');
     }
