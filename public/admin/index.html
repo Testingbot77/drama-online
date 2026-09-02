@@ -376,20 +376,20 @@
         </div>
       </section>
 
-      <!-- TAB: LINK TRACKER & CAMPAIGN CLICKS -->
+      <!-- TAB: LINK TRACKER & URL SHORTENER -->
       <section id="tab-link-tracker" class="admin-section">
         <div class="panel-card">
           <div class="panel-header">
             <div>
-              <h3><i class="fa-solid fa-link"></i> Link Tracker & Campaign Click Analytics</h3>
-              <p class="panel-sub">Generate trackable share links for each story/episode and track real-time clicks, US traffic, and AdSense conversions.</p>
+              <h3><i class="fa-solid fa-link"></i> Viral Link Tracker & URL Shortener</h3>
+              <p class="panel-sub">Create clean, short vanity URLs (e.g. <code>/s/grad1</code>) for video captions & bio links. Track real-time clicks and unique readers.</p>
             </div>
           </div>
 
           <!-- Link Generator Card -->
           <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
-            <h4 style="margin-top:0; color:var(--accent-gold); font-size:1.1rem;"><i class="fa-solid fa-plus-circle"></i> Create New Trackable Campaign Link</h4>
-            <form onsubmit="handleCreateTrackingLink(event)" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px;">
+            <h4 style="margin-top:0; color:var(--accent-gold); font-size:1.1rem;"><i class="fa-solid fa-scissors"></i> Create New Shortened Campaign Link</h4>
+            <form onsubmit="handleCreateTrackingLink(event)" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
               <div class="form-group" style="margin-bottom:0;">
                 <label style="font-size:0.85rem; color:var(--text-muted);">Select Story / Chapter</label>
                 <select id="trackStorySelect" class="admin-input" required>
@@ -400,7 +400,12 @@
 
               <div class="form-group" style="margin-bottom:0;">
                 <label style="font-size:0.85rem; color:var(--text-muted);">Campaign Tag / Name</label>
-                <input type="text" id="trackCampaignName" class="admin-input" placeholder="e.g. grad_fb_viral_reel1" required>
+                <input type="text" id="trackCampaignName" class="admin-input" placeholder="e.g. fb_grad_viral1" required>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label style="font-size:0.85rem; color:var(--text-muted);">Custom Short Code <small style="color:var(--accent-gold);">(Optional)</small></label>
+                <input type="text" id="trackCustomCode" class="admin-input" placeholder="e.g. grad1 or leave blank for auto">
               </div>
 
               <div class="form-group" style="margin-bottom:0;">
@@ -428,35 +433,53 @@
 
               <div style="display:flex; align-items:flex-end;">
                 <button type="submit" class="btn-action-accent" style="width:100%; height:42px; justify-content:center;">
-                  <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Link
+                  <i class="fa-solid fa-bolt"></i> Generate Short Link
                 </button>
               </div>
             </form>
 
-            <div id="generatedLinkResult" style="display:none; margin-top: 20px; padding: 16px; background: rgba(0, 210, 106, 0.08); border: 1px solid rgba(0, 210, 106, 0.3); border-radius: 8px;">
-              <div style="font-size:0.85rem; color:#00d26a; font-weight:700; margin-bottom:6px;"><i class="fa-solid fa-circle-check"></i> Trackable Link Ready to Share:</div>
-              <div style="display:flex; gap:12px; align-items:center;">
-                <input type="text" id="generatedLinkInput" readonly class="admin-input" style="background:#111; color:#fff; font-family:monospace; font-size:0.85rem;">
-                <button type="button" class="btn-action-primary" onclick="copyGeneratedTrackingLink()" style="white-space:nowrap;">
-                  <i class="fa-solid fa-copy"></i> Copy Link
-                </button>
+            <div id="generatedLinkResult" style="display:none; margin-top: 20px; padding: 20px; background: rgba(0, 210, 106, 0.06); border: 1px solid rgba(0, 210, 106, 0.3); border-radius: 10px;">
+              <div style="font-size:0.95rem; color:#00d26a; font-weight:700; margin-bottom:12px;">
+                <i class="fa-solid fa-circle-check"></i> Shortened Link Created Successfully!
+              </div>
+              
+              <!-- Primary Short URL -->
+              <div style="margin-bottom: 12px;">
+                <label style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">⚡ Short URL (Recommended for Bio & Captions):</label>
+                <div style="display:flex; gap:10px; align-items:center; margin-top:4px;">
+                  <input type="text" id="generatedShortLinkInput" readonly class="admin-input" style="background:#090a10; color:var(--accent-gold); font-weight:700; font-family:monospace; font-size:1rem; border-color:var(--accent-gold);">
+                  <button type="button" class="btn-action-accent" onclick="copyShortTrackingLink()" style="white-space:nowrap; padding:10px 18px;">
+                    <i class="fa-solid fa-copy"></i> Copy Short Link
+                  </button>
+                </div>
+              </div>
+
+              <!-- Full URL with UTMs -->
+              <div>
+                <label style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700;">🔗 Full URL with UTM Parameters:</label>
+                <div style="display:flex; gap:10px; align-items:center; margin-top:4px;">
+                  <input type="text" id="generatedLinkInput" readonly class="admin-input" style="background:#111; color:#aaa; font-family:monospace; font-size:0.8rem;">
+                  <button type="button" class="btn-action-primary" onclick="copyGeneratedTrackingLink()" style="white-space:nowrap; padding:8px 14px; font-size:0.85rem;">
+                    <i class="fa-solid fa-copy"></i> Copy Full URL
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Live Tracking Performance Table -->
-          <h4 style="margin-bottom: 12px; color:#fff;"><i class="fa-solid fa-chart-column"></i> Active Tracked Campaign Links & Live Clicks</h4>
+          <h4 style="margin-bottom: 12px; color:#fff;"><i class="fa-solid fa-chart-column"></i> Active Shortened Links & Live Click Counter</h4>
           <div class="table-responsive">
             <table class="admin-table">
               <thead>
                 <tr>
                   <th>Campaign Name</th>
                   <th>Target Episode / Story</th>
+                  <th>Short Link</th>
                   <th>Source / Medium</th>
                   <th>Total Clicks</th>
                   <th>Unique Readers</th>
                   <th>US Traffic %</th>
-                  <th>Est. Ad Revenue</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -547,6 +570,6 @@
 
   <div id="adminToast" class="admin-toast"></div>
 
-  <script src="/admin/admin.js?v=2.0.7"></script>
+  <script src="/admin/admin.js?v=2.0.8"></script>
 </body>
 </html>

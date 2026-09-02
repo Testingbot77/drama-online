@@ -611,26 +611,33 @@ function renderTrackingLinksTable(links) {
   tbody.innerHTML = '';
 
   if (links.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:24px;">No tracking links created yet. Create one above to start tracking clicks!</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:24px;">No shortened links created yet. Create one above to start tracking clicks!</td></tr>';
     return;
   }
 
   const domain = getProductionDomain();
 
   links.forEach(l => {
-    const fullUrl = l.fullTrackedUrl && !l.fullTrackedUrl.includes('localhost') ? l.fullTrackedUrl : `${domain}${l.trackedUrl}`;
+    const shortCode = l.shortCode || '';
+    const fullShortUrl = l.fullShortUrl || `${domain}/s/${shortCode}`;
+    const fullTrackedUrl = l.fullTrackedUrl || `${domain}${l.trackedUrl}`;
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${l.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted); font-family:monospace;">${l.campaign}</span></td>
-      <td style="max-width:240px; font-size:0.85rem;">${l.storyTitle}</td>
+      <td style="max-width:220px; font-size:0.85rem;">${l.storyTitle}</td>
+      <td>
+        <span class="badge-gold" style="font-family:monospace; font-size:0.82rem; cursor:pointer;" onclick="copyTrackingLinkUrl('${escapeAdminStr(fullShortUrl)}', 'Short URL copied!')" title="Click to copy short URL">
+          <i class="fa-solid fa-scissors"></i> /s/${shortCode}
+        </span>
+      </td>
       <td><span class="badge-cat" style="text-transform:capitalize;">${l.source} • ${l.medium || 'video'}</span></td>
       <td><strong style="color:var(--accent-gold); font-size:1.05rem;">${(l.clicks || 0).toLocaleString()}</strong></td>
       <td>${(l.uniqueReaders || 0).toLocaleString()}</td>
-      <td><span style="color:#00d26a; font-weight:700;">${l.usPercentage || 82}% 🇺🇸</span></td>
-      <td><strong style="color:#00d26a;">$${(l.estimatedRevenueUsd || 0).toFixed(2)}</strong></td>
+      <td><span style="color:#00d26a; font-weight:700;">${l.usPercentage || 85}% 🇺🇸</span></td>
       <td style="white-space:nowrap;">
-        <button class="btn-action-primary" onclick="copyTrackingLinkUrl('${escapeAdminStr(fullUrl)}')" title="Copy Tracked Link" style="padding:6px 12px; font-size:0.8rem;">
-          <i class="fa-solid fa-copy"></i> Copy Link
+        <button class="btn-action-accent" onclick="copyTrackingLinkUrl('${escapeAdminStr(fullShortUrl)}', 'Short link copied to clipboard!')" title="Copy Short Link" style="padding:6px 12px; font-size:0.8rem;">
+          <i class="fa-solid fa-copy"></i> Short Link
         </button>
         <button class="btn-action-danger" onclick="deleteTrackingLink('${l.id}')" title="Delete Link" style="padding:6px 10px; font-size:0.8rem; margin-left:6px;">
           <i class="fa-solid fa-trash"></i>
@@ -645,6 +652,7 @@ async function handleCreateTrackingLink(e) {
   e.preventDefault();
   const storySlug = document.getElementById('trackStorySelect').value;
   const campaign = document.getElementById('trackCampaignName').value.trim();
+  const customCode = (document.getElementById('trackCustomCode')?.value || '').trim();
   const source = document.getElementById('trackSourceSelect').value;
   const medium = document.getElementById('trackMediumSelect').value;
 
@@ -660,18 +668,23 @@ async function handleCreateTrackingLink(e) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${adminToken}`
       },
-      body: JSON.stringify({ storySlug, campaign, source, medium })
+      body: JSON.stringify({ storySlug, campaign, source, medium, customCode })
     });
     const data = await res.json();
     if (data.success && data.trackingLink) {
-      showAdminToast('Tracking link created successfully!');
+      showAdminToast('Short link created successfully! ⚡');
       
       const domain = getProductionDomain();
-      const fullUrl = data.trackingLink.fullTrackedUrl && !data.trackingLink.fullTrackedUrl.includes('localhost') 
-        ? data.trackingLink.fullTrackedUrl 
-        : `${domain}${data.trackingLink.trackedUrl}`;
-      
-      document.getElementById('generatedLinkInput').value = fullUrl;
+      const shortCode = data.trackingLink.shortCode || '';
+      const fullShortUrl = data.trackingLink.fullShortUrl || `${domain}/s/${shortCode}`;
+      const fullTrackedUrl = data.trackingLink.fullTrackedUrl || `${domain}${data.trackingLink.trackedUrl}`;
+
+      const shortInput = document.getElementById('generatedShortLinkInput');
+      if (shortInput) shortInput.value = fullShortUrl;
+
+      const fullInput = document.getElementById('generatedLinkInput');
+      if (fullInput) fullInput.value = fullTrackedUrl;
+
       document.getElementById('generatedLinkResult').style.display = 'block';
       
       loadTrackingLinks();
@@ -683,17 +696,25 @@ async function handleCreateTrackingLink(e) {
   }
 }
 
+function copyShortTrackingLink() {
+  const input = document.getElementById('generatedShortLinkInput');
+  if (input) {
+    navigator.clipboard.writeText(input.value);
+    showAdminToast('⚡ Short link copied to clipboard! Ready to paste in bio/captions');
+  }
+}
+
 function copyGeneratedTrackingLink() {
   const input = document.getElementById('generatedLinkInput');
   if (input) {
     navigator.clipboard.writeText(input.value);
-    showAdminToast('Tracking link copied to clipboard!');
+    showAdminToast('Full tracking link copied to clipboard!');
   }
 }
 
-function copyTrackingLinkUrl(url) {
+function copyTrackingLinkUrl(url, msg) {
   navigator.clipboard.writeText(url);
-  showAdminToast('Tracked campaign link copied!');
+  showAdminToast(msg || 'Link copied to clipboard!');
 }
 
 async function deleteTrackingLink(id) {
