@@ -80,92 +80,12 @@ async function loadAllStories() {
     const data = await res.json();
     if (data.success && data.stories) {
       allPubStories = data.stories;
-
-      // Check current route to render
-      const path = window.location.pathname;
-      if (path.startsWith('/story/')) {
-        const slug = path.replace('/story/', '').split('?')[0];
-        showStoryReader(slug);
-      } else if (path.startsWith('/category/')) {
-        showCategoryArchive(path.replace('/category/', '').split('?')[0]);
-      } else if (path === '/trending') {
-        showCategoryArchive('trending');
-      } else {
-        renderHomeComponents(allPubStories);
-      }
+      // Re-render current route now that stories are loaded
+      handleRoute(window.location.pathname, false);
     }
   } catch (err) {
     console.error('Error fetching stories:', err);
   }
-}
-
-// ================= HOMEPAGE RENDERING =================
-function renderHomeComponents(stories) {
-  if (!stories || stories.length === 0) return;
-
-  // 1. Hero Featured Story (highest trending or first)
-  const heroStory = stories[0];
-  const heroContainer = document.getElementById('heroCard');
-  if (heroContainer) {
-    heroContainer.innerHTML = `
-      <div class="hero-content-col">
-        <div class="hero-badge-row">
-          <span class="badge-gold"><i class="fa-solid fa-fire"></i> TOP TRENDING TODAY</span>
-          <span class="badge-cat">${heroStory.category || 'Drama'}</span>
-        </div>
-        <h1 class="hero-title">${heroStory.title}</h1>
-        <p class="hero-synopsis">${heroStory.hookSummary || ''}</p>
-        <div class="hero-meta-row">
-          <span><i class="fa-regular fa-clock"></i> ${heroStory.readTime || '7 min read'}</span>
-          <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 14000).toLocaleString()} readers</span>
-          <span><i class="fa-regular fa-calendar"></i> ${new Date(heroStory.publicationDate || Date.now()).toLocaleDateString()}</span>
-        </div>
-        <a href="/story/${heroStory.slug}" class="btn-read-hero" onclick="handleNavClick(event, '/story/${heroStory.slug}')">
-          <i class="fa-solid fa-book-open"></i> READ STORY
-        </a>
-      </div>
-      <div class="hero-image-col">
-        <img src="${heroStory.coverImage || '/images/story1_cover.svg'}" alt="${heroStory.title}">
-      </div>
-    `;
-  }
-
-  // 2. Trending Now Grid (sorted by trendingScore or views)
-  const trendingStories = [...stories].sort((a, b) => (b.trendingScore || b.views) - (a.trendingScore || a.views)).slice(0, 6);
-  renderCardGrid('trendingStoriesGrid', trendingStories);
-
-  // 3. Most Read Today Sidebar
-  const mostReadStories = [...stories].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
-  const mostReadContainer = document.getElementById('mostReadSidebarList');
-  if (mostReadContainer) {
-    mostReadContainer.innerHTML = '';
-    mostReadStories.forEach((s, idx) => {
-      const item = document.createElement('a');
-      item.className = 'most-read-item';
-      item.href = `/story/${s.slug}`;
-      item.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
-      item.innerHTML = `
-        <span class="most-read-num">0${idx + 1}</span>
-        <div>
-          <div class="most-read-title">${s.title}</div>
-          <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
-        </div>
-      `;
-      mostReadContainer.appendChild(item);
-    });
-  }
-
-  // 4. Category Grids
-  const marriage = stories.filter(s => matchCat(s, 'marriage') || matchCat(s, 'relationships')).slice(0, 4);
-  const betrayal = stories.filter(s => matchCat(s, 'betrayal') || matchCat(s, 'revenge')).slice(0, 4);
-  const inheritance = stories.filter(s => matchCat(s, 'inheritance') || matchCat(s, 'money')).slice(0, 4);
-  const billionaire = stories.filter(s => matchCat(s, 'billionaire') || matchCat(s, 'mafia')).slice(0, 4);
-
-  renderCardGrid('gridMarriage', marriage.length ? marriage : stories.slice(0, 4));
-  renderCardGrid('gridBetrayal', betrayal.length ? betrayal : stories.slice(1, 5));
-  renderCardGrid('gridInheritance', inheritance.length ? inheritance : stories.slice(2, 6));
-  renderCardGrid('gridBillionaire', billionaire.length ? billionaire : stories.slice(0, 4));
-  renderCardGrid('gridMoreStories', [...stories].reverse().slice(0, 4));
 }
 
 function renderCardGrid(elementId, storiesList) {
@@ -173,14 +93,25 @@ function renderCardGrid(elementId, storiesList) {
   if (!container) return;
   container.innerHTML = '';
 
+  if (!storiesList || storiesList.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">No stories found in this section.</p>';
+    return;
+  }
+
   storiesList.forEach(s => {
     const card = document.createElement('a');
     card.className = 'story-card';
     card.href = `/story/${s.slug}`;
     card.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
+    
+    const coverSrc = s.coverImage || `/images/${s.slug}-cover.svg`;
+
     card.innerHTML = `
       <div class="card-thumb-wrap">
-        <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" loading="lazy">
+        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.onerror=null; this.src='/images/the-discarded-heiress-billionaires-secret-vow-cover.svg';">
+        <div class="card-thumb-overlay">
+          <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
+        </div>
       </div>
       <div class="card-body">
         <div class="card-meta-row">
@@ -190,7 +121,7 @@ function renderCardGrid(elementId, storiesList) {
         <h3 class="card-title">${s.title}</h3>
         <p class="card-hook">${s.hookSummary || ''}</p>
         <div class="card-footer">
-          <span>Part ${s.partNumber || 1}</span>
+          <span>Part ${s.partNumber || 1} • <strong style="color: var(--accent-gold);">${s.views ? s.views.toLocaleString() + ' reads' : '🔥 Trending'}</strong></span>
           <span style="color: var(--accent-gold); font-weight:700;">Read Chapter →</span>
         </div>
       </div>
