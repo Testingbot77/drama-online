@@ -16,5 +16,23 @@
     "uniqueReaders": 0,
     "usPercentage": 85,
     "createdAt": "2026-09-02T15:50:42.719Z"
+  },
+  {
+    "id": "track-1788365423370",
+    "name": "Dola_Raw_1788199829896_Dola_Video.mp4 (Nightmare wall.)",
+    "storySlug": "the-graduation-envelope-mother-in-green",
+    "storyTitle": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
+    "source": "facebook",
+    "medium": "video",
+    "campaign": "dolara",
+    "shortCode": "dolara",
+    "shortUrl": "/s/dolara",
+    "fullShortUrl": "https://drama-online.onrender.com/s/dolara",
+    "trackedUrl": "/story/the-graduation-envelope-mother-in-green?utm_source=facebook&utm_medium=video&utm_campaign=dolara",
+    "fullTrackedUrl": "https://drama-online.onrender.com/story/the-graduation-envelope-mother-in-green?utm_source=facebook&utm_medium=video&utm_campaign=dolara",
+    "clicks": 1,
+    "uniqueReaders": 1,
+    "usPercentage": 85,
+    "createdAt": "2026-09-02T16:10:23.370Z"
   }
 ]
