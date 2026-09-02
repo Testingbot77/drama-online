@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24146,
-    "uniqueVisitors": 18458,
+    "totalPageviews": 24150,
+    "uniqueVisitors": 18462,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62794,
+    "adImpressions": 62810,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.26
+    "estimatedAdSenseRevenueUsd": 0.36
   },
   "trafficSources": [
     {
@@ -103,6 +103,38 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Shadow Billionaire Divorce (Part 2): The Judicial Reckoning",
