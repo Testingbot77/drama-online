@@ -110,10 +110,6 @@ function renderHomeComponents(stories) {
           <a href="/story/${heroStory.slug}" class="btn-read-hero" onclick="handleNavClick(event, '/story/${heroStory.slug}')">
             <i class="fa-solid fa-book-open"></i> READ STORY
           </a>
-          <button class="btn-hero-bookmark ${userBookmarks.includes(heroStory.slug) ? 'saved' : ''}" onclick="toggleSaveStory('${heroStory.slug}', '${heroStory.title.replace(/'/g, "\\'")}')">
-            <i class="${userBookmarks.includes(heroStory.slug) ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
-            <span>${userBookmarks.includes(heroStory.slug) ? 'Saved' : 'Save Story'}</span>
-          </button>
         </div>
       </div>
       <div class="hero-image-col">
@@ -132,20 +128,16 @@ function renderHomeComponents(stories) {
   if (mostReadContainer) {
     mostReadContainer.innerHTML = '';
     mostReadStories.forEach((s, idx) => {
-      const isSaved = userBookmarks.includes(s.slug);
-      const item = document.createElement('div');
-      item.className = 'most-read-item-wrapper';
+      const item = document.createElement('a');
+      item.className = 'most-read-item';
+      item.href = `/story/${s.slug}`;
+      item.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
       item.innerHTML = `
-        <a href="/story/${s.slug}" class="most-read-item" onclick="handleNavClick(event, '/story/${s.slug}')">
-          <span class="most-read-num">0${idx + 1}</span>
-          <div>
-            <div class="most-read-title">${s.title}</div>
-            <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
-          </div>
-        </a>
-        <button class="btn-sidebar-save ${isSaved ? 'saved' : ''}" onclick="toggleSaveStory('${s.slug}', '${s.title.replace(/'/g, "\\'")}')" title="${isSaved ? 'Remove from Saved' : 'Save to Library'}">
-          <i class="${isSaved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
-        </button>
+        <span class="most-read-num">0${idx + 1}</span>
+        <div>
+          <div class="most-read-title">${s.title}</div>
+          <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
+        </div>
       `;
       mostReadContainer.appendChild(item);
     });
@@ -175,35 +167,30 @@ function renderCardGrid(elementId, storiesList) {
   }
 
   storiesList.forEach(s => {
-    const isSaved = userBookmarks.includes(s.slug);
-    const card = document.createElement('div');
-    card.className = 'story-card-container';
+    const card = document.createElement('a');
+    card.className = 'story-card';
+    card.href = `/story/${s.slug}`;
+    card.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
     
     const coverSrc = s.coverImage || `/images/${s.slug}.jpg`;
 
     card.innerHTML = `
-      <div class="story-card">
-        <div class="card-thumb-wrap" onclick="handleNavClick(event, '/story/${s.slug}')">
-          <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/the-discarded-heiress-billionaires-secret-vow.jpg'">
-          <div class="card-thumb-overlay">
-            <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
-          </div>
-          <!-- 1-Click Bookmark Action Button on Card -->
-          <button class="btn-card-save ${isSaved ? 'saved' : ''}" onclick="event.preventDefault(); event.stopPropagation(); toggleSaveStory('${s.slug}', '${s.title.replace(/'/g, "\\'")}')" title="${isSaved ? 'Remove from Saved' : 'Save to Library'}">
-            <i class="${isSaved ? 'fa-solid' : 'fa-regular'} fa-bookmark"></i>
-          </button>
+      <div class="card-thumb-wrap">
+        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/the-discarded-heiress-billionaires-secret-vow.jpg'">
+        <div class="card-thumb-overlay">
+          <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
         </div>
-        <div class="card-body" onclick="handleNavClick(event, '/story/${s.slug}')">
-          <div class="card-meta-row">
-            <span class="badge-cat">${s.category || 'Drama'}</span>
-            <span style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.readTime || '6 min read'}</span>
-          </div>
-          <h3 class="card-title">${s.title}</h3>
-          <p class="card-hook">${s.hookSummary || ''}</p>
-          <div class="card-footer">
-            <span>Part ${s.partNumber || 1} • <strong style="color: var(--accent-gold);">${s.views ? s.views.toLocaleString() + ' reads' : '🔥 Trending'}</strong></span>
-            <span style="color: var(--accent-gold); font-weight:700;">Read Chapter →</span>
-          </div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta-row">
+          <span class="badge-cat">${s.category || 'Drama'}</span>
+          <span style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.readTime || '6 min read'}</span>
+        </div>
+        <h3 class="card-title">${s.title}</h3>
+        <p class="card-hook">${s.hookSummary || ''}</p>
+        <div class="card-footer">
+          <span>Part ${s.partNumber || 1} • <strong style="color: var(--accent-gold);">${s.views ? s.views.toLocaleString() + ' reads' : '🔥 Trending'}</strong></span>
+          <span style="color: var(--accent-gold); font-weight:700;">Read Chapter →</span>
         </div>
       </div>
     `;
@@ -536,546 +523,46 @@ function closeStickyFooterAd() {
   if (ad) ad.style.display = 'none';
 }
 
-// ================= NAVBAR LIVE SEARCH & CONTENT DROPDOWN =================
-function handleNavbarSearchFocus() {
-  const dropdown = document.getElementById('searchLiveDropdown');
-  const input = document.getElementById('navSearchInput');
-  if (dropdown) dropdown.style.display = 'block';
-  renderDropdownResults(allPubStories, input ? input.value : '');
-}
-
-function handleNavbarSearch(query) {
-  const dropdown = document.getElementById('searchLiveDropdown');
-  const clearBtn = document.getElementById('navSearchClearBtn');
-  if (dropdown) dropdown.style.display = 'block';
-  if (clearBtn) clearBtn.style.display = query ? 'flex' : 'none';
-
-  const q = (query || '').toLowerCase().trim();
-  if (!q) {
-    renderDropdownResults(allPubStories, '');
-    return;
-  }
-
-  const filtered = allPubStories.filter(s => {
-    const titleMatch = (s.title || '').toLowerCase().includes(q);
-    const catMatch = (s.category || '').toLowerCase().includes(q);
-    const tagMatch = (s.tags || []).some(t => t.toLowerCase().includes(q));
-    const hookMatch = (s.hookSummary || '').toLowerCase().includes(q);
-    return titleMatch || catMatch || tagMatch || hookMatch;
-  });
-
-  renderDropdownResults(filtered, q);
-}
-
-function renderDropdownResults(stories, query = '') {
-  const listEl = document.getElementById('dropdownResultsList');
-  const countEl = document.getElementById('dropdownMatchCount');
-  if (!listEl) return;
-
-  if (countEl) {
-    countEl.innerText = query ? `${stories.length} Stories Matched for "${query}"` : `${stories.length} Stories Available`;
-  }
-
-  if (stories.length === 0) {
-    listEl.innerHTML = `
-      <div class="empty-dropdown-state">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span>No matching stories found for "${query}"</span>
-      </div>
-    `;
-    return;
-  }
-
-  listEl.innerHTML = stories.slice(0, 8).map(s => `
-    <div class="dropdown-story-item" onclick="closeSearchDropdown(); handleNavClick(event, '/story/${s.slug}')">
-      <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" class="dropdown-story-thumb">
-      <div class="dropdown-story-info">
-        <div class="dropdown-story-meta">
-          <span class="dropdown-cat">${s.category || 'Drama'}</span>
-          ${s.partNumber ? `<span class="dropdown-part">Part ${s.partNumber}</span>` : ''}
-          <span class="dropdown-time">${s.readTime || '8 min read'}</span>
-        </div>
-        <div class="dropdown-story-title">${highlightQuery(s.title, query)}</div>
-      </div>
-      <i class="fa-solid fa-chevron-right dropdown-arrow"></i>
-    </div>
-  `).join('');
-}
-
-function applyDropdownTag(tag) {
-  const input = document.getElementById('navSearchInput');
-  if (input) {
-    input.value = tag;
-    handleNavbarSearch(tag);
-  }
-}
-
-function clearNavbarSearch() {
-  const input = document.getElementById('navSearchInput');
-  const clearBtn = document.getElementById('navSearchClearBtn');
-  if (input) input.value = '';
-  if (clearBtn) clearBtn.style.display = 'none';
-  renderDropdownResults(allPubStories, '');
-}
-
-function closeSearchDropdown() {
-  const dropdown = document.getElementById('searchLiveDropdown');
-  if (dropdown) dropdown.style.display = 'none';
-}
-
-// Close search dropdown on click outside
-document.addEventListener('click', (e) => {
-  const container = document.getElementById('navSearchContainer');
-  if (container && !container.contains(e.target)) {
-    closeSearchDropdown();
-  }
-});
-
-// ================= INTERACTIVE SEARCH OVERLAY =================
-function focusSearch() {
-  openSearchModal();
-}
-
-function openSearchModal() {
-  const modal = document.getElementById('searchModal');
-  if (!modal) return;
-  modal.style.display = 'flex';
-  const input = document.getElementById('globalSearchInput');
-  if (input) {
-    input.value = '';
-    setTimeout(() => input.focus(), 50);
-  }
-  renderSearchResults(allPubStories);
-}
-
-function closeSearchModal() {
-  const modal = document.getElementById('searchModal');
-  if (modal) modal.style.display = 'none';
-}
-
-function clearSearch() {
-  const input = document.getElementById('globalSearchInput');
-  const btnClear = document.getElementById('btnSearchClear');
-  if (input) input.value = '';
-  if (btnClear) btnClear.style.display = 'none';
-  renderSearchResults(allPubStories);
-}
-
-function applyQuickTag(tag) {
-  const input = document.getElementById('globalSearchInput');
-  if (input) {
-    input.value = tag;
-    handleLiveSearch(tag);
-  }
-}
-
-function handleLiveSearch(query) {
-  const btnClear = document.getElementById('btnSearchClear');
-  if (btnClear) btnClear.style.display = query ? 'block' : 'none';
-
-  const q = (query || '').toLowerCase().trim();
-  if (!q) {
-    renderSearchResults(allPubStories);
-    return;
-  }
-
-  const filtered = allPubStories.filter(s => {
-    const titleMatch = (s.title || '').toLowerCase().includes(q);
-    const catMatch = (s.category || '').toLowerCase().includes(q);
-    const subMatch = (s.subcategory || '').toLowerCase().includes(q);
-    const tagMatch = (s.tags || []).some(t => t.toLowerCase().includes(q));
-    const hookMatch = (s.hookSummary || '').toLowerCase().includes(q);
-    const authorMatch = (s.author || '').toLowerCase().includes(q);
-    return titleMatch || catMatch || subMatch || tagMatch || hookMatch || authorMatch;
-  });
-
-  renderSearchResults(filtered, q);
-}
-
-function renderSearchResults(stories, query = '') {
-  const listEl = document.getElementById('searchResultsList');
-  const countEl = document.getElementById('searchResultsCount');
-  if (!listEl) return;
-
-  if (countEl) {
-    countEl.innerText = query ? `Found ${stories.length} stories for "${query}"` : `Showing all ${stories.length} stories`;
-  }
-
-  if (stories.length === 0) {
-    listEl.innerHTML = `
-      <div class="empty-library-state">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <h4>No Stories Found</h4>
-        <p>Try searching for "Graduation", "Billionaire", "Revenge", or "Heiress".</p>
-      </div>
-    `;
-    return;
-  }
-
-  listEl.innerHTML = stories.map(s => `
-    <div class="search-result-card" onclick="closeSearchModal(); handleNavClick(event, '/story/${s.slug}')">
-      <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" class="search-result-thumb">
-      <div class="search-result-details">
-        <div class="search-result-meta">
-          <span class="search-cat-badge">${s.category || 'Drama'}</span>
-          <span class="search-readtime"><i class="fa-regular fa-clock"></i> ${s.readTime || '8 min read'}</span>
-          ${s.partNumber ? `<span class="search-part-badge">Part ${s.partNumber}</span>` : ''}
-        </div>
-        <h4 class="search-result-title">${highlightQuery(s.title, query)}</h4>
-        <p class="search-result-desc">${s.hookSummary ? highlightQuery(s.hookSummary.slice(0, 120) + '...', query) : ''}</p>
-      </div>
-      <button class="btn-read-search-arrow"><i class="fa-solid fa-arrow-right"></i></button>
-    </div>
-  `).join('');
-}
-
-function highlightQuery(text, query) {
-  if (!query || !text) return text || '';
-  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  return text.replace(regex, '<mark class="search-highlight">$1</mark>');
-}
-
 function showToast(msg) {
   const toast = document.getElementById('pubToast');
+  if (!toast) return;
   toast.innerText = msg;
   toast.style.display = 'block';
   setTimeout(() => { toast.style.display = 'none'; }, 2800);
 }
 
-// ================= USER PROFILE & BOOKMARKING SYSTEM =================
-
-let currentUser = null;
-let userBookmarks = [];
-let readingHistory = [];
-
-// Initialize saved user and bookmarks
-function initUserProfile() {
-  try {
-    const storedUser = localStorage.getItem('taleonix_user');
-    if (storedUser) {
-      currentUser = JSON.parse(storedUser);
-    }
-    const storedBookmarks = localStorage.getItem('taleonix_bookmarks');
-    if (storedBookmarks) {
-      userBookmarks = JSON.parse(storedBookmarks);
-    }
-    const storedHistory = localStorage.getItem('taleonix_history');
-    if (storedHistory) {
-      readingHistory = JSON.parse(storedHistory);
-    }
-  } catch (err) {
-    console.error('Error loading user profile state:', err);
-  }
-  updateNavProfileState();
-}
-
-function updateNavProfileState() {
-  const navText = document.getElementById('navProfileText');
-  const countPill = document.getElementById('navBookmarkCount');
-
-  if (currentUser) {
-    if (navText) navText.innerText = currentUser.name.split(' ')[0];
-  } else {
-    if (navText) navText.innerText = 'My Library';
-  }
-
-  if (countPill) {
-    if (userBookmarks.length > 0) {
-      countPill.innerText = userBookmarks.length;
-      countPill.style.display = 'inline-flex';
-    } else {
-      countPill.style.display = 'none';
-    }
-  }
-
-  // Update in-story bookmark button state if reading
-  updateStoryBookmarkButton();
-}
-
-function updateStoryBookmarkButton() {
-  const btn = document.getElementById('btnStoryBookmark');
-  const btnText = document.getElementById('bookmarkBtnText');
-  if (!btn || !currentViewingStory) return;
-
-  const isSaved = userBookmarks.includes(currentViewingStory.slug);
-  if (isSaved) {
-    btn.classList.add('saved');
-    btn.innerHTML = '<i class="fa-solid fa-bookmark"></i> <span id="bookmarkBtnText">Saved</span>';
-  } else {
-    btn.classList.remove('saved');
-    btn.innerHTML = '<i class="fa-regular fa-bookmark"></i> <span id="bookmarkBtnText">Save Story</span>';
-  }
-}
-
-function handleBookmarkCurrentStory() {
-  if (!currentViewingStory) return;
-  toggleSaveStory(currentViewingStory.slug, currentViewingStory.title);
-}
-
-function toggleSaveStory(slug, title) {
-  const idx = userBookmarks.indexOf(slug);
-  let isSaved = false;
-
-  if (idx >= 0) {
-    userBookmarks.splice(idx, 1);
-    isSaved = false;
-    showToast('Removed from Saved Stories');
-  } else {
-    userBookmarks.unshift(slug);
-    isSaved = true;
-    showToast('Saved to My Library! 🔖');
-  }
-
-  localStorage.setItem('taleonix_bookmarks', JSON.stringify(userBookmarks));
-  updateNavProfileState();
-
-  // If user is logged in, sync with server backend
-  if (currentUser && currentUser.email) {
-    fetch('/api/users/bookmarks/toggle', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: currentUser.email, slug: slug })
-    }).catch(err => console.warn('Sync notice:', err.message));
-  }
-
-  // If profile modal is open, re-render saved list
-  if (document.getElementById('userProfileModal').style.display === 'flex') {
-    renderSavedStories();
-  }
-}
-
-// Record reading history
-function recordReadingHistory(story) {
-  if (!story || !story.slug) return;
-  readingHistory = readingHistory.filter(h => h.slug !== story.slug);
-  readingHistory.unshift({
-    slug: story.slug,
-    title: story.title,
-    category: story.category,
-    coverImage: story.coverImage,
-    timestamp: new Date().toISOString()
-  });
-  if (readingHistory.length > 15) readingHistory.pop();
-  localStorage.setItem('taleonix_history', JSON.stringify(readingHistory));
-}
-
-// Modal controls
-function openUserProfileModal() {
-  const modal = document.getElementById('userProfileModal');
-  if (!modal) return;
-  modal.style.display = 'flex';
-
-  const authView = document.getElementById('modalAuthView');
-  const profileView = document.getElementById('modalProfileView');
-
-  if (currentUser) {
-    authView.style.display = 'none';
-    profileView.style.display = 'block';
-    
-    document.getElementById('userProfileName').innerText = currentUser.name || 'VIP Reader';
-    document.getElementById('userProfileEmail').innerText = currentUser.email || '';
-    if (currentUser.avatar) {
-      document.getElementById('userProfileAvatar').src = currentUser.avatar;
-    }
-    document.getElementById('savedCountBadge').innerText = userBookmarks.length;
-
-    renderSavedStories();
-  } else {
-    authView.style.display = 'block';
-    profileView.style.display = 'none';
-  }
-}
-
-function closeUserProfileModal() {
-  const modal = document.getElementById('userProfileModal');
-  if (modal) modal.style.display = 'none';
-}
-
-function switchProfileTab(tab) {
-  const tabSaved = document.getElementById('profileTabSaved');
-  const tabHistory = document.getElementById('profileTabHistory');
-  const btnSaved = document.getElementById('tabBtnSaved');
-  const btnHistory = document.getElementById('tabBtnHistory');
-
-  if (tab === 'saved') {
-    tabSaved.style.display = 'block';
-    tabHistory.style.display = 'none';
-    btnSaved.classList.add('active');
-    btnHistory.classList.remove('active');
-    renderSavedStories();
-  } else {
-    tabSaved.style.display = 'none';
-    tabHistory.style.display = 'block';
-    btnSaved.classList.remove('active');
-    btnHistory.classList.add('active');
-    renderReadingHistory();
-  }
-}
-
-function renderSavedStories() {
-  const listEl = document.getElementById('savedStoriesList');
-  if (!listEl) return;
-
-  const savedList = allPubStories.filter(s => userBookmarks.includes(s.slug));
-
-  if (savedList.length === 0) {
-    listEl.innerHTML = `
-      <div class="empty-library-state">
-        <i class="fa-regular fa-bookmark"></i>
-        <h4>No Saved Stories Yet</h4>
-        <p>Click the "Save Story" button on any chapter to build your personal library.</p>
-      </div>
-    `;
-    return;
-  }
-
-  listEl.innerHTML = savedList.map(s => `
-    <div class="saved-story-card">
-      <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" class="saved-story-thumb">
-      <div class="saved-story-details">
-        <span class="saved-cat-tag">${s.category || 'Drama'}</span>
-        <h4 class="saved-story-title" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${s.slug}')">${s.title}</h4>
-        <div class="saved-actions-row">
-          <a href="/story/${s.slug}" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${s.slug}')" class="btn-read-saved">
-            <i class="fa-solid fa-book-open"></i> Read Now
-          </a>
-          <button class="btn-remove-saved" onclick="toggleSaveStory('${s.slug}', '${s.title.replace(/'/g, "\\'")}')" title="Remove Bookmark">
-            <i class="fa-solid fa-trash-can"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderReadingHistory() {
-  const listEl = document.getElementById('readingHistoryList');
-  if (!listEl) return;
-
-  if (readingHistory.length === 0) {
-    listEl.innerHTML = `
-      <div class="empty-library-state">
-        <i class="fa-solid fa-clock-rotate-left"></i>
-        <h4>No Reading History</h4>
-        <p>Stories you read will appear here automatically.</p>
-      </div>
-    `;
-    return;
-  }
-
-  listEl.innerHTML = readingHistory.map(h => `
-    <div class="saved-story-card">
-      <img src="${h.coverImage || '/images/story1_cover.svg'}" alt="${h.title}" class="saved-story-thumb">
-      <div class="saved-story-details">
-        <span class="saved-cat-tag">${h.category || 'Drama'}</span>
-        <h4 class="saved-story-title" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${h.slug}')">${h.title}</h4>
-        <div class="saved-actions-row">
-          <a href="/story/${h.slug}" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${h.slug}')" class="btn-read-saved">
-            <i class="fa-solid fa-book-open"></i> Resume Reading
-          </a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-// Google Sign-In with User's Own Account
-function handleGoogleAuthSubmit(e) {
+// ================= EMAIL SUBSCRIPTION SYSTEM =================
+function handleEmailSubscription(e) {
   if (e) e.preventDefault();
-  const nameInput = document.getElementById('googleNameInput');
-  const emailInput = document.getElementById('googleEmailInput');
-
-  if (!emailInput || !emailInput.value) {
-    showToast('Please enter your Google Email address');
-    return;
-  }
-
-  const name = (nameInput && nameInput.value) ? nameInput.value.trim() : emailInput.value.split('@')[0];
-  const email = emailInput.value.trim();
-  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=f5c518&textColor=090a10`;
-
-  completeAuthentication({
-    name: name,
-    email: email,
-    provider: 'google',
-    avatar: avatarUrl
-  });
-}
-
-function handleEmailAuth(e) {
-  if (e) e.preventDefault();
-  const nameInput = document.getElementById('authNameInput');
-  const emailInput = document.getElementById('authEmailInput') || document.getElementById('inputReaderEmail');
-  
+  const emailInput = document.getElementById('inputReaderEmail');
   if (!emailInput || !emailInput.value) {
     showToast('Please enter a valid email address');
     return;
   }
 
-  const name = (nameInput && nameInput.value) ? nameInput.value.trim() : emailInput.value.split('@')[0];
   const email = emailInput.value.trim();
-  const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=3b82f6&textColor=ffffff`;
+  const name = email.split('@')[0];
 
-  completeAuthentication({
-    name: name,
-    email: email,
-    provider: 'email',
-    avatar: avatarUrl
-  });
-}
-
-function completeAuthentication(userPayload) {
   fetch('/api/users/auth', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userPayload)
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      provider: 'email',
+      avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=f5c518&textColor=090a10`
+    })
   })
   .then(r => r.json())
   .then(d => {
-    if (d.success) {
-      currentUser = d.user;
-      localStorage.setItem('taleonix_user', JSON.stringify(currentUser));
-      
-      // Merge backend bookmarks if any
-      if (d.user.bookmarks && d.user.bookmarks.length > 0) {
-        userBookmarks = Array.from(new Set([...userBookmarks, ...d.user.bookmarks]));
-        localStorage.setItem('taleonix_bookmarks', JSON.stringify(userBookmarks));
-      }
-
-      updateNavProfileState();
-      openUserProfileModal();
-      showToast(`Signed in as ${currentUser.name}! Profile connected 🎉`);
-    }
+    emailInput.value = '';
+    showToast('Subscribed! You will receive episode alerts for new chapters 🎉');
   })
   .catch(err => {
-    console.error('Auth error:', err);
-    // Offline / persistent fallback
-    currentUser = userPayload;
-    localStorage.setItem('taleonix_user', JSON.stringify(currentUser));
-    updateNavProfileState();
-    openUserProfileModal();
-    showToast(`Signed in as ${currentUser.name}!`);
+    emailInput.value = '';
+    showToast('Thank you for subscribing! 🎉');
   });
 }
 
-function handleUserLogout() {
-  currentUser = null;
-  localStorage.removeItem('taleonix_user');
-  updateNavProfileState();
-  openUserProfileModal();
-  showToast('Signed out of Taleonix Library.');
-}
-
-// Global Keydown Listener for Escape key (Close modal & back to reader)
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeUserProfileModal();
-    closeSearchModal();
-    closeSearchDropdown();
-  }
-});
-
-// Hook profile initialization on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  initUserProfile();
-});
 
 
