@@ -5,5 +5,9 @@
   "domainUrl": "http://localhost:3000",
   "adsenseClientId": "ca-pub-XXXXXXXXXXXX",
   "enableAdSenseSimulation": true,
-  "autoProcessFolder": true
+  "autoProcessFolder": true,
+  "wpUrl": "",
+  "wpUsername": "",
+  "wpAppPassword": "",
+  "adminPasswordHash": "993355"
 }

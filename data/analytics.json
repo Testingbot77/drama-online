@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24139,
-    "uniqueVisitors": 18451,
+    "totalPageviews": 24142,
+    "uniqueVisitors": 18454,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62766,
+    "adImpressions": 62778,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 0.04
+    "estimatedAdSenseRevenueUsd": 0.13
   },
   "trafficSources": [
     {
@@ -103,6 +103,30 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Contract Marriage: When the Crippled CEO Walked",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Mobile (iOS/Android)",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Contract Marriage: When the Crippled CEO Walked",
+      "country": "United States 🇺🇸",
+      "device": "Mobile (iOS/Android)",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Contract Marriage: When the Crippled CEO Walked",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "http://localhost:3000/",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Discarded Heiress: When the $90 Billion Vance Matriarch Returned",
