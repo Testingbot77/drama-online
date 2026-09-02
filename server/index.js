@@ -51,7 +51,7 @@ app.get('/robots.txt', (req, res) => {
 // Google AdSense ads.txt
 app.get('/ads.txt', (req, res) => {
   res.type('text/plain');
-  res.send('google.com, pub-2510739755298896, DIRECT, f08c47fec0942fa0\n');
+  res.send('google.com, pub-3806896432302528, DIRECT, f08c47fec0942fa0\n');
 });
 
 // Dynamic sitemap.xml
