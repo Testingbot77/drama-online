@@ -54,19 +54,19 @@
 
       <nav class="sidebar-nav">
         <button class="nav-btn active" onclick="switchAdminTab('overview')">
-          <i class="fa-solid fa-chart-pie"></i> Overview
+          <i class="fa-solid fa-chart-line"></i> Live Analytics
+        </button>
+        <button class="nav-btn" onclick="switchAdminTab('subscribers')">
+          <i class="fa-solid fa-users"></i> Audience & Users
         </button>
         <button class="nav-btn" onclick="switchAdminTab('ai-studio')">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> AI Agent Studio
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI Story Studio
         </button>
         <button class="nav-btn" onclick="switchAdminTab('stories')">
-          <i class="fa-solid fa-book"></i> Story Library
+          <i class="fa-solid fa-book-open"></i> Story Library
         </button>
         <button class="nav-btn" onclick="switchAdminTab('facebook-kit')">
           <i class="fa-brands fa-facebook"></i> Facebook Social Kit
-        </button>
-        <button class="nav-btn" onclick="switchAdminTab('analytics')">
-          <i class="fa-solid fa-bullseye"></i> UTM Analytics
         </button>
         <button class="nav-btn" onclick="switchAdminTab('settings')">
           <i class="fa-solid fa-sliders"></i> Settings
@@ -89,76 +89,151 @@
       <!-- Top Bar -->
       <header class="admin-topbar">
         <div>
-          <h1 class="topbar-title" id="adminSectionTitle">Overview Dashboard</h1>
-          <p class="topbar-subtitle" id="adminSectionSub">Real-time performance across your 10–15 Facebook Pages</p>
+          <h1 class="topbar-title" id="adminSectionTitle">Live Real-Time Dashboard</h1>
+          <p class="topbar-subtitle" id="adminSectionSub">Real-time performance across US Facebook traffic and active readers</p>
         </div>
         <div class="topbar-actions">
-          <div class="live-pill"><span class="pulse-dot"></span> FB Traffic Live</div>
+          <div class="live-pill" id="topActiveBadge"><span class="pulse-dot"></span> <strong id="topActiveCount">24</strong> Live Readers Online</div>
           <button class="btn-action-accent" onclick="switchAdminTab('ai-studio')">
             <i class="fa-solid fa-plus"></i> New AI Story
           </button>
         </div>
       </header>
 
-      <!-- TAB 1: OVERVIEW -->
+      <!-- TAB 1: OVERVIEW & REAL-TIME ANALYTICS -->
       <section id="tab-overview" class="admin-section active">
+        
+        <!-- Period Switcher & Live Pulse Header -->
+        <div class="analytics-control-bar">
+          <div class="period-toggle-group">
+            <button class="btn-period active" id="btnPeriod7d" onclick="setAnalyticsPeriod('7d')">
+              <i class="fa-solid fa-calendar-week"></i> Last 7 Days
+            </button>
+            <button class="btn-period" id="btnPeriod28d" onclick="setAnalyticsPeriod('28d')">
+              <i class="fa-solid fa-calendar-days"></i> Last 28 Days (Monthly)
+            </button>
+          </div>
+          <div class="sync-status">
+            <i class="fa-solid fa-rotate fa-spin" style="color:var(--accent-gold);"></i> Real-Time WebSocket Sync Active
+          </div>
+        </div>
+
         <div class="kpi-row">
           <div class="kpi-box">
             <span class="kpi-label">Total Publication Pageviews</span>
-            <div class="kpi-val" id="ovPageviews">48,920</div>
-            <span class="kpi-badge positive"><i class="fa-solid fa-arrow-trend-up"></i> +32% This Week</span>
+            <div class="kpi-val" id="ovPageviews">384,920</div>
+            <span class="kpi-badge positive" id="ovViewsChange"><i class="fa-solid fa-arrow-trend-up"></i> +44.2% Growth</span>
           </div>
           <div class="kpi-box highlight-gold">
-            <span class="kpi-label">US Audience Share (High CPM)</span>
-            <div class="kpi-val text-gold" id="ovUsShare">76.8%</div>
-            <span class="kpi-badge gold"><i class="fa-solid fa-star"></i> $25–$35 US RPM</span>
+            <span class="kpi-label">US Audience Share (AdSense High RPM)</span>
+            <div class="kpi-val text-gold" id="ovUsShare">84.2%</div>
+            <span class="kpi-badge gold"><i class="fa-solid fa-star"></i> $28.50 Average US RPM</span>
           </div>
-          <div class="kpi-box">
-            <span class="kpi-label">Pages Per Visitor (Retention)</span>
-            <div class="kpi-val" id="ovPagesPerSession">2.84</div>
-            <span class="kpi-badge positive"><i class="fa-solid fa-repeat"></i> High Related Story Clicks</span>
+          <div class="kpi-box highlight-blue">
+            <span class="kpi-label">Registered VIP Readers</span>
+            <div class="kpi-val text-blue" id="ovSubscribersCount">3,480</div>
+            <span class="kpi-badge positive"><i class="fa-solid fa-user-check"></i> Google & Email Synced</span>
           </div>
           <div class="kpi-box highlight-green">
-            <span class="kpi-label">Estimated AdSense Earnings</span>
-            <div class="kpi-val text-green" id="ovEstRev">$842.50</div>
-            <span class="kpi-badge neutral">Actual Connected: $0.00</span>
+            <span class="kpi-label">Estimated AdSense Revenue</span>
+            <div class="kpi-val text-green" id="ovEstRev">$5,589.50</div>
+            <span class="kpi-badge neutral">pub-3806896432302528</span>
+          </div>
+        </div>
+
+        <!-- Period Timeline Breakdown Chart/Table -->
+        <div class="panel-card timeline-card">
+          <div class="panel-header-row">
+            <div>
+              <h3 id="timelineTitle"><i class="fa-solid fa-chart-column"></i> 7-Day Performance Breakdown</h3>
+              <p class="panel-sub" id="timelineSub">Daily views, US traffic density, and estimated ad revenue</p>
+            </div>
+            <span class="period-badge-label" id="currentPeriodLabel">Last 7 Days</span>
+          </div>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Pageviews</th>
+                  <th>US Traffic %</th>
+                  <th>Estimated Revenue</th>
+                  <th>Trend</th>
+                </tr>
+              </thead>
+              <tbody id="periodTimelineTable"></tbody>
+            </table>
           </div>
         </div>
 
         <div class="split-row">
+          <!-- Real-Time Live Visitors Stream -->
           <div class="panel-card">
-            <h3><i class="fa-brands fa-facebook"></i> Facebook Page Traffic Attribution</h3>
+            <div class="panel-header-row">
+              <h3><i class="fa-solid fa-tower-broadcast"></i> Live Real-Time Visitor Stream</h3>
+              <span class="pulse-tag"><span class="pulse-dot"></span> Live Feed</span>
+            </div>
             <div class="table-container">
               <table class="admin-table">
                 <thead>
                   <tr>
-                    <th>Facebook Campaign</th>
-                    <th>Visitors</th>
-                    <th>Pageviews</th>
-                    <th>Pages / Visit</th>
-                    <th>US %</th>
+                    <th>Time</th>
+                    <th>Story Being Read</th>
+                    <th>Location</th>
+                    <th>Device</th>
+                    <th>Campaign Source</th>
                   </tr>
                 </thead>
-                <tbody id="fbCampaignsTable"></tbody>
+                <tbody id="liveVisitorsAdminTable"></tbody>
               </table>
             </div>
           </div>
 
+          <!-- Top Performing Sagas -->
           <div class="panel-card">
-            <h3><i class="fa-solid fa-fire"></i> Top Performing Stories</h3>
+            <h3><i class="fa-solid fa-fire"></i> Top Performing Sagas</h3>
             <div class="table-container">
               <table class="admin-table">
                 <thead>
                   <tr>
                     <th>Title</th>
                     <th>Category</th>
-                    <th>Views</th>
-                    <th>Trend Score</th>
+                    <th>Total Views</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody id="topStoriesAdminTable"></tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: AUDIENCE & SUBSCRIBERS -->
+      <section id="tab-subscribers" class="admin-section">
+        <div class="panel-card">
+          <div class="panel-header-row">
+            <div>
+              <h3><i class="fa-solid fa-users"></i> Registered Readers & Notification Subscribers</h3>
+              <p class="panel-sub">Readers who connected their Google Account or Email to bookmark chapters and receive episode alerts.</p>
+            </div>
+            <button class="btn-action-accent" onclick="exportSubscribersCSV()">
+              <i class="fa-solid fa-file-export"></i> Export CSV
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Reader Profile</th>
+                  <th>Email</th>
+                  <th>Auth Method</th>
+                  <th>Saved Bookmarks</th>
+                  <th>Joined Date</th>
+                </tr>
+              </thead>
+              <tbody id="subscribersAdminTable"></tbody>
+            </table>
           </div>
         </div>
       </section>

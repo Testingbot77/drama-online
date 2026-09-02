@@ -466,11 +466,20 @@ const INITIAL_SETTINGS = {
   wpAppPassword: ""
 };
 
+const SUBSCRIBERS_FILE = path.join(DATA_DIR, 'subscribers.json');
+
+const INITIAL_SUBSCRIBERS = [
+  { id: "usr_1", name: "Eleanor Vance", email: "eleanor.v@gmail.com", provider: "google", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Eleanor", bookmarks: ["the-discarded-heiress-billionaires-secret-vow", "the-shadow-billionaire-divorce-when-she-walked-away-with-half-the-city"], createdAt: new Date(Date.now() - 86400000 * 3).toISOString() },
+  { id: "usr_2", name: "David Miller", email: "david.m92@yahoo.com", provider: "email", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David", bookmarks: ["the-two-mothers-at-graduation", "his-hidden-mafia-queen-the-undercover-waitress"], createdAt: new Date(Date.now() - 86400000 * 2).toISOString() },
+  { id: "usr_3", name: "Sophia Reynolds", email: "sophia.reynolds@gmail.com", provider: "google", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia", bookmarks: ["the-contract-marriage-when-the-crippled-ceo-walked"], createdAt: new Date(Date.now() - 86400000 * 1).toISOString() }
+];
+
 // High-Throughput In-Memory Caches for 1M+ Readers
 let memoryStories = null;
 let memoryMarketing = null;
 let memoryAnalytics = null;
 let memorySettings = null;
+let memorySubscribers = null;
 
 module.exports = {
   getStories: () => {
@@ -504,5 +513,13 @@ module.exports = {
   saveSettings: (data) => {
     memorySettings = data;
     writeJSON(SETTINGS_FILE, data);
+  },
+  getSubscribers: () => {
+    if (!memorySubscribers) memorySubscribers = readJSON(SUBSCRIBERS_FILE, INITIAL_SUBSCRIBERS);
+    return memorySubscribers;
+  },
+  saveSubscribers: (data) => {
+    memorySubscribers = data;
+    writeJSON(SUBSCRIBERS_FILE, data);
   }
 };

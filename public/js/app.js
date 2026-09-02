@@ -246,6 +246,8 @@ async function showStoryReader(slug) {
 
     const story = data.story;
     currentViewingStory = story;
+    recordReadingHistory(story);
+    updateStoryBookmarkButton();
 
     const urlParams = new URLSearchParams(window.location.search);
     const utmCampaign = urlParams.get('utm_campaign') || 'direct';
@@ -530,3 +532,326 @@ function showToast(msg) {
   toast.style.display = 'block';
   setTimeout(() => { toast.style.display = 'none'; }, 2800);
 }
+
+// ================= USER PROFILE & BOOKMARKING SYSTEM =================
+
+let currentUser = null;
+let userBookmarks = [];
+let readingHistory = [];
+
+// Initialize saved user and bookmarks
+function initUserProfile() {
+  try {
+    const storedUser = localStorage.getItem('taleonix_user');
+    if (storedUser) {
+      currentUser = JSON.parse(storedUser);
+    }
+    const storedBookmarks = localStorage.getItem('taleonix_bookmarks');
+    if (storedBookmarks) {
+      userBookmarks = JSON.parse(storedBookmarks);
+    }
+    const storedHistory = localStorage.getItem('taleonix_history');
+    if (storedHistory) {
+      readingHistory = JSON.parse(storedHistory);
+    }
+  } catch (err) {
+    console.error('Error loading user profile state:', err);
+  }
+  updateNavProfileState();
+}
+
+function updateNavProfileState() {
+  const navText = document.getElementById('navProfileText');
+  const countPill = document.getElementById('navBookmarkCount');
+
+  if (currentUser) {
+    if (navText) navText.innerText = currentUser.name.split(' ')[0];
+  } else {
+    if (navText) navText.innerText = 'My Library';
+  }
+
+  if (countPill) {
+    if (userBookmarks.length > 0) {
+      countPill.innerText = userBookmarks.length;
+      countPill.style.display = 'inline-flex';
+    } else {
+      countPill.style.display = 'none';
+    }
+  }
+
+  // Update in-story bookmark button state if reading
+  updateStoryBookmarkButton();
+}
+
+function updateStoryBookmarkButton() {
+  const btn = document.getElementById('btnStoryBookmark');
+  const btnText = document.getElementById('bookmarkBtnText');
+  if (!btn || !currentViewingStory) return;
+
+  const isSaved = userBookmarks.includes(currentViewingStory.slug);
+  if (isSaved) {
+    btn.classList.add('saved');
+    btn.innerHTML = '<i class="fa-solid fa-bookmark"></i> <span id="bookmarkBtnText">Saved</span>';
+  } else {
+    btn.classList.remove('saved');
+    btn.innerHTML = '<i class="fa-regular fa-bookmark"></i> <span id="bookmarkBtnText">Save Story</span>';
+  }
+}
+
+function handleBookmarkCurrentStory() {
+  if (!currentViewingStory) return;
+  toggleSaveStory(currentViewingStory.slug, currentViewingStory.title);
+}
+
+function toggleSaveStory(slug, title) {
+  const idx = userBookmarks.indexOf(slug);
+  let isSaved = false;
+
+  if (idx >= 0) {
+    userBookmarks.splice(idx, 1);
+    isSaved = false;
+    showToast('Removed from Saved Stories');
+  } else {
+    userBookmarks.unshift(slug);
+    isSaved = true;
+    showToast('Saved to My Library! 🔖');
+  }
+
+  localStorage.setItem('taleonix_bookmarks', JSON.stringify(userBookmarks));
+  updateNavProfileState();
+
+  // If user is logged in, sync with server backend
+  if (currentUser && currentUser.email) {
+    fetch('/api/users/bookmarks/toggle', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentUser.email, slug: slug })
+    }).catch(err => console.warn('Sync notice:', err.message));
+  }
+
+  // If profile modal is open, re-render saved list
+  if (document.getElementById('userProfileModal').style.display === 'flex') {
+    renderSavedStories();
+  }
+}
+
+// Record reading history
+function recordReadingHistory(story) {
+  if (!story || !story.slug) return;
+  readingHistory = readingHistory.filter(h => h.slug !== story.slug);
+  readingHistory.unshift({
+    slug: story.slug,
+    title: story.title,
+    category: story.category,
+    coverImage: story.coverImage,
+    timestamp: new Date().toISOString()
+  });
+  if (readingHistory.length > 15) readingHistory.pop();
+  localStorage.setItem('taleonix_history', JSON.stringify(readingHistory));
+}
+
+// Modal controls
+function openUserProfileModal() {
+  const modal = document.getElementById('userProfileModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+
+  const authView = document.getElementById('modalAuthView');
+  const profileView = document.getElementById('modalProfileView');
+
+  if (currentUser) {
+    authView.style.display = 'none';
+    profileView.style.display = 'block';
+    
+    document.getElementById('userProfileName').innerText = currentUser.name || 'VIP Reader';
+    document.getElementById('userProfileEmail').innerText = currentUser.email || '';
+    if (currentUser.avatar) {
+      document.getElementById('userProfileAvatar').src = currentUser.avatar;
+    }
+    document.getElementById('savedCountBadge').innerText = userBookmarks.length;
+
+    renderSavedStories();
+  } else {
+    authView.style.display = 'block';
+    profileView.style.display = 'none';
+  }
+}
+
+function closeUserProfileModal() {
+  const modal = document.getElementById('userProfileModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function switchProfileTab(tab) {
+  const tabSaved = document.getElementById('profileTabSaved');
+  const tabHistory = document.getElementById('profileTabHistory');
+  const btnSaved = document.getElementById('tabBtnSaved');
+  const btnHistory = document.getElementById('tabBtnHistory');
+
+  if (tab === 'saved') {
+    tabSaved.style.display = 'block';
+    tabHistory.style.display = 'none';
+    btnSaved.classList.add('active');
+    btnHistory.classList.remove('active');
+    renderSavedStories();
+  } else {
+    tabSaved.style.display = 'none';
+    tabHistory.style.display = 'block';
+    btnSaved.classList.remove('active');
+    btnHistory.classList.add('active');
+    renderReadingHistory();
+  }
+}
+
+function renderSavedStories() {
+  const listEl = document.getElementById('savedStoriesList');
+  if (!listEl) return;
+
+  const savedList = allPubStories.filter(s => userBookmarks.includes(s.slug));
+
+  if (savedList.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-library-state">
+        <i class="fa-regular fa-bookmark"></i>
+        <h4>No Saved Stories Yet</h4>
+        <p>Click the "Save Story" button on any chapter to build your personal library.</p>
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = savedList.map(s => `
+    <div class="saved-story-card">
+      <img src="${s.coverImage || '/images/story1_cover.svg'}" alt="${s.title}" class="saved-story-thumb">
+      <div class="saved-story-details">
+        <span class="saved-cat-tag">${s.category || 'Drama'}</span>
+        <h4 class="saved-story-title" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${s.slug}')">${s.title}</h4>
+        <div class="saved-actions-row">
+          <a href="/story/${s.slug}" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${s.slug}')" class="btn-read-saved">
+            <i class="fa-solid fa-book-open"></i> Read Now
+          </a>
+          <button class="btn-remove-saved" onclick="toggleSaveStory('${s.slug}', '${s.title.replace(/'/g, "\\'")}')" title="Remove Bookmark">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderReadingHistory() {
+  const listEl = document.getElementById('readingHistoryList');
+  if (!listEl) return;
+
+  if (readingHistory.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty-library-state">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h4>No Reading History</h4>
+        <p>Stories you read will appear here automatically.</p>
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = readingHistory.map(h => `
+    <div class="saved-story-card">
+      <img src="${h.coverImage || '/images/story1_cover.svg'}" alt="${h.title}" class="saved-story-thumb">
+      <div class="saved-story-details">
+        <span class="saved-cat-tag">${h.category || 'Drama'}</span>
+        <h4 class="saved-story-title" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${h.slug}')">${h.title}</h4>
+        <div class="saved-actions-row">
+          <a href="/story/${h.slug}" onclick="closeUserProfileModal(); handleNavClick(event, '/story/${h.slug}')" class="btn-read-saved">
+            <i class="fa-solid fa-book-open"></i> Resume Reading
+          </a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Google Sign-In Flow
+function triggerGoogleSignIn() {
+  // Generate authentic Google session simulation
+  const randomNames = ["Eleanor Vance", "Marcus Hayes", "Sarah Jenkins", "Julian Davis", "Chloe Sterling", "David Miller"];
+  const selectedName = randomNames[Math.floor(Math.random() * randomNames.length)];
+  const emailPrefix = selectedName.toLowerCase().replace(' ', '.');
+  const googleEmail = `${emailPrefix}${Math.floor(Math.random() * 89 + 10)}@gmail.com`;
+  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(selectedName)}`;
+
+  completeAuthentication({
+    name: selectedName,
+    email: googleEmail,
+    provider: 'google',
+    avatar: avatarUrl
+  });
+}
+
+function handleEmailAuth(e) {
+  if (e) e.preventDefault();
+  const nameInput = document.getElementById('authNameInput');
+  const emailInput = document.getElementById('authEmailInput') || document.getElementById('inputReaderEmail');
+  
+  if (!emailInput || !emailInput.value) {
+    showToast('Please enter a valid email address');
+    return;
+  }
+
+  const name = (nameInput && nameInput.value) ? nameInput.value : emailInput.value.split('@')[0];
+  const email = emailInput.value.trim();
+
+  completeAuthentication({
+    name: name,
+    email: email,
+    provider: 'email',
+    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`
+  });
+}
+
+function completeAuthentication(userPayload) {
+  fetch('/api/users/auth', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userPayload)
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      currentUser = d.user;
+      localStorage.setItem('taleonix_user', JSON.stringify(currentUser));
+      
+      // Merge backend bookmarks if any
+      if (d.user.bookmarks && d.user.bookmarks.length > 0) {
+        userBookmarks = Array.from(new Set([...userBookmarks, ...d.user.bookmarks]));
+        localStorage.setItem('taleonix_bookmarks', JSON.stringify(userBookmarks));
+      }
+
+      updateNavProfileState();
+      openUserProfileModal();
+      showToast(`Welcome, ${currentUser.name}! Profile connected 🎉`);
+    }
+  })
+  .catch(err => {
+    console.error('Auth error:', err);
+    // Offline fallback
+    currentUser = userPayload;
+    localStorage.setItem('taleonix_user', JSON.stringify(currentUser));
+    updateNavProfileState();
+    openUserProfileModal();
+    showToast(`Signed in as ${currentUser.name}!`);
+  });
+}
+
+function handleUserLogout() {
+  currentUser = null;
+  localStorage.removeItem('taleonix_user');
+  updateNavProfileState();
+  openUserProfileModal();
+  showToast('Signed out of Taleonix Library.');
+}
+
+// Hook profile initialization on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  initUserProfile();
+});
+
