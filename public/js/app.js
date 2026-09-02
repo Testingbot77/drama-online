@@ -8,11 +8,11 @@ let currentViewingStory = null;
 let activeSpeechUtterance = null;
 let isNarrating = false;
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   initPubPreferences();
   setupReadingProgress();
-  await loadPublicStories();
   handleClientRouting();
+  loadPublicStories();
   window.addEventListener('popstate', handleClientRouting);
 });
 
