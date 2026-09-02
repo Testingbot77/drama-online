@@ -26,6 +26,7 @@ function handleNavClick(e, path) {
 }
 
 function handleRoute(path, shouldScroll = true) {
+  path = path || window.location.pathname || '/';
   const drawer = document.getElementById('mobileDrawer');
   if (drawer) drawer.classList.remove('open');
 
@@ -38,7 +39,7 @@ function handleRoute(path, shouldScroll = true) {
 
   document.querySelectorAll('.category-nav .nav-item').forEach(item => {
     const href = item.getAttribute('href');
-    if (href === path || (path.startsWith('/category') && href.includes(path.split('/')[2]))) {
+    if (href && (href === path || (path.startsWith('/category') && href.includes(path.split('/')[2])))) {
       item.classList.add('active');
     } else {
       item.classList.remove('active');
@@ -248,8 +249,6 @@ async function showStoryReader(slug) {
 
     const story = data.story;
     currentViewingStory = story;
-    recordReadingHistory(story);
-    updateStoryBookmarkButton();
 
     const urlParams = new URLSearchParams(window.location.search);
     const utmCampaign = urlParams.get('utm_campaign') || 'direct';
@@ -332,11 +331,11 @@ async function showStoryReader(slug) {
       part2Box.style.display = 'block';
       const currentPartNum = story.partNumber || 1;
       const nextPartNum = currentPartNum + 1;
-      const isGrandFinale = nextPartNum >= 3;
+      const isGrandFinale = story.nextPartSlug.includes('grand-finale') || story.nextPartSlug.includes('final');
 
       if (partBadge) {
         partBadge.innerHTML = isGrandFinale
-          ? '<i class="fa-solid fa-crown"></i> CHAPTER 3 (GRAND FINALE) AVAILABLE'
+          ? `<i class="fa-solid fa-crown"></i> CHAPTER ${nextPartNum} (GRAND FINALE) AVAILABLE`
           : `<i class="fa-solid fa-fire"></i> CHAPTER ${nextPartNum} AVAILABLE`;
       }
 
@@ -344,7 +343,7 @@ async function showStoryReader(slug) {
 
       if (partDesc) {
         partDesc.innerText = isGrandFinale
-          ? 'Experience the shocking conclusion and emotional climax in the Grand Finale.'
+          ? 'Experience the shocking conclusion, justice, and emotional climax in the Grand Finale.'
           : `Continue the gripping story right now in Chapter ${nextPartNum} without interruption.`;
       }
 

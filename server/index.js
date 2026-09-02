@@ -22,19 +22,11 @@ app.use(compression({
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-// Static Asset Directories with 24-hour browser caching
-const staticOptions = {
-  maxAge: '1d',
-  immutable: true,
-  setHeaders: (res, path) => {
-    res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
-  }
-};
-
-app.use('/css', express.static(path.join(__dirname, '..', 'public', 'css'), staticOptions));
-app.use('/js', express.static(path.join(__dirname, '..', 'public', 'js'), staticOptions));
-app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images'), staticOptions));
-app.use('/videos', express.static(path.join(__dirname, '..', 'public', 'videos'), staticOptions));
+// Static Asset Directories with instant cache revalidation for scripts/styles
+app.use('/css', express.static(path.join(__dirname, '..', 'public', 'css'), { maxAge: 0, setHeaders: (res) => res.setHeader('Cache-Control', 'no-cache, must-revalidate') }));
+app.use('/js', express.static(path.join(__dirname, '..', 'public', 'js'), { maxAge: 0, setHeaders: (res) => res.setHeader('Cache-Control', 'no-cache, must-revalidate') }));
+app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images'), { maxAge: '1d', setHeaders: (res) => res.setHeader('Cache-Control', 'public, max-age=86400') }));
+app.use('/videos', express.static(path.join(__dirname, '..', 'public', 'videos'), { maxAge: '1d', setHeaders: (res) => res.setHeader('Cache-Control', 'public, max-age=86400') }));
 app.use('/admin', express.static(path.join(__dirname, '..', 'public', 'admin')));
 
 // Health check & ping endpoint
