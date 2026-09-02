@@ -3,508 +3,395 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DramaLuxe • Viral Mini-Series & Uncensored Drama Stories</title>
-  <meta name="description" content="Read full episodes and uncensored stories of trending viral drama shorts, billionaire romance, mafia intrigue, and dramatic revenge.">
   
-  <!-- Google Fonts: Outfit (Brand) + Lora & Merriweather (Ultra-readable for 45-65 age group) -->
+  <!-- DYNAMIC_META_TAGS -->
+  <title>Taleonix • Viral US Drama Stories & Serialized Fiction</title>
+  <meta name="description" content="Read full episodes and captivating serialized stories of billionaire drama, revenge, marriage scandals, and undercover suspense on Taleonix.">
+  
+  <!-- Google Fonts: Outfit (Headings) + Lora & Merriweather (Ultra-readable body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:wght@300;400;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome Icons -->
+  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="dark-theme">
+<body class="theme-dark">
 
-  <!-- ================= TOP NAVIGATION BAR ================= -->
-  <header class="navbar" id="mainNavbar">
-    <div class="nav-container">
-      <div class="nav-brand" onclick="navigateTo('home')">
-        <div class="logo-icon"><i class="fa-solid fa-clapperboard"></i></div>
-        <div class="logo-text">
-          <span class="brand-name">Drama<span>Luxe</span></span>
-          <span class="brand-tagline">US Drama Network</span>
+  <!-- ================= EDITORIAL TOP NAVBAR ================= -->
+  <header class="pub-navbar" id="pubNavbar">
+    <div class="nav-wrapper">
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo" onclick="handleNavClick(event, '/')">
+        <span class="logo-symbol"><i class="fa-solid fa-feather-pointed"></i></span>
+        <div class="logo-typography">
+          <span class="brand-name">TALEONIX</span>
+          <span class="brand-tag">US Stories & Serialized Drama</span>
         </div>
-      </div>
+      </a>
 
-      <!-- Main Navigation Tabs (Clean Public Reader Navigation) -->
-      <nav class="nav-tabs" id="navTabs">
-        <button class="nav-tab active" id="tab-reader" onclick="navigateTo('home')">
-          <i class="fa-solid fa-book-open"></i> <span>Drama Stories</span>
-        </button>
-        <!-- Creator tabs only visible locally on your PC -->
-        <button class="nav-tab creator-local-only" id="tab-marketing" onclick="navigateTo('marketing')" style="display: none;">
-          <i class="fa-solid fa-photo-film"></i> <span>Dashboard 1: Video & Captions</span>
-          <span class="tab-badge pulse" id="videoCountBadge">4</span>
-        </button>
-        <button class="nav-tab creator-local-only" id="tab-analytics" onclick="navigateTo('analytics')" style="display: none;">
-          <i class="fa-solid fa-chart-line"></i> <span>Dashboard 2: Analytics</span>
-          <span class="tab-badge-gold">74% US</span>
-        </button>
+      <!-- Desktop Category Navigation -->
+      <nav class="category-nav" id="categoryNav">
+        <a href="/" class="nav-item active" onclick="handleNavClick(event, '/')">Home</a>
+        <a href="/trending" class="nav-item" onclick="handleNavClick(event, '/trending')">🔥 Trending</a>
+        <a href="/category/marriage" class="nav-item" onclick="handleNavClick(event, '/category/marriage')">Marriage</a>
+        <a href="/category/betrayal" class="nav-item" onclick="handleNavClick(event, '/category/betrayal')">Betrayal</a>
+        <a href="/category/inheritance" class="nav-item" onclick="handleNavClick(event, '/category/inheritance')">Inheritance</a>
+        <a href="/category/billionaire" class="nav-item" onclick="handleNavClick(event, '/category/billionaire')">Billionaire</a>
+        <a href="/category/mafia" class="nav-item" onclick="handleNavClick(event, '/category/mafia')">Mafia</a>
+        <a href="/category/secrets" class="nav-item" onclick="handleNavClick(event, '/category/secrets')">Secrets</a>
       </nav>
 
-      <!-- Right Header Actions -->
-      <div class="nav-actions">
-        <!-- Private Creator controls (Only visible locally on localhost) -->
-        <button class="btn-icon creator-local-only" onclick="openSettingsModal()" title="AdSense & AI Settings" id="btnSettingsNav" style="display: none;">
-          <i class="fa-solid fa-gear"></i>
-        </button>
-        <button class="btn-accent creator-local-only" onclick="openUploadModal()" id="btnUploadNav" style="display: none;">
-          <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload Video</span>
+      <!-- Search & Share Trigger -->
+      <div class="nav-right-actions">
+        <button class="btn-search-trigger" onclick="focusSearch()" aria-label="Search stories">
+          <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>
     </div>
+
+    <!-- Mobile Drawer Nav -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <a href="/" class="mobile-item" onclick="handleNavClick(event, '/')"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="/trending" class="mobile-item" onclick="handleNavClick(event, '/trending')"><i class="fa-solid fa-fire"></i> Trending Stories</a>
+      <div class="mobile-category-divider">Categories</div>
+      <a href="/category/marriage" class="mobile-item" onclick="handleNavClick(event, '/category/marriage')">💔 Marriage & Relationships</a>
+      <a href="/category/betrayal" class="mobile-item" onclick="handleNavClick(event, '/category/betrayal')">😡 Betrayal & Revenge</a>
+      <a href="/category/inheritance" class="mobile-item" onclick="handleNavClick(event, '/category/inheritance')">💰 Money & Inheritance</a>
+      <a href="/category/billionaire" class="mobile-item" onclick="handleNavClick(event, '/category/billionaire')">🔥 Billionaire Drama</a>
+      <a href="/category/mafia" class="mobile-item" onclick="handleNavClick(event, '/category/mafia')">🕶️ Mafia & Power</a>
+      <a href="/category/secrets" class="mobile-item" onclick="handleNavClick(event, '/category/secrets')">😱 Shocking Secrets</a>
+    </div>
   </header>
 
-  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
-  <div id="toastContainer" class="toast-container"></div>
+  <!-- ================= TOP HEADER ADSENSE BANNER ================= -->
+  <div class="adsense-banner-wrapper">
+    <div class="adsense-slot-leaderboard">
+      <div class="ad-flag">SPONSORED</div>
+      <div class="ad-mock-row">
+        <div class="ad-text-info">
+          <span class="ad-heading">🌟 Binge Trending US Drama Novels & Mini-Series</span>
+          <span class="ad-body">Unlock thousands of captivating chapters and thrilling cliffhangers.</span>
+        </div>
+        <button class="ad-action-btn">Read Free</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- ================= MAIN CONTENT WRAPPER ================= -->
-  <main class="main-content">
+  <!-- ================= MAIN CONTENT CONTAINER ================= -->
+  <main class="main-pub-content">
 
-    <!-- ================= VIEW 1: PUBLIC DRAMA READER (HOME) ================= -->
-    <section id="view-reader" class="app-view active">
+    <!-- ================= VIEW 1: EDITORIAL HOMEPAGE ================= -->
+    <div id="page-home" class="pub-view active">
       
-      <!-- Top AdSense Responsive Leaderboard Banner (728x90 / Responsive) -->
-      <div class="adsense-banner-container">
-        <div class="adsense-slot leaderboard" id="adSlotHeader">
-          <div class="ad-label">SPONSORED / GOOGLE ADSENSE</div>
-          <div class="ad-content">
-            <div class="ad-mockup">
-              <span class="ad-title">🌟 Top Rated Streaming & Novel Deals in US</span>
-              <span class="ad-desc">Binge trending mini-dramas and viral series on demand. High US RPM Ad Slot.</span>
-              <button class="ad-cta">Explore Now</button>
+      <!-- HERO FEATURED STORY -->
+      <section class="hero-feature-section" id="heroFeatureSection">
+        <div class="container">
+          <div class="hero-card" id="heroCard">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TRENDING NOW & MOST READ SPLIT -->
+      <section class="trending-section">
+        <div class="container">
+          <div class="trending-grid-layout">
+            
+            <!-- Column 1: Trending Stories (6-8 cards) -->
+            <div class="trending-main-col">
+              <div class="section-title-wrap">
+                <h2 class="sec-heading"><i class="fa-solid fa-fire text-gold"></i> TRENDING NOW</h2>
+                <span class="sec-tag">Top viral stories ranked by real reader engagement</span>
+              </div>
+              <div class="story-card-grid" id="trendingStoriesGrid"></div>
+            </div>
+
+            <!-- Column 2: Most Read Today Sidebar -->
+            <aside class="most-read-sidebar">
+              <div class="sidebar-box">
+                <h3 class="sidebar-title"><i class="fa-solid fa-ranking-star"></i> MOST READ TODAY</h3>
+                <div class="most-read-list" id="mostReadSidebarList"></div>
+              </div>
+
+              <!-- Sidebar Ad Unit (300x250) -->
+              <div class="sidebar-ad-box">
+                <div class="ad-flag">ADVERTISEMENT</div>
+                <div class="sidebar-ad-content">
+                  <h4>💎 Free Daily Chapters</h4>
+                  <p>Discover top-ranked romance & billionaire sagas.</p>
+                  <button class="ad-action-btn">Explore Now</button>
+                </div>
+              </div>
+            </aside>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORY 1: MARRIAGE & RELATIONSHIPS -->
+      <section class="category-block-section">
+        <div class="container">
+          <div class="cat-header-row">
+            <div>
+              <h2 class="cat-sec-title">💔 Marriage & Relationships</h2>
+              <p class="cat-sec-sub">Stories of secret vows, deceit, and true devotion</p>
+            </div>
+            <a href="/category/marriage" class="btn-view-all" onclick="handleNavClick(event, '/category/marriage')">View All →</a>
+          </div>
+          <div class="story-card-grid four-cols" id="gridMarriage"></div>
+        </div>
+      </section>
+
+      <!-- CATEGORY 2: BETRAYAL & REVENGE -->
+      <section class="category-block-section alt-bg">
+        <div class="container">
+          <div class="cat-header-row">
+            <div>
+              <h2 class="cat-sec-title">😡 Betrayal & Revenge</h2>
+              <p class="cat-sec-sub">When the discarded returned to claim absolute retribution</p>
+            </div>
+            <a href="/category/betrayal" class="btn-view-all" onclick="handleNavClick(event, '/category/betrayal')">View All →</a>
+          </div>
+          <div class="story-card-grid four-cols" id="gridBetrayal"></div>
+        </div>
+      </section>
+
+      <!-- CATEGORY 3: MONEY & INHERITANCE -->
+      <section class="category-block-section">
+        <div class="container">
+          <div class="cat-header-row">
+            <div>
+              <h2 class="cat-sec-title">💰 Money & Inheritance</h2>
+              <p class="cat-sec-sub">Hidden wills, secret trusts, and battles for family empires</p>
+            </div>
+            <a href="/category/inheritance" class="btn-view-all" onclick="handleNavClick(event, '/category/inheritance')">View All →</a>
+          </div>
+          <div class="story-card-grid four-cols" id="gridInheritance"></div>
+        </div>
+      </section>
+
+      <!-- CATEGORY 4: BILLIONAIRE & MAFIA -->
+      <section class="category-block-section alt-bg">
+        <div class="container">
+          <div class="cat-header-row">
+            <div>
+              <h2 class="cat-sec-title">🔥 Billionaire & Mafia Power</h2>
+              <p class="cat-sec-sub">High-stakes corporate takeovers and underworld protectors</p>
+            </div>
+            <a href="/category/billionaire" class="btn-view-all" onclick="handleNavClick(event, '/category/billionaire')">View All →</a>
+          </div>
+          <div class="story-card-grid four-cols" id="gridBillionaire"></div>
+        </div>
+      </section>
+
+      <!-- MORE STORIES YOU MAY LIKE -->
+      <section class="category-block-section">
+        <div class="container">
+          <div class="cat-header-row">
+            <div>
+              <h2 class="cat-sec-title">✨ More Stories You May Like</h2>
+              <p class="cat-sec-sub">Fresh discoveries curated for your reading journey</p>
             </div>
           </div>
+          <div class="story-card-grid four-cols" id="gridMoreStories"></div>
         </div>
+      </section>
+
+    </div>
+
+    <!-- ================= VIEW 2: CATEGORY / TRENDING ARCHIVE ================= -->
+    <div id="page-category" class="pub-view">
+      <div class="container archive-container">
+        <div class="archive-header">
+          <span class="badge-cat" id="archiveCatBadge">Category</span>
+          <h1 class="archive-title" id="archiveTitle">Trending Stories</h1>
+          <p class="archive-desc" id="archiveDesc">Browse all serialized drama episodes in this collection.</p>
+        </div>
+        <div class="story-card-grid" id="archiveGrid"></div>
       </div>
+    </div>
 
-      <!-- Featured Drama Hero Section -->
-      <div class="featured-hero" id="featuredHero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-          <span class="badge-gold"><i class="fa-solid fa-fire"></i> TOP TRENDING TODAY</span>
-          <h1 class="hero-title" id="heroTitle">The Discarded Heiress: Billionaire's Secret Vow</h1>
-          <p class="hero-desc" id="heroDesc">
-            Thrown out in the pouring rain by her arrogant in-laws, Maya thought her life was over. They had no idea she was the sole heiress of the $90 Billion Vance Empire.
-          </p>
-          <div class="hero-meta">
-            <span><i class="fa-regular fa-clock"></i> 6 min read</span>
-            <span><i class="fa-solid fa-eye"></i> 14,280 readers</span>
-            <span><i class="fa-solid fa-location-dot"></i> 74% US Traffic</span>
-          </div>
-          <div class="hero-buttons">
-            <button class="btn-primary" onclick="openStory('the-discarded-heiress-billionaires-secret-vow')">
-              <i class="fa-solid fa-book-open"></i> Read Full Episode
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Drama Feed Container -->
-      <div class="container section-feed">
-        <div class="section-header">
-          <div>
-            <h2 class="section-title">🔥 Viral Episodes & Full Stories</h2>
-            <p class="section-subtitle">Click on any video story to read the full chapter and cliffhanger</p>
-          </div>
-          <div class="filter-pills">
-            <button class="pill active" onclick="filterStories('all')">All Tropes</button>
-            <button class="pill" onclick="filterStories('Billionaire')">Billionaire</button>
-            <button class="pill" onclick="filterStories('Mafia')">Mafia</button>
-            <button class="pill" onclick="filterStories('Revenge')">Revenge</button>
-          </div>
-        </div>
-
-        <div class="story-grid" id="storyGrid">
-          <!-- Story Cards dynamically loaded -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= VIEW 1.1: SINGLE STORY FULL READER ================= -->
-    <section id="view-story-detail" class="app-view">
-      <div class="container reader-container">
+    <!-- ================= VIEW 3: FULL STORY READING EXPERIENCE ================= -->
+    <div id="page-story-reader" class="pub-view">
+      <div class="container reader-max-width">
         
-        <!-- Back Button & Breadcrumbs -->
-        <div class="reader-nav">
-          <button class="btn-secondary" onclick="navigateTo('home')">
-            <i class="fa-solid fa-arrow-left"></i> Back to All Dramas
-          </button>
-          <div class="share-actions">
-            <button class="btn-pill" onclick="copyCurrentStoryLink()"><i class="fa-solid fa-link"></i> Copy Link</button>
-            <button class="btn-pill" onclick="shareOnSocial('tiktok')"><i class="fa-brands fa-tiktok"></i></button>
-            <button class="btn-pill" onclick="shareOnSocial('instagram')"><i class="fa-brands fa-instagram"></i></button>
+        <!-- Breadcrumb & Share -->
+        <div class="reader-top-bar">
+          <a href="/" class="btn-back-link" onclick="handleNavClick(event, '/')">
+            <i class="fa-solid fa-arrow-left"></i> Back to Stories
+          </a>
+          <div class="story-share-pills">
+            <button class="share-btn" onclick="copyStoryLink()"><i class="fa-solid fa-link"></i> Copy Link</button>
+            <button class="share-btn fb" onclick="shareSocial('facebook')"><i class="fa-brands fa-facebook"></i> Share</button>
           </div>
         </div>
 
-        <!-- Story Article -->
-        <article class="drama-article" id="dramaArticle">
+        <!-- Main Story Article -->
+        <article class="taleonix-article" id="taleonixArticle">
           
-          <!-- Senior / Accessibility Reading Preferences Toolbar -->
-          <div class="reading-controls-bar">
-            <div class="read-control-group">
-              <span class="ctrl-label"><i class="fa-solid fa-text-height"></i> Text Size:</span>
-              <button class="btn-text-size" onclick="changeFontSize('normal')" id="btnFontNormal" title="Normal Font">A</button>
-              <button class="btn-text-size active" onclick="changeFontSize('large')" id="btnFontLarge" title="Large Font (Recommended for Easy Reading)">A+</button>
-              <button class="btn-text-size" onclick="changeFontSize('xlarge')" id="btnFontXLarge" title="Extra Large Font">A++</button>
+          <!-- Accessibility & Senior Reading Toolbar -->
+          <div class="reading-toolbar">
+            <div class="toolbar-group">
+              <span class="tool-label"><i class="fa-solid fa-text-height"></i> Text Size:</span>
+              <button class="tool-btn" onclick="setFontScale('normal')" id="btnScaleNormal">A</button>
+              <button class="tool-btn active" onclick="setFontScale('large')" id="btnScaleLarge">A+</button>
+              <button class="tool-btn" onclick="setFontScale('xlarge')" id="btnScaleXLarge">A++</button>
             </div>
 
-            <div class="read-control-group">
-              <span class="ctrl-label"><i class="fa-solid fa-palette"></i> Reading Mode:</span>
-              <button class="btn-theme-mode active" onclick="setReadingTheme('dark')" id="themeBtnDark" title="Dark Obsidian">🌙 Dark</button>
-              <button class="btn-theme-mode" onclick="setReadingTheme('sepia')" id="themeBtnSepia" title="Warm Cozy Sepia (Easy on Eyes)">📖 Sepia</button>
-              <button class="btn-theme-mode" onclick="setReadingTheme('light')" id="themeBtnLight" title="Classic Clean Light">☀️ Light</button>
+            <div class="toolbar-group">
+              <span class="tool-label"><i class="fa-solid fa-palette"></i> Reading Mode:</span>
+              <button class="tool-btn active" onclick="setReadingTheme('dark')" id="btnThemeDark">🌙 Dark</button>
+              <button class="tool-btn" onclick="setReadingTheme('sepia')" id="btnThemeSepia">📖 Sepia</button>
+              <button class="tool-btn" onclick="setReadingTheme('light')" id="btnThemeLight">☀️ Light</button>
             </div>
 
-            <!-- Audio Narration for 45-65 Readers -->
-            <div class="read-control-group audio-narration-group">
-              <button class="btn-listen" id="btnListenStory" onclick="toggleAudioNarration()">
-                <i class="fa-solid fa-circle-play"></i> <span>Listen to Episode (Audio)</span>
+            <!-- Audio Narration Player -->
+            <div class="toolbar-group audio-group">
+              <button class="btn-audio-listen" id="btnAudioPlayer" onclick="toggleSpeechNarration()">
+                <i class="fa-solid fa-circle-play"></i> <span>Listen to Story (Audio)</span>
               </button>
             </div>
           </div>
 
-          <div class="article-header">
-            <div class="article-tags" id="detailTags">
-              <span class="badge-genre">Billionaire Romance</span>
-              <span class="badge-views"><i class="fa-solid fa-eye"></i> 14,280 Views</span>
+          <!-- Story Header -->
+          <header class="story-header">
+            <div class="story-meta-top">
+              <span class="badge-cat" id="readerCategory">Billionaire Drama</span>
+              <span class="meta-item"><i class="fa-regular fa-clock"></i> <span id="readerReadTime">7 min read</span></span>
+              <span class="meta-item"><i class="fa-regular fa-calendar"></i> <span id="readerDate">Today</span></span>
             </div>
-            <h1 class="article-title" id="detailTitle">The Discarded Heiress: Billionaire's Secret Vow</h1>
-            <p class="article-synopsis" id="detailSynopsis">
-              Thrown out in the pouring rain by her arrogant in-laws, Maya thought her life was over. They had no idea she was the sole heiress of the $90 Billion Vance Empire.
-            </p>
+
+            <h1 class="story-main-title" id="readerTitle">Story Title Loading...</h1>
+            <p class="story-lead-synopsis" id="readerSynopsis">Story synopsis loading...</p>
+
+            <div class="story-byline">
+              <span class="author-avatar"><i class="fa-solid fa-user-pen"></i></span>
+              <div>
+                <span class="byline-author" id="readerAuthor">Elena Vance</span>
+                <span class="byline-pub">Taleonix Editorial Fiction</span>
+              </div>
+            </div>
+          </header>
+
+          <!-- Cover Image -->
+          <div class="story-cover-frame">
+            <img src="/images/story1_cover.svg" id="readerCoverImg" alt="Story Cover" class="story-cover-img">
           </div>
 
-          <!-- Hero Cover Image -->
-          <div class="article-cover-wrap">
-            <img src="/images/story1_cover.svg" id="detailCoverImage" alt="Drama Cover" class="article-cover">
-          </div>
-
-          <!-- Top In-Article Ad -->
-          <div class="in-article-ad-box">
-            <div class="ad-label">ADVERTISEMENT • GOOGLE ADSENSE</div>
-            <div class="ad-mockup in-content">
-              <span class="ad-title">💎 Read Millions of Chapters Unlocked</span>
-              <span class="ad-desc">Join millions of US readers binging viral novels.</span>
-              <button class="ad-cta">Install Free</button>
+          <!-- In-Article Top Ad Slot -->
+          <div class="in-article-ad-unit">
+            <div class="ad-flag">SPONSORED</div>
+            <div class="ad-mock-row">
+              <div class="ad-text-info">
+                <span class="ad-heading">💎 Binge 10,000+ Uncensored Drama Chapters</span>
+                <span class="ad-body">Experience the #1 digital novel app for US readers.</span>
+              </div>
+              <button class="ad-action-btn">Install Free</button>
             </div>
           </div>
 
-          <!-- Paragraphs and Scenes rendered dynamically -->
-          <div class="article-body" id="detailBody">
+          <!-- Narrative Paragraphs & Scene Visuals -->
+          <div class="story-content-body font-large" id="readerBody">
             <!-- Paragraphs and scenes injected by JS -->
           </div>
 
-          <!-- Middle In-Article Ad Slot -->
-          <div class="in-article-ad-box">
-            <div class="ad-label">SPONSORED STORY RECOMMENDATION</div>
-            <div class="ad-mockup in-content middle-ad">
-              <span class="ad-title">🔥 Discover The #1 Drama Series of 2026</span>
-              <span class="ad-desc">High RPM Ad Placement for 70% US Viewers</span>
-              <button class="ad-cta">Read Next</button>
+          <!-- Mid-Story Native Ad Unit -->
+          <div class="in-article-ad-unit mid-unit">
+            <div class="ad-flag">ADVERTISEMENT • GOOGLE ADSENSE</div>
+            <div class="ad-mock-row">
+              <div class="ad-text-info">
+                <span class="ad-heading">🔥 Top Trending Mini-Series of the Year</span>
+                <span class="ad-body">High viewability ad placement optimized for US readers.</span>
+              </div>
+              <button class="ad-action-btn">Explore Deals</button>
             </div>
           </div>
 
-          <!-- Cliffhanger Next Chapter CTA Box -->
-          <div class="cliffhanger-box">
-            <div class="cliff-icon"><i class="fa-solid fa-bolt"></i></div>
-            <div class="cliff-text">
-              <h3>⚡ Uncensored Chapter 2 Is Coming Next!</h3>
-              <p>Will Julian crawl back begging for mercy when Blackwood Capital executes the foreclosure? Bookmark this page or check our next reels!</p>
-            </div>
-            <button class="btn-accent" onclick="navigateTo('home')">Browse More Dramas</button>
+          <!-- PART 2 / CONTINUATION SYSTEM -->
+          <div class="part-continuation-card" id="partContinuationCard">
+            <div class="part-card-badge">🔥 PART 2 AVAILABLE</div>
+            <h3 class="part-card-title" id="nextPartHook">What happened after the confrontation was even more shocking...</h3>
+            <p class="part-card-desc">Continue the story right now in Chapter 2 without interruption.</p>
+            <a href="#" id="btnReadPart2" class="btn-read-part2">READ PART 2 →</a>
           </div>
+
+          <!-- "YOU MIGHT ALSO LIKE" (4-6 Algorithmic Related Stories) -->
+          <div class="related-stories-section">
+            <h3 class="related-section-title"><i class="fa-solid fa-book-bookmark"></i> You Might Also Like</h3>
+            <div class="related-stories-grid" id="relatedStoriesGrid"></div>
+          </div>
+
         </article>
 
         <!-- Sticky Mobile Bottom Ad Banner -->
-        <div class="sticky-mobile-ad" id="stickyMobileAd">
-          <div class="sticky-ad-content">
+        <div class="sticky-footer-ad" id="stickyFooterAd">
+          <div class="sticky-ad-inner">
             <span class="ad-tag">Ad</span>
-            <span class="sticky-ad-text">🔥 Trending US Drama Novels: Free Access Today!</span>
-            <button class="sticky-ad-btn">Read Now</button>
+            <span class="sticky-ad-title">🔥 Discover 10,000+ Viral Novels on Demand</span>
+            <button class="sticky-ad-btn">Read Free</button>
           </div>
-          <button class="sticky-close" onclick="closeStickyAd()">×</button>
+          <button class="sticky-close-btn" onclick="closeStickyFooterAd()">×</button>
         </div>
 
       </div>
-    </section>
-
-    <!-- ================= VIEW 2: DASHBOARD 1 (VIDEO & MARKETING HUB) ================= -->
-    <section id="view-marketing" class="app-view">
-      <div class="container dashboard-container">
-        
-        <!-- Dashboard Top Control Header -->
-        <div class="dashboard-header">
-          <div>
-            <div class="dashboard-tag"><i class="fa-solid fa-photo-film"></i> CREATOR DASHBOARD 1</div>
-            <h2 class="dash-title">Video & Social Marketing Control Center</h2>
-            <p class="dash-subtitle">Video preview player, auto-generated viral captions, 2-3 hashtags, 1-click story links, and high-CTR pinned comments for your 6 pages.</p>
-          </div>
-          <div class="dash-action-group">
-            <div class="watcher-status-badge">
-              <span class="status-dot pulse"></span>
-              <span>Folder Watcher: <code>input_videos/</code></span>
-            </div>
-            <button class="btn-secondary" onclick="triggerFolderScan()">
-              <i class="fa-solid fa-rotate"></i> Scan Folder
-            </button>
-            <button class="btn-accent" onclick="openUploadModal()">
-              <i class="fa-solid fa-plus"></i> Process New Video
-            </button>
-          </div>
-        </div>
-
-        <!-- Marketing Items List Container -->
-        <div class="marketing-list" id="marketingList">
-          <!-- Video Cards dynamically loaded -->
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= VIEW 3: DASHBOARD 2 (WEBSITE ANALYTICS HUB) ================= -->
-    <section id="view-analytics" class="app-view">
-      <div class="container dashboard-container">
-        
-        <!-- Analytics Header -->
-        <div class="dashboard-header">
-          <div>
-            <div class="dashboard-tag-gold"><i class="fa-solid fa-chart-line"></i> CREATOR DASHBOARD 2</div>
-            <h2 class="dash-title">Website Analytics & AdSense Revenue</h2>
-            <p class="dash-subtitle">Real-time traffic performance, USA audience share (70%+ target), top performing stories, and estimated AdSense earnings.</p>
-          </div>
-          <div class="dash-action-group">
-            <span class="badge-live"><i class="fa-solid fa-circle pulse-red"></i> LIVE TRACKING</span>
-            <button class="btn-secondary" onclick="refreshAnalytics()">
-              <i class="fa-solid fa-arrows-rotate"></i> Refresh
-            </button>
-          </div>
-        </div>
-
-        <!-- 4 Primary KPI Stat Cards -->
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-header">
-              <span class="kpi-title">Total Pageviews</span>
-              <div class="kpi-icon blue"><i class="fa-solid fa-eye"></i></div>
-            </div>
-            <div class="kpi-value" id="kpiPageviews">24,130</div>
-            <div class="kpi-sub positive"><i class="fa-solid fa-arrow-trend-up"></i> +28.4% from your 6 pages today</div>
-          </div>
-
-          <div class="kpi-card gold-border">
-            <div class="kpi-header">
-              <span class="kpi-title">USA Audience Share</span>
-              <div class="kpi-icon gold"><i class="fa-solid fa-flag-usa"></i></div>
-            </div>
-            <div class="kpi-value gold-text" id="kpiUsShare">74.2%</div>
-            <div class="kpi-sub positive"><i class="fa-solid fa-star"></i> High AdSense CPM Tier ($25-$35 RPM)</div>
-          </div>
-
-          <div class="kpi-card">
-            <div class="kpi-header">
-              <span class="kpi-title">Avg. Reading Time</span>
-              <div class="kpi-icon purple"><i class="fa-solid fa-stopwatch"></i></div>
-            </div>
-            <div class="kpi-value" id="kpiReadTime">3m 35s</div>
-            <div class="kpi-sub neutral"><i class="fa-solid fa-check-double"></i> High reader retention & ad viewability</div>
-          </div>
-
-          <div class="kpi-card green-border">
-            <div class="kpi-header">
-              <span class="kpi-title">Estimated AdSense Revenue</span>
-              <div class="kpi-icon green"><i class="fa-solid fa-dollar-sign"></i></div>
-            </div>
-            <div class="kpi-value green-text" id="kpiRevenue">$486.20</div>
-            <div class="kpi-sub positive"><i class="fa-solid fa-chart-pie"></i> Avg. RPM: $20.15 across all slots</div>
-          </div>
-        </div>
-
-        <!-- Analytics Breakdown 2-Column Grid -->
-        <div class="analytics-split-grid">
-          
-          <!-- Column 1: Country Traffic & Sources -->
-          <div class="dash-panel">
-            <h3 class="panel-title"><i class="fa-solid fa-globe"></i> Geographic Breakdown (US High-Value Focus)</h3>
-            <div class="geo-list" id="geoList">
-              <!-- Dynamically populated -->
-            </div>
-
-            <div class="divider"></div>
-
-            <h3 class="panel-title"><i class="fa-solid fa-share-nodes"></i> Traffic Acquisition Sources (Your 6 Pages)</h3>
-            <div class="traffic-sources-list" id="sourcesList">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <!-- Column 2: Top Performing Stories & AdSense Slot Health -->
-          <div class="dash-panel">
-            <h3 class="panel-title"><i class="fa-solid fa-ranking-star"></i> Top Performing Stories (Highest Clicks)</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Story Title</th>
-                    <th>Genre</th>
-                    <th>Reads</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="topStoriesTable">
-                  <!-- Dynamically populated -->
-                </tbody>
-              </table>
-            </div>
-
-            <div class="divider"></div>
-
-            <h3 class="panel-title"><i class="fa-solid fa-rectangle-ad"></i> AdSense Slot Performance Simulation</h3>
-            <div class="ad-stats-grid">
-              <div class="ad-stat-box">
-                <span class="ad-slot-name">Header Billboard (728x90)</span>
-                <span class="ad-slot-stat">24,130 Views • <strong>3.8% CTR</strong></span>
-              </div>
-              <div class="ad-stat-box">
-                <span class="ad-slot-name">In-Article Mid Ad (300x250)</span>
-                <span class="ad-slot-stat">21,800 Views • <strong>4.2% CTR</strong></span>
-              </div>
-              <div class="ad-stat-box">
-                <span class="ad-slot-name">Sticky Mobile Banner (320x50)</span>
-                <span class="ad-slot-stat">16,808 Views • <strong>2.9% CTR</strong></span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Live Real-Time Visitor Activity Stream -->
-        <div class="dash-panel full-width">
-          <h3 class="panel-title"><i class="fa-solid fa-tower-broadcast pulse-red"></i> Real-Time Reader Activity (From Your Reels/Shorts)</h3>
-          <div class="live-activity-table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Time</th>
-                  <th>Drama Story Opened</th>
-                  <th>Visitor Location</th>
-                  <th>Device / Browser</th>
-                  <th>Source / Page</th>
-                </tr>
-              </thead>
-              <tbody id="recentVisitorsTable">
-                <!-- Dynamically populated -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- ================= UPLOAD / PROCESS MODAL ================= -->
-  <div class="modal-backdrop" id="uploadModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i class="fa-solid fa-cloud-arrow-up"></i> Process Video from Folder or Upload</h3>
-        <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+  <!-- ================= EDITORIAL FOOTER ================= -->
+  <footer class="pub-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a href="/" class="brand-logo footer-logo" onclick="handleNavClick(event, '/')">
+          <span class="logo-symbol"><i class="fa-solid fa-feather-pointed"></i></span>
+          <span class="brand-name">TALEONIX</span>
+        </a>
+        <p class="footer-tagline">Taleonix is a premier US digital fiction publication delivering serialized drama stories, billionaire romance, and gripping suspense.</p>
       </div>
-      <div class="modal-body">
-        <div class="folder-instructions">
-          <div class="folder-icon"><i class="fa-solid fa-folder-open"></i></div>
-          <div class="folder-text">
-            <h4>Direct Folder Processing:</h4>
-            <p>Simply paste or drop any <code>.mp4</code> short video into your local folder: <br>
-            <strong class="folder-path">c:\Users\HP\Downloads\Drama Online\input_videos\</strong></p>
-            <p class="small-text">The watcher will automatically detect it, analyze the plot, write the full story with scene illustrations, and publish it!</p>
-          </div>
-        </div>
 
-        <div class="modal-divider"><span>OR UPLOAD DIRECTLY</span></div>
+      <div class="footer-links-col">
+        <h4>Explore Categories</h4>
+        <ul>
+          <li><a href="/category/marriage" onclick="handleNavClick(event, '/category/marriage')">Marriage & Relationships</a></li>
+          <li><a href="/category/betrayal" onclick="handleNavClick(event, '/category/betrayal')">Betrayal & Revenge</a></li>
+          <li><a href="/category/inheritance" onclick="handleNavClick(event, '/category/inheritance')">Money & Inheritance</a></li>
+          <li><a href="/category/billionaire" onclick="handleNavClick(event, '/category/billionaire')">Billionaire Drama</a></li>
+          <li><a href="/category/mafia" onclick="handleNavClick(event, '/category/mafia')">Mafia & Power</a></li>
+        </ul>
+      </div>
 
-        <form id="uploadForm" class="upload-dropzone">
-          <input type="file" id="videoFileInput" accept="video/mp4,video/mov,video/webm" style="display:none;" onchange="handleFileSelected(this)">
-          <div class="dropzone-content" onclick="document.getElementById('videoFileInput').click()">
-            <i class="fa-solid fa-film drop-icon"></i>
-            <p class="drop-text" id="dropzoneText">Click or Drag & Drop Short Drama Video (.mp4)</p>
-            <span class="drop-sub">Max size: 100MB</span>
-          </div>
-          <button type="button" id="btnStartProcess" class="btn-accent full-width" onclick="submitVideoUpload()" style="display:none; margin-top: 15px;">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Video & Auto-Publish Story
-          </button>
-        </form>
-
-        <div id="processingLoader" class="processing-loader" style="display:none;">
-          <div class="spinner"></div>
-          <div class="processing-status-text">
-            <h4 id="processStepTitle">🤖 Analyzing Video with Gemini Vision...</h4>
-            <p id="processStepDesc">Extracting characters, dialogue, dramatic tension & cliffhangers...</p>
-          </div>
-        </div>
+      <div class="footer-links-col">
+        <h4>Publication</h4>
+        <ul>
+          <li><a href="/trending" onclick="handleNavClick(event, '/trending')">Trending Now</a></li>
+          <li><a href="/sitemap.xml" target="_blank">Sitemap XML</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/contact">Editorial Contact</a></li>
+        </ul>
       </div>
     </div>
-  </div>
 
-  <!-- ================= SETTINGS & ADSENSE MODAL ================= -->
-  <div class="modal-backdrop" id="settingsModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><i class="fa-solid fa-gear"></i> Settings & Monetization Configuration</h3>
-        <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="settingsForm" onsubmit="saveSettingsForm(event)">
-          <div class="form-group">
-            <label><i class="fa-solid fa-key"></i> Google Gemini API Key</label>
-            <input type="password" id="settingApiKey" placeholder="AIzaSy..." class="form-input">
-            <span class="form-hint">Used to watch & analyze video clips and write long-reading stories automatically. (Leave blank to use Smart Local AI Synthesizer)</span>
-          </div>
-
-          <div class="form-group">
-            <label><i class="fa-brands fa-google"></i> Google AdSense Publisher ID</label>
-            <input type="text" id="settingAdsenseId" placeholder="ca-pub-XXXXXXXXXXXXXXXX" class="form-input">
-            <span class="form-hint">Your Google AdSense Client ID. Placements are pre-configured for high US RPM.</span>
-          </div>
-
-          <div class="form-group">
-            <label><i class="fa-solid fa-globe"></i> Custom / Free Live Domain URL</label>
-            <input type="text" id="settingDomainUrl" placeholder="https://yourdramadomain.com" class="form-input">
-            <span class="form-hint">The base domain used for story links in your social media pinned comments.</span>
-          </div>
-
-          <div class="divider"></div>
-          <h4 style="color: var(--accent-gold); margin-bottom: 12px; font-size: 0.95rem;"><i class="fa-brands fa-wordpress"></i> WordPress Auto-Sync (Optional / When Upgrading)</h4>
-
-          <div class="form-group">
-            <label>WordPress Site URL</label>
-            <input type="text" id="settingWpUrl" placeholder="https://yourblog.com" class="form-input">
-          </div>
-          <div class="form-group">
-            <label>WordPress Username</label>
-            <input type="text" id="settingWpUser" placeholder="admin" class="form-input">
-          </div>
-          <div class="form-group">
-            <label>WordPress Application Password</label>
-            <input type="password" id="settingWpPass" placeholder="xxxx xxxx xxxx xxxx" class="form-input">
-            <span class="form-hint">Generate in WordPress: Users → Profile → Application Passwords</span>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn-secondary" onclick="closeSettingsModal()">Cancel</button>
-            <button type="submit" class="btn-accent"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
-          </div>
-        </form>
+    <div class="footer-bottom-bar">
+      <div class="container footer-bottom-inner">
+        <span>© 2026 Taleonix Media Network. All rights reserved.</span>
+        <span>Dedicated to high-retention US storytelling.</span>
       </div>
     </div>
-  </div>
+  </footer>
 
-  <!-- Javascript -->
+  <!-- Toast Notification -->
+  <div id="pubToast" class="pub-toast"></div>
+
   <script src="/js/app.js"></script>
 </body>
 </html>

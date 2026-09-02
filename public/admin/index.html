@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taleonix Cockpit • Editorial & Facebook Traffic Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ================= AUTH SCREEN ================= -->
+  <div id="loginScreen" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-logo">
+        <i class="fa-solid fa-feather-pointed"></i>
+      </div>
+      <h2>Taleonix Editorial Cockpit</h2>
+      <p class="login-sub">Internal Control Center for US Drama Network & Facebook Funnels</p>
+      
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="login-group">
+          <label><i class="fa-solid fa-lock"></i> Master Access PIN</label>
+          <input type="password" id="loginPinInput" placeholder="Enter PIN (Default: 1234)" class="login-input" required autofocus>
+        </div>
+        <button type="submit" class="btn-login" id="btnLoginSubmit">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Authenticate & Enter
+        </button>
+      </form>
+      <div id="loginErrorMsg" class="login-error" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN APP ================= -->
+  <div id="adminApp" class="admin-layout" style="display: none;">
+    
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon"><i class="fa-solid fa-feather-pointed"></i></div>
+        <div>
+          <span class="brand-title">Taleonix</span>
+          <span class="brand-sub">Creator Cockpit</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" onclick="switchAdminTab('overview')">
+          <i class="fa-solid fa-chart-pie"></i> Overview
+        </button>
+        <button class="nav-btn" onclick="switchAdminTab('ai-studio')">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI Agent Studio
+        </button>
+        <button class="nav-btn" onclick="switchAdminTab('stories')">
+          <i class="fa-solid fa-book"></i> Story Library
+        </button>
+        <button class="nav-btn" onclick="switchAdminTab('facebook-kit')">
+          <i class="fa-brands fa-facebook"></i> Facebook Social Kit
+        </button>
+        <button class="nav-btn" onclick="switchAdminTab('analytics')">
+          <i class="fa-solid fa-bullseye"></i> UTM Analytics
+        </button>
+        <button class="nav-btn" onclick="switchAdminTab('settings')">
+          <i class="fa-solid fa-sliders"></i> Settings
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" class="btn-public-preview">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Public Site
+        </a>
+        <button class="btn-logout" onclick="handleAdminLogout()">
+          <i class="fa-solid fa-power-off"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      
+      <!-- Top Bar -->
+      <header class="admin-topbar">
+        <div>
+          <h1 class="topbar-title" id="adminSectionTitle">Overview Dashboard</h1>
+          <p class="topbar-subtitle" id="adminSectionSub">Real-time performance across your 10–15 Facebook Pages</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="live-pill"><span class="pulse-dot"></span> FB Traffic Live</div>
+          <button class="btn-action-accent" onclick="switchAdminTab('ai-studio')">
+            <i class="fa-solid fa-plus"></i> New AI Story
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: OVERVIEW -->
+      <section id="tab-overview" class="admin-section active">
+        <div class="kpi-row">
+          <div class="kpi-box">
+            <span class="kpi-label">Total Publication Pageviews</span>
+            <div class="kpi-val" id="ovPageviews">48,920</div>
+            <span class="kpi-badge positive"><i class="fa-solid fa-arrow-trend-up"></i> +32% This Week</span>
+          </div>
+          <div class="kpi-box highlight-gold">
+            <span class="kpi-label">US Audience Share (High CPM)</span>
+            <div class="kpi-val text-gold" id="ovUsShare">76.8%</div>
+            <span class="kpi-badge gold"><i class="fa-solid fa-star"></i> $25–$35 US RPM</span>
+          </div>
+          <div class="kpi-box">
+            <span class="kpi-label">Pages Per Visitor (Retention)</span>
+            <div class="kpi-val" id="ovPagesPerSession">2.84</div>
+            <span class="kpi-badge positive"><i class="fa-solid fa-repeat"></i> High Related Story Clicks</span>
+          </div>
+          <div class="kpi-box highlight-green">
+            <span class="kpi-label">Estimated AdSense Earnings</span>
+            <div class="kpi-val text-green" id="ovEstRev">$842.50</div>
+            <span class="kpi-badge neutral">Actual Connected: $0.00</span>
+          </div>
+        </div>
+
+        <div class="split-row">
+          <div class="panel-card">
+            <h3><i class="fa-brands fa-facebook"></i> Facebook Page Traffic Attribution</h3>
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Facebook Campaign</th>
+                    <th>Visitors</th>
+                    <th>Pageviews</th>
+                    <th>Pages / Visit</th>
+                    <th>US %</th>
+                  </tr>
+                </thead>
+                <tbody id="fbCampaignsTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3><i class="fa-solid fa-fire"></i> Top Performing Stories</h3>
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Views</th>
+                    <th>Trend Score</th>
+                  </tr>
+                </thead>
+                <tbody id="topStoriesAdminTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: AI AGENT STUDIO -->
+      <section id="tab-ai-studio" class="admin-section">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Multi-Pass Iterative Story Refinement Agent</h3>
+              <p class="panel-sub">Upload video or enter plot outline. The agent runs Pass 1 (Drafting) → Pass 2 (Hook & Cliché Analysis) → Pass 3 (1500+ Words Novelistic Expansion) → Pass 4 (Scene Posters & FB Social Kit).</p>
+            </div>
+          </div>
+
+          <div class="ai-studio-grid">
+            <div class="studio-input-pane">
+              <div class="upload-box" onclick="document.getElementById('studioVideoFile').click()">
+                <input type="file" id="studioVideoFile" accept="video/mp4,video/mov" style="display:none;" onchange="handleStudioFileSelect(this)">
+                <i class="fa-solid fa-clapperboard upload-icon"></i>
+                <h4 id="studioUploadText">Click or Drag & Drop Short Drama Video (.mp4)</h4>
+                <p>Or drop file into local <code>input_videos/</code> folder</p>
+              </div>
+
+              <div class="form-group" style="margin-top: 15px;">
+                <label>Target Category</label>
+                <select id="studioCategory" class="admin-select">
+                  <option value="Marriage & Relationships">💔 Marriage & Relationships</option>
+                  <option value="Betrayal & Revenge" selected>😡 Betrayal & Revenge</option>
+                  <option value="Money & Inheritance">💰 Money & Inheritance</option>
+                  <option value="Shocking Secrets">😱 Shocking Secrets</option>
+                  <option value="Billionaire Drama">🔥 Billionaire Drama</option>
+                  <option value="Mafia & Power">🕶️ Mafia & Power</option>
+                </select>
+              </div>
+
+              <button class="btn-action-accent full-width" onclick="runAiAgentGeneration()" id="btnStartAgent">
+                <i class="fa-solid fa-bolt"></i> Run Multi-Pass AI Refinement Agent
+              </button>
+            </div>
+
+            <!-- Agent Progress Pipeline Visualizer -->
+            <div class="studio-pipeline-pane">
+              <h4>🤖 Agent Processing Pipeline</h4>
+              <div class="pipeline-steps">
+                <div class="pipe-step" id="step1">
+                  <div class="step-num">1</div>
+                  <div class="step-info">
+                    <strong>Pass 1: Raw Draft & Outline</strong>
+                    <span>Multimodal video analysis, core conflict & character mapping</span>
+                  </div>
+                </div>
+                <div class="pipe-step" id="step2">
+                  <div class="step-num">2</div>
+                  <div class="step-info">
+                    <strong>Pass 2: Critical Hook & Engagement Analysis</strong>
+                    <span>Editorial critique, removing AI clichés, boosting emotional stakes</span>
+                  </div>
+                </div>
+                <div class="pipe-step" id="step3">
+                  <div class="step-num">3</div>
+                  <div class="step-info">
+                    <strong>Pass 3: Retention & Novelistic Expansion</strong>
+                    <span>Writing 1500–2500+ words rich American prose, vivid dialogue</span>
+                  </div>
+                </div>
+                <div class="pipe-step" id="step4">
+                  <div class="step-num">4</div>
+                  <div class="step-info">
+                    <strong>Pass 4: Editorial Polish & Facebook Social Kit</strong>
+                    <span>Generating cinematic scene art, Part 2 cliffhanger hook & UTM links</span>
+                  </div>
+                </div>
+              </div>
+              <div id="agentStatusLog" class="agent-log">Waiting for input video...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: STORY LIBRARY -->
+      <section id="tab-stories" class="admin-section">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-book"></i> Taleonix Story Library</h3>
+            <span class="count-badge" id="storyCountBadge">6 Stories</span>
+          </div>
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Cover</th>
+                  <th>Title & Slug</th>
+                  <th>Category</th>
+                  <th>Part</th>
+                  <th>Reads</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="storyLibraryTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: FACEBOOK SOCIAL KIT -->
+      <section id="tab-facebook-kit" class="admin-section">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h3><i class="fa-brands fa-facebook"></i> Facebook Social Kit & Attribution Link Generator</h3>
+              <p class="panel-sub">Select any story and Facebook page to automatically generate tracked direct URLs, high-CTR pinned comments, and captions.</p>
+            </div>
+          </div>
+
+          <div class="fb-kit-controls">
+            <div class="form-group">
+              <label>1. Select Story</label>
+              <select id="fbStorySelect" class="admin-select" onchange="updateFbSocialKit()"></select>
+            </div>
+            <div class="form-group">
+              <label>2. Select Facebook Distribution Page</label>
+              <select id="fbPageSelect" class="admin-select" onchange="updateFbSocialKit()">
+                <option value="fb_page_1_billionaire">Page 1: Billionaire Reels (Billionaire & CEO)</option>
+                <option value="fb_page_2_revenge">Page 2: Revenge Stories (Betrayal & Karma)</option>
+                <option value="fb_page_3_mafia">Page 3: Mafia Romance (Mafia & Power)</option>
+                <option value="fb_page_4_secrets">Page 4: Shocking Secrets (Gala & DNA Scandals)</option>
+                <option value="fb_page_5_family">Page 5: Family Drama (Inheritance & Marriage)</option>
+                <option value="fb_page_6_general">Page 6: Viral Shorts (General Drama)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fb-assets-grid" id="fbAssetsContainer">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: UTM ANALYTICS -->
+      <section id="tab-analytics" class="admin-section">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h3><i class="fa-solid fa-bullseye"></i> Facebook Campaign & Geo Attribution</h3>
+              <p class="panel-sub">Track which Facebook pages bring the longest reading sessions and highest AdSense RPM.</p>
+            </div>
+          </div>
+
+          <div class="analytics-split">
+            <div>
+              <h4>Geographic Distribution (US Focus)</h4>
+              <div id="adminGeoList" class="geo-list-wrap"></div>
+            </div>
+            <div>
+              <h4>Real-time Reader Feed (Facebook Clicks)</h4>
+              <div id="adminLiveVisitorsList" class="live-visitor-feed"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: SETTINGS -->
+      <section id="tab-settings" class="admin-section">
+        <div class="panel-card">
+          <h3><i class="fa-solid fa-sliders"></i> Platform & Monetization Configuration</h3>
+          
+          <form onsubmit="saveAdminSettings(event)" class="settings-form">
+            <div class="form-group">
+              <label><i class="fa-solid fa-key"></i> Google Gemini API Key</label>
+              <input type="password" id="setGeminiKey" class="admin-input" placeholder="AIzaSy...">
+              <span class="input-hint">Used by the 4-pass AI Refinement Agent for automated story generation.</span>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fa-brands fa-google"></i> Google AdSense Publisher ID</label>
+              <input type="text" id="setAdsenseId" class="admin-input" placeholder="ca-pub-XXXXXXXXXXXXXXXX">
+              <span class="input-hint">Your approved Google AdSense Client ID.</span>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fa-solid fa-globe"></i> Live Publication Domain URL</label>
+              <input type="text" id="setDomainUrl" class="admin-input" placeholder="https://drama-online.onrender.com">
+              <span class="input-hint">Base URL used for generating Facebook tracked story links.</span>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fa-solid fa-shield-halved"></i> Change Admin Master PIN</label>
+              <input type="password" id="setAdminPin" class="admin-input" placeholder="Enter new PIN">
+            </div>
+
+            <div class="divider"></div>
+            <h4><i class="fa-brands fa-wordpress"></i> WordPress Auto-Sync (Optional)</h4>
+            <div class="form-group">
+              <label>WordPress Site URL</label>
+              <input type="text" id="setWpUrl" class="admin-input" placeholder="https://yourwordpressblog.com">
+            </div>
+            <div class="form-group">
+              <label>WordPress Username</label>
+              <input type="text" id="setWpUser" class="admin-input" placeholder="admin">
+            </div>
+            <div class="form-group">
+              <label>WordPress Application Password</label>
+              <input type="password" id="setWpPass" class="admin-input" placeholder="xxxx xxxx xxxx xxxx">
+            </div>
+
+            <button type="submit" class="btn-action-accent">
+              <i class="fa-solid fa-floppy-disk"></i> Save Platform Settings
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="adminToast" class="admin-toast"></div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
