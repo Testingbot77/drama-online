@@ -343,23 +343,36 @@ function exportSubscribersCSV() {
 
 function renderStoryLibrary(stories) {
   const table = document.getElementById('storyLibraryTable');
+  if (!table) return;
   table.innerHTML = '';
-  document.getElementById('storyCountBadge').innerText = `${stories.length} Stories`;
+  document.getElementById('storyCountBadge').innerText = `${stories.length} Chapters Published`;
+
+  const domain = getProductionDomain();
 
   stories.forEach(s => {
+    const cleanCode = (s.slug.replace(/[^a-zA-Z0-9]/g, '').slice(0, 6).toLowerCase() || ('s' + (s.partNumber || 1)));
+    const shortUrl = `${domain}/s/${cleanCode}`;
+    const fbCaption = `${s.title} — Full Chapter Available Now!\n\n🔥 Read Full Story Free 👉 ${shortUrl}\n\n#drama #viral #taleonix`;
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><img src="${s.coverImage || '/images/story1_cover.svg'}" class="table-thumb" alt="Cover"></td>
+      <td><img src="${s.coverImage || '/images/the-graduation-envelope-mother-in-green-cover.jpg'}" class="table-thumb" alt="Cover" style="width:70px; aspect-ratio:16/9; object-fit:cover; border-radius:6px;"></td>
       <td>
-        <strong>${s.title}</strong><br>
+        <strong style="font-size:0.92rem;">${s.title}</strong><br>
         <span style="font-size:0.75rem; color: var(--text-dim); font-family: monospace;">/story/${s.slug}</span>
       </td>
-      <td><span class="kpi-badge neutral">${s.category || 'Drama'}</span></td>
-      <td>Part ${s.partNumber || 1}</td>
-      <td style="color: var(--gold); font-weight: 700;">${s.views?.toLocaleString() || 0}</td>
-      <td><span class="kpi-badge positive">${s.status || 'Published'}</span></td>
-      <td>
-        <a href="/story/${s.slug}" target="_blank" class="btn-copy-code" style="text-decoration:none;"><i class="fa-solid fa-eye"></i> Read</a>
+      <td><span class="badge-cat" style="font-size:0.75rem;">${s.category || 'Drama'}</span></td>
+      <td><strong style="color:var(--accent-gold);">Part ${s.partNumber || 1}</strong></td>
+      <td style="white-space:nowrap;">
+        <button class="btn-action-accent" onclick="copyTrackingLinkUrl('${escapeAdminStr(shortUrl)}', '⚡ Short link copied! Ready to post in bio/captions')" title="Copy Short Link" style="padding:6px 12px; font-size:0.8rem; margin-right:4px;">
+          <i class="fa-solid fa-copy"></i> Copy Link
+        </button>
+        <button class="btn-action-primary" onclick="copyTrackingLinkUrl('${escapeAdminStr(fbCaption)}', '📝 Facebook caption with link copied!')" title="Copy Ready Facebook Caption" style="padding:6px 10px; font-size:0.8rem; margin-right:4px;">
+          <i class="fa-brands fa-facebook"></i> Caption
+        </button>
+        <a href="/story/${s.slug}" target="_blank" class="btn-action-secondary" style="padding:6px 10px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Read
+        </a>
       </td>
     `;
     table.appendChild(tr);

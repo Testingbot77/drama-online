@@ -20,9 +20,12 @@
   <meta name="google-adsense-account" content="ca-pub-3806896432302528">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806896432302528" crossorigin="anonymous"></script>
   
-  <link rel="stylesheet" href="/css/style.css?v=2.0.2">
+  <link rel="stylesheet" href="/css/style.css?v=3.0.0">
 </head>
 <body class="theme-dark">
+
+  <!-- ================= READING PROGRESS BAR ================= -->
+  <div id="readingProgressBar"></div>
 
   <!-- ================= EDITORIAL TOP NAVBAR ================= -->
   <header class="pub-navbar" id="pubNavbar">
@@ -46,11 +49,10 @@
       <nav class="category-nav" id="categoryNav">
         <a href="/" class="nav-item active" onclick="handleNavClick(event, '/')">Home</a>
         <a href="/trending" class="nav-item" onclick="handleNavClick(event, '/trending')">🔥 Trending</a>
+        <a href="/category/family" class="nav-item" onclick="handleNavClick(event, '/category/family')">Family Secrets</a>
+        <a href="/category/billionaire" class="nav-item" onclick="handleNavClick(event, '/category/billionaire')">Billionaire</a>
         <a href="/category/inheritance" class="nav-item" onclick="handleNavClick(event, '/category/inheritance')">Inheritance</a>
-        <a href="/category/secrets" class="nav-item" onclick="handleNavClick(event, '/category/secrets')">Secrets</a>
-        <a href="/category/family" class="nav-item" onclick="handleNavClick(event, '/category/family')">Family Drama</a>
         <a href="/category/revenge" class="nav-item" onclick="handleNavClick(event, '/category/revenge')">Revenge</a>
-        <a href="/category/justice" class="nav-item" onclick="handleNavClick(event, '/category/justice')">Justice</a>
       </nav>
     </div>
 
@@ -58,24 +60,23 @@
     <div class="mobile-drawer" id="mobileDrawer">
       <a href="/" class="mobile-item" onclick="handleNavClick(event, '/')"><i class="fa-solid fa-house"></i> Home</a>
       <a href="/trending" class="mobile-item" onclick="handleNavClick(event, '/trending')"><i class="fa-solid fa-fire"></i> Trending</a>
+      <a href="/category/family" class="mobile-item" onclick="handleNavClick(event, '/category/family')"><i class="fa-solid fa-people-roof"></i> Family Secrets</a>
+      <a href="/category/billionaire" class="mobile-item" onclick="handleNavClick(event, '/category/billionaire')"><i class="fa-solid fa-crown"></i> Billionaire</a>
       <a href="/category/inheritance" class="mobile-item" onclick="handleNavClick(event, '/category/inheritance')"><i class="fa-solid fa-vault"></i> Inheritance</a>
-      <a href="/category/secrets" class="mobile-item" onclick="handleNavClick(event, '/category/secrets')"><i class="fa-solid fa-user-secret"></i> Secrets</a>
-      <a href="/category/family" class="mobile-item" onclick="handleNavClick(event, '/category/family')"><i class="fa-solid fa-people-roof"></i> Family Drama</a>
       <a href="/category/revenge" class="mobile-item" onclick="handleNavClick(event, '/category/revenge')"><i class="fa-solid fa-bolt"></i> Revenge</a>
-      <a href="/category/justice" class="mobile-item" onclick="handleNavClick(event, '/category/justice')"><i class="fa-solid fa-scale-balanced"></i> Justice</a>
     </div>
   </header>
 
   <!-- ================= TOP HEADER ADSENSE BANNER ================= -->
   <div class="adsense-banner-wrapper">
     <div class="adsense-slot-leaderboard">
-      <div class="ad-flag">SPONSORED</div>
+      <div class="ad-flag">SPONSORED • US DIGITAL FICTION</div>
       <div class="ad-mock-row">
         <div class="ad-text-info">
-          <span class="ad-heading">🌟 Binge Trending US Drama Novels & Mini-Series</span>
-          <span class="ad-body">Unlock thousands of captivating chapters and thrilling cliffhangers.</span>
+          <span class="ad-heading">🌟 Free Serialized Chapters • No Subscription Needed</span>
+          <span class="ad-body">Binge full multi-part drama novels with unforgettable cliffhangers.</span>
         </div>
-        <button class="ad-action-btn">Read Free</button>
+        <button class="ad-action-btn" onclick="scrollToRows()">Browse All Sagas</button>
       </div>
     </div>
   </div>
@@ -83,123 +84,87 @@
   <!-- ================= MAIN CONTENT CONTAINER ================= -->
   <main class="main-pub-content">
 
-    <!-- ================= VIEW 1: EDITORIAL HOMEPAGE ================= -->
+    <!-- ================= VIEW 1: NETFLIX-STYLE STREAMING HOMEPAGE ================= -->
     <div id="page-home" class="pub-view active">
-      
-      <!-- HERO FEATURED STORY -->
-      <section class="hero-feature-section" id="heroFeatureSection">
-        <div class="container">
-          <div class="hero-card" id="heroCard">
+      <div class="container">
+
+        <!-- RESUME READING BAR (Shown if reader has saved progress) -->
+        <div id="resumeReadingBar" style="display: none;"></div>
+        
+        <!-- CINEMATIC HERO SPOTLIGHT -->
+        <section class="hero-spotlight" id="heroSpotlight">
+          <!-- Dynamically injected -->
+        </section>
+
+        <!-- NETFLIX ROW 1: TRENDING TONIGHT IN US -->
+        <section class="netflix-row-section" id="sectionTrending">
+          <div class="netflix-header-row">
+            <div class="netflix-title-wrap">
+              <h2><i class="fa-solid fa-fire" style="color:var(--accent-gold);"></i> Trending Tonight in US</h2>
+              <p class="netflix-sub">Top viral drama series ranked by American reader completion rate</p>
+            </div>
+            <div class="netflix-controls">
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowTrending', -1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowTrending', 1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="netflix-track" id="rowTrending">
             <!-- Dynamically populated -->
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TRENDING NOW & MOST READ SPLIT -->
-      <section class="trending-section">
-        <div class="container">
-          <div class="trending-grid-layout">
-            
-            <!-- Column 1: Trending Stories (6-8 cards) -->
-            <div class="trending-main-col">
-              <div class="section-title-wrap">
-                <h2 class="sec-heading"><i class="fa-solid fa-fire text-gold"></i> TRENDING NOW</h2>
-                <span class="sec-tag">Top viral stories ranked by real reader engagement</span>
-              </div>
-              <div class="story-card-grid" id="trendingStoriesGrid"></div>
+        <!-- NETFLIX ROW 2: FAMILY SECRETS & BETRAYALS -->
+        <section class="netflix-row-section">
+          <div class="netflix-header-row">
+            <div class="netflix-title-wrap">
+              <h2><i class="fa-solid fa-people-roof" style="color:#60A5FA;"></i> Family Secrets & In-Law Betrayals</h2>
+              <p class="netflix-sub">Confrontations in driveways, wedding disclosures, and mothers who refused to stay silent</p>
             </div>
-
-            <!-- Column 2: Most Read Today Sidebar -->
-            <aside class="most-read-sidebar">
-              <div class="sidebar-box">
-                <h3 class="sidebar-title"><i class="fa-solid fa-ranking-star"></i> MOST READ TODAY</h3>
-                <div class="most-read-list" id="mostReadSidebarList"></div>
-              </div>
-
-              <!-- Sidebar Ad Unit (300x250) -->
-              <div class="sidebar-ad-box">
-                <div class="ad-flag">ADVERTISEMENT</div>
-                <div class="sidebar-ad-content">
-                  <h4>💎 Free Daily Chapters</h4>
-                  <p>Discover top-ranked romance & billionaire sagas.</p>
-                  <button class="ad-action-btn">Explore Now</button>
-                </div>
-              </div>
-            </aside>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- CATEGORY 1: MARRIAGE & RELATIONSHIPS -->
-      <section class="category-block-section">
-        <div class="container">
-          <div class="cat-header-row">
-            <div>
-              <h2 class="cat-sec-title">💔 Marriage & Relationships</h2>
-              <p class="cat-sec-sub">Stories of secret vows, deceit, and true devotion</p>
-            </div>
-            <a href="/category/marriage" class="btn-view-all" onclick="handleNavClick(event, '/category/marriage')">View All →</a>
-          </div>
-          <div class="story-card-grid four-cols" id="gridMarriage"></div>
-        </div>
-      </section>
-
-      <!-- CATEGORY 2: BETRAYAL & REVENGE -->
-      <section class="category-block-section alt-bg">
-        <div class="container">
-          <div class="cat-header-row">
-            <div>
-              <h2 class="cat-sec-title">😡 Betrayal & Revenge</h2>
-              <p class="cat-sec-sub">When the discarded returned to claim absolute retribution</p>
-            </div>
-            <a href="/category/betrayal" class="btn-view-all" onclick="handleNavClick(event, '/category/betrayal')">View All →</a>
-          </div>
-          <div class="story-card-grid four-cols" id="gridBetrayal"></div>
-        </div>
-      </section>
-
-      <!-- CATEGORY 3: MONEY & INHERITANCE -->
-      <section class="category-block-section">
-        <div class="container">
-          <div class="cat-header-row">
-            <div>
-              <h2 class="cat-sec-title">💰 Money & Inheritance</h2>
-              <p class="cat-sec-sub">Hidden wills, secret trusts, and battles for family empires</p>
-            </div>
-            <a href="/category/inheritance" class="btn-view-all" onclick="handleNavClick(event, '/category/inheritance')">View All →</a>
-          </div>
-          <div class="story-card-grid four-cols" id="gridInheritance"></div>
-        </div>
-      </section>
-
-      <!-- CATEGORY 4: BILLIONAIRE & MAFIA -->
-      <section class="category-block-section alt-bg">
-        <div class="container">
-          <div class="cat-header-row">
-            <div>
-              <h2 class="cat-sec-title">🔥 Billionaire & Mafia Power</h2>
-              <p class="cat-sec-sub">High-stakes corporate takeovers and underworld protectors</p>
-            </div>
-            <a href="/category/billionaire" class="btn-view-all" onclick="handleNavClick(event, '/category/billionaire')">View All →</a>
-          </div>
-          <div class="story-card-grid four-cols" id="gridBillionaire"></div>
-        </div>
-      </section>
-
-      <!-- MORE STORIES YOU MAY LIKE -->
-      <section class="category-block-section">
-        <div class="container">
-          <div class="cat-header-row">
-            <div>
-              <h2 class="cat-sec-title">✨ More Stories You May Like</h2>
-              <p class="cat-sec-sub">Fresh discoveries curated for your reading journey</p>
+            <div class="netflix-controls">
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowFamily', -1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowFamily', 1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
           </div>
-          <div class="story-card-grid four-cols" id="gridMoreStories"></div>
-        </div>
-      </section>
+          <div class="netflix-track" id="rowFamily">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
 
+        <!-- NETFLIX ROW 3: BILLIONAIRE REVENGE & HIDDEN IDENTITY -->
+        <section class="netflix-row-section">
+          <div class="netflix-header-row">
+            <div class="netflix-title-wrap">
+              <h2><i class="fa-solid fa-crown" style="color:#F59E0B;"></i> Billionaire Identity & Cold Revenge</h2>
+              <p class="netflix-sub">Undercover founders and dismissed heirs returning with multi-million dollar payback</p>
+            </div>
+            <div class="netflix-controls">
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowBillionaire', -1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowBillionaire', 1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="netflix-track" id="rowBillionaire">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- NETFLIX ROW 4: INHERITANCE & WILL SHOCKERS -->
+        <section class="netflix-row-section">
+          <div class="netflix-header-row">
+            <div class="netflix-title-wrap">
+              <h2><i class="fa-solid fa-vault" style="color:#34D399;"></i> Hidden Wills & Property Deeds</h2>
+              <p class="netflix-sub">Handwritten ledgers, kitchen trash secrets, and legal documents that flipped fortunes</p>
+            </div>
+            <div class="netflix-controls">
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowInheritance', -1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="btn-carousel-ctrl" onclick="scrollTrack('rowInheritance', 1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="netflix-track" id="rowInheritance">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+      </div>
     </div>
 
     <!-- ================= VIEW 2: CATEGORY / TRENDING ARCHIVE ================= -->

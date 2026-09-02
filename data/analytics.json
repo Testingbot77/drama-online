@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 6,
-    "uniqueVisitors": 6,
+    "totalPageviews": 8,
+    "uniqueVisitors": 8,
     "usTrafficPercentage": 85,
     "avgReadTimeSeconds": 0,
     "estimatedRevenueUsd": 0,
     "averageRpmUsd": 24.5,
-    "adImpressions": 16,
+    "adImpressions": 24,
     "adCtr": "0.00%",
-    "estimatedAdSenseRevenueUsd": 0.13
+    "estimatedAdSenseRevenueUsd": 0.21
   },
   "trafficSources": [
     {
@@ -53,6 +53,22 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
