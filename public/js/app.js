@@ -89,27 +89,40 @@ async function loadAllStories() {
 function renderHomeComponents(stories) {
   if (!stories || stories.length === 0) return;
 
-  // 1. Hero Featured Story
-  const heroStory = stories[0];
+  // Extract unique Series Starters (Chapter 1 of each distinct series)
+  const seriesStarters = [];
+  const seenSeries = new Set();
+
+  stories.forEach(s => {
+    const sid = s.seriesId || s.slug;
+    if (!seenSeries.has(sid)) {
+      seenSeries.add(sid);
+      const chCount = stories.filter(st => (st.seriesId || st.slug) === sid).length;
+      seriesStarters.push({ ...s, totalChapters: chCount });
+    }
+  });
+
+  // 1. Hero Featured Story (First series starter)
+  const heroStory = seriesStarters[0] || stories[0];
   const heroContainer = document.getElementById('heroCard');
   if (heroContainer) {
     const heroImg = heroStory.coverImage || `/images/${heroStory.slug}.jpg`;
     heroContainer.innerHTML = `
       <div class="hero-content-col">
         <div class="hero-badge-row">
-          <span class="badge-gold"><i class="fa-solid fa-fire"></i> TOP TRENDING TODAY</span>
-          <span class="badge-cat">${heroStory.category || 'Drama'}</span>
+          <span class="badge-gold"><i class="fa-solid fa-crown"></i> ${heroStory.totalChapters || 10} CHAPTERS MEGA SAGA</span>
+          <span class="badge-cat">${heroStory.category || 'Family Secrets'}</span>
         </div>
         <h1 class="hero-title">${heroStory.title}</h1>
         <p class="hero-synopsis">${heroStory.hookSummary || ''}</p>
         <div class="hero-meta-row">
-          <span><i class="fa-regular fa-clock"></i> ${heroStory.readTime || '7 min read'}</span>
-          <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 34000).toLocaleString()} readers</span>
-          <span><i class="fa-regular fa-calendar"></i> ${new Date(heroStory.publicationDate || Date.now()).toLocaleDateString()}</span>
+          <span><i class="fa-regular fa-clock"></i> ${heroStory.readTime || '9 min read'}</span>
+          <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 68900).toLocaleString()} readers</span>
+          <span><i class="fa-solid fa-book-open"></i> Full ${heroStory.totalChapters || 10} Chapters</span>
         </div>
         <div class="hero-cta-actions">
           <a href="/story/${heroStory.slug}" class="btn-read-hero" onclick="handleNavClick(event, '/story/${heroStory.slug}')">
-            <i class="fa-solid fa-book-open"></i> READ STORY
+            <i class="fa-solid fa-book-open"></i> START READING CHAPTER 1
           </a>
         </div>
       </div>
@@ -119,12 +132,11 @@ function renderHomeComponents(stories) {
     `;
   }
 
-  // 2. Trending Now Grid (sorted by trendingScore or views)
-  const trendingStories = [...stories].sort((a, b) => (b.trendingScore || b.views) - (a.trendingScore || a.views)).slice(0, 6);
-  renderCardGrid('trendingStoriesGrid', trendingStories);
+  // 2. Trending Now Grid (Shows all 8 Series Starters!)
+  renderCardGrid('trendingStoriesGrid', seriesStarters);
 
-  // 3. Most Read Today Sidebar
-  const mostReadStories = [...stories].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
+  // 3. Most Read Today Sidebar (Shows all series starters)
+  const mostReadStories = [...seriesStarters].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 6);
   const mostReadContainer = document.getElementById('mostReadSidebarList');
   if (mostReadContainer) {
     mostReadContainer.innerHTML = '';
@@ -137,24 +149,24 @@ function renderHomeComponents(stories) {
         <span class="most-read-num">0${idx + 1}</span>
         <div>
           <div class="most-read-title">${s.title}</div>
-          <div class="most-read-meta">${s.category || 'Drama'} • ${s.readTime || '6 min read'}</div>
+          <div class="most-read-meta">${s.category || 'Drama'} • ${s.totalChapters || 6} Chapters</div>
         </div>
       `;
       mostReadContainer.appendChild(item);
     });
   }
 
-  // 4. Category Grids
-  const marriage = stories.filter(s => matchCat(s, 'marriage') || matchCat(s, 'relationships'));
-  const betrayal = stories.filter(s => matchCat(s, 'betrayal') || matchCat(s, 'revenge'));
-  const inheritance = stories.filter(s => matchCat(s, 'inheritance') || matchCat(s, 'money'));
-  const billionaire = stories.filter(s => matchCat(s, 'billionaire') || matchCat(s, 'mafia'));
+  // 4. Category Grids (Using distinct series starters)
+  const family = seriesStarters.filter(s => matchCat(s, 'family') || matchCat(s, 'secrets') || matchCat(s, 'relationships'));
+  const inheritance = seriesStarters.filter(s => matchCat(s, 'inheritance') || matchCat(s, 'money'));
+  const justice = seriesStarters.filter(s => matchCat(s, 'courtroom') || matchCat(s, 'justice') || matchCat(s, 'feud'));
+  const redemption = seriesStarters.filter(s => matchCat(s, 'redemption') || matchCat(s, 'revenge') || matchCat(s, 'secrets'));
 
-  renderCardGrid('gridMarriage', marriage.length ? marriage.slice(0, 4) : stories.slice(0, 4));
-  renderCardGrid('gridBetrayal', betrayal.length ? betrayal.slice(0, 4) : stories.slice(1, 5));
-  renderCardGrid('gridInheritance', inheritance.length ? inheritance.slice(0, 4) : stories.slice(2, 6));
-  renderCardGrid('gridBillionaire', billionaire.length ? billionaire.slice(0, 4) : stories.slice(0, 4));
-  renderCardGrid('gridMoreStories', [...stories].reverse().slice(0, 4));
+  renderCardGrid('gridMarriage', family.length ? family : seriesStarters.slice(0, 4));
+  renderCardGrid('gridBetrayal', redemption.length ? redemption : seriesStarters.slice(2, 6));
+  renderCardGrid('gridInheritance', inheritance.length ? inheritance : seriesStarters.slice(1, 5));
+  renderCardGrid('gridBillionaire', justice.length ? justice : seriesStarters.slice(4, 8));
+  renderCardGrid('gridMoreStories', seriesStarters);
 }
 
 function renderCardGrid(elementId, storiesList) {
@@ -174,24 +186,25 @@ function renderCardGrid(elementId, storiesList) {
     card.onclick = (e) => handleNavClick(e, `/story/${s.slug}`);
     
     const coverSrc = s.coverImage || `/images/${s.slug}.jpg`;
+    const chapterBadge = s.totalChapters ? `${s.totalChapters} CHAPTERS` : (s.partNumber ? `CHAPTER ${s.partNumber}` : 'FULL STORY');
 
     card.innerHTML = `
       <div class="card-thumb-wrap">
-        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/the-discarded-heiress-billionaires-secret-vow.jpg'">
+        <img src="${coverSrc}" alt="${s.title}" loading="lazy" onerror="this.src='/images/grad_frame_01.jpg'">
         <div class="card-thumb-overlay">
-          <span class="thumb-badge">${s.category || 'Taleonix Drama'}</span>
+          <span class="thumb-badge"><i class="fa-solid fa-book-bookmark"></i> ${chapterBadge}</span>
         </div>
       </div>
       <div class="card-body">
         <div class="card-meta-row">
           <span class="badge-cat">${s.category || 'Drama'}</span>
-          <span style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.readTime || '6 min read'}</span>
+          <span style="font-size:0.75rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${s.readTime || '9 min read'}</span>
         </div>
         <h3 class="card-title">${s.title}</h3>
         <p class="card-hook">${s.hookSummary || ''}</p>
         <div class="card-footer">
-          <span>Part ${s.partNumber || 1} • <strong style="color: var(--accent-gold);">${s.views ? s.views.toLocaleString() + ' reads' : '🔥 Trending'}</strong></span>
-          <span style="color: var(--accent-gold); font-weight:700;">Read Chapter →</span>
+          <span><strong style="color: var(--accent-gold);"><i class="fa-solid fa-layer-group"></i> ${chapterBadge}</strong></span>
+          <span style="color: var(--accent-gold); font-weight:700;">Start Reading →</span>
         </div>
       </div>
     `;

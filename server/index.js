@@ -116,7 +116,26 @@ app.get('/api/stories', (req, res) => {
 // 2. Get single story by slug + automatically fetch 4-6 related stories
 app.get('/api/stories/:slug', (req, res) => {
   const stories = db.getStories();
-  const story = stories.find(s => s.slug === req.params.slug);
+  const slugParam = req.params.slug;
+  let story = stories.find(s => s.slug === slugParam);
+
+  if (!story) {
+    // Smart legacy slug alias resolution
+    const aliasMap = {
+      'the-grandmothers-secret-quilt': 'the-grandmothers-handwritten-ledger-inheritance',
+      'the-grandmothers-secret-quilt-part-2-the-48-million-retribution': 'the-grandmothers-handwritten-ledger-part-2-grand-finale',
+      'the-forgotten-portrait-family-will': 'the-gold-framed-deed-refused-to-pack',
+      'the-forgotten-portrait-part-2-grand-finale': 'the-gold-framed-deed-chapter-6-grand-finale',
+      'the-two-mothers-at-graduation-part-2-the-50-million-legacy': 'the-two-mothers-at-graduation-chapter-6-grand-finale'
+    };
+    const targetSlug = aliasMap[slugParam] || slugParam;
+    story = stories.find(s => s.slug === targetSlug);
+
+    if (!story) {
+      story = stories.find(s => s.slug.includes(slugParam) || slugParam.includes(s.slug));
+    }
+  }
+
   if (!story) {
     return res.status(404).json({ success: false, error: 'Story not found' });
   }
