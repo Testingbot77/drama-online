@@ -123,24 +123,24 @@
 
         <div class="kpi-row">
           <div class="kpi-box">
-            <span class="kpi-label">Total Publication Pageviews</span>
-            <div class="kpi-val" id="ovPageviews">384,920</div>
-            <span class="kpi-badge positive" id="ovViewsChange"><i class="fa-solid fa-arrow-trend-up"></i> +44.2% Growth</span>
+            <span class="kpi-label"><i class="fa-solid fa-globe"></i> Total Website Pageviews</span>
+            <div class="kpi-val" id="ovPageviews">0</div>
+            <span class="kpi-badge positive"><i class="fa-solid fa-book-open"></i> All Stories Combined</span>
           </div>
           <div class="kpi-box highlight-gold">
-            <span class="kpi-label">US Audience Share (AdSense High RPM)</span>
-            <div class="kpi-val text-gold" id="ovUsShare">84.2%</div>
-            <span class="kpi-badge gold"><i class="fa-solid fa-star"></i> $28.50 Average US RPM</span>
+            <span class="kpi-label"><i class="fa-solid fa-link"></i> Campaign Link Clicks</span>
+            <div class="kpi-val text-gold" id="ovLinkClicks">0</div>
+            <span class="kpi-badge gold"><i class="fa-brands fa-facebook"></i> Social & Bio Clicks</span>
           </div>
           <div class="kpi-box highlight-blue">
-            <span class="kpi-label">Registered VIP Readers</span>
-            <div class="kpi-val text-blue" id="ovSubscribersCount">3,480</div>
-            <span class="kpi-badge positive"><i class="fa-solid fa-user-check"></i> Google & Email Synced</span>
+            <span class="kpi-label"><i class="fa-solid fa-users"></i> Unique Readers</span>
+            <div class="kpi-val text-blue" id="ovUniqueVisitors">0</div>
+            <span class="kpi-badge positive"><i class="fa-solid fa-user-check"></i> Individual Visitors</span>
           </div>
           <div class="kpi-box highlight-green">
-            <span class="kpi-label">Estimated AdSense Revenue</span>
-            <div class="kpi-val text-green" id="ovEstRev">$5,589.50</div>
-            <span class="kpi-badge neutral">pub-3806896432302528</span>
+            <span class="kpi-label"><i class="fa-solid fa-layer-group"></i> Total Stories & Chapters</span>
+            <div class="kpi-val text-green" id="ovStoriesCount">52</div>
+            <span class="kpi-badge neutral">8 Full Sagas Live</span>
           </div>
         </div>
 
@@ -148,20 +148,20 @@
         <div class="panel-card timeline-card">
           <div class="panel-header-row">
             <div>
-              <h3 id="timelineTitle"><i class="fa-solid fa-chart-column"></i> 7-Day Performance Breakdown</h3>
-              <p class="panel-sub" id="timelineSub">Daily views, US traffic density, and estimated ad revenue</p>
+              <h3 id="timelineTitle"><i class="fa-solid fa-chart-column"></i> Performance Activity Breakdown</h3>
+              <p class="panel-sub" id="timelineSub">Website Pageviews vs Direct Campaign Link Clicks</p>
             </div>
-            <span class="period-badge-label" id="currentPeriodLabel">Last 7 Days</span>
+            <span class="period-badge-label" id="currentPeriodLabel">Recent Activity</span>
           </div>
           <div class="table-container">
             <table class="admin-table">
               <thead>
                 <tr>
                   <th>Period</th>
-                  <th>Pageviews</th>
+                  <th>Website Pageviews</th>
+                  <th>Link Clicks</th>
+                  <th>Unique Readers</th>
                   <th>US Traffic %</th>
-                  <th>Estimated Revenue</th>
-                  <th>Trend</th>
                 </tr>
               </thead>
               <tbody id="periodTimelineTable"></tbody>
@@ -474,7 +474,7 @@
           <div class="panel-header">
             <div>
               <h3><i class="fa-solid fa-bullseye"></i> Facebook Campaign & Geo Attribution</h3>
-              <p class="panel-sub">Track which Facebook pages bring the longest reading sessions and highest AdSense RPM.</p>
+              <p class="panel-sub">Track which Facebook pages bring the longest reading sessions and highest reader engagement.</p>
             </div>
           </div>
 
@@ -547,6 +547,6 @@
 
   <div id="adminToast" class="admin-toast"></div>
 
-  <script src="/admin/admin.js?v=2.0.5"></script>
+  <script src="/admin/admin.js?v=2.0.6"></script>
 </body>
 </html>

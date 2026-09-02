@@ -121,7 +121,7 @@ function renderHomeComponents(stories) {
         <p class="hero-synopsis">${heroStory.hookSummary || ''}</p>
         <div class="hero-meta-row">
           <span><i class="fa-regular fa-clock"></i> ${heroStory.readTime || '9 min read'}</span>
-          <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 68900).toLocaleString()} readers</span>
+          <span><i class="fa-solid fa-eye"></i> ${(heroStory.views || 0).toLocaleString()} readers</span>
           <span><i class="fa-solid fa-book-open"></i> Full ${heroStory.totalChapters || 10} Chapters</span>
         </div>
         <div class="hero-cta-actions">

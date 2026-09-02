@@ -212,18 +212,18 @@ async function fetchRealtimeAnalytics() {
 function renderRealtimeStats(data) {
   // Top bar live readers count
   const topCount = document.getElementById('topActiveCount');
-  if (topCount) topCount.innerText = data.liveActiveCount || 22;
+  if (topCount) topCount.innerText = data.liveActiveCount || 0;
 
-  // Overview KPIs
+  // Overview KPIs: Separated Website Pageviews vs Link Clicks
   const ovViews = document.getElementById('ovPageviews');
-  const ovUs = document.getElementById('ovUsShare');
-  const ovSubs = document.getElementById('ovSubscribersCount');
-  const ovRev = document.getElementById('ovEstRev');
+  const ovLinks = document.getElementById('ovLinkClicks');
+  const ovUniq = document.getElementById('ovUniqueVisitors');
+  const ovStories = document.getElementById('ovStoriesCount');
 
-  if (ovViews) ovViews.innerText = (data.totalViews || 384920).toLocaleString();
-  if (ovUs) ovUs.innerText = data.usSharePct || '84.2%';
-  if (ovSubs) ovSubs.innerText = (data.totalSubscribers || 3).toLocaleString();
-  if (ovRev) ovRev.innerText = data.estimatedMonthlyRevenue || '$5,589.50';
+  if (ovViews) ovViews.innerText = (data.totalWebsiteViews || 0).toLocaleString();
+  if (ovLinks) ovLinks.innerText = (data.totalLinkClicks || 0).toLocaleString();
+  if (ovUniq) ovUniq.innerText = (data.totalUnique || 0).toLocaleString();
+  if (ovStories) ovStories.innerText = (data.totalStories || 52).toLocaleString();
 
   renderPeriodTimeline(data);
   renderLiveVisitorsStream(data.recentVisitors || []);
@@ -236,14 +236,19 @@ function renderPeriodTimeline(data) {
 
   const items = currentPeriod === '7d' ? (data.sevenDay || []) : (data.twentyEightDay || []);
 
+  if (items.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:20px;">No activity logged yet. Share a story link to see live tracking!</td></tr>';
+    return;
+  }
+
   items.forEach(item => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${item.day ? `${item.day} (${item.date})` : item.period}</strong></td>
-      <td style="color: var(--gold); font-weight: 700;">${item.views.toLocaleString()}</td>
-      <td><span class="kpi-badge gold">${item.usTraffic}% US 🇺🇸</span></td>
-      <td style="color: #4ade80; font-weight: 700;">${item.revenue}</td>
-      <td><span class="kpi-badge positive"><i class="fa-solid fa-arrow-trend-up"></i> +18.4%</span></td>
+      <td style="color: var(--accent-gold); font-weight: 700;">${(item.websiteViews || 0).toLocaleString()}</td>
+      <td style="color: #60a5fa; font-weight: 700;">${(item.linkClicks || 0).toLocaleString()}</td>
+      <td>${(item.unique || 0).toLocaleString()}</td>
+      <td><span class="kpi-badge gold">${item.usTraffic || 85}% US 🇺🇸</span></td>
     `;
     tbody.appendChild(tr);
   });
