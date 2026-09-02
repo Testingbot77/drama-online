@@ -161,6 +161,10 @@ async function loadDashboardData() {
     }
 
   } catch (err) {
+    console.error("Dashboard load err:", err);
+  }
+}
+
 let currentPeriod = '7d';
 let realtimeCacheData = null;
 
