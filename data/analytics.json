@@ -1,307 +1,57 @@
 {
   "overview": {
-    "totalPageviews": 24196,
-    "uniqueVisitors": 18508,
-    "usTrafficPercentage": 74.2,
-    "avgReadTimeSeconds": 215,
-    "estimatedRevenueUsd": 486.37,
-    "averageRpmUsd": 20.15,
-    "adImpressions": 62994,
-    "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 1.93
+    "totalPageviews": 0,
+    "uniqueVisitors": 0,
+    "usTrafficPercentage": 85.0,
+    "avgReadTimeSeconds": 0,
+    "estimatedRevenueUsd": 0.0,
+    "averageRpmUsd": 24.5,
+    "adImpressions": 0,
+    "adCtr": "0.00%",
+    "estimatedAdSenseRevenueUsd": 0.0
   },
   "trafficSources": [
     {
-      "source": "TikTok Shorts (6 Pages)",
-      "visitors": 10850,
-      "percentage": 58.8
+      "source": "Facebook Reels",
+      "visitors": 0,
+      "percentage": 0
+    },
+    {
+      "source": "TikTok Shorts",
+      "visitors": 0,
+      "percentage": 0
     },
     {
       "source": "Instagram Reels",
-      "visitors": 4620,
-      "percentage": 25
-    },
-    {
-      "source": "YouTube Shorts",
-      "visitors": 2210,
-      "percentage": 12
+      "visitors": 0,
+      "percentage": 0
     },
     {
       "source": "Direct / Other",
-      "visitors": 770,
-      "percentage": 4.2
+      "visitors": 0,
+      "percentage": 0
     }
   ],
   "geoBreakdown": [
     {
       "country": "United States 🇺🇸",
-      "visitors": 13690,
-      "percentage": 74.2,
-      "rpm": "$26.50"
+      "visitors": 0,
+      "percentage": 85,
+      "rpm": "$28.50"
     },
     {
       "country": "United Kingdom 🇬🇧",
-      "visitors": 2030,
-      "percentage": 11,
-      "rpm": "$19.80"
+      "visitors": 0,
+      "percentage": 10,
+      "rpm": "$21.00"
     },
     {
       "country": "Canada 🇨🇦",
-      "visitors": 1475,
-      "percentage": 8,
-      "rpm": "$18.20"
-    },
-    {
-      "country": "Australia 🇦🇺",
-      "visitors": 738,
-      "percentage": 4,
-      "rpm": "$17.40"
-    },
-    {
-      "country": "Other Countries 🌍",
-      "visitors": 517,
-      "percentage": 2.8,
-      "rpm": "$6.50"
+      "visitors": 0,
+      "percentage": 5,
+      "rpm": "$19.50"
     }
   ],
-  "dailyViews": [
-    {
-      "date": "Day 1",
-      "views": 1850,
-      "usViews": 1370,
-      "revenue": "$36.80"
-    },
-    {
-      "date": "Day 2",
-      "views": 2420,
-      "usViews": 1790,
-      "revenue": "$48.50"
-    },
-    {
-      "date": "Day 3",
-      "views": 3100,
-      "usViews": 2310,
-      "revenue": "$62.40"
-    },
-    {
-      "date": "Day 4",
-      "views": 4200,
-      "usViews": 3120,
-      "revenue": "$84.70"
-    },
-    {
-      "date": "Day 5",
-      "views": 5600,
-      "usViews": 4180,
-      "revenue": "$112.90"
-    },
-    {
-      "date": "Day 6",
-      "views": 6960,
-      "usViews": 5180,
-      "revenue": "$140.90"
-    }
-  ],
-  "recentVisitors": [
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Handwritten Ledger (Chapter 4): The Corridor Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Handwritten Ledger (Chapter 3): The Emergency Courthouse Injunction",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Handwritten Ledger (Chapter 2): The Treasury Vault Audit",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Handwritten Ledger (Chapter 1): The Corporate Eviction Notice",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Two Mothers at Graduation (Chapter 1): The Valedictorian on Stage",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 10 - Grand Finale): The Harvest Table",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 5): The Living Room Portrait",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 4): The Father's Discovery",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 3): The Kitchen Table Keys",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Secret Quilt (Part 2 - Grand Finale): The Courtroom Truth & The Heir's Retribution",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Secret Quilt (Part 2 - Grand Finale): The Courtroom Truth & The Heir's Retribution",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Secret Quilt (Part 2 - Grand Finale): The Courtroom Truth & The Heir's Retribution",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Secret Quilt: When the Greedy Nephew Evicted Her, He Threw Away a $48 Million Fortune",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 6): The Matriarch's Ledger",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 5): The Living Room Portrait",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 4): The Father's Discovery",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 3): The Kitchen Table Keys",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 3): The Kitchen Table Keys",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 3): The Kitchen Table Keys",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    }
-  ]
+  "recentVisitors": [],
+  "facebookCampaigns": []
 }
