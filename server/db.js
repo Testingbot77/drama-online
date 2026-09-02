@@ -452,27 +452,43 @@ const INITIAL_ANALYTICS = {
   ]
 };
 
-const INITIAL_SETTINGS = {
-  geminiApiKey: process.env.GEMINI_API_KEY || "",
-  adminPasswordHash: "1234", // Default admin password
-  siteName: "Taleonix",
-  siteTagline: "US Drama Stories & High-Retention Digital Publication",
-  domainUrl: "https://drama-online.onrender.com",
-  adsenseClientId: "ca-pub-XXXXXXXXXXXX",
-  enableAdSenseSimulation: true,
-  autoProcessFolder: true,
-  wpUrl: "",
-  wpUsername: "",
-  wpAppPassword: ""
-};
+// High-Throughput In-Memory Caches for 1M+ Readers
+let memoryStories = null;
+let memoryMarketing = null;
+let memoryAnalytics = null;
+let memorySettings = null;
 
 module.exports = {
-  getStories: () => readJSON(STORIES_FILE, INITIAL_STORIES),
-  saveStories: (data) => writeJSON(STORIES_FILE, data),
-  getMarketingItems: () => readJSON(MARKETING_FILE, INITIAL_MARKETING),
-  saveMarketingItems: (data) => writeJSON(MARKETING_FILE, data),
-  getAnalytics: () => readJSON(ANALYTICS_FILE, INITIAL_ANALYTICS),
-  saveAnalytics: (data) => writeJSON(ANALYTICS_FILE, data),
-  getSettings: () => readJSON(SETTINGS_FILE, INITIAL_SETTINGS),
-  saveSettings: (data) => writeJSON(SETTINGS_FILE, data)
+  getStories: () => {
+    if (!memoryStories) memoryStories = readJSON(STORIES_FILE, INITIAL_STORIES);
+    return memoryStories;
+  },
+  saveStories: (data) => {
+    memoryStories = data;
+    writeJSON(STORIES_FILE, data);
+  },
+  getMarketingItems: () => {
+    if (!memoryMarketing) memoryMarketing = readJSON(MARKETING_FILE, INITIAL_MARKETING);
+    return memoryMarketing;
+  },
+  saveMarketingItems: (data) => {
+    memoryMarketing = data;
+    writeJSON(MARKETING_FILE, data);
+  },
+  getAnalytics: () => {
+    if (!memoryAnalytics) memoryAnalytics = readJSON(ANALYTICS_FILE, INITIAL_ANALYTICS);
+    return memoryAnalytics;
+  },
+  saveAnalytics: (data) => {
+    memoryAnalytics = data;
+    writeJSON(ANALYTICS_FILE, data);
+  },
+  getSettings: () => {
+    if (!memorySettings) memorySettings = readJSON(SETTINGS_FILE, INITIAL_SETTINGS);
+    return memorySettings;
+  },
+  saveSettings: (data) => {
+    memorySettings = data;
+    writeJSON(SETTINGS_FILE, data);
+  }
 };

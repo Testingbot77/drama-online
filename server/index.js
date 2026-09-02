@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const compression = require('compression');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
@@ -12,15 +13,45 @@ const { publishToWordPress } = require('./wordpressSync');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+// High-speed Gzip / Brotli payload compression for 1M+ readers
+app.use(compression({
+  threshold: 1024,
+  level: 6
+}));
 
-// 1. Static Asset Directories (Images, CSS, JS, Videos, Admin assets)
-app.use('/css', express.static(path.join(__dirname, '..', 'public', 'css')));
-app.use('/js', express.static(path.join(__dirname, '..', 'public', 'js')));
-app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
-app.use('/videos', express.static(path.join(__dirname, '..', 'public', 'videos')));
+app.use(cors());
+app.use(express.json({ limit: '10mb' }));
+
+// Static Asset Directories with 24-hour browser caching
+const staticOptions = {
+  maxAge: '1d',
+  immutable: true,
+  setHeaders: (res, path) => {
+    res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+  }
+};
+
+app.use('/css', express.static(path.join(__dirname, '..', 'public', 'css'), staticOptions));
+app.use('/js', express.static(path.join(__dirname, '..', 'public', 'js'), staticOptions));
+app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images'), staticOptions));
+app.use('/videos', express.static(path.join(__dirname, '..', 'public', 'videos'), staticOptions));
 app.use('/admin', express.static(path.join(__dirname, '..', 'public', 'admin')));
+
+// Health check & ping endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'healthy', uptime: process.uptime(), timestamp: new Date().toISOString() });
+});
+
+// Self-Pinging Keep-Alive Heartbeat (Runs every 10 mins so Render never sleeps)
+const KEEP_ALIVE_URL = process.env.RENDER_EXTERNAL_URL || 'https://drama-online.onrender.com';
+setInterval(() => {
+  if (KEEP_ALIVE_URL && KEEP_ALIVE_URL.startsWith('http')) {
+    fetch(`${KEEP_ALIVE_URL}/api/health`)
+      .then(r => r.json())
+      .then(() => console.log(`[Keep-Alive] Pinged ${KEEP_ALIVE_URL}/api/health successfully.`))
+      .catch(err => console.warn(`[Keep-Alive] Ping warning:`, err.message));
+  }
+}, 10 * 60 * 1000); // 10 minutes
 
 // Multer storage for admin studio video uploads
 const storage = multer.diskStorage({
