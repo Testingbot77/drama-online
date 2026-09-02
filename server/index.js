@@ -440,7 +440,9 @@ app.post('/api/admin/tracking-links', requireAdminAuth, (req, res) => {
   const matchedStory = stories.find(s => s.slug === storySlug) || { title: 'Story Link' };
   const links = db.getTrackingLinks();
   const settings = db.getSettings();
-  const domain = settings.domainUrl || `http://${req.headers.host}`;
+  const domain = (settings.domainUrl && !settings.domainUrl.includes('localhost'))
+    ? settings.domainUrl.replace(/\/+$/, '')
+    : (process.env.RENDER_EXTERNAL_URL || 'https://drama-online.onrender.com');
   
   const utmSource = source || 'facebook';
   const utmMedium = medium || 'video';

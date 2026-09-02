@@ -569,9 +569,12 @@ function handleEmailSubscription(e) {
 }
 
 function copyStoryShareLink() {
-  const url = window.location.href;
+  let url = window.location.href;
+  if (url.includes('localhost')) {
+    url = url.replace(/https?:\/\/localhost:\d+/, 'https://drama-online.onrender.com');
+  }
   navigator.clipboard.writeText(url);
-  showToast('Story link copied to clipboard! Share it with your friends 🎉');
+  showToast('Story link copied to clipboard! Ready to share 🎉');
 }
 
 

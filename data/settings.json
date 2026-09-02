@@ -1,8 +1,8 @@
 {
   "geminiApiKey": "",
-  "siteName": "DramaLuxe",
-  "siteTagline": "Viral Mini-Series & Uncensored Drama Stories",
-  "domainUrl": "http://localhost:3000",
+  "siteName": "Taleonix",
+  "siteTagline": "Viral US Drama Sagas & Serialized Fiction",
+  "domainUrl": "https://drama-online.onrender.com",
   "adsenseClientId": "ca-pub-XXXXXXXXXXXX",
   "enableAdSenseSimulation": true,
   "autoProcessFolder": true,

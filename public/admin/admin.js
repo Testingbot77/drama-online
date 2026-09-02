@@ -598,6 +598,13 @@ function populateTrackStorySelect() {
   });
 }
 
+function getProductionDomain() {
+  if (adminSettings && adminSettings.domainUrl && !adminSettings.domainUrl.includes('localhost')) {
+    return adminSettings.domainUrl.replace(/\/+$/, '');
+  }
+  return 'https://drama-online.onrender.com';
+}
+
 function renderTrackingLinksTable(links) {
   const tbody = document.getElementById('trackingLinksTableBody');
   if (!tbody) return;
@@ -608,10 +615,10 @@ function renderTrackingLinksTable(links) {
     return;
   }
 
-  const domain = window.location.origin;
+  const domain = getProductionDomain();
 
   links.forEach(l => {
-    const fullUrl = l.fullTrackedUrl || `${domain}${l.trackedUrl}`;
+    const fullUrl = l.fullTrackedUrl && !l.fullTrackedUrl.includes('localhost') ? l.fullTrackedUrl : `${domain}${l.trackedUrl}`;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${l.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted); font-family:monospace;">${l.campaign}</span></td>
@@ -659,8 +666,10 @@ async function handleCreateTrackingLink(e) {
     if (data.success && data.trackingLink) {
       showAdminToast('Tracking link created successfully!');
       
-      const domain = window.location.origin;
-      const fullUrl = data.trackingLink.fullTrackedUrl || `${domain}${data.trackingLink.trackedUrl}`;
+      const domain = getProductionDomain();
+      const fullUrl = data.trackingLink.fullTrackedUrl && !data.trackingLink.fullTrackedUrl.includes('localhost') 
+        ? data.trackingLink.fullTrackedUrl 
+        : `${domain}${data.trackingLink.trackedUrl}`;
       
       document.getElementById('generatedLinkInput').value = fullUrl;
       document.getElementById('generatedLinkResult').style.display = 'block';
