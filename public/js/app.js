@@ -27,6 +27,10 @@ function handleNavClick(e, path) {
 
 function handleRoute(path, shouldScroll = true) {
   path = path || window.location.pathname || '/';
+  if (path.startsWith('/admin')) {
+    window.location.href = '/admin/';
+    return;
+  }
   const drawer = document.getElementById('mobileDrawer');
   if (drawer) drawer.classList.remove('open');
 
@@ -562,6 +566,12 @@ function handleEmailSubscription(e) {
     emailInput.value = '';
     showToast('Thank you for subscribing! 🎉');
   });
+}
+
+function copyStoryShareLink() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url);
+  showToast('Story link copied to clipboard! Share it with your friends 🎉');
 }
 
 

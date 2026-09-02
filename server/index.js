@@ -196,6 +196,20 @@ app.post('/api/stories/:slug/view', (req, res) => {
     analytics.overview.estimatedAdSenseRevenueUsd = Number(((analytics.overview.estimatedAdSenseRevenueUsd || 0) + incRev).toFixed(2));
 
     db.saveAnalytics(analytics);
+
+    // Update dedicated Link Tracker entries
+    try {
+      const trackingLinks = db.getTrackingLinks();
+      const matchedTrack = trackingLinks.find(tl => tl.campaign === campaign || tl.storySlug === req.params.slug);
+      if (matchedTrack) {
+        matchedTrack.clicks = (matchedTrack.clicks || 0) + 1;
+        matchedTrack.uniqueReaders = (matchedTrack.uniqueReaders || 0) + 1;
+        matchedTrack.estimatedRevenueUsd = Number(((matchedTrack.estimatedRevenueUsd || 0) + incRev).toFixed(2));
+        db.saveTrackingLinks(trackingLinks);
+      }
+    } catch(err) {
+      console.warn('Tracking link record error:', err.message);
+    }
   }
   res.json({ success: true });
 });
@@ -407,6 +421,59 @@ app.post('/api/admin/settings', requireAdminAuth, (req, res) => {
   res.json({ success: true, message: 'Settings saved successfully' });
 });
 
+// Admin Tracking Links Management
+app.get('/api/admin/tracking-links', requireAdminAuth, (req, res) => {
+  const links = db.getTrackingLinks();
+  res.json({ success: true, trackingLinks: links });
+});
+
+app.post('/api/admin/tracking-links', requireAdminAuth, (req, res) => {
+  const { name, storySlug, source, medium, campaign } = req.body;
+  if (!storySlug || !campaign) {
+    return res.status(400).json({ success: false, error: 'Story slug and campaign name required' });
+  }
+  const stories = db.getStories();
+  const matchedStory = stories.find(s => s.slug === storySlug) || { title: 'Story Link' };
+  const links = db.getTrackingLinks();
+  const settings = db.getSettings();
+  const domain = settings.domainUrl || `http://${req.headers.host}`;
+  
+  const utmSource = source || 'facebook';
+  const utmMedium = medium || 'video';
+  const cleanCampaign = campaign.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+  const query = `utm_source=${encodeURIComponent(utmSource)}&utm_medium=${encodeURIComponent(utmMedium)}&utm_campaign=${encodeURIComponent(cleanCampaign)}`;
+  const trackedUrl = `/story/${storySlug}?${query}`;
+  const fullTrackedUrl = `${domain}${trackedUrl}`;
+
+  const newLink = {
+    id: 'track-' + Date.now(),
+    name: name || `${matchedStory.title} (${utmSource})`,
+    storySlug,
+    storyTitle: matchedStory.title,
+    source: utmSource,
+    medium: utmMedium,
+    campaign: cleanCampaign,
+    trackedUrl,
+    fullTrackedUrl,
+    clicks: 0,
+    uniqueReaders: 0,
+    usPercentage: 82.0,
+    estimatedRevenueUsd: 0.00,
+    createdAt: new Date().toISOString()
+  };
+
+  links.unshift(newLink);
+  db.saveTrackingLinks(links);
+  res.json({ success: true, trackingLink: newLink });
+});
+
+app.delete('/api/admin/tracking-links/:id', requireAdminAuth, (req, res) => {
+  let links = db.getTrackingLinks();
+  links = links.filter(l => l.id !== req.params.id);
+  db.saveTrackingLinks(links);
+  res.json({ success: true, message: 'Tracking link removed' });
+});
+
 // Admin Video Upload & Multi-Pass AI Processing
 app.post('/api/admin/process-video', requireAdminAuth, upload.single('video'), async (req, res) => {
   if (!req.file) {
@@ -418,6 +485,12 @@ app.post('/api/admin/process-video', requireAdminAuth, upload.single('video'), a
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
+});
+
+// Explicit Admin Portal Routing
+app.use('/admin', express.static(path.join(__dirname, '..', 'public', 'admin')));
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'admin', 'index.html'));
 });
 
 // ======================== HTML ROUTING & OPENGRAPH INJECTION ========================

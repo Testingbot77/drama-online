@@ -10,6 +10,7 @@ const STORIES_FILE = path.join(DATA_DIR, 'stories.json');
 const MARKETING_FILE = path.join(DATA_DIR, 'marketing.json');
 const ANALYTICS_FILE = path.join(DATA_DIR, 'analytics.json');
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
+const TRACKING_LINKS_FILE = path.join(DATA_DIR, 'tracking_links.json');
 
 // Helper to safely read JSON
 function readJSON(filePath, defaultData) {
@@ -2234,6 +2235,41 @@ let memoryAnalytics = null;
 let memorySettings = null;
 let memorySubscribers = null;
 
+let memoryTrackingLinks = null;
+
+const INITIAL_TRACKING_LINKS = [
+  {
+    id: "track-1",
+    name: "Facebook Graduation Driveway Promo",
+    storySlug: "the-graduation-envelope-mother-in-green",
+    storyTitle: "The Graduation Envelope (Chapter 1)",
+    source: "facebook",
+    medium: "video",
+    campaign: "grad_fb_driveway_viral",
+    trackedUrl: "/story/the-graduation-envelope-mother-in-green?utm_source=facebook&utm_medium=video&utm_campaign=grad_fb_driveway_viral",
+    clicks: 1420,
+    uniqueReaders: 1180,
+    usPercentage: 84.5,
+    estimatedRevenueUsd: 48.60,
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: "track-2",
+    name: "TikTok Bio Link - Grandmother Ledger",
+    storySlug: "the-grandmothers-handwritten-ledger-inheritance",
+    storyTitle: "The Grandmother's Handwritten Ledger (Chapter 1)",
+    source: "tiktok",
+    medium: "bio",
+    campaign: "grandma_ledger_tiktok_bio",
+    trackedUrl: "/story/the-grandmothers-handwritten-ledger-inheritance?utm_source=tiktok&utm_medium=bio&utm_campaign=grandma_ledger_tiktok_bio",
+    clicks: 980,
+    uniqueReaders: 820,
+    usPercentage: 79.2,
+    estimatedRevenueUsd: 31.40,
+    createdAt: new Date().toISOString()
+  }
+];
+
 module.exports = {
   getStories: () => {
     if (!memoryStories) memoryStories = readJSON(STORIES_FILE, INITIAL_STORIES);
@@ -2274,5 +2310,13 @@ module.exports = {
   saveSubscribers: (data) => {
     memorySubscribers = data;
     writeJSON(SUBSCRIBERS_FILE, data);
+  },
+  getTrackingLinks: () => {
+    if (!memoryTrackingLinks) memoryTrackingLinks = readJSON(TRACKING_LINKS_FILE, INITIAL_TRACKING_LINKS);
+    return memoryTrackingLinks;
+  },
+  saveTrackingLinks: (data) => {
+    memoryTrackingLinks = data;
+    writeJSON(TRACKING_LINKS_FILE, data);
   }
 };

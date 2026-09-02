@@ -101,6 +101,7 @@ function switchAdminTab(tabName) {
     'subscribers': { title: 'Audience & Subscribers', sub: 'Registered readers, Google/Email signups, and saved bookmarks' },
     'ai-studio': { title: 'AI Story Studio', sub: 'Multi-Pass Iterative Story Refinement & Scene Synthesis' },
     'stories': { title: 'Story Library', sub: 'Manage, edit, and link Part 1, Part 2, and Grand Finale trilogies' },
+    'link-tracker': { title: 'Link Tracker & Campaign Clicks', sub: 'Generate shareable campaign links and track real-time clicks & conversions' },
     'facebook-kit': { title: 'Facebook Social Kit', sub: '1-Click UTM campaign tracking, captions & pinned comments' },
     'settings': { title: 'Platform Settings', sub: 'API keys, AdSense ID, and domain parameters' }
   };
@@ -114,6 +115,8 @@ function switchAdminTab(tabName) {
     loadSubscribers();
   } else if (tabName === 'overview') {
     fetchRealtimeAnalytics();
+  } else if (tabName === 'link-tracker') {
+    loadTrackingLinks();
   }
 }
 
@@ -558,6 +561,141 @@ async function saveAdminSettings(e) {
     }
   } catch (err) {
     showAdminToast('Error saving settings: ' + err.message);
+  }
+}
+
+// ================= LINK TRACKER & CAMPAIGN CLICKS =================
+async function loadTrackingLinks() {
+  populateTrackStorySelect();
+  try {
+    const res = await fetch('/api/admin/tracking-links', {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const data = await res.json();
+    if (data.success) {
+      renderTrackingLinksTable(data.trackingLinks || []);
+    }
+  } catch (err) {
+    console.error('Error loading tracking links:', err);
+  }
+}
+
+function populateTrackStorySelect() {
+  const sel = document.getElementById('trackStorySelect');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">-- Choose Episode / Story --</option>';
+
+  allAdminStories.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.slug;
+    opt.innerText = `[Part ${s.partNumber || 1}] ${s.title}`;
+    sel.appendChild(opt);
+  });
+}
+
+function renderTrackingLinksTable(links) {
+  const tbody = document.getElementById('trackingLinksTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  if (links.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:24px;">No tracking links created yet. Create one above to start tracking clicks!</td></tr>';
+    return;
+  }
+
+  const domain = window.location.origin;
+
+  links.forEach(l => {
+    const fullUrl = l.fullTrackedUrl || `${domain}${l.trackedUrl}`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${l.name}</strong><br><span style="font-size:0.75rem; color:var(--text-muted); font-family:monospace;">${l.campaign}</span></td>
+      <td style="max-width:240px; font-size:0.85rem;">${l.storyTitle}</td>
+      <td><span class="badge-cat" style="text-transform:capitalize;">${l.source} • ${l.medium || 'video'}</span></td>
+      <td><strong style="color:var(--accent-gold); font-size:1.05rem;">${(l.clicks || 0).toLocaleString()}</strong></td>
+      <td>${(l.uniqueReaders || 0).toLocaleString()}</td>
+      <td><span style="color:#00d26a; font-weight:700;">${l.usPercentage || 82}% 🇺🇸</span></td>
+      <td><strong style="color:#00d26a;">$${(l.estimatedRevenueUsd || 0).toFixed(2)}</strong></td>
+      <td style="white-space:nowrap;">
+        <button class="btn-action-primary" onclick="copyTrackingLinkUrl('${escapeAdminStr(fullUrl)}')" title="Copy Tracked Link" style="padding:6px 12px; font-size:0.8rem;">
+          <i class="fa-solid fa-copy"></i> Copy Link
+        </button>
+        <button class="btn-action-danger" onclick="deleteTrackingLink('${l.id}')" title="Delete Link" style="padding:6px 10px; font-size:0.8rem; margin-left:6px;">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+async function handleCreateTrackingLink(e) {
+  e.preventDefault();
+  const storySlug = document.getElementById('trackStorySelect').value;
+  const campaign = document.getElementById('trackCampaignName').value.trim();
+  const source = document.getElementById('trackSourceSelect').value;
+  const medium = document.getElementById('trackMediumSelect').value;
+
+  if (!storySlug || !campaign) {
+    showAdminToast('Please select a story and enter a campaign name.');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/admin/tracking-links', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${adminToken}`
+      },
+      body: JSON.stringify({ storySlug, campaign, source, medium })
+    });
+    const data = await res.json();
+    if (data.success && data.trackingLink) {
+      showAdminToast('Tracking link created successfully!');
+      
+      const domain = window.location.origin;
+      const fullUrl = data.trackingLink.fullTrackedUrl || `${domain}${data.trackingLink.trackedUrl}`;
+      
+      document.getElementById('generatedLinkInput').value = fullUrl;
+      document.getElementById('generatedLinkResult').style.display = 'block';
+      
+      loadTrackingLinks();
+    } else {
+      showAdminToast('Error creating link: ' + (data.error || 'Unknown error'));
+    }
+  } catch (err) {
+    showAdminToast('Network error: ' + err.message);
+  }
+}
+
+function copyGeneratedTrackingLink() {
+  const input = document.getElementById('generatedLinkInput');
+  if (input) {
+    navigator.clipboard.writeText(input.value);
+    showAdminToast('Tracking link copied to clipboard!');
+  }
+}
+
+function copyTrackingLinkUrl(url) {
+  navigator.clipboard.writeText(url);
+  showAdminToast('Tracked campaign link copied!');
+}
+
+async function deleteTrackingLink(id) {
+  if (!confirm('Are you sure you want to delete this tracking link?')) return;
+  try {
+    const res = await fetch(`/api/admin/tracking-links/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAdminToast('Tracking link deleted');
+      loadTrackingLinks();
+    }
+  } catch (err) {
+    showAdminToast('Error deleting link: ' + err.message);
   }
 }
 

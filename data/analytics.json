@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 24190,
-    "uniqueVisitors": 18502,
+    "totalPageviews": 24196,
+    "uniqueVisitors": 18508,
     "usTrafficPercentage": 74.2,
     "avgReadTimeSeconds": 215,
     "estimatedRevenueUsd": 486.37,
     "averageRpmUsd": 20.15,
-    "adImpressions": 62970,
+    "adImpressions": 62994,
     "adCtr": "3.42%",
-    "estimatedAdSenseRevenueUsd": 1.75
+    "estimatedAdSenseRevenueUsd": 1.93
   },
   "trafficSources": [
     {
@@ -103,6 +103,54 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Grandmother's Handwritten Ledger (Chapter 4): The Corridor Confrontation",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Grandmother's Handwritten Ledger (Chapter 3): The Emergency Courthouse Injunction",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Grandmother's Handwritten Ledger (Chapter 2): The Treasury Vault Audit",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "The Grandmother's Handwritten Ledger (Chapter 1): The Corporate Eviction Notice",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Two Mothers at Graduation (Chapter 1): The Valedictorian on Stage",
@@ -251,54 +299,6 @@
       "time": "Just now",
       "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
       "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 3): The Kitchen Table Keys",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Grandmother's Secret Quilt (Part 2 - Grand Finale): The Courtroom Truth & The Heir's Retribution",
-      "country": "United Kingdom 🇬🇧",
       "device": "Desktop",
       "referrer": "Direct Link",
       "campaign": "direct"
