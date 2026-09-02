@@ -452,6 +452,20 @@ const INITIAL_ANALYTICS = {
   ]
 };
 
+const INITIAL_SETTINGS = {
+  geminiApiKey: process.env.GEMINI_API_KEY || "",
+  adminPasswordHash: "1234",
+  siteName: "Taleonix",
+  siteTagline: "US Drama Stories & High-Retention Digital Publication",
+  domainUrl: "https://drama-online.onrender.com",
+  adsenseClientId: "ca-pub-3806896432302528",
+  enableAdSenseSimulation: true,
+  autoProcessFolder: true,
+  wpUrl: "",
+  wpUsername: "",
+  wpAppPassword: ""
+};
+
 // High-Throughput In-Memory Caches for 1M+ Readers
 let memoryStories = null;
 let memoryMarketing = null;
