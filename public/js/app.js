@@ -277,10 +277,19 @@ async function showStoryReader(slug) {
     const scenes = story.scenes || [];
 
     paragraphs.forEach((pText, idx) => {
+      if (pText.startsWith('[') && pText.endsWith(']')) {
+        const locHeader = document.createElement('div');
+        locHeader.className = 'scene-location-header';
+        locHeader.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${pText.replace(/[\[\]]/g, '').trim()}`;
+        bodyEl.appendChild(locHeader);
+        return;
+      }
+
       const p = document.createElement('p');
       p.innerText = pText;
       bodyEl.appendChild(p);
 
+      // Check if a scene illustration belongs after this paragraph
       const matchedScene = scenes.find(s => s.insertAfterParagraph === idx);
       if (matchedScene) {
         const sceneBox = document.createElement('div');
@@ -293,15 +302,25 @@ async function showStoryReader(slug) {
       }
     });
 
+    // PART 2 CONTINUATION BOX
     const part2Box = document.getElementById('partContinuationCard');
     const nextPartHook = document.getElementById('nextPartHook');
     const btnReadPart2 = document.getElementById('btnReadPart2');
 
     if (story.nextPartSlug) {
       part2Box.style.display = 'block';
+      part2Box.querySelector('.part-card-badge').innerText = '🔥 PART 2 AVAILABLE';
       nextPartHook.innerText = story.nextPartHook || 'What happened next in Chapter 2 shook the entire city...';
+      btnReadPart2.innerText = 'READ PART 2 →';
       btnReadPart2.href = `/story/${story.nextPartSlug}`;
       btnReadPart2.onclick = (e) => handleNavClick(e, `/story/${story.nextPartSlug}`);
+    } else if (story.previousPartSlug) {
+      part2Box.style.display = 'block';
+      part2Box.querySelector('.part-card-badge').innerText = '🎉 SERIES CLIMAX COMPLETED';
+      nextPartHook.innerText = 'You have finished Chapter 2 of this drama saga!';
+      btnReadPart2.innerText = 'BINGE NEXT VIRAL STORY →';
+      btnReadPart2.href = '/trending';
+      btnReadPart2.onclick = (e) => handleNavClick(e, '/trending');
     } else {
       part2Box.style.display = 'block';
       nextPartHook.innerText = '⚡ Chapter 2 is currently in editorial production.';
