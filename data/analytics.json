@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 12,
-    "uniqueVisitors": 12,
+    "totalPageviews": 13,
+    "uniqueVisitors": 13,
     "usTrafficPercentage": 85,
     "avgReadTimeSeconds": 0,
     "estimatedRevenueUsd": 0,
     "averageRpmUsd": 24.5,
-    "adImpressions": 40,
+    "adImpressions": 44,
     "adCtr": "0.00%",
-    "estimatedAdSenseRevenueUsd": 0.34
+    "estimatedAdSenseRevenueUsd": 0.35
   },
   "trafficSources": [
     {
@@ -53,6 +53,14 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
