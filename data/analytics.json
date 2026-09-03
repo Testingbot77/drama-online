@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 13,
-    "uniqueVisitors": 13,
+    "totalPageviews": 15,
+    "uniqueVisitors": 15,
     "usTrafficPercentage": 85,
     "avgReadTimeSeconds": 0,
     "estimatedRevenueUsd": 0,
     "averageRpmUsd": 24.5,
-    "adImpressions": 44,
+    "adImpressions": 52,
     "adCtr": "0.00%",
-    "estimatedAdSenseRevenueUsd": 0.35
+    "estimatedAdSenseRevenueUsd": 0.4
   },
   "trafficSources": [
     {
@@ -53,6 +53,22 @@
     }
   ],
   "recentVisitors": [
+    {
+      "time": "Just now",
+      "drama": "THE GRADUATION ENVELOPE (PART 2): MOTHER REVEALS THE SECRET SURGERY CONTRACT UNDER THE KITCHEN LIGHTS",
+      "country": "United Kingdom 🇬🇧",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
+    {
+      "time": "Just now",
+      "drama": "THE GRADUATION ENVELOPE (PART 1): ESTRANGED MOTHER HANDS VALEDICTORIAN AN ENVELOPE IN THE DRIVEWAY",
+      "country": "United States 🇺🇸",
+      "device": "Desktop",
+      "referrer": "Direct Link",
+      "campaign": "direct"
+    },
     {
       "time": "Just now",
       "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
