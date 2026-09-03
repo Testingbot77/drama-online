@@ -1,14 +1,14 @@
 {
   "overview": {
-    "totalPageviews": 15,
-    "uniqueVisitors": 15,
-    "usTrafficPercentage": 85,
+    "totalPageviews": 0,
+    "uniqueVisitors": 0,
+    "usTrafficPercentage": 0,
     "avgReadTimeSeconds": 0,
     "estimatedRevenueUsd": 0,
     "averageRpmUsd": 24.5,
-    "adImpressions": 52,
+    "adImpressions": 0,
     "adCtr": "0.00%",
-    "estimatedAdSenseRevenueUsd": 0.4
+    "estimatedAdSenseRevenueUsd": 0
   },
   "trafficSources": [
     {
@@ -36,143 +36,23 @@
     {
       "country": "United States 🇺🇸",
       "visitors": 0,
-      "percentage": 85,
+      "percentage": 0,
       "rpm": "$28.50"
     },
     {
       "country": "United Kingdom 🇬🇧",
       "visitors": 0,
-      "percentage": 10,
+      "percentage": 0,
       "rpm": "$21.00"
     },
     {
       "country": "Canada 🇨🇦",
       "visitors": 0,
-      "percentage": 5,
+      "percentage": 0,
       "rpm": "$19.50"
     }
   ],
-  "recentVisitors": [
-    {
-      "time": "Just now",
-      "drama": "THE GRADUATION ENVELOPE (PART 2): MOTHER REVEALS THE SECRET SURGERY CONTRACT UNDER THE KITCHEN LIGHTS",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "THE GRADUATION ENVELOPE (PART 1): ESTRANGED MOTHER HANDS VALEDICTORIAN AN ENVELOPE IN THE DRIVEWAY",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "http://localhost:3000/story/the-gold-framed-deed-refused-to-pack",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "http://localhost:3000/story/the-gold-framed-deed-refused-to-pack",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "http://localhost:3000/story/the-gold-framed-deed-refused-to-pack",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Gold Framed Deed (Chapter 1): The Mother Who Refused to Pack",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Mobile (Short Link / Bio)",
-      "referrer": "facebook (dolara)",
-      "campaign": "dolara"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 1): The Driveway Confrontation",
-      "country": "United States 🇺🇸",
-      "device": "Mobile (Short Link / Bio)",
-      "referrer": "facebook (grad1)",
-      "campaign": "fb_reels_grad1"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Graduation Envelope (Chapter 2): The Hospital Confession",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Direct Link",
-      "campaign": "direct"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Two Mothers at Graduation (Chapter 1): The Valedictorian on Stage",
-      "country": "United Kingdom 🇬🇧",
-      "device": "Desktop",
-      "referrer": "Facebook Feed",
-      "campaign": "test_1"
-    },
-    {
-      "time": "Just now",
-      "drama": "The Two Mothers at Graduation (Chapter 1): The Valedictorian on Stage",
-      "country": "United States 🇺🇸",
-      "device": "Desktop",
-      "referrer": "Facebook Feed",
-      "campaign": "test_1"
-    }
-  ],
-  "facebookCampaigns": []
+  "recentVisitors": [],
+  "facebookCampaigns": [],
+  "topStories": []
 }

@@ -169,9 +169,9 @@ app.post('/api/stories/:slug/view', (req, res) => {
     analytics.overview.adImpressions = (analytics.overview.adImpressions || 0) + 4;
 
     const campaign = req.body.utm_campaign || 'direct';
-    const isUS = Math.random() < 0.77;
-    const country = isUS ? 'United States 🇺🇸' : 'United Kingdom 🇬🇧';
-    const referrer = req.body.referrer || 'Facebook Feed / Bio Link';
+    const cfCountry = req.headers['cf-ipcountry'] || req.headers['x-country-code'] || req.headers['x-appengine-country'];
+    const country = cfCountry ? `${cfCountry.toUpperCase()} 🌐` : (req.body.referrer?.includes('facebook') ? 'United States 🇺🇸' : 'United States 🇺🇸');
+    const referrer = req.body.referrer || 'Facebook Feed / Direct Link';
 
     const matchedCamp = (analytics.facebookCampaigns || []).find(c => c.campaign === campaign);
     if (matchedCamp) {
@@ -180,7 +180,7 @@ app.post('/api/stories/:slug/view', (req, res) => {
     }
 
     analytics.recentVisitors.unshift({
-      time: 'Just now',
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
       drama: story.title,
       country: country,
       device: req.body.device || 'Mobile (iOS/Android)',
@@ -188,12 +188,13 @@ app.post('/api/stories/:slug/view', (req, res) => {
       campaign: campaign
     });
 
-    if (analytics.recentVisitors.length > 25) {
+    if (analytics.recentVisitors.length > 50) {
       analytics.recentVisitors.pop();
     }
 
-    const incRev = isUS ? 0.038 : 0.014;
-    analytics.overview.estimatedAdSenseRevenueUsd = Number(((analytics.overview.estimatedAdSenseRevenueUsd || 0) + incRev).toFixed(2));
+    // Standard Tier-1 estimated CPM calculation ($28.50 RPM)
+    const incRev = 0.0285;
+    analytics.overview.estimatedAdSenseRevenueUsd = Number(((analytics.overview.estimatedAdSenseRevenueUsd || 0) + incRev).toFixed(4));
 
     db.saveAnalytics(analytics);
 
