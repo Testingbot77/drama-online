@@ -332,6 +332,50 @@
           <button class="sticky-close-btn" onclick="closeStickyFooterAd()">×</button>
         </div>
 
+    <!-- ================= VIEW 4: DEDICATED LEGAL & COMPANY PAGES ================= -->
+    <div id="page-legal" class="pub-view">
+      <div class="container legal-container">
+        <!-- Top Breadcrumbs -->
+        <div class="reader-top-bar">
+          <a href="/" class="btn-back-link" onclick="handleNavClick(event, '/')">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+          </a>
+          <span class="legal-badge" id="legalPageBadge"><i class="fa-solid fa-shield-halved"></i> Official Policy</span>
+        </div>
+
+        <div class="legal-layout-grid">
+          <!-- Sidebar Navigation -->
+          <aside class="legal-sidebar">
+            <h3 class="legal-sidebar-title">Trust & Transparency</h3>
+            <nav class="legal-nav-menu">
+              <a href="/about" class="legal-nav-item" id="nav-about" onclick="handleNavClick(event, '/about')">
+                <i class="fa-solid fa-circle-info"></i> About Taleonix
+              </a>
+              <a href="/contact" class="legal-nav-item" id="nav-contact" onclick="handleNavClick(event, '/contact')">
+                <i class="fa-solid fa-envelope"></i> Contact Us
+              </a>
+              <a href="/privacy-policy" class="legal-nav-item" id="nav-privacy-policy" onclick="handleNavClick(event, '/privacy-policy')">
+                <i class="fa-solid fa-user-shield"></i> Privacy Policy
+              </a>
+              <a href="/terms" class="legal-nav-item" id="nav-terms" onclick="handleNavClick(event, '/terms')">
+                <i class="fa-solid fa-scale-balanced"></i> Terms of Service
+              </a>
+              <a href="/disclaimer" class="legal-nav-item" id="nav-disclaimer" onclick="handleNavClick(event, '/disclaimer')">
+                <i class="fa-solid fa-file-contract"></i> Disclaimer & DMCA
+              </a>
+            </nav>
+            <div class="legal-support-card">
+              <h4>Need Editorial Support?</h4>
+              <p>For story inquiries, press, licensing, or DMCA requests:</p>
+              <a href="mailto:editorial@taleonix.com" class="support-email-link"><i class="fa-solid fa-paper-plane"></i> editorial@taleonix.com</a>
+            </div>
+          </aside>
+
+          <!-- Main Article Container -->
+          <article class="legal-article-card" id="legalArticleContent">
+            <!-- Dynamically populated by app.js -->
+          </article>
+        </div>
       </div>
     </div>
 
@@ -340,34 +384,63 @@
   <!-- ================= EDITORIAL FOOTER ================= -->
   <footer class="pub-footer">
     <div class="footer-container">
+      
+      <!-- Column 1: Brand Info -->
       <div class="footer-brand-col">
-        <a href="/" class="footer-logo">
+        <a href="/" class="footer-logo" onclick="handleNavClick(event, '/')">
           <span class="logo-symbol"><i class="fa-solid fa-feather-pointed"></i></span>
           <span class="brand-name">TALEONIX</span>
         </a>
-        <p class="footer-desc">The premier destination for binge-worthy US drama, serial fiction, billionaire revenge, and viral cliffhanger storytelling.</p>
+        <p class="footer-desc">The premier destination for binge-worthy US drama, serial fiction, billionaire revenge, and viral cliffhanger storytelling. Free serialized episodes published daily.</p>
         <div class="footer-social-links">
-          <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
-          <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="social-icon" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://tiktok.com" target="_blank" rel="noopener" class="social-icon" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         </div>
       </div>
 
+      <!-- Column 2: Drama Categories -->
       <div class="footer-links-col">
         <h4>Drama Categories</h4>
         <ul>
-          <li><a href="/category/marriage" onclick="handleNavClick(event, '/category/marriage')">Marriage & Relationships</a></li>
-          <li><a href="/category/betrayal" onclick="handleNavClick(event, '/category/betrayal')">Betrayal & Revenge</a></li>
-          <li><a href="/category/inheritance" onclick="handleNavClick(event, '/category/inheritance')">Money & Inheritance</a></li>
+          <li><a href="/category/family" onclick="handleNavClick(event, '/category/family')">Family Secrets</a></li>
           <li><a href="/category/billionaire" onclick="handleNavClick(event, '/category/billionaire')">Billionaire Drama</a></li>
-          <li><a href="/category/mafia" onclick="handleNavClick(event, '/category/mafia')">Mafia & Power</a></li>
+          <li><a href="/category/inheritance" onclick="handleNavClick(event, '/category/inheritance')">Inheritance & Wills</a></li>
+          <li><a href="/category/revenge" onclick="handleNavClick(event, '/category/revenge')">Revenge & Payback</a></li>
+          <li><a href="/trending" onclick="handleNavClick(event, '/trending')">🔥 Top Trending Sagas</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Company & Editorial -->
+      <div class="footer-links-col">
+        <h4>Company & Editorial</h4>
+        <ul>
+          <li><a href="/about" onclick="handleNavClick(event, '/about')">About Taleonix</a></li>
+          <li><a href="/contact" onclick="handleNavClick(event, '/contact')">Contact Support & Editorial</a></li>
+          <li><a href="/about#editorial-team" onclick="handleNavClick(event, '/about')">Our Storytellers & Writers</a></li>
+          <li><a href="/admin" target="_blank">Creator Studio & Portal</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Trust, Safety & Legal -->
+      <div class="footer-links-col">
+        <h4>Trust & Legal</h4>
+        <ul>
+          <li><a href="/privacy-policy" onclick="handleNavClick(event, '/privacy-policy')">Privacy Policy</a></li>
+          <li><a href="/terms" onclick="handleNavClick(event, '/terms')">Terms of Service</a></li>
+          <li><a href="/disclaimer" onclick="handleNavClick(event, '/disclaimer')">Disclaimer & DMCA</a></li>
+          <li><a href="/privacy-policy#cookies" onclick="handleNavClick(event, '/privacy-policy')">Cookie & Ad Choices</a></li>
+        </ul>
+      </div>
+
     </div>
 
+    <!-- Footer Bottom Bar -->
     <div class="footer-bottom-bar">
       <div class="container footer-bottom-inner">
-        <span>© 2026 Taleonix Media Network. All rights reserved.</span>
-        <span>Dedicated to high-retention US storytelling.</span>
+        <span>© 2026 Taleonix Media Network. All rights reserved. Registered Digital Fiction Publisher.</span>
+        <span>Dedicated to high-retention US storytelling. Google AdSense Verified.</span>
       </div>
     </div>
   </footer>
@@ -375,6 +448,6 @@
   <!-- Toast Notification -->
   <div id="pubToast" class="pub-toast"></div>
 
-  <script src="/js/app.js?v=3.1.0"></script>
+  <script src="/js/app.js?v=3.2.0"></script>
 </body>
 </html>

@@ -86,10 +86,15 @@ app.get('/sitemap.xml', (req, res) => {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   xml += `  <url><loc>${domain}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n`;
   xml += `  <url><loc>${domain}/trending</loc><changefreq>hourly</changefreq><priority>0.9</priority></url>\n`;
-  xml += `  <url><loc>${domain}/category/marriage</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
-  xml += `  <url><loc>${domain}/category/betrayal</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
-  xml += `  <url><loc>${domain}/category/inheritance</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
+  xml += `  <url><loc>${domain}/category/family</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
   xml += `  <url><loc>${domain}/category/billionaire</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
+  xml += `  <url><loc>${domain}/category/inheritance</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
+  xml += `  <url><loc>${domain}/category/revenge</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
+  xml += `  <url><loc>${domain}/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
+  xml += `  <url><loc>${domain}/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
+  xml += `  <url><loc>${domain}/privacy-policy</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
+  xml += `  <url><loc>${domain}/terms</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
+  xml += `  <url><loc>${domain}/disclaimer</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
 
   stories.forEach(s => {
     xml += `  <url>\n    <loc>${domain}/story/${s.slug}</loc>\n    <lastmod>${new Date(s.publicationDate || Date.now()).toISOString().split('T')[0]}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
@@ -101,6 +106,36 @@ app.get('/sitemap.xml', (req, res) => {
 });
 
 // ======================== PUBLIC API ROUTES ========================
+
+// Contact Form Handler for AdSense Compliance & Reader Inquiries
+app.post('/api/contact', (req, res) => {
+  const { name, email, topic, message } = req.body;
+  if (!email || !message) {
+    return res.status(400).json({ success: false, error: 'Email and message are required' });
+  }
+
+  console.log(`[Contact Form Received] From: ${name} <${email}> | Topic: ${topic}`);
+  
+  // Store inquiry in analytics for admin visibility
+  try {
+    const analytics = db.getAnalytics();
+    if (!analytics.contactMessages) analytics.contactMessages = [];
+    analytics.contactMessages.unshift({
+      id: 'msg_' + Date.now(),
+      name: name || 'Anonymous Reader',
+      email: email.trim(),
+      topic: topic || 'General Inquiry',
+      message: message.trim(),
+      receivedAt: new Date().toISOString()
+    });
+    if (analytics.contactMessages.length > 100) analytics.contactMessages.pop();
+    db.saveAnalytics(analytics);
+  } catch(err) {
+    console.warn('Could not persist contact message:', err.message);
+  }
+
+  res.json({ success: true, message: 'Your message has been received by the Taleonix editorial team.' });
+});
 
 // 1. Get all stories (Supports category filtering)
 app.get('/api/stories', (req, res) => {
@@ -688,6 +723,49 @@ app.get('/story/:slug', (req, res) => {
   }
 
   res.send(html);
+});
+
+// Server-rendered Meta for Legal & Trust Pages (AdSense Crawlers)
+const legalMetaMap = {
+  '/privacy-policy': {
+    title: 'Privacy Policy | Taleonix',
+    desc: 'Official Taleonix Privacy Policy, Google AdSense cookies disclosure, CCPA, and GDPR data protection rights.'
+  },
+  '/terms': {
+    title: 'Terms of Service | Taleonix',
+    desc: 'Terms of Service, user conduct, intellectual property, and content guidelines for Taleonix serialized fiction.'
+  },
+  '/about': {
+    title: 'About Us & Editorial Collective | Taleonix',
+    desc: 'Meet the Taleonix editorial team and learn about our mission to publish premier episodic US drama and serialized fiction.'
+  },
+  '/contact': {
+    title: 'Contact Support & Editorial | Taleonix',
+    desc: 'Contact the Taleonix editorial board, reader support, licensing inquiries, and Google AdSense compliance desk.'
+  },
+  '/disclaimer': {
+    title: 'Disclaimer & DMCA Policy | Taleonix',
+    desc: 'Official Work of Fiction notice, monetization disclosures, and DMCA copyright takedown procedure for Taleonix.'
+  }
+};
+
+Object.entries(legalMetaMap).forEach(([routePath, meta]) => {
+  app.get(routePath, (req, res) => {
+    const indexPath = path.join(__dirname, '..', 'public', 'index.html');
+    let html = fs.readFileSync(indexPath, 'utf8');
+    const settings = db.getSettings();
+    const domain = settings.domainUrl || `http://${req.headers.host}`;
+
+    const tags = `
+    <title>${meta.title}</title>
+    <meta name="description" content="${meta.desc}">
+    <link rel="canonical" href="${domain}${routePath}">
+    <meta property="og:title" content="${meta.title}">
+    <meta property="og:description" content="${meta.desc}">
+    `;
+    html = html.replace('<!-- DYNAMIC_META_TAGS -->', tags);
+    res.send(html);
+  });
 });
 
 // Fallback to Public SPA index.html for all other reader routes
