@@ -67,17 +67,19 @@
     </div>
   </header>
 
-  <!-- ================= TOP HEADER ADSENSE BANNER ================= -->
-  <div class="adsense-banner-wrapper">
-    <div class="adsense-slot-leaderboard">
-      <div class="ad-flag">SPONSORED • US DIGITAL FICTION</div>
-      <div class="ad-mock-row">
-        <div class="ad-text-info">
-          <span class="ad-heading">🌟 Free Serialized Chapters • No Subscription Needed</span>
-          <span class="ad-body">Binge full multi-part drama novels with unforgettable cliffhangers.</span>
-        </div>
-        <button class="ad-action-btn" onclick="scrollToRows()">Browse All Sagas</button>
-      </div>
+  <!-- ================= TOP HEADER CLEAN ADSENSE BANNER ================= -->
+  <div class="adsense-clean-container">
+    <div class="adsense-clean-label">ADVERTISEMENT</div>
+    <div class="adsense-clean-slot leaderboard">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-3806896432302528"
+           data-ad-slot="auto"
+           data-ad-format="horizontal"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </div>
   </div>
 
@@ -259,32 +261,40 @@
             <img src="/images/story1_cover.svg" id="readerCoverImg" alt="Story Cover" class="story-cover-img">
           </div>
 
-          <!-- In-Article Top Ad Slot -->
-          <div class="in-article-ad-unit">
-            <div class="ad-flag">SPONSORED</div>
-            <div class="ad-mock-row">
-              <div class="ad-text-info">
-                <span class="ad-heading">💎 Binge 10,000+ Uncensored Drama Chapters</span>
-                <span class="ad-body">Experience the #1 digital novel app for US readers.</span>
-              </div>
-              <button class="ad-action-btn">Install Free</button>
+          <!-- In-Article Top Clean Ad Slot -->
+          <div class="adsense-clean-container">
+            <div class="adsense-clean-label">ADVERTISEMENT</div>
+            <div class="adsense-clean-slot in-article">
+              <ins class="adsbygoogle"
+                   style="display:block; text-align:center;"
+                   data-ad-layout="in-article"
+                   data-ad-format="fluid"
+                   data-ad-client="ca-pub-3806896432302528"
+                   data-ad-slot="auto"></ins>
+              <script>
+                   (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
             </div>
           </div>
 
-          <!-- Narrative Paragraphs & Scene Visuals -->
+          <!-- Narrative Paragraphs & Story Prose -->
           <div class="story-content-body font-large" id="readerBody">
-            <!-- Paragraphs and scenes injected by JS -->
+            <!-- Paragraphs injected cleanly by JS -->
           </div>
 
-          <!-- Mid-Story Native Ad Unit -->
-          <div class="in-article-ad-unit mid-unit">
-            <div class="ad-flag">ADVERTISEMENT • GOOGLE ADSENSE</div>
-            <div class="ad-mock-row">
-              <div class="ad-text-info">
-                <span class="ad-heading">🔥 Top Trending Mini-Series of the Year</span>
-                <span class="ad-body">High viewability ad placement optimized for US readers.</span>
-              </div>
-              <button class="ad-action-btn">Explore Deals</button>
+          <!-- Mid-Story Clean AdSense Unit -->
+          <div class="adsense-clean-container">
+            <div class="adsense-clean-label">ADVERTISEMENT</div>
+            <div class="adsense-clean-slot in-article">
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-3806896432302528"
+                   data-ad-slot="auto"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script>
+                   (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
             </div>
           </div>
 
@@ -320,17 +330,9 @@
             <div class="related-stories-grid" id="relatedStoriesGrid"></div>
           </div>
 
-        </article>
-
-        <!-- Sticky Mobile Bottom Ad Banner -->
-        <div class="sticky-footer-ad" id="stickyFooterAd">
-          <div class="sticky-ad-inner">
-            <span class="ad-tag">Ad</span>
-            <span class="sticky-ad-title">🔥 Discover 10,000+ Viral Novels on Demand</span>
-            <button class="sticky-ad-btn">Read Free</button>
-          </div>
-          <button class="sticky-close-btn" onclick="closeStickyFooterAd()">×</button>
         </div>
+      </div>
+    </div>
 
     <!-- ================= VIEW 4: DEDICATED LEGAL & COMPANY PAGES ================= -->
     <div id="page-legal" class="pub-view">

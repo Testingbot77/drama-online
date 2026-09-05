@@ -286,7 +286,20 @@ async function showStoryReader(slug) {
     document.getElementById('readerReadTime').innerText = story.readTime || '8 min read';
     document.getElementById('readerDate').innerText = new Date(story.publicationDate || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     document.getElementById('readerAuthor').innerText = story.author || 'Elena Vance';
-    document.getElementById('readerCoverImg').src = story.coverImage || `/images/the-graduation-envelope-mother-in-green-cover.jpg`;
+    
+    // Cover Frame Logic: ONLY display cover image on Chapter 1 / First Page
+    const coverFrame = document.querySelector('.story-cover-frame');
+    const isFirstChapter = !story.partNumber || story.partNumber === 1 || !story.previousPartSlug;
+    if (isFirstChapter && story.coverImage) {
+      if (coverFrame) {
+        coverFrame.style.display = 'block';
+        document.getElementById('readerCoverImg').src = story.coverImage;
+      }
+    } else {
+      if (coverFrame) {
+        coverFrame.style.display = 'none';
+      }
+    }
 
     const bodyEl = document.getElementById('readerBody');
     bodyEl.innerHTML = '';
@@ -507,14 +520,14 @@ function setFontScale(scale, save = true) {
   const bodyEl = document.getElementById('readerBody');
   if (bodyEl) {
     if (scale === 'normal') {
-      bodyEl.style.setProperty('--reader-font-size', '1.1rem');
-      bodyEl.style.setProperty('--reader-line-height', '1.75');
+      bodyEl.style.setProperty('--reader-font-size', '0.95rem');
+      bodyEl.style.setProperty('--reader-line-height', '1.65');
     } else if (scale === 'large') {
-      bodyEl.style.setProperty('--reader-font-size', '1.25rem');
-      bodyEl.style.setProperty('--reader-line-height', '1.85');
+      bodyEl.style.setProperty('--reader-font-size', '1.05rem');
+      bodyEl.style.setProperty('--reader-line-height', '1.72');
     } else if (scale === 'xlarge') {
-      bodyEl.style.setProperty('--reader-font-size', '1.45rem');
-      bodyEl.style.setProperty('--reader-line-height', '1.95');
+      bodyEl.style.setProperty('--reader-font-size', '1.18rem');
+      bodyEl.style.setProperty('--reader-line-height', '1.82');
     }
   }
   document.querySelectorAll('.tool-btn').forEach(b => {

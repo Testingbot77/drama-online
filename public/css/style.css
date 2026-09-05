@@ -34,8 +34,8 @@
   --font-serif: 'Lora', 'Merriweather', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  --reader-font-size: 1.25rem;
-  --reader-line-height: 1.85;
+  --reader-font-size: 1.05rem;
+  --reader-line-height: 1.72;
 }
 
 /* Theme Variations for Senior / Kindle Reading */
@@ -476,21 +476,21 @@ body.theme-light .nav-item:hover, body.theme-light .nav-item.active {
 
 .hero-title {
   font-family: var(--font-heading);
-  font-size: 2.3rem;
-  font-weight: 900;
-  line-height: 1.15;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.2;
   color: #fff;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 @media (max-width: 640px) {
-  .hero-title { font-size: 1.65rem; }
+  .hero-title { font-size: 1.45rem; }
 }
 
 .hero-synopsis {
   font-family: var(--font-serif);
-  font-size: 1.08rem;
-  line-height: 1.6;
+  font-size: 0.94rem;
+  line-height: 1.55;
   color: var(--text-secondary);
 }
 
@@ -918,25 +918,25 @@ body.theme-light .nav-item:hover, body.theme-light .nav-item.active {
 
 .story-main-title {
   font-family: var(--font-heading);
-  font-size: 2.4rem;
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.25;
   color: var(--text-primary);
-  margin-bottom: 16px;
-  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
 }
 
 @media (max-width: 640px) {
-  .story-main-title { font-size: 1.8rem; }
+  .story-main-title { font-size: 1.35rem; }
 }
 
 .story-lead-synopsis {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.58;
   color: var(--text-secondary);
   font-style: italic;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .prev-episode-banner {
@@ -1753,3 +1753,52 @@ body.theme-light .nav-item:hover, body.theme-light .nav-item.active {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ================= CLEAN GOOGLE ADSENSE PLACEMENT ================= */
+.adsense-clean-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 20px auto;
+  text-align: center;
+  overflow: hidden;
+}
+
+.adsense-clean-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.8;
+}
+
+.adsense-clean-slot {
+  width: 100%;
+  min-height: 90px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+body.theme-light .adsense-clean-slot {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.adsense-clean-slot.leaderboard {
+  min-height: 90px;
+  max-height: 120px;
+  max-width: 970px;
+  margin: 0 auto;
+}
+
+.adsense-clean-slot.in-article {
+  min-height: 250px;
+  max-width: 728px;
+  margin: 0 auto;
+}
+
