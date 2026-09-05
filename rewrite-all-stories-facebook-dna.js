@@ -1,0 +1,1209 @@
+const fs = require('fs');
+const path = require('path');
+
+const storiesPath = path.join(__dirname, 'data', 'stories.json');
+const rawStories = JSON.parse(fs.readFileSync(storiesPath, 'utf8'));
+
+// Map of all rewritten stories with Facebook Micro-Drama DNA
+const storyUpdates = {
+  // =========================================================================
+  // SERIES 1: THE GRADUATION ENVELOPE (10 Chapters)
+  // Evidence Object: Sealed J.P. Morgan Manila Envelope / Hospital Trust Deed
+  // Characters: Kayla (Valedictorian), David (Father, Blue-collar veteran), Monica (Estranged Mother in Emerald Green Silk), Brenda (Greedy Sister-in-Law)
+  // =========================================================================
+  "story-grad-mega-ch1": {
+    title: "THE GRADUATION ENVELOPE (PART 1): ESTRANGED MOTHER HANDS VALEDICTORIAN AN ENVELOPE IN THE DRIVEWAY",
+    hookSummary: "Kayla stood in her valedictorian robe when a woman in emerald green stepped out of a black sedan, holding a sealed envelope that proved eighteen years of silence was a lie.",
+    paragraphs: [
+      "[ SUBURBAN ATLANTA DRIVEWAY — 05:45 PM ]",
+      "The manila envelope hit the hood of David's pickup truck with a heavy, dry slap.",
+      "Eighteen-year-old Kayla stood on the asphalt in her purple valedictorian graduation gown, her gold honor cords fluttering against her chest.",
+      "Beside her, David—fifty-one, wearing a faded navy short-sleeve button-up with motor oil staining the left cuff—didn't blink.",
+      "The woman stepping out of the idling black sedan wore an emerald green silk wrap dress, gold hoop earrings catching the harsh Georgia sun, and tortoise-shell sunglasses pushed onto her braids.",
+      "Monica. The woman whose name had not been spoken inside David's house since the winter of 2008.",
+      "\"Don't touch that truck, Monica,\" David said, his voice flat, level, and deadly quiet. \"And don't look at my daughter.\"",
+      "Kayla looked from her father's white-knuckled grip on the tailgate to the woman standing three feet away.",
+      "\"Dad?\" Kayla whispered. \"Who is this?\"",
+      "Monica didn't reach out. She kept her hands clasped tightly over her leather handbag, her throat working against a swallow.",
+      "\"She's got your grandmother's eyes, David,\" Monica said softly. \"Every bit of them.\"",
+      "\"You gave up the right to look at her eyes eighteen years ago at Atlanta Memorial,\" David said, not taking a single step forward. \"You signed the paper. You took your suitcase. We buried your memory.\"",
+      "\"I didn't sign away my love, David. I signed a promissory note to keep her alive.\"",
+      "Monica pointed a single manicured finger at the envelope resting between them on the hot metal hood.",
+      "The envelope was thick, sealed with red wax, and bore the embossed seal of J.P. Morgan Private Wealth & Escrow.",
+      "\"Inside that envelope is not an apology,\" Monica said, her voice dropping into the quiet authority that stops an entire room. \"It's the unencumbered deed to the pediatric clinic on Campbellton Road and four years of prepaid tuition at Johns Hopkins.\"",
+      "David let out a dry, humorless breath. \"You think money buys eighteen birthdays, Monica? You think a check pays for eighth-grade science fairs and double shifts at the freight yard?\"",
+      "\"Money doesn't make a mother, David,\" Monica replied, looking directly into his eyes without flinching. \"And pride doesn't pay a four-hundred-thousand-dollar surgeon.\"",
+      "Kayla stepped forward. Her fingers hovered an inch above the red wax seal.",
+      "\"Kayla, step back,\" David commanded, his jaw tight as stone.",
+      "Kayla looked at her father's calloused hands, then at the woman who looked like her own reflection thirty years in the future.",
+      "\"No, Dad,\" Kayla said quietly. \"If my life was bought and paid for, I'm opening the receipt.\""
+    ]
+  },
+  "story-grad-mega-ch2": {
+    title: "THE GRADUATION ENVELOPE (PART 2): MOTHER REVEALS THE SECRET SURGERY CONTRACT UNDER THE KITCHEN LIGHTS",
+    hookSummary: "Under the buzzing kitchen fixture, Monica broke the red wax seal and dropped the 2008 Chicago Pediatric Hospital agreement onto the laminate table.",
+    paragraphs: [
+      "[ DAVIS FAMILY KITCHEN — 06:30 PM ]",
+      "The kitchen table was scarred formica, holding three untouched ceramic mugs of sweet tea and the open envelope.",
+      "Monica sat with her spine completely straight, her emerald sleeves folded back neatly against her forearms.",
+      "David remained standing by the refrigerator, arms locked over his chest, his boots rooted into the linoleum.",
+      "\"Start talking, Monica,\" David said. \"And remember that God hears lies even when family forgets them.\"",
+      "Monica pulled out a yellowed carbon-copy document dated October 14, 2008, from Chicago Memorial Children's Hospital.",
+      "\"When Kayla was five months old, her lungs collapsed twice in forty-eight hours,\" Monica began, her voice steady but vibrating with old grief. \"The pediatric surgeon in Atlanta told us she needed a pulmonary bypass procedure that cost three hundred and eighty thousand dollars.\"",
+      "David's gaze hardened. \"I took a second mortgage. The hospital board told me an anonymous foundation covered the rest through state grants.\"",
+      "\"There was no foundation, David. There was only my father's holding corporation.\"",
+      "Monica turned the carbon sheet toward David. The signature at the bottom was not a charity director—it was her estranged father, Arthur Vance.",
+      "\"Arthur gave me two choices that night in the ICU hallway,\" Monica said, her eyes locked on David. \"Option one: watch Kayla slip away because your union insurance refused the experimental bypass.\"",
+      "\"Option two: sign sole legal custody to you, disappear from Georgia forever, and work under his corporate firm in Chicago without ever sending a postcard, a birthday card, or a dime under my name.\"",
+      "Kayla let out a sharp, trembling breath, her hand covering her mouth as she read the clause circled in red ink: *Surrender of Parental Rights in Exchange for Full Medical Indemnity.*",
+      "\"He threatened to pull the surgical funding mid-operation if I ever attempted to contact you before Kayla turned eighteen,\" Monica whispered.",
+      "David stared at the yellowed page. The rigid tension in his shoulders didn't break, but his jaw twitched violently.",
+      "\"You could have told me, Monica,\" David said, his voice dropping into a ragged whisper. \"We could have fought him together.\"",
+      "\"With what, David?\" Monica asked quietly. \"With your four-hundred-dollar savings account and sixty-hour freight shifts? While our baby turned blue in an incubator?\"",
+      "The kitchen fell dead silent. The only sound was the low electric hum of the refrigerator.",
+      "\"I gave up my motherhood so you could have a living daughter,\" Monica said, her gaze cutting through the quiet room. \"You got to raise a valedictorian. I got to raise a balance sheet to make sure she never needed Arthur's permission again.\"",
+      "David reached down slowly and touched the edge of the surgical contract. His fingers trembled against the paper.",
+      "\"You let me hate you for eighteen years,\" David said.",
+      "\"Hating me kept you fighting for her,\" Monica answered softly. \"And that was the only job that mattered.\""
+    ]
+  },
+  "story-grad-mega-ch3": {
+    title: "THE GRADUATION ENVELOPE (PART 3): AUNT BRENDA DEMANDS HALF THE TRUST FUND BEFORE SUNSET",
+    hookSummary: "Aunt Brenda marched through the screen door waving a power of attorney, demanding David sign over the trust fund before the bank closed.",
+    paragraphs: [
+      "[ DAVIS FRONT PORCH & LIVING ROOM — 07:15 PM ]",
+      "The aluminum screen door slammed open against the exterior brick with a violent bang.",
+      "Brenda—David's older sister, wearing a sharp purple church skirt suit and clutching an oversized designer tote—strode into the living room without knocking.",
+      "Behind her stood her son Marcus, twenty-four, leaning against the doorframe in designer sneakers with his hands deep in his pockets.",
+      "\"I saw that Chicago luxury sedan parked at the curb, David!\" Brenda snapped, her voice cutting through the house.",
+      "Then she saw Monica sitting at the scarred table, and her eyes flared with immediate venom.",
+      "\"Well, look what the cat dragged back from the Midwest,\" Brenda sneered, dropping her gold-buckled tote onto the coffee table. \"Eighteen years of silence, and she struts back the day Kayla's graduation money is supposed to be distributed.\"",
+      "David didn't move from his position by the counter. \"Lower your voice in my house, Brenda.\"",
+      "\"No, David! I've been running your household paperwork since mama passed!\" Brenda pulled a blue folder from her tote.",
+      "\"We carried Kayla's car insurance, we covered the Sunday dinners, and Marcus helped you fix the plumbing last summer!\" Brenda pointed an acrylic nail at Monica's parchment documents.",
+      "\"If there's an estate settlement or a family payout on this table, it goes through the family trust account—not into the pocket of a woman who abandoned her child in a bassinet!\"",
+      "Marcus stepped forward, smirking slightly. \"Uncle Dave, mom's right. You owe us twelve thousand for the roof repair from two years ago anyway.\"",
+      "Monica didn't raise her voice. She didn't stand up. She simply closed her pen with a quiet, decisive *click*.",
+      "\"Brenda,\" Monica said, her tone cool and measured like chilled glass. \"You charged David eight percent interest on that roof repair. I have the bank routing transcripts right here in my second folder.\"",
+      "Brenda froze, her mouth open mid-sentence.",
+      "\"You also claimed Kayla as a dependent on your small business tax return in 2021 and 2022 without David's knowledge,\" Monica continued calmly.",
+      "\"How did you get my tax filings?\" Brenda's voice cracked, the aggressive swagger evaporating in an instant.",
+      "\"I didn't spend eighteen years in corporate forensic accounting to be outsmarted by a Sunday school treasurer,\" Monica said.",
+      "David stepped between his sister and the table, his eyes fixed on Brenda with quiet disappointment.",
+      "\"You came here for Kayla's graduation, Brenda?\" David asked, his voice low and dangerous. \"Or you came here to collect a fee on my daughter's future?\"",
+      "\"David, family sticks together—\" Brenda stammered.",
+      "\"Family builds each other up,\" David said, holding open the front screen door. \"Landlords collect rent. Take your blue folder and get off my porch.\""
+    ]
+  },
+  "story-grad-mega-ch4": {
+    title: "THE GRADUATION ENVELOPE (PART 4): THE STEPBROTHER'S FORGED LIEN ON THE FAMILY HOUSE",
+    hookSummary: "Marcus produced a signed home equity note claiming David owed his construction company $45,000 for the back patio renovation.",
+    paragraphs: [
+      "[ DAVIS FRONT YARD — 07:45 PM ]",
+      "Marcus blocked the porch steps, refusing to follow his mother down to the driveway.",
+      "From his back pocket, he whipped out a notarized mechanical lien document on Fulton County legal letterhead.",
+      "\"You think you can just dismiss us like hired help, Uncle Dave?\" Marcus said, his voice rising in petulant defiance.",
+      "\"This is a forty-five-thousand-dollar lien against this parcel. I filed it last Tuesday through my contracting LLC.\"",
+      "Kayla stepped out onto the porch, her valedictorian cap still in her hand. \"Marcus, you poured six bags of premix concrete on the patio and drank beer all afternoon.\"",
+      "\"Business is business, little cousin,\" Marcus snapped. \"You got J.P. Morgan money now? Then you pay your family debts first.\"",
+      "Monica walked down the three wooden steps slowly, her heels clicking rhythmically against the stone pavers.",
+      "She stopped two inches from Marcus's shoulder, looked at the lien paper in his hand, and didn't even blink.",
+      "\"Marcus Vance-Lewis,\" Monica said, her voice dropping into conversational velvet. \"Your contractor license was revoked by the Georgia State Licensing Board in March for unpermitted electrical work in Decatur.\"",
+      "Marcus's face drained of color. \"That was an administrative misunderstanding—\"",
+      "\"Filing a fraudulent lien without an active general contractor license is a Class C felony in Fulton County,\" Monica said evenly.",
+      "\"It carries a mandatory minimum sentence of three years in state prison and a twenty-five-thousand-dollar restitution penalty.\"",
+      "She pulled a small black smartphone from her purse and displayed a scanned verification from the Georgia Secretary of State's portal.",
+      "\"I already forwarded this lien notice to the district attorney's commercial fraud division twenty minutes ago while Brenda was yelling about car insurance.\"",
+      "Marcus looked at his mother, panic spreading across his forehead in glistening beads of sweat.",
+      "\"Mom... did you know about this?\" Marcus stammered.",
+      "Brenda grabbed Marcus's arm, pulling him toward their sedan. \"Shut up, Marcus! Get in the car!\"",
+      "David stood at the top of the steps, looking down at his nephew with cold finality.",
+      "\"You tried to steal from the roof over my daughter's head on the day she graduated,\" David said, shaking his head slowly.",
+      "\"Don't ever call me Uncle Dave again. The only thing you're building from now on is a criminal record.\""
+    ]
+  },
+  "story-grad-mega-ch5": {
+    title: "THE GRADUATION ENVELOPE (PART 5): THE MIDNIGHT AUDIT OF THE VANCE FAMILY FOUNDATION",
+    hookSummary: "Around the kitchen table at midnight, Monica and David uncovered how Arthur Vance siphoned $2.4M from the trust meant for Kayla's pediatric care.",
+    paragraphs: [
+      "[ DAVIS KITCHEN — 11:30 PM ]",
+      "A single overhead pendant lamp illuminated four stacks of ledger printouts spread across the kitchen table.",
+      "David poured two fresh cups of black coffee from the old glass pot, setting one quietly in front of Monica.",
+      "Kayla sat at the end of the table, her graduation gown draped over the back of her chair, reading through bank wire confirmations from 2012 to 2024.",
+      "\"Arthur didn't just enforce the custody separation,\" Monica said, stirring a teaspoon of sugar into her cup. \"He used the trust account as a tax shield for his commercial real estate holdings.\"",
+      "David leaned over the papers, his brow furrowed as he traced a wire transfer for six hundred thousand dollars.",
+      "\"This account was in Kayla's legal name since she was six years old?\" David asked, disbelief coloring his voice.",
+      "\"Arthur listed her as the primary beneficiary to avoid capital gains taxes on three shopping plazas in Cobb County,\" Monica explained.",
+      "\"He told the board the funds were being held in escrow for her medical and educational needs, while he withdrew dividends every quarter.\"",
+      "Kayla looked up from the forensic report. \"So while Dad was skipping meals to buy my school uniforms, my grandfather was claiming my name on corporate tax deductions?\"",
+      "\"He treated you like an asset on a balance sheet,\" Monica said softly. \"The same way he treated me.\"",
+      "David set his coffee cup down with deliberate care. The porcelain clinked against the table.",
+      "\"What happens tomorrow morning when the banks open, Monica?\" David asked.",
+      "\"Tomorrow at eight-thirty, Kayla walks into the J.P. Morgan private client branch in Buckhead as an eighteen-year-old adult,\" Monica replied.",
+      "\"The power of attorney Arthur held automatically terminates at midnight tonight on her eighteenth birthday.\"",
+      "Monica slid a gold authorization card and a certified copy of Kayla's birth certificate across the table.",
+      "\"Every dollar Arthur siphoned has been frozen by the trust executor pending her signature.\"",
+      "Kayla looked at the gold card, then reached over and placed her hand over her father's scarred knuckles.",
+      "\"Dad worked every single day to give me this diploma,\" Kayla said, her voice ringing clear through the quiet house.",
+      "\"Tomorrow morning, Arthur Vance finds out that the granddaughter he erased is the one holding his entire fortune.\""
+    ]
+  },
+  "story-grad-mega-ch6": {
+    title: "THE GRADUATION ENVELOPE (PART 6): THE BUCKHEAD TRUST VAULT CONFRONTATION",
+    hookSummary: "Arthur Vance arrived at the private banking suite flanked by corporate lawyers, only to find Kayla sitting at the head of the boardroom table.",
+    paragraphs: [
+      "[ J.P. MORGAN PRIVATE WEALTH SUITE, BUCKHEAD — 08:45 AM ]",
+      "The mahogany boardroom table was polished to a mirror finish, reflecting the towering skyline of Atlanta through floor-to-ceiling glass.",
+      "Seated at the head of the table was Kayla, dressed in a sharp navy blazer, with David in his cleanest pressed dark suit on her right, and Monica on her left.",
+      "The heavy frosted glass doors swung open, and Arthur Vance—seventy-four, wearing a bespoke pinstripe suit and leaning on a gold-tipped cane—strode in.",
+      "Flanking him were two junior partners from his corporate legal firm, clutching leather briefcases.",
+      "\"What is the meaning of this administrative freeze?\" Arthur barked, his voice echoing off the glass.",
+      "Then his eyes landed on Monica, and his jaw tightened into a rigid scowl.",
+      "\"Monica. You violated our binding 2008 non-disclosure agreement by setting foot in Georgia.\"",
+      "Kayla didn't wait for her mother to speak. She slid a single blue document across the polished mahogany.",
+      "\"Good morning, Mr. Vance,\" Kayla said, her voice remarkably calm and devoid of anger.",
+      "Arthur scoffed, looking down at the eighteen-year-old girl. \"You don't address me as Mr. Vance, young lady. I am the patriarch of this family.\"",
+      "\"A patriarch protects his children,\" David interjected, his deep voice vibrating with unshakable steel.",
+      "\"You bought a mother's silence with surgical ransom. That doesn't make you a patriarch. That makes you a predator with a checkbook.\"",
+      "Arthur's lawyers whispered frantically behind him, scanning the document Kayla had provided.",
+      "\"Mr. Vance,\" the senior attorney whispered, leaning close to Arthur's ear. \"The irrevocable trust agreement from 2008 explicitly states that upon the beneficiary reaching age eighteen, full fiduciary control reverts exclusively to Kayla Davis.\"",
+      "Arthur slammed his palm against the mahogany. \"I funded that account! I built those medical clinics!\"",
+      "Monica leaned forward, resting her elbows on the table with calm poise.",
+      "\"You funded it with dirty corporate write-offs, Arthur. And Kayla just signed the authorization transferring seventy percent of the holdings into an independent community endowment for children's pulmonary care.\"",
+      "Arthur stared at his granddaughter, his face flushed with helpless fury.",
+      "\"You're throwing away millions for sentimentality!\" Arthur snarled.",
+      "Kayla stood up, towering with quiet dignity in her blazer.",
+      "\"My father taught me that family is what you sacrifice, not what you steal,\" Kayla said.",
+      "\"Sign the transfer ledger, Arthur. Your eighteen years of leverage are officially over.\""
+    ]
+  },
+  "story-grad-mega-ch7": {
+    title: "THE GRADUATION ENVELOPE (PART 7): THE FORENSIC SUBPOENA AT THE FAMILY REAL ESTATE OFFICE",
+    hookSummary: "State financial investigators raided the Vance Commercial Realty headquarters after Kayla surrendered the offshore escrow records.",
+    paragraphs: [
+      "[ VANCE COMMERCIAL REALTY HEADQUARTERS — 11:15 AM ]",
+      "Blue federal seals were slapped across the glass entrance doors of the executive suite on Peachtree Road.",
+      "Three state forensic investigators loaded heavy bankers boxes labeled *Escrow Accounts 2010–2024* onto rolling carts.",
+      "Arthur Vance sat behind his Brazilian walnut desk, his hands visibly shaking as he watched his empire get boxed into cardboard containers.",
+      "David walked into the office, carrying a single manila folder under his arm.",
+      "\"You came to gloat, Davis?\" Arthur spat, refusing to look up.",
+      "\"I don't gloat over broken men, Arthur,\" David said, pulling up a chair and sitting down without asking.",
+      "David placed the folder on the desk. Inside was a copy of the receipt for Kayla's first pediatric surgery bill—stamped *Paid in Full by Surrender of Maternal Rights*.",
+      "\"I kept this copy in my toolbox for eighteen years,\" David said quietly. \"Every time my back gave out on a construction site, every time I worked through Christmas Eve, I looked at this stamp.\"",
+      "\"I thought Monica threw us away because she wanted a luxury life in Chicago.\"",
+      "Arthur looked at the yellowed paper, a flicker of genuine unease crossing his eyes.",
+      "\"You made me carry eighteen years of bitterness while you used my daughter's name to evade thirty million dollars in municipal taxes,\" David continued.",
+      "\"The investigators didn't come because Monica called them. They came because Kayla turned over the ledger with her own signature.\"",
+      "Arthur leaned back, his voice dropping into a desperate plea. \"David... she's my granddaughter. She carries my blood. Convince her to withdraw the state audit.\"",
+      "David stood up, adjusting his jacket cuff.",
+      "\"She carries my work ethic and her mother's courage,\" David said, walking toward the exit.",
+      "\"The blood you gave her almost killed her. The love we gave her is what's putting you out of business.\""
+    ]
+  },
+  "story-grad-mega-ch8": {
+    title: "THE GRADUATION ENVELOPE (PART 8): AUNT BRENDA'S PUBLIC APOLOGY AT THE DINER",
+    hookSummary: "Brenda cornered David at the family diner, begging him to stop the state from investigating Marcus's illegal contractor liens.",
+    paragraphs: [
+      "[ GEORGIA SUNRISE DINER, CASCADE ROAD — 02:30 PM ]",
+      "The vinyl booth was quiet under the hum of the diner's ceiling fans.",
+      "David sat alone with a cup of black coffee and a plate of grilled toast.",
+      "Brenda slid into the opposite side of the booth, her designer sunglasses removed, her eyes puffy and bloodshot from crying.",
+      "\"David... please,\" Brenda begged, her hands trembling as she reached across the table toward her brother.",
+      "\"The state licensing board sent two marshals to Marcus's apartment this morning. They're revoking his LLC and freezing his personal checking account.\"",
+      "David took a slow sip of his coffee without looking up. \"Marcus filed a felony lien on my house while his cousin was wearing her graduation cap.\"",
+      "\"He was desperate, David! He owed twenty thousand dollars to equipment suppliers in Marietta!\"",
+      "\"Being desperate doesn't give you permission to put your family on the street, Brenda,\" David said, setting his cup down with sharp precision.",
+      "Brenda wiped a tear from her cheek. \"I helped raise you after mama died. Doesn't that count for anything?\"",
+      "David looked directly into his sister's eyes, his expression heavy with years of unspoken boundaries.",
+      "\"You helped raise me, Brenda, and then you spent the last ten years charging me a tax on every family favor you ever did.\"",
+      "\"Monica offered to settle Marcus's equipment debt on one condition,\" David said, sliding a typed agreement across the table.",
+      "\"What condition?\" Brenda whispered.",
+      "\"Marcus completes two hundred hours of community service at the pediatric foundation, surrenders his predatory lien, and you sign over mama's original family photo albums to Kayla.\"",
+      "Brenda stared at the agreement, her pride crumbling into quiet defeat.",
+      "\"You're giving him a second chance?\" she asked.",
+      "\"I'm giving my nephew a chance to become an honest man,\" David answered. \"Sign the paper, Brenda. Mercy has a deadline, and it's three o'clock.\""
+    ]
+  },
+  "story-grad-mega-ch9": {
+    title: "THE GRADUATION ENVELOPE (PART 9): THE MOTHER AND DAUGHTER BENCH CONVERSATION",
+    hookSummary: "On the quiet stone bench outside Atlanta Memorial, Monica gave Kayla her mother's silver charm bracelet from eighteen years ago.",
+    paragraphs: [
+      "[ ATLANTA MEMORIAL HOSPITAL COURTYARD — 05:00 PM ]",
+      "The afternoon breeze rustled through the magnolia trees shading the quiet hospital courtyard.",
+      "Kayla sat on the curved stone bench, holding a small velvet jewelry box in her lap.",
+      "Monica walked over carrying two paper cups of iced tea, sitting down on the opposite end of the bench to give her daughter space.",
+      "\"This is where they wheeled you into the transport ambulance for Chicago,\" Monica said softly, looking at the pediatric wing windows.",
+      "\"I stood right next to that brick column and watched the red lights fade down the street.\"",
+      "Kayla opened the velvet box. Inside rested a delicate silver charm bracelet with a tiny engraved silver heart: *Kayla — October 2008*.",
+      "\"I bought this the morning you were born,\" Monica whispered. \"Arthur's lawyers took my phone, my keys, and my credit cards that night, but I hid this bracelet inside my coat lining.\"",
+      "Kayla ran her thumb over the cool silver engraving. \"Did you think about coming back before today?\"",
+      "\"Every single sunrise, baby,\" Monica said, tears finally breaking past her composed exterior.",
+      "\"Every time I closed a contract, every time I sat in an airport lounge in Chicago, I looked at this bracelet. But Arthur had private investigators monitoring David's house.\"",
+      "\"If I sent one letter, he would have called in the three-hundred-thousand-dollar emergency loan and foreclosed on your father's home.\"",
+      "Kayla looked up from the bracelet, her eyes wet with profound understanding.",
+      "\"Dad told me this morning that forgiveness isn't forgetting the past—it's refusing to let the past control the table.\"",
+      "Kayla held out her wrist toward her mother.",
+      "\"Put it on me, Mom.\"",
+      "Monica's hands shook as she fastened the silver clasp around Kayla's wrist.",
+      "For the first time in eighteen years, the distance between them disappeared in a quiet, tearful embrace under the magnolia trees.",
+      "\"You don't have to make up for eighteen years in one day, Mom,\" Kayla whispered.",
+      "\"We've got the rest of our lives to write the next chapter.\""
+    ]
+  },
+  "story-grad-mega-ch10": {
+    title: "THE GRADUATION ENVELOPE (PART 10 - GRAND FINALE): THE VALEDICTORIAN'S SPEECH AND THE EMPTY CHAIR",
+    hookSummary: "Kayla took the podium at the district honors banquet, publicly honoring both the father who stayed and the mother who sacrificed in silence.",
+    paragraphs: [
+      "[ ATLANTA CIVIC CENTER BANQUET HALL — 07:30 PM ]",
+      "Over eight hundred guests, educators, and community leaders filled the grand ballroom for the State Valedictorian Honors Gala.",
+      "At Table 4, David sat in his finest dark suit, his broad shoulders relaxed for the first time in two decades.",
+      "Beside him sat Monica, elegant in a tailored midnight blue gown, her silver charm bracelet gleaming on Kayla's wrist at the podium.",
+      "Between them sat an empty chair with a single red rose placed neatly over an unsealed J.P. Morgan envelope—a reminder of the power they had reclaimed.",
+      "Kayla stepped up to the microphone, her valedictorian medal catching the warm stage spotlights.",
+      "\"Good evening, faculty, family, and honored guests,\" Kayla began, her voice carrying clear and steady across the auditorium.",
+      "\"Growing up, I was taught that success is measured by the trophies you bring home and the grades on your report card.\"",
+      "\"But over the last forty-eight hours, I learned that true honor is measured by the sacrifices made when nobody is looking.\"",
+      "She looked directly down at Table 4, her eyes meeting David's proud, tear-filled gaze.",
+      "\"My father worked sixty hours a week in Georgia mud and steel so I would never know hunger or fear.\"",
+      "\"And my mother surrendered eighteen years of her own heart so that I could simply have breath in my lungs to stand on this stage tonight.\"",
+      "The entire ballroom went completely still as Kayla held up the silver charm bracelet for all to see.",
+      "\"Family is not a transaction. It cannot be bought with corporate leverage, and it cannot be broken by distance or time.\"",
+      "\"To anyone in this room fighting to protect the people they love: keep standing. The truth always outlasts the lie.\"",
+      "As Kayla concluded her speech, the eight hundred attendees rose in a thunderous, standing ovation.",
+      "At Table 4, David reached across the white linen tablecloth and took Monica's hand in a firm, respectful clasp of mutual victory.",
+      "The sixteen-year battle was over. The family was whole, the truth was vindicated, and the future belonged to Kayla."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 2: THE GRANDMOTHER'S HANDWRITTEN LEDGER (6 Chapters)
+  // Evidence Object: Clara's Weathered Black Leather Ledger / Unsealed Land Deed
+  // Characters: Evelyn (Granddaughter/Heir), Clara (Matriarch), Marcus & Brenda (Greedy Relatives)
+  // =========================================================================
+  "story-ledger-mega-ch1": {
+    title: "THE GRANDMOTHER'S LEDGER (PART 1): SISTER ACCUSES NIECE OF THEFT BEFORE UNSEALED WILL IS OPENED",
+    hookSummary: "Aunt Brenda slammed the dining table, demanding Evelyn surrender the house keys before Grandmother Clara's handwritten ledger was unsealed.",
+    paragraphs: [
+      "[ CLARA'S HISTORIC WEST END HOME — 04:15 PM ]",
+      "The thick, brass-bound black leather ledger hit the mahogany dining table with a solid thud.",
+      "Brenda—fifty-eight, dressed in a sharp black church suit with a gold brooch pinned to her lapel—leaned forward with both hands flat on the table.",
+      "\"Hand over the master keys, Evelyn,\" Brenda commanded, her voice vibrating with authority. \"You've been squatting in mama's house for three years under the excuse of caretaking.\"",
+      "Evelyn, thirty-two, sat calmly in her grandmother's high-backed armchair, wearing a plain grey sweater and her hair tied back in a neat bun.",
+      "In her right hand, Evelyn held the brass key to the ledger's padlock.",
+      "Across the room, Uncle Marcus stood by the grandfather clock, holding an unsealed legal envelope from a strip-mall probate attorney.",
+      "\"Evelyn, be reasonable,\" Marcus said, smoothing his silk tie. \"We have a cash offer from a commercial developer for four hundred and fifty thousand dollars. We close in thirty days.\"",
+      "\"Grandmother Clara built this house in 1964 with cash from her sewing business,\" Evelyn said, her voice dropping into quiet, measured steel.",
+      "\"She didn't spend sixty years paying property taxes for you to flip it into a parking lot before her funeral flowers have even wilted.\"",
+      "Brenda scoffed, pointing an acrylic nail at Evelyn. \"You don't own a single timber in this house! I am her eldest daughter. Under Georgia intestate succession, I am the rightful administrator!\"",
+      "\"Mama didn't leave this property intestate, Brenda,\" Evelyn replied softly.",
+      "Evelyn inserted the small brass key into the ledger lock. The mechanism clicked open with sharp clarity.",
+      "Inside the yellowed parchment pages were sixty years of handwritten cash receipts, bank drafts, and a registered allodial title deed stamped by the Fulton County Superior Court in 1978.",
+      "\"Every mortgage payment, every property tax dollar, and every family loan mama ever disbursed is documented right here in her handwriting,\" Evelyn said.",
+      "Brenda's eyes narrowed. \"That's just an old recipe diary. It has no legal standing in a modern probate court!\"",
+      "Evelyn turned to page 142, pointing to an entry dated August 12, 1994, with Brenda's signed signature underneath.",
+      "\"Page one-forty-two: *Loan to Brenda for Atlanta boutique deposit — thirty thousand dollars from home equity. Repayment terms: zero paid to date.*\"",
+      "Brenda's face turned pale. \"Where did you find that book?\"",
+      "\"Grandmother Clara didn't trust banks, Brenda,\" Evelyn said, closing the book with quiet finality. \"And she certainly didn't trust you.\""
+    ]
+  },
+  "story-ledger-mega-ch2": {
+    title: "THE GRANDMOTHER'S LEDGER (PART 2): THE CORRIDOR CONFRONTATION OVER THE 1978 ALLODIAL TITLE",
+    hookSummary: "Uncle Marcus blocked the hallway, attempting to snatch the ledger, but Evelyn revealed the certified county clerk seal.",
+    paragraphs: [
+      "[ WEST END RESIDENCE UPPER HALLWAY — 05:00 PM ]",
+      "Marcus stepped into the narrow hallway, blocking Evelyn's path to the master study with his broad frame.",
+      "\"Give me the book, Evelyn,\" Marcus whispered, his smile completely gone. \"You're playing a dangerous game with family money.\"",
+      "Evelyn held the leather ledger tight against her ribs. She didn't step back an inch.",
+      "\"You call it family money, Uncle Marcus?\" Evelyn asked, her eyes steady. \"The only money you ever put in this house was the twenty dollars you dropped in mama's birthday card in 2018.\"",
+      "Marcus reached out toward the book. \"I'm the designated executor on the 2015 draft will!\"",
+      "\"The 2015 draft that Grandmother Clara formally revoked when you tried to take a second lien on her garage?\" Evelyn asked calmly.",
+      "She opened the back flap of the ledger, displaying a certified copy of the county clerk's revocation certificate stamped in blue indelible ink.",
+      "\"Grandmother Clara had the revocation witnessed by two retired county judges at the Cascade United Methodist Church,\" Evelyn said.",
+      "Marcus's hand froze in mid-air. His eyes darted from the blue seal to Evelyn's resolute face.",
+      "\"She never told us about that,\" Marcus stammered.",
+      "\"Because she knew you'd try to pressure her before the ink was dry,\" Evelyn replied.",
+      "Brenda appeared at the bottom of the stairs, shouting up. \"Marcus! Call our lawyer! Tell him we're filing an emergency restraining order!\"",
+      "Evelyn looked down the stairwell at her aunt with cold composure.",
+      "\"File whatever you want, Aunt Brenda. But when the judge asks why you owe the estate forty-five thousand dollars in back interest, make sure you bring your checkbook.\""
+    ]
+  },
+  "story-ledger-mega-ch3": {
+    title: "THE GRANDMOTHER'S LEDGER (PART 3): THE FORENSIC ACCOUNTANT'S UNSEALED REPORT",
+    hookSummary: "At the probate hearing, the estate auditor confirmed Clara's ledger was an admissible sovereign business record.",
+    paragraphs: [
+      "[ FULTON COUNTY PROBATE COURT ROOM 402 — 10:15 AM ]",
+      "The courtroom was heavy with the silence of high-stakes litigation.",
+      "Brenda and Marcus sat at the plaintiff's table with their high-priced downtown attorney, shuffling glossy property appraisal binders.",
+      "At the defense table, Evelyn sat with retired Attorney Thomas Vance, a veteran civil rights lawyer who had known Clara for fifty years.",
+      "Judge Harris adjusted his glasses and looked down from the bench. \"Counsel, the petitioners claim the deceased died without a verified testamentary instrument.\"",
+      "Attorney Vance stood up slowly. In his hand, he carried Clara's black leather ledger.",
+      "\"Your Honor, we submit Defense Exhibit A: the lifelong accounting ledger and testamentary trust established by Clara Mae Washington in 1978.\"",
+      "Brenda's attorney jumped to his feet. \"Objection! That is a non-standard bound notebook, not a formal statutory will!\"",
+      "\"Under Georgia Code Section 53-4-20, a holographic testamentary record supported by contemporaneous business entries and authenticated financial receipts is fully admissible,\" Vance stated calmly.",
+      "The court-appointed forensic auditor, Dr. Cynthia Adams, took the witness stand.",
+      "\"Dr. Adams, did your team examine the hand-inscribed ledger?\" Judge Harris inquired.",
+      "\"We did, Your Honor. Every single page was matched against Federal Reserve microfilm records, bank deposit slips, and Fulton County deed registers dating back to 1964.\"",
+      "\"And what was your finding regarding the property ownership?\"",
+      "Dr. Adams looked directly at Brenda and Marcus. \"The property was placed into an irrevocable private trust naming Evelyn Washington as sole trustee and custodian upon Clara Washington's passing.\"",
+      "Brenda gripped the table edge, her face turning crimson with shock.",
+      "\"Furthermore,\" Dr. Adams added, \"the ledger outlines outstanding debts owed to the estate by the petitioners totaling over seventy-eight thousand dollars.\"",
+      "Judge Harris brought his gavel down with a sharp crack that echoed through the room.",
+      "\"Petition for administrative seizure is denied with prejudice. Trustee Evelyn Washington retains full title.\""
+    ]
+  },
+  "story-ledger-mega-ch4": {
+    title: "THE GRANDMOTHER'S LEDGER (PART 4): THE CORRIDOR CONFRONTATION AFTER THE VERDICT",
+    hookSummary: "In the courthouse corridor, Brenda attempted to claim sentimental heirlooms, but Evelyn held firm on Clara's exact written wishes.",
+    paragraphs: [
+      "[ COURTHOUSE CORRIDOR — 11:30 AM ]",
+      "The marble floors of the courthouse hallway clicked as Brenda rushed after Evelyn, her anger barely concealed behind trembling lips.",
+      "\"Evelyn! Stop walking away from me!\" Brenda shouted, grabbing Evelyn's coat sleeve.",
+      "Evelyn turned around slowly, looking down at Brenda's hand until her aunt let go.",
+      "\"You think you won something today?\" Brenda hissed. \"You stole my mother's legacy! I'm her flesh and blood!\"",
+      "\"You spent the last fifteen years treating mama like a bank ATM, Brenda,\" Evelyn said, her voice dropping into that quiet, unshakable authority.",
+      "\"When mama was in physical therapy for three months after her hip replacement, how many times did you visit?\"",
+      "Brenda hesitated, looking away toward the elevator bank. \"I had business in Charlotte—\"",
+      "\"Zero times, Brenda. You sent a group text on Thanksgiving asking if her social security check had cleared.\"",
+      "Marcus caught up, trying to play peacemaker. \"Evelyn, let's at least divide the antique furniture and mama's jewelry box. We don't have to be enemies.\"",
+      "Evelyn opened the ledger to the final inscribed page, holding it up so both of them could see Clara's clean, cursive hand.",
+      "\"*To my daughter Brenda and son Marcus: I forgive your absence. But my house, my memories, and my work belong to the child who held my hand in the dark.*\"",
+      "Marcus bowed his head, unable to meet his niece's eyes.",
+      "\"The house is staying in the family, Marcus,\" Evelyn said gently. \"It's just staying with the family that cared.\""
+    ]
+  },
+  "story-ledger-mega-ch5": {
+    title: "THE GRANDMOTHER'S LEDGER (PART 5): THE RESTORATION OF THE HISTORIC HOMESTEAD",
+    hookSummary: "Evelyn welcomed the neighborhood elders into Clara's restored living room to unveil the community preservation trust.",
+    paragraphs: [
+      "[ CLARA'S WEST END HOME LIVING ROOM — 02:00 PM ]",
+      "Sunlight poured through the freshly cleaned stained-glass transom above the front door, illuminating the polished oak floors.",
+      "Ten neighborhood elders from the West End Community Council sat in a circle of restored wingback chairs, holding glasses of sweet tea.",
+      "On the mantlepiece above the brick fireplace rested Clara's framed portrait and her black leather ledger.",
+      "Mr. Henderson, seventy-eight, who had lived across the street since 1970, raised his glass.",
+      "\"When developers started buying up the block three years ago, we thought Miss Clara's house was going to be knocked down for luxury townhomes,\" he said.",
+      "Evelyn stepped to the center of the room, smiling warmly at the neighbors who had watched her grow up.",
+      "\"Grandmother Clara always said that land is the only thing they're not making any more of,\" Evelyn said.",
+      "\"This house will never be sold. Starting next month, the downstairs will host the West End Youth Literacy Program, funded by the estate's rental properties.\"",
+      "The room filled with soft murmurs of approval and applause from the elders.",
+      "Mrs. Jenkins, Clara's lifelong church sister, squeezed Evelyn's hand. \"Your grandmother is smiling down on this room today, child.\"",
+      "Evelyn looked up at Clara's portrait. The quiet determination in her grandmother's painted eyes matched her own heart.",
+      "The house was no longer a battleground—it was a sanctuary."
+    ]
+  },
+  "story-ledger-mega-ch6": {
+    title: "THE GRANDMOTHER'S LEDGER (PART 6 - GRAND FINALE): THE MATRIARCH'S SOVEREIGN VICTORY",
+    hookSummary: "Six months later, Marcus returned not with a lawsuit, but with a written apology and the first repayment check.",
+    paragraphs: [
+      "[ WEST END HOMESTEAD FRONT PORCH — 06:00 PM ]",
+      "The autumn breeze carried the sweet scent of burning wood and falling oak leaves across the porch.",
+      "Evelyn sat in Clara's old wooden rocking chair, watching the neighborhood children walk home from the library program inside.",
+      "A familiar silver sedan pulled up to the curb. Marcus stepped out, wearing a simple button-up shirt without the flashy jewelry.",
+      "He walked up the front steps slowly, holding a white bank envelope in both hands.",
+      "\"Evelyn,\" Marcus said quietly, stopping at the top step.",
+      "\"Uncle Marcus,\" Evelyn replied, gesturing to the adjacent rocking chair. \"Have a seat.\"",
+      "Marcus sat down, looking out over the quiet street where he had played as a boy fifty years ago.",
+      "\"I came to bring this,\" Marcus said, setting the white envelope on the small side table.",
+      "\"It's the first five thousand dollars toward what I borrowed from mama in 2015. I set up an automatic monthly transfer for the rest.\"",
+      "Evelyn looked at the envelope, then at her uncle's tired, humbled face.",
+      "\"What changed, Uncle Marcus?\"",
+      "\"I drove past my old elementary school last week, and I realized I spent thirty years chasing money that didn't love me back,\" Marcus said, his voice cracking slightly.",
+      "\"Mama wasn't punishing us with that ledger, Evelyn. She was teaching us what things are actually worth.\"",
+      "Evelyn reached over and placed her hand over his. \"She always left the front door unlocked for you, Marcus. You just had to come in as her son, not her landlord.\"",
+      "As the sun dipped below the Atlanta skyline, painting the West End in shades of amber and gold, peace settled over Clara's house—unshakable, sovereign, and finally healed."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 3: THE GOLD FRAMED DEED (6 Chapters)
+  // Evidence Object: 1948 Gold-Framed Land Deed / Allodial Patent
+  // Characters: Mrs. Patricia Washington (68, Matriarch), Julian (Predatory Developer), Detective Harris
+  // =========================================================================
+  "story-framed-deed-mega-ch1": {
+    title: "THE GOLD FRAMED DEED (PART 1): THE MOTHER WHO REFUSED TO PACK",
+    hookSummary: "Mrs. Patricia sat in her living room armchair holding her husband's 1948 gold-framed deed when the corporate eviction crew arrived.",
+    paragraphs: [
+      "[ HISTORIC CASCADE HOMESTEAD — 08:30 AM ]",
+      "The heavy brass knock rattled the stained-glass front door three times in rapid succession.",
+      "Sixty-eight-year-old Patricia Washington didn't flinch. She sat in her velvet armchair wearing a pressed floral Sunday dress, her silver hair pinned in an elegant crown.",
+      "Resting across her lap was a heavy, gold-leaf picture frame holding an original 1948 hand-drawn surveyor's deed.",
+      "Standing on the front porch was Julian Sterling, thirty-eight, wearing an Italian wool suit and carrying a clip-board with a commercial demolition warrant.",
+      "Behind him, two moving crew workers leaned against a thirty-foot diesel box truck idling in the driveway.",
+      "\"Mrs. Washington,\" Julian said through the screen door, his voice dripping with condescending patience. \"The ninety-day municipal redevelopment notice expired at midnight.\"",
+      "\"We have authorization from the regional development board to clear this parcel for the new commercial transit hub.\"",
+      "Patricia took a slow breath, smoothed her skirt, and looked up at him through the copper screen.",
+      "\"Julian, your grandfather used to deliver ice to this porch in the summer of 1952,\" Patricia said, her voice dropping into quiet, resonant steel.",
+      "\"He had the good manners to take his hat off when he stepped onto my father's property. You didn't even wipe your designer shoes on the mat.\"",
+      "Julian sighed, waving the clipboard. \"This isn't 1952, Mrs. Washington. The city rezoned this entire four-acre corridor as commercial transit property. We hold the municipal eminent domain certificate.\"",
+      "\"You hold a piece of paper bought from crooked city commissioners over steak dinners in Buckhead,\" Patricia replied calmly.",
+      "She lifted the gold frame, turning the glass toward him.",
+      "Underneath the glass was a parchment document bearing the Great Seal of the State of Georgia and the handwritten signature of Governor Melvin Thompson, dated June 14, 1948.",
+      "\"This parcel was deeded under an irrevocable allodial land grant to my father, Sergeant Major Robert Washington, for service in the 761st Tank Battalion,\" Patricia said.",
+      "\"It carries no municipal encumbrance, no tax lien, and cannot be seized by eminent domain without an act of the United States Congress.\"",
+      "Julian's smirk tightened into a thin line. \"Our corporate attorneys reviewed that deed. It's an outdated historical novelty.\"",
+      "\"Then bring your corporate attorneys with you when you try to step through this door, Julian,\" Patricia said, locking the deadbolt with a solid, echoing click.",
+      "\"Because until God himself serves an eviction notice, this ground belongs to the Washington family.\""
+    ]
+  },
+  "story-framed-deed-mega-ch2": {
+    title: "THE GOLD FRAMED DEED (PART 2): THE DISTRICT ATTORNEY'S INJUNCTION AT THE BULLDOZER LINE",
+    hookSummary: "When Julian ordered the bulldozers to breach the front fence, Detective Harris and the State Attorney arrived with a cease-and-desist order.",
+    paragraphs: [
+      "[ CASCADE HOMESTEAD FRONT PERIMETER — 11:00 AM ]",
+      "A yellow sixty-ton hydraulic bulldozer roared to life at the edge of the driveway, its steel tracks tearing into the curb.",
+      "Julian stood beside the machine, shouting into his cell phone while fifty neighborhood residents gathered along the sidewalk in silent solidarity.",
+      "Patricia stood at the top of her porch steps, holding the gold-framed deed against her chest like a shield.",
+      "The siren of a Fulton County Sheriff's cruiser wailed in the distance, cutting off the bulldozer's diesel roar as two black-and-white cruisers screeched to a halt.",
+      "Stepping out of the lead vehicle was Detective Marcus Harris, accompanied by Assistant State Attorney Cynthia Ward.",
+      "\"Cut that engine immediately!\" Detective Harris shouted, flashing his badge at the bulldozer operator.",
+      "Julian rushed forward, his face flushed. \"Detective, I have a lawful municipal demolition permit! You're interfering with a city-sponsored development project!\"",
+      "Assistant State Attorney Ward opened a leather legal binder. \"Mr. Sterling, the municipal permit you're holding was signed by Commissioner Bradley, who was arrested by federal marshals two hours ago on bribery charges.\"",
+      "Julian's mouth dropped open. \"What does Bradley's arrest have to do with my private development parcel?\"",
+      "\"Everything,\" Attorney Ward replied, stepping past him to look up at Mrs. Washington.",
+      "\"The state attorney's office conducted a title search on this four-acre tract. The 1948 allodial patent is fully intact and registered in the state archives.\"",
+      "\"Any attempt to disturb this property constitutes criminal trespass and malicious property destruction under federal statute.\"",
+      "Patricia walked down the porch steps, her expression steady and composed.",
+      "\"You thought an old woman standing on a porch was alone, Julian,\" Patricia said quietly.",
+      "\"You forgot that the foundation of this house was laid with blood and honor, not dirty money. Back your machines off my grass.\""
+    ]
+  },
+  "story-framed-deed-mega-ch3": {
+    title: "THE GOLD FRAMED DEED (PART 3): THE FORENSIC AUDIT OF STERLING HOLDINGS",
+    hookSummary: "State investigators unsealed Julian's shell corporations, revealing fifty illegal foreclosures across southwest Atlanta.",
+    paragraphs: [
+      "[ STATE REGULATORY HEARINGS CHAMBER — 02:30 PM ]",
+      "A bank of state financial regulators sat behind the curved wooden bench, reviewing digital transaction maps projected on the wall.",
+      "Julian sat at the defense table between two white-shoe corporate attorneys, his tie loosened, dark circles under his eyes.",
+      "Detective Harris took the stand, presenting a stack of seized emails from Sterling Holdings' Atlanta servers.",
+      "\"Detective Harris, what did the digital subpoena uncover regarding the Cascade property?\" the state prosecutor asked.",
+      "\"The emails show a coordinated effort by Sterling Holdings to manufacture false tax delinquency notices against elderly Black homeowners along the proposed transit corridor.\"",
+      "\"They paid corrupt municipal clerks five thousand dollars per parcel to alter property tax records and file premature foreclosure liens.\"",
+      "Patricia sat in the front row of the public gallery, her hands resting quietly on her handbag.",
+      "The prosecutor turned to the bench. \"Your Honor, Mrs. Washington's property taxes were paid five years in advance through her veteran husband's survivor trust.\"",
+      "\"Sterling Holdings knowingly submitted forged affidavits of service to obtain default judgements.\"",
+      "The chief administrative judge slammed his gavel down. \"All foreclosure certificates issued under Sterling Holdings in Fulton County over the past seven years are immediately suspended.\"",
+      "\"Mr. Sterling, you are remanded to the custody of state marshals pending grand jury indictment for commercial racketeering.\"",
+      "As marshals stepped forward to cuff Julian, he turned to look at Patricia in the gallery.",
+      "Patricia met his gaze without gloating, only the deep, unshakable dignity of a woman who knew truth was patient.",
+      "\"You can buy buildings with stolen money, Julian,\" Patricia said softly as he was led away. \"But you cannot buy the soul of a community.\""
+    ]
+  },
+  "story-framed-deed-mega-ch4": {
+    title: "THE GOLD FRAMED DEED (PART 4): THE NEIGHBORHOOD TITLE CLINIC",
+    hookSummary: "Mrs. Patricia converted her wrap-around porch into a legal clinic, helping twenty elderly neighbors protect their ancestral deeds.",
+    paragraphs: [
+      "[ WASHINGTON HOMESTEAD PORCH — 04:00 PM ]",
+      "The wrap-around porch was filled with twenty elderly neighbors holding manila folders, tax receipts, and family Bibles.",
+      "Assistant State Attorney Ward and three pro-bono civil rights attorneys sat at foldout tables, reviewing land records one by one.",
+      "Patricia poured pitchers of iced sweet tea, serving lemon pound cake she had baked that morning.",
+      "Mr. Davis, eighty-one, sat with his hands trembling as an attorney stamped his property title *Cleared of All Sterling Liens*.",
+      "\"Miss Patricia,\" Mr. Davis said, tears in his eyes. \"They told me last month I had to be out by the fifteenth or they'd put my furniture on the curb.\"",
+      "Patricia rested her hand gently on his shoulder. \"Nobody is putting you on the curb, Arthur.\"",
+      "\"Our parents worked sixty years cleaning floors, laying asphalt, and fighting in foreign wars to give us these homes.\"",
+      "\"As long as we stand together, no developer with a slick suit and a forged deed will ever run us off our land.\"",
+      "The front yard buzzed with the sound of laughter and relieved tears as families received their cleared deed certificates.",
+      "Detective Harris walked up the steps, holding a cup of tea. \"You started a revolution on this porch, Mrs. Washington.\"",
+      "Patricia smiled, looking at the gold-framed deed hanging proudly inside the front hallway.",
+      "\"My father always said: *A deed is only as strong as the person willing to defend it.* We're just honoring the contract.\""
+    ]
+  },
+  "story-framed-deed-mega-ch5": {
+    title: "THE GOLD FRAMED DEED (PART 5): THE RESTITUTION SETTLEMENT",
+    hookSummary: "The state court ordered the liquidation of Sterling Holdings, establishing a $12M community preservation trust.",
+    paragraphs: [
+      "[ FULTON COUNTY SUPERIOR COURT ROOM 601 — 10:00 AM ]",
+      "The grand courtroom was packed to standing room only with Cascade residents and community advocates.",
+      "Judge Reynolds sat at the bench, reviewing the final consent decree signed by the state receiver.",
+      "\"In the matter of the State of Georgia v. Sterling Commercial Holdings, the court accepts the complete liquidation of the defendant's commercial assets.\"",
+      "\"A twelve-million-dollar restitution fund is hereby established under the oversight of the Cascade Community Land Trust.\"",
+      "The judge looked down at Patricia Washington, who sat in the center of the courtroom with her family.",
+      "\"Mrs. Washington, the court officially names you and Attorney Ward as co-chairs of the permanent preservation board.\"",
+      "\"No commercial development may proceed within this four-mile historical district without unanimous approval from the neighborhood council.\"",
+      "The courtroom erupted into sustained applause, neighbors hugging and wiping tears of relief.",
+      "Patricia stood up with quiet grace, nodding respectfully to the bench.",
+      "\"Thank you, Your Honor. Justice took seventy-six years to be recognized, but it arrived right on time.\""
+    ]
+  },
+  "story-framed-deed-mega-ch6": {
+    title: "THE GOLD FRAMED DEED (PART 6 - GRAND FINALE): THE UNBROKEN HOMESTEAD",
+    hookSummary: "On the 78th anniversary of the land grant, three generations of the Washington family gathered beneath the ancient oak tree in peace.",
+    paragraphs: [
+      "[ WASHINGTON HOMESTEAD BACKYARD — 05:30 PM ]",
+      "Long wooden banquet tables covered in red checkered tablecloths stretched beneath the towering branches of the eighty-year-old oak tree.",
+      "Smoke from barbecue pits drifted into the evening sky, carrying the rich aroma of smoked brisket, collard greens, and cornbread.",
+      "Children played tag on the lush green grass, their laughter echoing across the four acres that had almost been paved over.",
+      "Patricia stood at the head of the table, surrounded by her children, grandchildren, and great-grandchildren.",
+      "On a wooden easel beside her rested the 1948 gold-framed deed, cleaned and polished to a bright, enduring shine.",
+      "Her son, Robert Jr., raised his glass of lemonade. \"To Mama. Who held the line when the bulldozers were at the gate.\"",
+      "\"To the foundation that can never be broken!\" the entire family echoed in unison.",
+      "Patricia looked out over her family, her heart full of peace and quiet gratitude.",
+      "She knew the fight for dignity was never truly over, but on this ground, in this home, the roots ran deeper than any machine could ever dig.",
+      "The deed was safe. The home was whole. The legacy was eternal."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 4: THE MILLIONAIRE SISTER'S KITCHEN TRASH QUILT (6 Chapters)
+  // Evidence Object: Grandmother's Patchwork Quilt / Bearer Bonds in Seams
+  // Characters: Maya (Quiet Caretaker Sister), Vanessa (Wealthy, Arrogant Sister), Uncle Raymond
+  // =========================================================================
+  "story-trash-quilt-mega-ch1": {
+    title: "THE KITCHEN TRASH QUILT (PART 1): ARROGANT SISTER THROWS GRANDMOTHER'S QUILT IN THE TRASH",
+    hookSummary: "Vanessa tossed Grandmother Big Mama's handmade 1950s patchwork quilt into a black heavy-duty trash bag, calling it dirty laundry.",
+    paragraphs: [
+      "[ BIG MAMA'S SAVANNAH COTTAGE KITCHEN — 02:15 PM ]",
+      "The heavy black contractor trash bag was shoved halfway into the metal kitchen bin with a loud crinkle.",
+      "Thirty-eight-year-old Vanessa—wearing a designer cashmere sweater, diamond stud earrings, and oversized sunglasses—dusted off her manicured hands.",
+      "\"Everything in this back bedroom is infested with dust and mothballs,\" Vanessa declared, checking her gold watch.",
+      "\"The estate liquidator is coming at four. If it's not antique mahogany or solid gold, it goes straight to the curb.\"",
+      "Maya, thirty-four, walked into the kitchen carrying a cardboard box of old family photo albums.",
+      "She stopped dead in her tracks when she saw the corner of faded floral calico and worn denim sticking out of the black trash bag.",
+      "\"Vanessa... what is that in the bin?\" Maya asked, her voice dropping into an ominous, dead quiet.",
+      "\"It's that raggedy old patchwork blanket Big Mama kept on her rocking chair,\" Vanessa scoffed, not looking up from her tablet.",
+      "\"It smells like lavender and liniment. Nobody at the estate sale is going to pay fifty cents for someone's stained sewing scraps.\"",
+      "Maya set the photo box down with deliberate slowness. She walked to the bin and pulled the quilt out with both hands.",
+      "The quilt was heavy, made from pieces of work overalls, Sunday church dresses from the 1960s, and flour sack cotton, bound together with thick hand-stitched navy thread.",
+      "\"Big Mama worked thirty-two years at the Savannah cotton mill, Vanessa,\" Maya said, holding the quilt against her chest.",
+      "\"She hand-stitched every square of this quilt while her arthritis was so bad her fingers bled. This isn't trash. This is our family's blood.\"",
+      "Vanessa rolled her eyes, laughing dismissively. \"You always were dramatic, Maya. You spent four years wiping her chin and changing her sheets for free while I built a seven-figure marketing agency in Atlanta.\"",
+      "\"If you want to hoard dirty laundry in your one-bedroom apartment, be my guest. But the deed to this house is going into my name to recoup my legal fees.\"",
+      "Uncle Raymond walked into the kitchen, wearing his postal service jacket, looking between the two sisters.",
+      "\"Girls, Big Mama's will reading is in two hours at Attorney Henderson's office,\" Raymond said gently.",
+      "Maya held the quilt tighter. As her fingers brushed the thick double-hem along the bottom edge, she felt something stiff and crinkling beneath the fabric lining.",
+      "She didn't say a word. She just looked at her sister with quiet, unbreakable pity.",
+      "\"Keep the house, Vanessa,\" Maya said softly. \"I'll take the trash.\""
+    ]
+  },
+  "story-trash-quilt-mega-ch2": {
+    title: "THE KITCHEN TRASH QUILT (PART 2): THE SEAM RIPPER'S SECRET IN THE BEDROOM",
+    hookSummary: "Behind the closed bedroom door, Maya used a seam ripper on the quilt's hem, uncovering $250,000 in vintage bearer bonds and the true deed.",
+    paragraphs: [
+      "[ BIG MAMA'S BACK BEDROOM — 03:00 PM ]",
+      "The bedroom was quiet except for the ticking of the brass mantle clock and the gentle hum of the ceiling fan.",
+      "Maya sat on the edge of the mattress, holding a small silver seam ripper she had retrieved from Big Mama's sewing basket.",
+      "She carefully slid the point under the heavy navy stitching along the quilt's thick bottom border.",
+      "With a soft *snip*, the seam parted, revealing a tight inner layer of oilcloth wrapped in protective wax paper.",
+      "Maya's breath hitched as she slid out the first bundle.",
+      "Inside were ten pristine 1974 United States Treasury Bearer Bonds, each with a face value of twenty-five thousand dollars.",
+      "Accompanying the bonds was a handwritten letter on faded yellow legal paper in Big Mama's familiar, elegant cursive:",
+      "\"*My dearest Maya: If you are reading this, it means you took my old quilt when everyone else looked for gold.*\"",
+      "\"*True wealth is not what you show the world. It is what you carry in your hands when no one is watching.*\"",
+      "\"*The house belongs to the child who stayed. The original deed is registered in safe deposit box 402 at First Savannah Bank.*\"",
+      "Tears spilled over Maya's eyelashes, splashing softly onto the wax paper.",
+      "For four years, while Vanessa called her a failure for staying behind in Savannah, Big Mama had been quietly protecting her future.",
+      "There was a sharp knock on the bedroom door. Vanessa's voice came through the wood: \"Maya! Get your coat! The attorney's office won't wait for your sentimental crying!\"",
+      "Maya wiped her cheeks, folded the oilcloth back into the quilt hem, and wrapped the blanket securely around her shoulders.",
+      "\"Coming, Vanessa,\" Maya said quietly. \"I'm ready.\""
+    ]
+  },
+  "story-trash-quilt-mega-ch3": {
+    title: "THE KITCHEN TRASH QUILT (PART 3): THE ESTATE ATTORNEY'S WILL READING",
+    hookSummary: "At the attorney's office, Vanessa demanded the entire house appraisal, but Attorney Henderson opened the safe deposit box records.",
+    paragraphs: [
+      "[ HENDERSON & ASSOCIATES LAW OFFICES — 04:15 PM ]",
+      "The mahogany conference room was cold, air-conditioned to a crisp chill.",
+      "Vanessa sat at the center of the table with her arms crossed, tapping her designer acrylic nails against the polished wood.",
+      "Maya sat quietly across from her, the heavy patchwork quilt resting neatly folded in her lap.",
+      "Uncle Raymond sat between them, his head resting in his hands, bracing for the inevitable fight.",
+      "Attorney Arthur Henderson, seventy-two, adjusted his bifocals and cleared his throat over a red ribbon-bound legal folder.",
+      "\"We are gathered for the formal execution of the Last Will and Testament of Mrs. Hattie 'Big Mama' Washington, executed in July 2022.\"",
+      "Vanessa leaned forward immediately. \"Arthur, let's skip the small bequests. As the primary financial contributor to mama's medical insurance, the residential property should be transferred to my LLC.\"",
+      "Attorney Henderson looked over the rims of his glasses at Vanessa with sharp, unimpressed eyes.",
+      "\"Miss Vanessa, your mother left very specific instructions regarding the residential estate.\"",
+      "He unfolded the will, reading the operative clause with deliberate clarity:",
+      "\"*Clause 4: To my daughter Vanessa, I leave the modern glass coffee table and the leather sofa she purchased for my living room, as she valued appearances above all things.*\"",
+      "Vanessa gasped, standing up from her leather chair. \"What kind of insult is that?! I paid for her funeral flowers!\"",
+      "\"*Clause 5,*\" Attorney Henderson continued, ignoring the interruption: \"*To my daughter Maya, I leave my handmade 1950s patchwork quilt, and all real and personal property tied to its custody.*\"",
+      "\"*The residential homestead, having been placed into the Hattie Washington Family Living Trust, vests solely with the custodian of the quilt.*\"",
+      "Vanessa's face went from furious red to ghost white. \"A blanket? You're giving her a four-hundred-thousand-dollar historic home based on a dirty blanket?!\"",
+      "\"It's not just a blanket, Vanessa,\" Maya said, her voice dropping into calm, unyielding steel.",
+      "\"It's the only thing in that house you threw into the trash.\""
+    ]
+  },
+  "story-trash-quilt-mega-ch4": {
+    title: "THE KITCHEN TRASH QUILT (PART 4): THE PRIVATE WEALTH VERIFICATION",
+    hookSummary: "At First Savannah Bank, the trust officer authenticated the bearer bonds and transferred the deed into Maya's name.",
+    paragraphs: [
+      "[ FIRST SAVANNAH BANK PRIVATE CLIENT VAULT — 09:30 AM ]",
+      "The heavy steel vault door was swung wide, revealing rows of brass deposit boxes gleaming under bright fluorescent lights.",
+      "Maya sat at the private review table with Senior Trust Officer Marcus Bradley and Attorney Henderson.",
+      "On the table lay the ten United States Treasury Bearer Bonds alongside the original 1968 hand-inked deed to the Savannah property.",
+      "Officer Bradley ran the bonds through a digital spectral authenticator, watching the green verification lights flash across the screen.",
+      "\"Every single bond is fully registered, matured, and carrying accumulated sovereign interest,\" Officer Bradley announced with a warm smile.",
+      "\"Total liquidity value is three hundred and twelve thousand, four hundred and fifty dollars, available immediately in cash or government securities.\"",
+      "Attorney Henderson placed the official county title deed next to the cashier's check.",
+      "\"The property is completely unencumbered, Maya. No back taxes, no liens, and no developer options.\"",
+      "Maya touched the cool brass key to Box 402. \"Big Mama never spent a dime on herself, did she?\"",
+      "\"Your grandmother understood that true security is quiet,\" Attorney Henderson said softly.",
+      "\"She watched people take from her family for generations. She made sure that the one who stayed by her side would never have to ask anyone for permission again.\"",
+      "Maya looked down at the quilt resting beside her on the leather chair.",
+      "\"We're going to fix the roof, open the community garden, and keep Big Mama's porch light on every single night.\""
+    ]
+  },
+  "story-trash-quilt-mega-ch5": {
+    title: "THE KITCHEN TRASH QUILT (PART 5): THE SISTER'S AFTERNOON BREAKDOWN",
+    hookSummary: "Vanessa returned to the cottage, stripped of her corporate arrogance, pleading for a share of the estate to save her failing business.",
+    paragraphs: [
+      "[ SAVANNAH COTTAGE SCREENED PORCH — 03:00 PM ]",
+      "The afternoon rain tapped rhythmically against the corrugated tin roof of the screened porch.",
+      "Maya sat in Big Mama's old wooden swing, sipping sweet tea from a mason jar, watching the rain wash over the hydrangeas.",
+      "A black luxury SUV pulled up to the curb. Vanessa stepped out, but her crisp corporate swagger was completely gone.",
+      "Her hair was damp from the rain, her mascara slightly smeared, and she carried no designer bags—only a manila folder of debt default notices.",
+      "She walked up the front steps slowly, stopping at the screen door without pulling the handle.",
+      "\"Maya... can I come in?\" Vanessa asked, her voice cracking with raw vulnerability.",
+      "Maya set her tea down on the wooden side table. \"Sit down, Vanessa.\"",
+      "Vanessa sank into the wicker chair opposite the swing, burying her face in her trembling hands.",
+      "\"My agency in Atlanta is underwater, Maya,\" Vanessa sobbed. \"We lost our two biggest corporate accounts in January. I owed sixty thousand dollars in commercial lease penalties.\"",
+      "\"I needed that house appraisal to secure a bridge loan from the bank. I was drowning, and I couldn't let anyone see me fail.\"",
+      "Maya looked at her sister with quiet, unflinching honesty.",
+      "\"You thought being rich meant treating everyone who had less like they were invisible, Vanessa.\"",
+      "\"You walked into this house and treated Big Mama's life like garbage because you couldn't post it on social media.\"",
+      "Vanessa looked up, tears streaming down her cheeks. \"I'm sorry, Maya. I am so sorry. I threw away the only thing that mattered.\"",
+      "Maya stood up, walked over to the closet, and brought out the patchwork quilt, draping it gently over her sister's shivering shoulders.",
+      "\"Big Mama's quilt keeps everyone warm, Vanessa,\" Maya said softly. \"Even the ones who threw it away.\""
+    ]
+  },
+  "story-trash-quilt-mega-ch6": {
+    title: "THE KITCHEN TRASH QUILT (PART 6 - GRAND FINALE): THE HEIR'S SANCTUARY",
+    hookSummary: "Maya used the trust fund to save her sister from bankruptcy while establishing the Hattie Washington Youth Quilting Guild.",
+    paragraphs: [
+      "[ SAVANNAH HISTORIC DISTRICT COMMUNITY CENTER — 05:00 PM ]",
+      "The grand community room was filled with colorful bolts of fabric, sewing machines, and twelve young neighborhood girls learning traditional quilting.",
+      "At the center table sat Maya, guiding an eight-year-old girl's hand as she threaded a navy needle through cotton batting.",
+      "Beside her, wearing a simple linen dress and no designer jewelry, Vanessa was neatly measuring calico squares with a wooden yardstick.",
+      "Over the last six months, Maya had paid off her sister's business penalties through a zero-interest family loan, on the condition that Vanessa returned to Savannah every weekend to manage the foundation's accounting.",
+      "Hanging on the center wall in a custom museum-grade glass shadowbox was Big Mama's 1950s patchwork quilt.",
+      "Uncle Raymond walked in, carrying fresh peach cobbler from the bakery down the street.",
+      "\"Look at this room,\" Raymond said, smiling proudly. \"Miss Hattie's sewing circle is back in business.\"",
+      "Vanessa looked at Maya, her eyes bright with genuine peace and humility.",
+      "\"Thank you for not giving up on me, Maya,\" Vanessa whispered.",
+      "Maya smiled, tying off a clean navy knot on the girl's practice square.",
+      "\"Big Mama always told us that family is like a quilt: sometimes it gets torn, but with enough patience and strong thread, it ends up warmer than it was before.\"",
+      "The laughter of the children filled the room, weaving a new legacy of love, redemption, and unbreakable family honor."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 5: THE LANDLORD'S FAKE EVICTION (6 Chapters)
+  // Evidence Object: Forged 3-Day Notice / 1972 Allodial Lease Agreement
+  // Characters: James 'Pop' Miller (Decorated Veteran), Victor Sterling (Predatory Landlord), Kendra (Attorney)
+  // =========================================================================
+  "story-landlord-mega-ch1": {
+    title: "THE LANDLORD'S FAKE EVICTION (PART 1): THE 3-DAY NOTICE PINNED TO THE VETERAN'S DOOR",
+    hookSummary: "Landlord Victor Sterling pinned a fraudulent 3-day eviction notice on James's door, claiming $12,000 in back rent that was never owed.",
+    paragraphs: [
+      "[ OAKRIDGE APARTMENTS UNIT 4B — 07:15 AM ]",
+      "The sharp metallic staple slammed into the weathered oak door frame with a violent crunch.",
+      "Seventy-two-year-old James 'Pop' Miller opened his front door, holding a steaming mug of black coffee in his left hand.",
+      "Standing on the welcome mat was Victor Sterling, forty-two, wearing a bespoke double-breasted grey suit, holding an industrial staple gun and a blue legal clipboard.",
+      "Pinned to the center of James's door was a neon orange *Three-Day Notice to Vacate for Immediate Non-Payment of Rent*.",
+      "\"Good morning, Mr. Miller,\" Victor said, his tone slick, hurried, and dismissive.",
+      "\"As of eight o'clock this morning, the management company has escalated your default to immediate legal possession. Twelve thousand, four hundred dollars in accumulated back rent.\"",
+      "James didn't flinch. He stood tall in his faded Vietnam Veteran ballcap, his spine perfectly rigid despite forty years of postal delivery work.",
+      "\"Twelve thousand dollars, Victor?\" James asked, his voice low, steady, and unbothered as morning thunder.",
+      "\"I've lived in this unit since June of 1972. I've never missed a rent payment on the first of the month in fifty-two years.\"",
+      "Victor smirked, tapping the notice with his gold pen. \"Our corporate software updated the lease terms to fair-market luxury value six months ago. You failed to remit the difference.\"",
+      "\"You have seventy-two hours to surrender the keys, or county marshals will remove your personal property to the curb.\"",
+      "James took a slow sip of his black coffee, looking past Victor to the other elderly tenants peeking through their cracked doors in terror.",
+      "\"You bought this complex three months ago from the Reynolds estate, Victor,\" James said quietly.",
+      "\"You didn't read the master covenant filed in the basement archives, did you?\"",
+      "Victor laughed coldly. \"Old covenants don't override corporate property management law, old man. Seventy-two hours. Clock is ticking.\"",
+      "James reached out with two steady fingers, plucked the orange notice from the wooden door, and held it up between them.",
+      "\"Victor, you just committed a federal civil rights violation before I finished my first cup of coffee,\" James said calmly.",
+      "\"Bring your marshals on Friday. Make sure they bring their lawyers too.\""
+    ]
+  },
+  "story-landlord-mega-ch2": {
+    title: "THE LANDLORD'S FAKE EVICTION (PART 2): THE 1972 ALLODIAL LIFETIME LEASE",
+    hookSummary: "Attorney Kendra unsealed the original 1972 lease covenant, proving James held a guaranteed lifetime tenancy at fixed $180/month.",
+    paragraphs: [
+      "[ COMMUNITY LEGAL AID CLINIC, DOWNTOWN — 11:30 AM ]",
+      "Attorney Kendra Washington laid out three bound files under the desk lamp.",
+      "Pop Miller sat across from her, wearing his pressed khaki veteran jacket, holding a weathered steel lockbox.",
+      "Inside the lockbox were fifty-two years of carbon-copy rent payment receipts, each signed by the original building owner, Colonel Arthur Reynolds.",
+      "\"Pop, look at Clause 12 of the 1972 master covenant,\" Kendra said, pointing to the original yellowed parchment.",
+      "\"*In consideration of heroic military service and lifetime property maintenance, Unit 4B is granted as an irrevocable lifetime tenancy at the fixed rate of one hundred and eighty dollars per month.*\"",
+      "\"*This covenant runs with the land and binds all future purchasers, assigns, and corporate successors in perpetuity.*\"",
+      "Kendra smiled, looking up at the veteran. \"Sterling's corporate management group didn't do a full title search before purchasing the property for six million dollars.\"",
+      "\"They assumed they could bully all the long-term seniors out with forged default notices and double the rent for tech workers.\"",
+      "Pop nodded slowly. \"Victor served notices to Mrs. Jenkins in 2A and Mr. Jackson in 3C. They're terrified they'll be homeless by the weekend.\"",
+      "\"Not on our watch,\" Kendra said, pulling out a state emergency injunction petition.",
+      "\"We're not just defending your unit, Pop. We're filing a class-action civil racketeering lawsuit against Sterling Management on behalf of every tenant in the building.\"",
+      "Pop placed his hand over the 1972 lease. \"Arthur Reynolds gave his word on paper. And in this country, a man's word on paper still counts for something.\""
+    ]
+  },
+  "story-landlord-mega-ch3": {
+    title: "THE LANDLORD'S FAKE EVICTION (PART 3): THE FRIDAY MARSHAL STANDOFF",
+    hookSummary: "When Victor arrived with private security to change the locks, Kendra and thirty community veterans blocked the hallway.",
+    paragraphs: [
+      "[ OAKRIDGE APARTMENTS 4TH FLOOR HALLWAY — 09:00 AM ]",
+      "The heavy footsteps of four private security guards echoed up the stairwell, accompanied by the metallic clink of crowbars and drill bits.",
+      "Victor Sterling led the way, holding a set of master lock cylinders and a clipboard.",
+      "\"Unit 4B first! Drill the deadbolt and stack the furniture in the parking lot!\" Victor ordered.",
+      "He turned the corner of the fourth-floor corridor and came to a dead stop.",
+      "Standing in front of Unit 4B was Pop Miller, flanked by twelve retired military veterans in uniform, standing at attention with their arms folded.",
+      "Beside Pop stood Attorney Kendra Washington, holding a certified emergency stay signed by Fulton County Superior Court Chief Judge Vance.",
+      "\"Step back, Mr. Sterling,\" Kendra announced, her voice echoing clearly down the hallway.",
+      "\"You are served with an immediate Emergency Temporary Restraining Order, Docket Number 2024-CV-8841.\"",
+      "Victor's face flushed with anger. \"That stay is invalid! I filed a commercial possession action!\"",
+      "Two Fulton County Sheriff's deputies stepped out from Unit 4A, badges shining on their vests.",
+      "\"The stay is signed by Judge Vance, Mr. Sterling,\" the senior deputy said, resting his hand on his duty belt.",
+      "\"If your private guards touch that door or any tenant property, I will place all four of them in handcuffs for felony criminal trespass.\"",
+      "The private security guards immediately lowered their tools, stepping away from Victor.",
+      "Pop Miller looked at Victor with calm, unshakable veteran discipline.",
+      "\"You wanted a fight on Friday, Victor,\" Pop said quietly. \"Welcome to the front line.\""
+    ]
+  },
+  "story-landlord-mega-ch4": {
+    title: "THE LANDLORD'S FAKE EVICTION (PART 4): THE COURTROOM 3 ARRAIGNMENT",
+    hookSummary: "Judge Vance forced Victor Sterling to take the witness stand, exposing $400,000 in fraudulent tenant late fees.",
+    paragraphs: [
+      "[ FULTON COUNTY SUPERIOR COURT ROOM 304 — 02:00 PM ]",
+      "The courtroom was packed to capacity with elderly Oakridge tenants and local news cameras.",
+      "Victor Sterling sat at the respondent's table, his high-priced corporate defense attorneys sweating under the glare of Judge Vance.",
+      "Kendra stood at the podium, projecting the building's financial ledgers onto the courtroom monitors.",
+      "\"Mr. Sterling,\" Kendra questioned, \"did your management company intentionally alter the lease records of forty-eight senior citizens to manufacture default judgments?\"",
+      "Victor cleared his throat nervously, looking at his legal team. \"We transitioned to a modern automated billing software. There were administrative discrepancies—\"",
+      "\"Administrative discrepancies?\" Judge Vance interrupted, his voice booming from the bench.",
+      "\"You levied four hundred thousand dollars in bogus fees and attempted an illegal lockout of a decorated military veteran holding a recorded deed covenant!\"",
+      "Judge Vance slammed his palm on the desk. \"I find Sterling Management in direct civil and criminal contempt of this court.\"",
+      "\"The court orders an immediate freeze on all eviction proceedings across all eighteen properties owned by the defendant.\"",
+      "\"Furthermore, an independent forensic monitor is appointed to review all tenant accounts at the defendant's sole expense.\"",
+      "The gallery erupted into cheers, elderly neighbors embracing and crying tears of profound relief.",
+      "Pop Miller stood up, saluting the bench with quiet dignity.",
+      "Justice was not just served; it was delivered to the front door."
+    ]
+  },
+  "story-landlord-mega-ch5": {
+    title: "THE LANDLORD'S FAKE EVICTION (PART 5): THE TENANT COOPERATIVE CHARTER",
+    hookSummary: "The court ordered Sterling Holdings to sell Oakridge Apartments to the newly formed Tenant Cooperative Trust.",
+    paragraphs: [
+      "[ OAKRIDGE APARTMENTS COMMUNITY REC ROOM — 06:00 PM ]",
+      "The community room was filled with folding tables laden with homemade soul food, potato salad, fried chicken, and sweet tea.",
+      "Pop Miller stood at the podium beside Kendra, presenting the framed charter of the *Oakridge Resident Housing Cooperative*.",
+      "\"As part of the federal court settlement,\" Kendra announced to thunderous cheers, \"Sterling Management was forced to surrender ownership to the Tenant Cooperative Trust.\"",
+      "\"Every tenant in this building is now a partial owner of their home, with rent permanently capped at thirty percent of income!\"",
+      "Mrs. Jenkins, eighty-four, wiped tears from her eyes as she held her new lifetime ownership certificate.",
+      "\"Pop, you saved all our lives,\" she said, kissing his cheek.",
+      "Pop smiled warmly, holding up his glass of sweet tea.",
+      "\"We saved each other because we refused to be divided by a bully with a clipboard,\" Pop said.",
+      "\"This building was built on community, and as long as we stand united, nobody will ever take it from us again.\""
+    ]
+  },
+  "story-landlord-mega-ch6": {
+    title: "THE LANDLORD'S FAKE EVICTION (PART 6 - GRAND FINALE): THE VETERAN'S SANCTUARY",
+    hookSummary: "Pop Miller replaced the old neon orange eviction notice on his door with the permanent brass plaque of the Resident Cooperative.",
+    paragraphs: [
+      "[ OAKRIDGE APARTMENTS UNIT 4B — 05:30 PM ]",
+      "The warm afternoon sun illuminated the freshly painted hallway of the historic apartment complex.",
+      "Pop Miller stood outside Unit 4B with a screwdriver, fastening a polished brass plaque over the spot where Victor had pinned the orange notice.",
+      "The plaque read: *Unit 4B — Dedicated to Pop Miller & The Guardians of Oakridge, Established 1972.*",
+      "Kendra walked down the hallway, carrying a fresh cup of coffee for her client and mentor.",
+      "\"How does it feel, Pop?\" she asked, smiling.",
+      "Pop stepped back, admiring the gleaming brass under the hallway lights.",
+      "\"It feels like home, Kendra,\" Pop said, taking a sip of his coffee.",
+      "\"A house is just bricks and mortar. But when people stand together for what is right, it becomes an unshakeable fortress.\"",
+      "The sound of children playing in the courtyard below and the laughter of neighbors filled the hallway—a testament to courage, justice, and the power of unity."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 6: THE KITCHEN TABLE SECRET (6 Chapters)
+  // Evidence Object: Red Final Default Notice / Secret Escrow Fund Receipts
+  // Characters: Denise (Loyal Caretaker Daughter), Greg (Greedy Prodigal Brother), Mama Evelyn
+  // =========================================================================
+  "story-kitchen-secret-mega-ch1": {
+    title: "THE KITCHEN TABLE SECRET (PART 1): THE MORNING COFFEE DEFAULT NOTICE",
+    hookSummary: "Denise sat at the kitchen table holding a red final foreclosure notice that proved her brother had secretly mortgaged their mother's home.",
+    paragraphs: [
+      "[ COOPER FAMILY HOMESTEAD KITCHEN — 06:45 AM ]",
+      "The bright red legal envelope sat propped against the ceramic coffee mug on the yellow formica kitchen table.",
+      "Thirty-six-year-old Denise—wearing a simple grey cardigan and nursing scrubs—stared at the bold black lettering stamped across the envelope: *FINAL NOTICE OF FORECLOSURE AUCTION — SALE DATE: OCT 12.*",
+      "Beside her, Mama Evelyn, seventy-one, hummed a quiet hymn as she stirred grits on the gas stove, completely unaware of the catastrophe resting three feet away.",
+      "The back door clicked open, and Greg—thirty-nine, wearing a designer tracksuit, fresh gold chain, and carrying two luxury sneaker shopping bags—stepped in.",
+      "\"Morning, Mama! Morning, Dee,\" Greg said cheerfully, heading for the refrigerator.",
+      "Denise didn't return the greeting. She picked up the red notice, sliding it across the formica with a quiet, sharp scrape.",
+      "Greg's eyes locked onto the red envelope, and his confident swagger instantly dissolved into frozen guilt.",
+      "\"Greg,\" Denise said, her voice dropping into a razor-sharp whisper so Mama Evelyn wouldn't hear over the humming.",
+      "\"Why did a commercial private lender send a foreclosure notice on mama's house for two hundred and ten thousand dollars?\"",
+      "Greg swallowed hard, glancing nervously at their mother's back.",
+      "\"Dee... keep your voice down. It's just a routine administrative cross-collateralization on my business loan. I've got a closing next week that clears it.\"",
+      "\"A closing?\" Denise stood up slowly, her hands trembling with quiet fury.",
+      "\"Mama paid off this mortgage in 2014 after Daddy passed! You had her sign a power of attorney last Christmas claiming it was for her Medicare supplemental insurance!\"",
+      "Greg stepped closer, his voice dropping into a desperate plea. \"I was launching my logistics company, Denise! I needed collateral for the fleet deposit! I'm doing this for the whole family!\"",
+      "\"You put our mother's roof on the roulette wheel of your get-rich-quick schemes,\" Denise whispered, her eyes burning with pure betrayal.",
+      "Mama Evelyn turned from the stove, smiling with two bowls of grits. \"What are my two favorite children whispering about over by the coffee pot?\"",
+      "Denise slipped the red notice into her scrub pocket, looking directly into her brother's terrified eyes.",
+      "\"Nothing, Mama,\" Denise said softly. \"Greg was just telling me how he's going to fix the roof before sunset.\""
+    ]
+  },
+  "story-kitchen-secret-mega-ch2": {
+    title: "THE KITCHEN TABLE SECRET (PART 2): THE FATHER'S SECRET ESCROW FUND",
+    hookSummary: "In the attic cedar chest, Denise discovered their late father's secret escrow account designed to protect against family betrayal.",
+    paragraphs: [
+      "[ COOPER HOMESTEAD ATTIC — 10:30 AM ]",
+      "Dust motes danced in the single beam of sunlight filtering through the attic dormer window.",
+      "Denise knelt before her late father's heavy cedar chest, holding a small brass skeleton key she had retrieved from his old tackle box.",
+      "The heavy lid creaked open, releasing the rich scent of cedarwood, dried lavender, and old paper.",
+      "Beneath his folded army dress uniform rested a sealed leather pouch labeled: *In Case of Emergency — For Denise Only.*",
+      "Denise opened the pouch with trembling fingers.",
+      "Inside was a certified bank register from Atlanta Federal Savings, showing an active escrow account holding two hundred and fifty thousand dollars in insured municipal bonds.",
+      "Attached was a handwritten letter from her father, Robert Cooper, dated two months before his passing in 2014:",
+      "\"*My darling Denise: If you are reading this, Greg has done exactly what I prayed he wouldn't do—leveraged your mother's kindness for his own vanity.*\"",
+      "\"*I love your brother, but he has always mistaken luck for wisdom. This escrow account requires your sole signature and cannot be touched by any power of attorney.*\"",
+      "\"*Pay the house note, protect your mother, and make Greg face the work he has run from his entire life.*\"",
+      "Denise pressed her father's letter against her heart, a single tear cutting through the dust on her cheek.",
+      "Daddy had known. He had built a fortress around them before he closed his eyes.",
+      "She folded the bank register into her pocket and headed down the wooden attic stairs with newfound purpose."
+    ]
+  },
+  "story-kitchen-secret-mega-ch3": {
+    title: "THE KITCHEN TABLE SECRET (PART 3): THE PRIVATE LENDER'S DEADLINE",
+    hookSummary: "Predatory private lender Marcus Kane arrived at the house with foreclosure papers, but Denise presented the certified payout draft.",
+    paragraphs: [
+      "[ COOPER LIVING ROOM — 02:00 PM ]",
+      "The doorbell chimed with sharp persistence.",
+      "Private lender Marcus Kane—fifty, dressed in an immaculate grey three-piece suit with a gold pocket watch—stood in the foyer.",
+      "Greg sat on the living room sofa with his head in his hands, trembling with anxiety.",
+      "\"Mr. Cooper,\" Kane said smoothly, holding open a leather foreclosure folder. \"As agreed, if the two hundred and ten thousand dollar principal is not wired by three o'clock, the deed transfers to Kane Capital LLC.\"",
+      "Denise walked into the foyer, carrying a certified bank draft from Atlanta Federal Savings.",
+      "\"Mr. Kane,\" Denise said, her voice commanding the entire room. \"Here is the certified cashier's draft for two hundred and ten thousand dollars, plus four hundred dollars in statutory filing fees.\"",
+      "Kane's confident smile vanished. He took the check, scrutinizing the watermarked seal.",
+      "\"Where did this liquidity come from? Greg told me this property had no other financial guarantors.\"",
+      "\"My father guaranteed this house before you even started your predatory lending company, Mr. Kane,\" Denise said coldly.",
+      "\"Sign the full release of mortgage and satisfaction of lien right now, or my attorney will file a predatory lending complaint with the State Banking Commission.\"",
+      "Kane looked at the certified funds, realized his takeover scheme was dead, and signed the satisfaction document with a tight scowl.",
+      "\"Satisfaction confirmed,\" Kane muttered, handing over the stamped deed before exiting into the rain.",
+      "Greg looked up from the sofa, his eyes wide with disbelief. \"Dee... how did you do that? Where did you get that money?\"",
+      "Denise turned to her brother with cold, unyielding authority.",
+      "\"Daddy paid your debt, Greg. But starting today, you owe every single hour of your life to this house.\""
+    ]
+  },
+  "story-kitchen-secret-mega-ch4": {
+    title: "THE KITCHEN TABLE SECRET (PART 4): THE PRODIGAL BROTHER'S HARVEST WORK",
+    hookSummary: "Denise put Greg on a strict restitution contract: fifty percent of his income and mandatory weekend property restoration.",
+    paragraphs: [
+      "[ COOPER BACKYARD & WORKSHOP — 08:00 AM ]",
+      "The morning sun beat down on the backyard as Greg hauled heavy wooden fence posts across the grass, his designer clothes replaced with worn jeans and work boots.",
+      "Denise sat on the back porch with a ledger notebook, tracking every hour of labor and every payment receipt.",
+      "Greg wiped the sweat from his forehead with the back of his forearm, setting the post down with a heavy thud.",
+      "\"Dee... I've been working eight hours every Saturday for three months,\" Greg said, leaning against the fence.",
+      "Denise looked up from her ledger. \"You put twenty years of Mama's peace on the auction block, Greg. Three months of honest sweat is just the down payment on your character.\"",
+      "Greg walked up to the porch, his posture humbled, the flashy arrogance completely stripped away.",
+      "\"I was so obsessed with looking successful, Dee,\" Greg confessed, his voice breaking. \"I wanted everyone to think I was a big-time entrepreneur, and I almost destroyed everything that mattered.\"",
+      "Denise handed him a cold glass of lemonade. \"Daddy didn't leave that money to punish you, Greg. He left it to give you a chance to become a real man.\"",
+      "Greg took the glass, his eyes wet with genuine gratitude.",
+      "\"I'm going to pay back every dime, Dee. Even if it takes me ten years.\"",
+      "\"Good,\" Denise said softly. \"Because family doesn't give up on each other. But family doesn't tolerate thieves either. Back to work.\""
+    ]
+  },
+  "story-kitchen-secret-mega-ch5": {
+    title: "THE KITCHEN TABLE SECRET (PART 5): THE MAMA'S SUNDAY BLESSING",
+    hookSummary: "At Sunday dinner, Mama Evelyn revealed she had known about the debt all along, blessing her children for their redemption.",
+    paragraphs: [
+      "[ COOPER DINING ROOM — 03:00 PM ]",
+      "The dining table was laden with Sunday dinner: roasted chicken, macaroni and cheese, collard greens, sweet potato pie, and warm cornbread.",
+      "Mama Evelyn sat at the head of the table, looking at Denise and Greg sitting together with genuine mutual respect.",
+      "She reached out and took both of their hands in her warm, weathered palms.",
+      "\"Children, let us bless this food,\" Mama Evelyn said softly.",
+      "After the prayer, Mama looked directly at Greg, whose eyes welled with emotion.",
+      "\"Greg, baby,\" Mama said gently. \"I saw that red envelope in your gym bag back in November.\"",
+      "Greg froze, his fork trembling in his hand. \"Mama... you knew?\"",
+      "\"A mother always knows when her child is drowning, Gregory,\" Mama Evelyn said with immense tenderness.",
+      "\"I prayed every night that your father's wisdom and your sister's strength would guide you back to dry land.\"",
+      "\"You made a terrible mistake, but you didn't run away. You stayed, you worked, and you rebuilt what you broke.\"",
+      "Greg broke down into silent, cleansing tears, burying his face in his mother's shoulder.",
+      "Denise smiled through her own tears, holding her mother's other hand.",
+      "The house was safe, the secret was healed, and the family was restored."
+    ]
+  },
+  "story-kitchen-secret-mega-ch6": {
+    title: "THE KITCHEN TABLE SECRET (PART 6 - GRAND FINALE): THE COFFEE TABLE PEACE",
+    hookSummary: "One year later, Greg handed Denise the final restitution payment, and the deed was placed permanently in a family trust.",
+    paragraphs: [
+      "[ COOPER KITCHEN — 07:00 AM ]",
+      "One year later, the morning sun poured through the clean kitchen curtains, illuminating a fresh pot of coffee.",
+      "Denise sat at the table, sipping her coffee in quiet serenity.",
+      "Greg walked in, dressed in clean work overalls for his newly established, debt-free carpentry business.",
+      "He set a white envelope on the yellow formica table beside her mug.",
+      "Inside was the final monthly installment check for five thousand dollars, completing the full reimbursement of their father's escrow fund.",
+      "\"Paid in full, Dee,\" Greg said with a broad, honest smile.",
+      "Denise looked at the check, then picked up the envelope and tore it into neat confetti squares, tossing them into the recycling bin.",
+      "\"The debt is paid, Greg. But more importantly, my brother is back.\"",
+      "They hugged in the warm kitchen as Mama Evelyn hummed her morning hymn by the stove.",
+      "The kitchen table was no longer a place of hidden secrets—it was the altar of their family's enduring love and redemption."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 7: THE PRODIGAL SON AT THE BACKYARD REUNION (6 Chapters)
+  // Evidence Object: Brown Paper Gift Bag / $15M Endowment Check & Paid Mortgage
+  // Characters: Malcolm (Estranged Successful Son), Aunt Shirley & Derek (Mocking Relatives), Big Mama
+  // =========================================================================
+  "story-prodigal-son-mega-ch1": {
+    title: "THE PRODIGAL SON AT THE REUNION (PART 1): THE PAPER PLATE AND THE $15M GIFT BAG",
+    hookSummary: "Aunt Shirley handed Malcolm a flimsy paper plate with scraps, mocking his dusty truck before he unveiled the $15M endowment bag.",
+    paragraphs: [
+      "[ HISTORIC FAMILY HOMESTEAD BACKYARD, MACON GA — 03:30 PM ]",
+      "The smoky aroma of hickory barbecue and fried catfish drifted across the sprawling three-acre backyard.",
+      "Over sixty relatives were gathered under white party tents for the annual Jenkins Family Reunion.",
+      "At the center buffet table, Aunt Shirley—fifty-four, dressed in a flamboyant yellow silk pantsuit with layers of gold necklaces—held a greasy plastic tongs.",
+      "When thirty-two-year-old Malcolm stepped up to the buffet line wearing faded denim work jeans, steel-toed boots, and a dusty jacket from his pickup truck, Shirley scoffed loudly.",
+      "\"Well, look who finally drove in from Texas,\" Shirley announced, making sure the entire picnic tent heard.",
+      "She slapped a half-burnt chicken wing and a spoonful of cold baked beans onto a flimsy, paper-thin white plate and shoved it into Malcolm's hands.",
+      "\"Don't take too much brisket, Malcolm. Your cousin Derek paid for the catering out of his luxury car bonus, and we have paying family members to feed first.\"",
+      "Cousin Derek, twenty-nine, leaned against the ice cooler in a designer polo shirt, twirling his luxury car key fob with an arrogant smirk.",
+      "\"Hey Malcolm, how's that little solar repair route in Austin going? You need ten dollars for gas back to the highway?\"",
+      "Malcolm didn't react with anger. He set the flimsy paper plate down on the edge of the table without touching a single bite.",
+      "From beside his boot, he picked up a weathered brown paper gift bag tied with simple twine and set it squarely in the middle of the buffet table.",
+      "\"I didn't come for Derek's catering, Aunt Shirley,\" Malcolm said, his voice dropping into quiet, magnetic steel.",
+      "\"I came to deliver Big Mama's 80th birthday gift.\"",
+      "Shirley laughed dismissively. \"What is it? A box of homemade pecans? Or a five-dollar coupon for truck stop coffee?\"",
+      "Malcolm untied the twine with calm, deliberate precision.",
+      "He pulled out two documents encased in clear protective folders.",
+      "The first was the official paid-in-full satisfaction of mortgage from Federal Land Bank for the entire sixty-acre ancestral farm, valued at four hundred and fifty thousand dollars.",
+      "The second was a certified cashier's endowment check made out to the Jenkins Family Agricultural Sanctuary for fifteen million dollars, drawn from Malcolm's green-energy IPO.",
+      "The entire picnic pavilion fell into a dead, suffocating silence. Shirley's plastic tongs slipped from her fingers, clattering onto the grass.",
+      "Malcolm looked at his cousin Derek, whose face had turned the color of chalk.",
+      "\"Keep the brisket, Derek,\" Malcolm said softly. \"I just bought the whole farm.\""
+    ]
+  },
+  "story-prodigal-son-mega-ch2": {
+    title: "THE PRODIGAL SON AT THE REUNION (PART 2): THE PAID-OFF MORTGAGE DEED REVEAL",
+    hookSummary: "Big Mama walked to the center of the pavilion, taking the mortgage deed from Malcolm's hands with tears of joy.",
+    paragraphs: [
+      "[ REUNION PAVILION — 04:00 PM ]",
+      "Eighty-year-old Big Mama Hattie walked slowly into the center of the pavilion, leaning on her polished wooden cane.",
+      "The sixty relatives parted in utter silence as the matriarch reached Malcolm's side.",
+      "She picked up the paid mortgage certificate, her weathered fingers tracing the official gold county seal.",
+      "\"Malcolm, baby...\" Big Mama whispered, her voice trembling with eighty years of history.",
+      "\"Is this the note your grandfather took out in 1982 to keep this farm from being auctioned by the bank?\"",
+      "\"It's paid in full, Big Mama,\" Malcolm replied gently, bowing his head so she could place her hand on his cheek.",
+      "\"Every acre, every barn, and every tree belongs free and clear to this family for the next hundred years.\"",
+      "Aunt Shirley scrambled forward, her arrogant demeanor completely vanished.",
+      "\"Mama! Malcolm! Why didn't you tell us you had a tech company in Austin? We would have given you the head of the table!\"",
+      "Malcolm turned to Shirley with cool, unblinking composure.",
+      "\"You only offer the head of the table to people who bring money, Aunt Shirley.\"",
+      "\"When I left ten years ago with forty dollars in my pocket to build solar turbines, you told the family I was a failure who would end up in prison.\"",
+      "\"If you only respect a man when he has a check in his hand, you never respected him at all.\"",
+      "Derek stood frozen by the cooler, unable to look his cousin in the eye.",
+      "Big Mama brought her cane down firmly on the wooden deck.",
+      "\"This boy worked in silence while you bragged with borrowed feathers,\" Big Mama declared to the entire gathering.",
+      "\"From this day forward, Malcolm leads this family's land trust.\""
+    ]
+  },
+  "story-prodigal-son-mega-ch3": {
+    title: "THE PRODIGAL SON AT THE REUNION (PART 3): THE GREEN ENERGY ENDOWMENT",
+    hookSummary: "Malcolm unveiled plans to build a community solar cooperative on the back thirty acres, generating $50k monthly for family college scholarships.",
+    paragraphs: [
+      "[ FARM WORKSHOP PAVILION — 05:15 PM ]",
+      "Malcolm spread large architectural blueprints across a workbench in the farm pavilion.",
+      "Dozens of young cousins, aunts, and uncles gathered around, listening intently.",
+      "\"The back thirty acres of fallow land will house the Jenkins Solar Cooperative,\" Malcolm explained.",
+      "\"It will generate clean power for five thousand homes in Macon and yield fifty thousand dollars every month directly into the family education endowment.\"",
+      "\"Every child in this family who maintains a 3.0 GPA will have four years of college tuition paid in full, zero debt.\"",
+      "The young cousins erupted into joyous applause, hugging each other in excitement.",
+      "Derek stepped up to the edge of the table, his head bowed.",
+      "\"Malcolm... I'm sorry for how I acted earlier. I've been drowning in lease payments on that car, trying to impress people who don't care about me.\"",
+      "Malcolm looked at his younger cousin with firm compassion.",
+      "\"Sell the car, Derek. Stop performing for social media and come work on the installation crew next month.\"",
+      "\"I'll pay you a fair wage, but you'll learn how to build something real with your hands.\"",
+      "Derek wiped a tear from his eye and nodded vigorously. \"I'll be there on Monday, Malcolm. I promise.\""
+    ]
+  },
+  "story-prodigal-son-mega-ch4": {
+    title: "THE PRODIGAL SON AT THE REUNION (PART 4): AUNT SHIRLEY'S TEARFUL APOLOGY",
+    hookSummary: "Aunt Shirley sat with Malcolm behind the smokehouse, confessing her fear of poverty that drove her bitter arrogance.",
+    paragraphs: [
+      "[ BEHIND THE OLD SMOKEHOUSE — 06:30 PM ]",
+      "The setting sun cast long amber rays across the peach orchard.",
+      "Aunt Shirley sat on an overturned wooden crate, wiping her running mascara with a paper napkin.",
+      "Malcolm walked over, holding two cold bottles of water, and handed one to his aunt.",
+      "\"Shirley,\" Malcolm said softly, sitting on the adjacent bench.",
+      "Shirley took a shuddering breath. \"When your father died in 1998, Malcolm, we didn't have five hundred dollars for the burial.\"",
+      "\"I spent the last twenty-five years terrified of being poor again. I thought if I wore gold and shouted loud, nobody would ever see how scared I was.\"",
+      "Malcolm looked out over the orchard his father had planted.",
+      "\"Fear makes people cruel, Aunt Shirley. But you don't have to be afraid anymore.\"",
+      "\"The farm is secure. The family is protected. You can put down the armor now.\"",
+      "Shirley reached out and embraced her nephew, weeping tears of deep, long-overdue healing.",
+      "\"Your daddy would be so proud of the man you became, Malcolm.\"",
+      "\"He built the foundation, Aunt Shirley,\" Malcolm said softly. \"I just put up the walls.\""
+    ]
+  },
+  "story-prodigal-son-mega-ch5": {
+    title: "THE PRODIGAL SON AT THE REUNION (PART 5): THE MATRIARCH'S SUNSET BLESSING",
+    hookSummary: "Big Mama gathered the four generations around the firepit, officially transferring the family registry to Malcolm.",
+    paragraphs: [
+      "[ HOMESTEAD FIREPIT — 08:00 PM ]",
+      "The crackle of cedar logs sent bright golden embers dancing into the twilight sky.",
+      "All sixty family members sat in a vast circle of lawn chairs around the warm fire.",
+      "Big Mama held the ancient Jenkins Family Bible, its leather cover worn smooth by seventy years of prayer.",
+      "She placed the Bible directly onto Malcolm's lap.",
+      "\"In 1875, our great-grandparents bought the first five acres of this dirt with twelve silver dollars,\" Big Mama spoke, her voice carrying clear through the still Georgia night.",
+      "\"Many tried to take it, many tried to divide us. But love and honor always bring the right child home.\"",
+      "\"Malcolm, you hold the book now. Guide this family with wisdom, keep the doors open for the lost, and never forget where your roots were planted.\"",
+      "Malcolm placed his hand over the Bible, looking around the circle of loving faces.",
+      "\"I will protect this land and this family with everything God gives me,\" Malcolm swore with quiet reverence.",
+      "A chorus of *Amen* echoed through the trees, sealing a new era of prosperity and unity."
+    ]
+  },
+  "story-prodigal-son-mega-ch6": {
+    title: "THE PRODIGAL SON AT THE REUNION (PART 6 - GRAND FINALE): THE HARVEST FEAST",
+    hookSummary: "The reunion concluded with a lavish feast where everyone ate as equals from the abundance of the reclaimed land.",
+    paragraphs: [
+      "[ HOMESTEAD MAIN LAWN — 09:30 PM ]",
+      "String lights hung between the pecan trees, bathing the long banquet tables in warm golden light.",
+      "Plates of fresh smoked meats, garden vegetables, peach cobbler, and sweet tea were shared freely among all four generations.",
+      "There were no paper plates, no VIP tables, and no division—only the joy of an unbroken family.",
+      "Derek laughed with his cousins as he served brisket, while Aunt Shirley sat happily beside Big Mama.",
+      "Malcolm stood on the back porch, watching his family celebrate under the southern stars.",
+      "He had traveled three thousand miles and built a fortune, but standing on his family's free land was the greatest victory of his life.",
+      "The prodigal son had returned, not to be served, but to set his people free."
+    ]
+  },
+
+  // =========================================================================
+  // SERIES 8: THE TWO MOTHERS AT GRADUATION (6 Chapters)
+  // Evidence Object: Sarah's 18-Year Tuition Savings Ledger / Sealed Patent Trust
+  // Characters: Nia (Valedictorian), Sarah (Adoptive Mother/Nurse), Catherine (Biological Mother), Uncle Charles
+  // =========================================================================
+  "story-motherhood-mega-ch1": {
+    title: "THE TWO MOTHERS AT GRADUATION (PART 1): THE VIP FOYER CONFRONTATION",
+    hookSummary: "Sarah stood in the theater foyer holding Nia's graduation sash when biological mother Catherine arrived in designer heels demanding front-row honors.",
+    paragraphs: [
+      "[ BOSTON SYMPHONY HALL FOYER — 01:15 PM ]",
+      "The marble foyer was buzzing with hundreds of families holding flower bouquets and graduation programs for the prestigious New England Honors Academy.",
+      "Fifty-two-year-old Sarah Jenkins—wearing a modest navy department-store dress, her hands calloused from thirty years of night-shift nursing—held eighteen-year-old Nia's gold valedictorian sash.",
+      "The sharp clack of Christian Louboutin red-bottom heels echoed across the marble floor.",
+      "Stepping through the VIP entrance was Catherine Vance, forty-nine, wearing a tailored cream designer coat, oversized diamond earrings, and flanked by her wealthy second husband.",
+      "Catherine hadn't sent a single birthday card to Nia since surrendering legal guardianship eighteen years ago to pursue an international banking career in London.",
+      "Catherine marched straight toward the front-row VIP box, pointing a manicured hand at the usher.",
+      "\"Excuse me. I am Nia Jenkins's mother. I require the primary guest of honor seat in the front box.\"",
+      "Sarah didn't raise her voice. She stepped forward with quiet, unyielding authority, placing herself directly between Catherine and the box entrance.",
+      "\"Catherine,\" Sarah said, her voice calm as a winter morning. \"You have a general admission ticket in the balcony. That's where you'll be sitting.\"",
+      "Catherine turned with an icy sneer. \"Sarah, you were paid a monthly family stipend to raise my child while I established my firm. Do not forget your place.\"",
+      "\"My place was in the pediatric emergency room when Nia had thirty-nine-degree fevers,\" Sarah replied softly, holding Catherine's furious gaze.",
+      "\"My place was working sixty-hour double shifts at Boston General so she could attend private preparatory school.\"",
+      "\"You gave birth to her DNA, Catherine. I built her future. You don't get front-row honors for eighteen years of absence.\"",
+      "Nia walked out of the green room in her black graduation gown and gold honor cords, stopping dead when she saw both women facing each other.",
+      "Catherine immediately reached out with open arms, putting on a dazzling public smile. \"Nia, my brilliant baby girl! Mommy flew all the way from London for your big day!\"",
+      "Nia looked at Catherine's designer coat, then at Sarah's tired, loving eyes and the gold sash in her hands.",
+      "Nia took two deliberate steps, walked straight past Catherine, and wrapped her arms around Sarah.",
+      "\"Tie my sash, Mom,\" Nia said quietly. \"It's time to take the stage.\""
+    ]
+  },
+  "story-motherhood-mega-ch2": {
+    title: "THE TWO MOTHERS AT GRADUATION (PART 2): THE VALEDICTORIAN'S STAGE REVELATION",
+    hookSummary: "From the podium, Nia dedicated her valedictorian medal to the mother who worked double nursing shifts, exposing Catherine's empty promises.",
+    paragraphs: [
+      "[ SYMPHONY HALL MAIN AUDITORIUM — 02:30 PM ]",
+      "The grand auditorium was bathed in warm golden spotlights as over a thousand attendees took their seats.",
+      "In the second row, Sarah sat proudly, holding Nia's bouquet of purple orchids.",
+      "In the upper balcony box, Catherine sat with her arms crossed, stewing in furious humiliation.",
+      "Nia stepped up to the podium, her valedictorian medal gleaming against her purple honor cords.",
+      "\"Distinguished faculty, fellow graduates, and families,\" Nia began, her voice ringing clear and steady through the hall.",
+      "\"In society, we are often told that success is about pedigree, wealth, and the prestigious names behind us.\"",
+      "\"When I was an infant, the woman who gave birth to me decided that a corporate career in London was more important than raising a sick baby.\"",
+      "A collective gasp rippled through the audience as Catherine stiffened in her balcony seat.",
+      "\"She left me with a woman who had no biological obligation, no wealth, and nothing to offer except an unbreakable heart.\"",
+      "Nia looked down directly into Sarah's tear-filled eyes.",
+      "\"My mother, Sarah Jenkins, worked thirteen-hour night shifts at Boston General Hospital, wearing worn nursing shoes so I could have textbooks, piano lessons, and prep school tuition.\"",
+      "\"She taught me that motherhood is not an entitlement earned by birth—it is a covenant earned by sacrifice.\"",
+      "Nia lifted her gold valedictorian medal from her neck, holding it high for the entire auditorium to see.",
+      "\"This medal doesn't belong to me. It belongs to the woman who stayed in the dark so I could shine in the light.\"",
+      "The entire auditorium rose in a thunderous, standing ovation, cheering and wiping away tears as Sarah covered her face in overwhelming pride.",
+      "In the balcony, Catherine stood up silently and hurried toward the exit, defeated by the undeniable truth of real love."
+    ]
+  },
+  "story-motherhood-mega-ch3": {
+    title: "THE TWO MOTHERS AT GRADUATION (PART 3): THE POST-CEREMONY FOYER SHOWDOWN",
+    hookSummary: "Catherine cornered Sarah outside the theater with an offer of a $500,000 London trust fund, but Nia tore up the check on the spot.",
+    paragraphs: [
+      "[ THEATER EXTERIOR PLAZA — 04:00 PM ]",
+      "The afternoon sunlight bathed the stone plaza where graduates were taking family photos.",
+      "Catherine waited by the bronze fountain, holding a sleek black leather checkbook.",
+      "As Sarah and Nia walked toward the family car, Catherine stepped into their path.",
+      "\"Nia, wait!\" Catherine pleaded, her designer facade cracking under genuine desperation.",
+      "\"I set up a five-hundred-thousand-dollar graduate trust for you at Barclays London. You can attend Oxford or Cambridge without ever taking out a student loan!\"",
+      "Catherine pulled out a signed check for fifty thousand dollars and held it out toward Sarah.",
+      "\"And this is for you, Sarah. For your years of caretaking. Take it as a severance settlement.\"",
+      "Sarah didn't look at the check. She looked at Catherine with profound, dignified sorrow.",
+      "\"Catherine, you still think every relationship has an invoice attached to it,\" Sarah said quietly.",
+      "Nia stepped between them, took the fifty-thousand-dollar check from Catherine's hand, and tore it cleanly into four pieces, letting the scraps fall into the fountain water.",
+      "\"Mom didn't caretake me for a severance package, Catherine,\" Nia said, her voice dropping into icy resolve.",
+      "\"She raised me as her daughter. I was awarded a full presidential scholarship to Harvard Medical School this morning on my own academic merit.\"",
+      "\"I don't need your Barclays money, and I don't need your conditional love. Keep your London fortune.\"",
+      "Catherine stared at the floating paper scraps, her hands trembling as she realized she had lost her daughter forever.",
+      "Nia took Sarah's arm, and together they walked to their modest family car, leaving the past behind for good."
+    ]
+  },
+  "story-motherhood-mega-ch4": {
+    title: "THE TWO MOTHERS AT GRADUATION (PART 4): THE HARVARD MEDICAL ARCHIVE",
+    hookSummary: "At Harvard Medical School orientation, Nia was awarded the prestigious Endowed Pediatric Fellowship in Sarah's name.",
+    paragraphs: [
+      "[ HARVARD MEDICAL SCHOOL ATRIUM — 10:00 AM ]",
+      "The grand granite atrium of Harvard Medical School was filled with incoming doctoral scholars and department chairs.",
+      "Dean Richardson stood at the podium with Nia and Sarah by his side.",
+      "\"Every year, the Department of Pediatric Surgery awards one fully funded research fellowship to a scholar who exemplifies extraordinary resilience and ethical leadership.\"",
+      "\"This year, the committee unanimously awards the Chancellor's Fellowship to Nia Jenkins.\"",
+      "Dean Richardson turned to Sarah with deep professional respect.",
+      "\"Nurse Jenkins, your thirty years of exemplary service in pediatric triage has been recognized by the Boston Medical Board.\"",
+      "\"The medical school has named the new community triage lab the *Sarah Jenkins Pediatric Care Center* in your honor.\"",
+      "Sarah wiped tears of joyful disbelief from her eyes as the faculty erupted into applause.",
+      "Nia hugged her mother tight. \"You spent thirty years helping other people's children, Mom. Now your name will be on the door forever.\""
+    ]
+  },
+  "story-motherhood-mega-ch5": {
+    title: "THE TWO MOTHERS AT GRADUATION (PART 5): THE BIOLOGICAL MOTHER'S LONE REFLECTION",
+    hookSummary: "From her luxury high-rise in London, Catherine read the Harvard press release, weeping over the daughter she traded for prestige.",
+    paragraphs: [
+      "[ CATHERINE'S LONDON PENTHOUSE — 08:00 PM ]",
+      "The rain fell heavily against the floor-to-ceiling glass overlooking the River Thames.",
+      "Catherine sat alone on an Italian leather sofa in her multimillion-dollar penthouse, holding a glass of vintage wine.",
+      "On her tablet screen was the Boston Globe feature article: *Harvard Medical Valedictorian Honors Nurse Mother at Graduation.*",
+      "She zoomed in on the photograph of Nia smiling radiantly, holding Sarah's hand on the stage.",
+      "Her husband walked into the room, checking his diamond wristwatch. \"Catherine, the board dinner starts in twenty minutes. Are you ready?\"",
+      "Catherine didn't answer. A single tear rolled down her cheek, dripping onto her silk dress.",
+      "She had won the corporate titles, the luxury penthouses, and the international prestige.",
+      "But as she looked at her empty living room, she realized she was the poorest woman in the world.",
+      "She had traded her only child for an empire of cold stone, and there was no check in the world that could buy back eighteen lost years."
+    ]
+  },
+  "story-motherhood-mega-ch6": {
+    title: "THE TWO MOTHERS AT GRADUATION (PART 6 - GRAND FINALE): THE BOSTON HARVEST COTTAGE",
+    hookSummary: "Five years later, Dr. Nia Jenkins and Sarah moved into their serene seaside cottage, celebrating a lifetime of unbroken love.",
+    paragraphs: [
+      "[ SEASIDE COTTAGE, CAPE COD — 06:00 PM ]",
+      "The golden evening sun cast a warm amber glow over the porch of the newly purchased Cape Cod cottage.",
+      "Sarah sat in a comfortable rocking chair, watching the ocean waves roll gently onto the sandy shore.",
+      "Dr. Nia Jenkins—now a chief pediatric surgical resident at Boston Children's Hospital—walked onto the porch carrying two cups of warm herbal tea.",
+      "She handed one to Sarah and sat on the wooden railing beside her.",
+      "\"Remember when you used to wake up at four-thirty in the morning to pack my school lunches, Mom?\" Nia asked with a soft smile.",
+      "Sarah took a sip of her tea, smiling with deep, peaceful contentment.",
+      "\"I'd do every single day over again in a heartbeat, baby.\"",
+      "Nia reached over and held her mother's hand—the same hand that had guided her through thirty years of struggle and triumph.",
+      "\"We made it, Mom. Together.\"",
+      "As the sun dipped into the Atlantic, wrapping the cottage in peace and quiet majesty, the two women sat in serene gratitude—a testament that the truest bond of motherhood is not born of biology, but forged in sacrificial love."
+    ]
+  }
+};
+
+// Update stories
+let updatedCount = 0;
+const updatedStories = rawStories.map(story => {
+  const update = storyUpdates[story.id];
+  if (update) {
+    updatedCount++;
+    return {
+      ...story,
+      title: update.title,
+      hookSummary: update.hookSummary,
+      paragraphs: update.paragraphs,
+      readTime: Math.ceil(update.paragraphs.length * 0.5) + " min read",
+      avgReadTimeSeconds: update.paragraphs.length * 30
+    };
+  }
+  return story;
+});
+
+fs.writeFileSync(storiesPath, JSON.stringify(updatedStories, null, 2), 'utf8');
+console.log(`Successfully updated ${updatedCount} stories in ${storiesPath} with Black American Facebook Micro-Drama DNA!`);

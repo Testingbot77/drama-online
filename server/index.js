@@ -137,6 +137,31 @@ app.post('/api/contact', (req, res) => {
   res.json({ success: true, message: 'Your message has been received by the Taleonix editorial team.' });
 });
 
+// Live Extension Reel Catalog Sync Endpoint
+app.get('/api/catalog', (req, res) => {
+  const desktopCatalogPath = 'C:/Users/HP/OneDrive/Desktop/Extension/data/reels_catalog.json';
+  const downloadsCatalogPath = 'C:/Users/HP/Downloads/Extension/data/reels_catalog.json';
+  
+  let catalogData = null;
+  if (fs.existsSync(desktopCatalogPath)) {
+    try { catalogData = JSON.parse(fs.readFileSync(desktopCatalogPath, 'utf8')); } catch(e){}
+  } else if (fs.existsSync(downloadsCatalogPath)) {
+    try { catalogData = JSON.parse(fs.readFileSync(downloadsCatalogPath, 'utf8')); } catch(e){}
+  }
+  
+  if (!catalogData) {
+    catalogData = {
+      watchedFolder: 'C:/Users/HP/OneDrive/Desktop/Extension/uploads',
+      contentMode: 'captions_only',
+      captionStyle: 'viral',
+      userHashtags: ['#FamilyDrama', '#Betrayal', '#AmericanDrama', '#ViralReels'],
+      reels: db.getMarketingItems() || []
+    };
+  }
+  
+  res.json(catalogData);
+});
+
 // 1. Get all stories (Supports category filtering)
 app.get('/api/stories', (req, res) => {
   const stories = db.getStories();

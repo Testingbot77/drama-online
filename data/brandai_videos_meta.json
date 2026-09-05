@@ -1,0 +1,236 @@
+[
+  {
+    "index": 1,
+    "filename": "04-09-2026_10.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\TheBrandAI_Videos\\04-09-2026_10.mp4",
+    "sizeMb": "27.62",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_1_frame_1.jpg",
+        "framePath": "/images/brandai_batch/video_1_frame_1.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_1_frame_1.jpg"
+      },
+      {
+        "sec": 8,
+        "frameName": "video_1_frame_2.jpg",
+        "framePath": "/images/brandai_batch/video_1_frame_2.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_1_frame_2.jpg"
+      },
+      {
+        "sec": 14,
+        "frameName": "video_1_frame_3.jpg",
+        "framePath": "/images/brandai_batch/video_1_frame_3.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_1_frame_3.jpg"
+      },
+      {
+        "sec": 20,
+        "frameName": "video_1_frame_4.jpg",
+        "framePath": "/images/brandai_batch/video_1_frame_4.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_1_frame_4.jpg"
+      },
+      {
+        "sec": 26,
+        "frameName": "video_1_frame_5.jpg",
+        "framePath": "/images/brandai_batch/video_1_frame_5.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_1_frame_5.jpg"
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "filename": "04-09-2026_11.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\TheBrandAI_Videos\\04-09-2026_11.mp4",
+    "sizeMb": "35.37",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_2_frame_1.jpg",
+        "framePath": "/images/brandai_batch/video_2_frame_1.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_2_frame_1.jpg"
+      },
+      {
+        "sec": 8,
+        "frameName": "video_2_frame_2.jpg",
+        "framePath": "/images/brandai_batch/video_2_frame_2.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_2_frame_2.jpg"
+      },
+      {
+        "sec": 14,
+        "frameName": "video_2_frame_3.jpg",
+        "framePath": "/images/brandai_batch/video_2_frame_3.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_2_frame_3.jpg"
+      },
+      {
+        "sec": 20,
+        "frameName": "video_2_frame_4.jpg",
+        "framePath": "/images/brandai_batch/video_2_frame_4.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_2_frame_4.jpg"
+      },
+      {
+        "sec": 26,
+        "frameName": "video_2_frame_5.jpg",
+        "framePath": "/images/brandai_batch/video_2_frame_5.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_2_frame_5.jpg"
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "filename": "04-09-2026_12.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\TheBrandAI_Videos\\04-09-2026_12.mp4",
+    "sizeMb": "26.46",
+    "duration": 30.08,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_3_frame_1.jpg",
+        "framePath": "/images/brandai_batch/video_3_frame_1.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_3_frame_1.jpg"
+      },
+      {
+        "sec": 8,
+        "frameName": "video_3_frame_2.jpg",
+        "framePath": "/images/brandai_batch/video_3_frame_2.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_3_frame_2.jpg"
+      },
+      {
+        "sec": 14,
+        "frameName": "video_3_frame_3.jpg",
+        "framePath": "/images/brandai_batch/video_3_frame_3.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_3_frame_3.jpg"
+      },
+      {
+        "sec": 20,
+        "frameName": "video_3_frame_4.jpg",
+        "framePath": "/images/brandai_batch/video_3_frame_4.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_3_frame_4.jpg"
+      },
+      {
+        "sec": 26,
+        "frameName": "video_3_frame_5.jpg",
+        "framePath": "/images/brandai_batch/video_3_frame_5.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_3_frame_5.jpg"
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "filename": "04-09-2026_13.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\TheBrandAI_Videos\\04-09-2026_13.mp4",
+    "sizeMb": "29.95",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_4_frame_1.jpg",
+        "framePath": "/images/brandai_batch/video_4_frame_1.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_4_frame_1.jpg"
+      },
+      {
+        "sec": 8,
+        "frameName": "video_4_frame_2.jpg",
+        "framePath": "/images/brandai_batch/video_4_frame_2.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_4_frame_2.jpg"
+      },
+      {
+        "sec": 14,
+        "frameName": "video_4_frame_3.jpg",
+        "framePath": "/images/brandai_batch/video_4_frame_3.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_4_frame_3.jpg"
+      },
+      {
+        "sec": 20,
+        "frameName": "video_4_frame_4.jpg",
+        "framePath": "/images/brandai_batch/video_4_frame_4.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_4_frame_4.jpg"
+      },
+      {
+        "sec": 26,
+        "frameName": "video_4_frame_5.jpg",
+        "framePath": "/images/brandai_batch/video_4_frame_5.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_4_frame_5.jpg"
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "filename": "04-09-2026_14.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\TheBrandAI_Videos\\04-09-2026_14.mp4",
+    "sizeMb": "24.86",
+    "duration": 30.08,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_5_frame_1.jpg",
+        "framePath": "/images/brandai_batch/video_5_frame_1.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_5_frame_1.jpg"
+      },
+      {
+        "sec": 8,
+        "frameName": "video_5_frame_2.jpg",
+        "framePath": "/images/brandai_batch/video_5_frame_2.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_5_frame_2.jpg"
+      },
+      {
+        "sec": 14,
+        "frameName": "video_5_frame_3.jpg",
+        "framePath": "/images/brandai_batch/video_5_frame_3.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_5_frame_3.jpg"
+      },
+      {
+        "sec": 20,
+        "frameName": "video_5_frame_4.jpg",
+        "framePath": "/images/brandai_batch/video_5_frame_4.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_5_frame_4.jpg"
+      },
+      {
+        "sec": 26,
+        "frameName": "video_5_frame_5.jpg",
+        "framePath": "/images/brandai_batch/video_5_frame_5.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_5_frame_5.jpg"
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "filename": "04-09-2026_15.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\TheBrandAI_Videos\\04-09-2026_15.mp4",
+    "sizeMb": "29.01",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_6_frame_1.jpg",
+        "framePath": "/images/brandai_batch/video_6_frame_1.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_6_frame_1.jpg"
+      },
+      {
+        "sec": 8,
+        "frameName": "video_6_frame_2.jpg",
+        "framePath": "/images/brandai_batch/video_6_frame_2.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_6_frame_2.jpg"
+      },
+      {
+        "sec": 14,
+        "frameName": "video_6_frame_3.jpg",
+        "framePath": "/images/brandai_batch/video_6_frame_3.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_6_frame_3.jpg"
+      },
+      {
+        "sec": 20,
+        "frameName": "video_6_frame_4.jpg",
+        "framePath": "/images/brandai_batch/video_6_frame_4.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_6_frame_4.jpg"
+      },
+      {
+        "sec": 26,
+        "frameName": "video_6_frame_5.jpg",
+        "framePath": "/images/brandai_batch/video_6_frame_5.jpg",
+        "fullPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\brandai_batch\\video_6_frame_5.jpg"
+      }
+    ]
+  }
+]
