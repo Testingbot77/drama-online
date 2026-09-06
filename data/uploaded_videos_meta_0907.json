@@ -1,0 +1,260 @@
+[
+  {
+    "file": "15.mp4",
+    "duration": 30.08,
+    "sizeMb": "33.90",
+    "frames": [
+      {
+        "timestamp": 2,
+        "frameName": "video_15_frame_1.jpg",
+        "webPath": "/images/uploads_batch_0907/video_15_frame_1.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_15_frame_1.jpg"
+      },
+      {
+        "timestamp": 7,
+        "frameName": "video_15_frame_2.jpg",
+        "webPath": "/images/uploads_batch_0907/video_15_frame_2.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_15_frame_2.jpg"
+      },
+      {
+        "timestamp": 13,
+        "frameName": "video_15_frame_3.jpg",
+        "webPath": "/images/uploads_batch_0907/video_15_frame_3.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_15_frame_3.jpg"
+      },
+      {
+        "timestamp": 19,
+        "frameName": "video_15_frame_4.jpg",
+        "webPath": "/images/uploads_batch_0907/video_15_frame_4.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_15_frame_4.jpg"
+      },
+      {
+        "timestamp": 24,
+        "frameName": "video_15_frame_5.jpg",
+        "webPath": "/images/uploads_batch_0907/video_15_frame_5.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_15_frame_5.jpg"
+      },
+      {
+        "timestamp": 28,
+        "frameName": "video_15_frame_6.jpg",
+        "webPath": "/images/uploads_batch_0907/video_15_frame_6.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_15_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "file": "16.mp4",
+    "duration": 30.08,
+    "sizeMb": "28.02",
+    "frames": [
+      {
+        "timestamp": 2,
+        "frameName": "video_16_frame_1.jpg",
+        "webPath": "/images/uploads_batch_0907/video_16_frame_1.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_16_frame_1.jpg"
+      },
+      {
+        "timestamp": 7,
+        "frameName": "video_16_frame_2.jpg",
+        "webPath": "/images/uploads_batch_0907/video_16_frame_2.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_16_frame_2.jpg"
+      },
+      {
+        "timestamp": 13,
+        "frameName": "video_16_frame_3.jpg",
+        "webPath": "/images/uploads_batch_0907/video_16_frame_3.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_16_frame_3.jpg"
+      },
+      {
+        "timestamp": 19,
+        "frameName": "video_16_frame_4.jpg",
+        "webPath": "/images/uploads_batch_0907/video_16_frame_4.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_16_frame_4.jpg"
+      },
+      {
+        "timestamp": 24,
+        "frameName": "video_16_frame_5.jpg",
+        "webPath": "/images/uploads_batch_0907/video_16_frame_5.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_16_frame_5.jpg"
+      },
+      {
+        "timestamp": 28,
+        "frameName": "video_16_frame_6.jpg",
+        "webPath": "/images/uploads_batch_0907/video_16_frame_6.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_16_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "file": "17.mp4",
+    "duration": 30.041667,
+    "sizeMb": "33.59",
+    "frames": [
+      {
+        "timestamp": 2,
+        "frameName": "video_17_frame_1.jpg",
+        "webPath": "/images/uploads_batch_0907/video_17_frame_1.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_17_frame_1.jpg"
+      },
+      {
+        "timestamp": 7,
+        "frameName": "video_17_frame_2.jpg",
+        "webPath": "/images/uploads_batch_0907/video_17_frame_2.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_17_frame_2.jpg"
+      },
+      {
+        "timestamp": 13,
+        "frameName": "video_17_frame_3.jpg",
+        "webPath": "/images/uploads_batch_0907/video_17_frame_3.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_17_frame_3.jpg"
+      },
+      {
+        "timestamp": 19,
+        "frameName": "video_17_frame_4.jpg",
+        "webPath": "/images/uploads_batch_0907/video_17_frame_4.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_17_frame_4.jpg"
+      },
+      {
+        "timestamp": 24,
+        "frameName": "video_17_frame_5.jpg",
+        "webPath": "/images/uploads_batch_0907/video_17_frame_5.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_17_frame_5.jpg"
+      },
+      {
+        "timestamp": 28,
+        "frameName": "video_17_frame_6.jpg",
+        "webPath": "/images/uploads_batch_0907/video_17_frame_6.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_17_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "file": "18.mp4",
+    "duration": 30.041667,
+    "sizeMb": "30.06",
+    "frames": [
+      {
+        "timestamp": 2,
+        "frameName": "video_18_frame_1.jpg",
+        "webPath": "/images/uploads_batch_0907/video_18_frame_1.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_18_frame_1.jpg"
+      },
+      {
+        "timestamp": 7,
+        "frameName": "video_18_frame_2.jpg",
+        "webPath": "/images/uploads_batch_0907/video_18_frame_2.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_18_frame_2.jpg"
+      },
+      {
+        "timestamp": 13,
+        "frameName": "video_18_frame_3.jpg",
+        "webPath": "/images/uploads_batch_0907/video_18_frame_3.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_18_frame_3.jpg"
+      },
+      {
+        "timestamp": 19,
+        "frameName": "video_18_frame_4.jpg",
+        "webPath": "/images/uploads_batch_0907/video_18_frame_4.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_18_frame_4.jpg"
+      },
+      {
+        "timestamp": 24,
+        "frameName": "video_18_frame_5.jpg",
+        "webPath": "/images/uploads_batch_0907/video_18_frame_5.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_18_frame_5.jpg"
+      },
+      {
+        "timestamp": 28,
+        "frameName": "video_18_frame_6.jpg",
+        "webPath": "/images/uploads_batch_0907/video_18_frame_6.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_18_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "file": "19.mp4",
+    "duration": 30.041667,
+    "sizeMb": "26.85",
+    "frames": [
+      {
+        "timestamp": 2,
+        "frameName": "video_19_frame_1.jpg",
+        "webPath": "/images/uploads_batch_0907/video_19_frame_1.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_19_frame_1.jpg"
+      },
+      {
+        "timestamp": 7,
+        "frameName": "video_19_frame_2.jpg",
+        "webPath": "/images/uploads_batch_0907/video_19_frame_2.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_19_frame_2.jpg"
+      },
+      {
+        "timestamp": 13,
+        "frameName": "video_19_frame_3.jpg",
+        "webPath": "/images/uploads_batch_0907/video_19_frame_3.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_19_frame_3.jpg"
+      },
+      {
+        "timestamp": 19,
+        "frameName": "video_19_frame_4.jpg",
+        "webPath": "/images/uploads_batch_0907/video_19_frame_4.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_19_frame_4.jpg"
+      },
+      {
+        "timestamp": 24,
+        "frameName": "video_19_frame_5.jpg",
+        "webPath": "/images/uploads_batch_0907/video_19_frame_5.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_19_frame_5.jpg"
+      },
+      {
+        "timestamp": 28,
+        "frameName": "video_19_frame_6.jpg",
+        "webPath": "/images/uploads_batch_0907/video_19_frame_6.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_19_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "file": "20.mp4",
+    "duration": 30.041667,
+    "sizeMb": "34.94",
+    "frames": [
+      {
+        "timestamp": 2,
+        "frameName": "video_20_frame_1.jpg",
+        "webPath": "/images/uploads_batch_0907/video_20_frame_1.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_20_frame_1.jpg"
+      },
+      {
+        "timestamp": 7,
+        "frameName": "video_20_frame_2.jpg",
+        "webPath": "/images/uploads_batch_0907/video_20_frame_2.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_20_frame_2.jpg"
+      },
+      {
+        "timestamp": 13,
+        "frameName": "video_20_frame_3.jpg",
+        "webPath": "/images/uploads_batch_0907/video_20_frame_3.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_20_frame_3.jpg"
+      },
+      {
+        "timestamp": 19,
+        "frameName": "video_20_frame_4.jpg",
+        "webPath": "/images/uploads_batch_0907/video_20_frame_4.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_20_frame_4.jpg"
+      },
+      {
+        "timestamp": 24,
+        "frameName": "video_20_frame_5.jpg",
+        "webPath": "/images/uploads_batch_0907/video_20_frame_5.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_20_frame_5.jpg"
+      },
+      {
+        "timestamp": 28,
+        "frameName": "video_20_frame_6.jpg",
+        "webPath": "/images/uploads_batch_0907/video_20_frame_6.jpg",
+        "localPath": "C:\\Users\\HP\\Downloads\\Drama Online\\public\\images\\uploads_batch_0907\\video_20_frame_6.jpg"
+      }
+    ]
+  }
+]
