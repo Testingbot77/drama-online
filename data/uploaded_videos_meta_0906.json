@@ -1,0 +1,236 @@
+[
+  {
+    "index": 1,
+    "filename": "7.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\New upload\\7.mp4",
+    "sizeMb": "31.29",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_7_frame_1.jpg",
+        "framePath": "/images/uploads_batch_0906/video_7_frame_1.jpg"
+      },
+      {
+        "sec": 7,
+        "frameName": "video_7_frame_2.jpg",
+        "framePath": "/images/uploads_batch_0906/video_7_frame_2.jpg"
+      },
+      {
+        "sec": 13,
+        "frameName": "video_7_frame_3.jpg",
+        "framePath": "/images/uploads_batch_0906/video_7_frame_3.jpg"
+      },
+      {
+        "sec": 19,
+        "frameName": "video_7_frame_4.jpg",
+        "framePath": "/images/uploads_batch_0906/video_7_frame_4.jpg"
+      },
+      {
+        "sec": 24,
+        "frameName": "video_7_frame_5.jpg",
+        "framePath": "/images/uploads_batch_0906/video_7_frame_5.jpg"
+      },
+      {
+        "sec": 28,
+        "frameName": "video_7_frame_6.jpg",
+        "framePath": "/images/uploads_batch_0906/video_7_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "filename": "8.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\New upload\\8.mp4",
+    "sizeMb": "24.80",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_8_frame_1.jpg",
+        "framePath": "/images/uploads_batch_0906/video_8_frame_1.jpg"
+      },
+      {
+        "sec": 7,
+        "frameName": "video_8_frame_2.jpg",
+        "framePath": "/images/uploads_batch_0906/video_8_frame_2.jpg"
+      },
+      {
+        "sec": 13,
+        "frameName": "video_8_frame_3.jpg",
+        "framePath": "/images/uploads_batch_0906/video_8_frame_3.jpg"
+      },
+      {
+        "sec": 19,
+        "frameName": "video_8_frame_4.jpg",
+        "framePath": "/images/uploads_batch_0906/video_8_frame_4.jpg"
+      },
+      {
+        "sec": 24,
+        "frameName": "video_8_frame_5.jpg",
+        "framePath": "/images/uploads_batch_0906/video_8_frame_5.jpg"
+      },
+      {
+        "sec": 28,
+        "frameName": "video_8_frame_6.jpg",
+        "framePath": "/images/uploads_batch_0906/video_8_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "filename": "9.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\New upload\\9.mp4",
+    "sizeMb": "36.84",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_9_frame_1.jpg",
+        "framePath": "/images/uploads_batch_0906/video_9_frame_1.jpg"
+      },
+      {
+        "sec": 7,
+        "frameName": "video_9_frame_2.jpg",
+        "framePath": "/images/uploads_batch_0906/video_9_frame_2.jpg"
+      },
+      {
+        "sec": 13,
+        "frameName": "video_9_frame_3.jpg",
+        "framePath": "/images/uploads_batch_0906/video_9_frame_3.jpg"
+      },
+      {
+        "sec": 19,
+        "frameName": "video_9_frame_4.jpg",
+        "framePath": "/images/uploads_batch_0906/video_9_frame_4.jpg"
+      },
+      {
+        "sec": 24,
+        "frameName": "video_9_frame_5.jpg",
+        "framePath": "/images/uploads_batch_0906/video_9_frame_5.jpg"
+      },
+      {
+        "sec": 28,
+        "frameName": "video_9_frame_6.jpg",
+        "framePath": "/images/uploads_batch_0906/video_9_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "filename": "10.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\New upload\\10.mp4",
+    "sizeMb": "30.61",
+    "duration": 30.08,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_10_frame_1.jpg",
+        "framePath": "/images/uploads_batch_0906/video_10_frame_1.jpg"
+      },
+      {
+        "sec": 7,
+        "frameName": "video_10_frame_2.jpg",
+        "framePath": "/images/uploads_batch_0906/video_10_frame_2.jpg"
+      },
+      {
+        "sec": 13,
+        "frameName": "video_10_frame_3.jpg",
+        "framePath": "/images/uploads_batch_0906/video_10_frame_3.jpg"
+      },
+      {
+        "sec": 19,
+        "frameName": "video_10_frame_4.jpg",
+        "framePath": "/images/uploads_batch_0906/video_10_frame_4.jpg"
+      },
+      {
+        "sec": 24,
+        "frameName": "video_10_frame_5.jpg",
+        "framePath": "/images/uploads_batch_0906/video_10_frame_5.jpg"
+      },
+      {
+        "sec": 28,
+        "frameName": "video_10_frame_6.jpg",
+        "framePath": "/images/uploads_batch_0906/video_10_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "filename": "12.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\New upload\\12.mp4",
+    "sizeMb": "29.48",
+    "duration": 30.08,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_12_frame_1.jpg",
+        "framePath": "/images/uploads_batch_0906/video_12_frame_1.jpg"
+      },
+      {
+        "sec": 7,
+        "frameName": "video_12_frame_2.jpg",
+        "framePath": "/images/uploads_batch_0906/video_12_frame_2.jpg"
+      },
+      {
+        "sec": 13,
+        "frameName": "video_12_frame_3.jpg",
+        "framePath": "/images/uploads_batch_0906/video_12_frame_3.jpg"
+      },
+      {
+        "sec": 19,
+        "frameName": "video_12_frame_4.jpg",
+        "framePath": "/images/uploads_batch_0906/video_12_frame_4.jpg"
+      },
+      {
+        "sec": 24,
+        "frameName": "video_12_frame_5.jpg",
+        "framePath": "/images/uploads_batch_0906/video_12_frame_5.jpg"
+      },
+      {
+        "sec": 28,
+        "frameName": "video_12_frame_6.jpg",
+        "framePath": "/images/uploads_batch_0906/video_12_frame_6.jpg"
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "filename": "13.mp4",
+    "fullPath": "C:\\Users\\HP\\Downloads\\New upload\\13.mp4",
+    "sizeMb": "28.48",
+    "duration": 30.041667,
+    "frames": [
+      {
+        "sec": 3,
+        "frameName": "video_13_frame_1.jpg",
+        "framePath": "/images/uploads_batch_0906/video_13_frame_1.jpg"
+      },
+      {
+        "sec": 7,
+        "frameName": "video_13_frame_2.jpg",
+        "framePath": "/images/uploads_batch_0906/video_13_frame_2.jpg"
+      },
+      {
+        "sec": 13,
+        "frameName": "video_13_frame_3.jpg",
+        "framePath": "/images/uploads_batch_0906/video_13_frame_3.jpg"
+      },
+      {
+        "sec": 19,
+        "frameName": "video_13_frame_4.jpg",
+        "framePath": "/images/uploads_batch_0906/video_13_frame_4.jpg"
+      },
+      {
+        "sec": 24,
+        "frameName": "video_13_frame_5.jpg",
+        "framePath": "/images/uploads_batch_0906/video_13_frame_5.jpg"
+      },
+      {
+        "sec": 28,
+        "frameName": "video_13_frame_6.jpg",
+        "framePath": "/images/uploads_batch_0906/video_13_frame_6.jpg"
+      }
+    ]
+  }
+]
