@@ -39,6 +39,323 @@ function writeJSON(filePath, data) {
 // Rich Initial Editorial Stories for Taleonix
 const INITIAL_STORIES = [
   {
+    "id": "story-20260908-v1-empty-duffel-porch",
+    "title": "THE EMPTY DUFFEL: HER EX-HUSBAND BROUGHT HIS NEW FIANCÉE TO CLAIM CUSTODY, BUT SHE UNZIPPED THE BAG ON THE FRONT PORCH",
+    "slug": "the-empty-duffel-bag-custody-porch-showdown",
+    "category": "Custody Battles & Motherhood",
+    "subcategory": "Parental Betrayal & Family Boundaries",
+    "tags": [
+      "Custody Battle",
+      "Motherhood",
+      "Betrayal",
+      "American Drama",
+      "Trending"
+    ],
+    "author": "Eleanor Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-08T13:39:54.676Z",
+    "status": "published",
+    "partNumber": 1,
+    "seriesId": "series-duffel-bag-kendra",
+    "nextPartSlug": "the-secret-envelope-on-the-comforter",
+    "nextPartHook": "👉 Read Next: She Found The Unopened Manilla Envelope Left On Her Son's Bed Before Sunrise!",
+    "views": 0,
+    "uniqueVisitors": 0,
+    "avgReadTimeSeconds": 0,
+    "trendingScore": 99.9,
+    "readTime": "12 min read",
+    "coverImage": "/images/uploads_batch_0908/v1_frame2.jpg",
+    "socialImage": "/images/uploads_batch_0908/v1_frame2.jpg",
+    "hookSummary": "When Marcus arrived on Kendra's doorstep with his twenty-five-year-old fiancée demanding to take six-year-old Cameron for the entire summer, Kendra calmly unzipped a heavy canvas duffel bag right in front of them. What lay inside wasn't clothes—it was four years of unopened child support checks Marcus claimed he never had the money to pay.",
+    "paragraphs": [
+      "[ FRONT PORCH, SUBURBAN ATLANTA — 06:15 PM ]",
+      "The humid Georgia evening air was thick with the scent of freshly cut grass, but on Kendra's front porch, the atmosphere had turned cold enough to crack glass.",
+      "Thirty-five-year-old Kendra stood squarely in the threshold of her two-story craftsman home, wearing her rose-knit cardigan over a fitted taupe shirt, her braided hair pulled into a neat, severe knot at the nape of her neck.",
+      "Directly in front of her stood Marcus, her ex-husband of four years, clad in an immaculate black fitted t-shirt, standing with the arrogant posture of a man who believed money and charm could rewrite history.",
+      "Hovering just half a step behind Marcus was his twenty-five-year-old fiancée, Bianca, dressed in an ivory trench coat, arms crossed with an entitled smirk playing on her lips.",
+      "Between them stood six-year-old Cameron, clutching the hem of Kendra's cardigan in his grey-and-blue hoodie, his wide brown eyes darting anxiously between his parents.",
+      "'We’re taking Cameron now, Kendra,' Marcus said, his voice smooth, calculated, and loud enough for the neighbors across the cul-de-sac to hear. 'We booked the villa in Hilton Head for six weeks. Bianca already bought him a whole designer summer wardrobe. Let him go get his suitcase.'",
+      "Bianca chimed in, tossing her highlighted hair over her shoulder. 'Yeah Kendra, don't make this ugly for the boy. Marcus has court rights too, even if you like playing the martyr.'",
+      "Kendra didn't blink. She didn't shout, she didn't curse, and she didn't lose her composure.",
+      "Instead, she reached down beside the doorway and lifted a heavy, beige-and-brown canvas travel duffel bag with both hands.",
+      "With slow, deliberate precision, Kendra pulled the bronze zipper completely open, spreading the mouth of the bag wide under the amber porch light.",
+      "'You want to talk about court rights, Marcus?' Kendra's voice was low, measured, and razor-sharp. 'You told Judge Holloway you couldn't afford four hundred dollars a month because your consulting business went bankrupt.'",
+      "Marcus’s confident expression faltered slightly as he glanced down into the gaping opening of the duffel bag.",
+      "Inside the bag lay ninety-six certified bank statements, dozens of returned registered mail receipts, and Marcus’s own signed financial affidavits alongside glossy printouts from Bianca’s Instagram showing luxury European vacations and a ninety-thousand-dollar sportscar.",
+      "'You haven't spent four hours with your son in twelve months,' Kendra continued, staring straight into Marcus's widening eyes. 'You didn't come to his kindergarten graduation, you missed his asthma treatment appointments, and you haven't bought a single pair of sneakers.'",
+      "Bianca took a startled step back, whispering urgently to Marcus. 'Marcus... what is all that? You said she was the one refusing visitation!'",
+      "Marcus turned red, his hands trembling as he reached toward Cameron. 'Kendra, stop this theatrical nonsense right now!'",
+      "'Don't you reach for him,' Kendra said, stepping forward with the weight of four years of single motherhood behind her words. 'You brought your new fiancée here to look like Father of the Year. But tomorrow morning at nine, my attorney is filing for emergency full custody and criminal non-support.'",
+      "Cameron looked up at his father and softly said, 'Daddy, why did you tell the lady I didn't need you?'",
+      "Marcus stood frozen on the concrete walkway, completely stripped of his rehearsed defense, as Kendra took Cameron's hand and stepped back inside.",
+      "Before closing the solid oak door, Kendra looked Marcus dead in the eyes and whispered: 'Enjoy Hilton Head, Marcus. Because your freedom ends on Monday.'"
+    ],
+    "scenes": [
+      {
+        "paragraphIndex": 10,
+        "imageUrl": "/images/uploads_batch_0908/v1_frame2.jpg",
+        "caption": "Kendra unzips the heavy duffel bag on the front porch as Marcus and Bianca realize their bluff has failed."
+      },
+      {
+        "paragraphIndex": 17,
+        "imageUrl": "/images/uploads_batch_0908/v1_frame3.jpg",
+        "caption": "Kendra delivers her final ultimatum while Cameron watches his father's arrogant facade shatter."
+      }
+    ]
+  },
+  {
+    "id": "story-20260908-v2-envelope-bed-secret",
+    "title": "THE UNOPENED ENVELOPE: HER MOTHER-IN-LAW LEFT A SEALED LETTER ON HER 5-YEAR-OLD'S BED, BUT SHE READ IT BEFORE SUNRISE",
+    "slug": "the-secret-envelope-on-the-comforter",
+    "category": "Family Secrets & In-Law Betrayal",
+    "subcategory": "Hidden DNA & Domestic Conspiracy",
+    "tags": [
+      "In-Law Drama",
+      "Secret Letter",
+      "Motherhood",
+      "American Drama",
+      "Trending"
+    ],
+    "author": "Eleanor Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-08T13:39:54.682Z",
+    "status": "published",
+    "partNumber": 1,
+    "seriesId": "series-secret-envelope-lori",
+    "nextPartSlug": "the-empty-duffel-bag-custody-porch-showdown",
+    "nextPartHook": "👉 Read Next: She Confronted Her Ex On The Front Porch With The Duffel Bag He Never Expected Her To Open!",
+    "views": 0,
+    "uniqueVisitors": 0,
+    "avgReadTimeSeconds": 0,
+    "trendingScore": 99.8,
+    "readTime": "11 min read",
+    "coverImage": "/images/uploads_batch_0908/v2_frame2.jpg",
+    "socialImage": "/images/uploads_batch_0908/v2_frame2.jpg",
+    "hookSummary": "While tucking in her five-year-old son Aiden, thirty-two-year-old Lori spotted an unsealed white heavy-stock envelope resting squarely in the center of the bedspread. Written on the front in her mother-in-law's familiar cursive was: 'For Malcolm Only — Read Before The Adoption Hearing.'",
+    "paragraphs": [
+      "[ MASTER BEDROOM, OAKLAND HILLS — 08:30 PM ]",
+      "The warm golden glow from the bedside lamp cast long shadows across the ivory linen duvet, highlighting a crisp, heavy-stock white envelope resting directly in the center of the mattress.",
+      "Thirty-two-year-old Lori stood beside the oak chest of drawers in her mauve cardigan and dark denim, her hair styled in high micro-braids as her five-year-old son Aiden leaned against her hip in his bright red fleece hoodie.",
+      "Lori's fingers rested flat against the envelope, her pulse thumping rhythmically in her throat.",
+      "Standing in the bedroom doorway was her sister-in-law, Tiffany, dressed in a bright fuchsia sweater, her eyes wide with nervous guilt as she tried to block the hallway.",
+      "'Lori, please... just don't open that,' Tiffany stammered, wringing her hands. 'My mother said that letter is private. It’s between her and Malcolm.'",
+      "Lori didn't move her hand. Her gaze shifted from the neat cursive handwriting on the front of the envelope to Tiffany's anxious face.",
+      "The envelope was addressed in elegant black ink: 'To My Son Malcolm — The Truth You Must Know Before Signing The Final Papers.'",
+      "For three years, Lori and her husband Malcolm had been fighting through California's complex legal bureaucracy to formalize Malcolm's legal adoption of Aiden, whom Malcolm had raised since infancy.",
+      "The final court confirmation hearing was scheduled for the following morning at ten o'clock downtown.",
+      "Yet just twenty minutes earlier, Malcolm’s mother, Evelyn, had 'stopped by to drop off groceries' and secretly slipped upstairs into Aiden's room while Lori was downstairs in the pantry.",
+      "'Tiffany,' Lori said, her voice dropping into a calm, unnerving silence. 'Your mother hasn't stepped foot in this house for six months. Why did she sneak upstairs to leave a letter on my baby’s bed?'",
+      "Aiden looked up at his mother, his little hand gripping Lori’s fingers tightly. 'Mommy, grandma said that paper was a surprise for daddy so he wouldn't sign.'",
+      "Those innocent words from a five-year-old boy felt like ice water down Lori's spine.",
+      "Lori slowly turned the envelope over, broke the wax seal with her thumb, and slid out the two folded pages inside.",
+      "Attached to the handwritten letter was a notarized paternity document dated six years ago—one that Evelyn had hidden in her safe deposit box since the day Aiden was born.",
+      "The document proved beyond any doubt that Malcolm was indeed Aiden's biological father, a fact Evelyn had maliciously lied about for years to prevent Malcolm from marrying Lori.",
+      "Evelyn had kept the truth secret to control her son's trust fund, intending to blackmail Lori on the eve of the adoption hearing.",
+      "Just then, the front door downstairs clicked open, and Malcolm called out enthusiastically from the foyer: 'Lori! Aiden! I picked up the celebration cake!'",
+      "Lori tucked the document safely into her cardigan pocket, looked Tiffany right in the eyes, and said softly: 'Go tell your mother she better be in court tomorrow. Because her secrets are officially over.'"
+    ],
+    "scenes": [
+      {
+        "paragraphIndex": 3,
+        "imageUrl": "/images/uploads_batch_0908/v2_frame2.jpg",
+        "caption": "Lori places her hand on the secret envelope on Aiden's bed as Tiffany tries to explain Evelyn's intrusion."
+      },
+      {
+        "paragraphIndex": 14,
+        "imageUrl": "/images/uploads_batch_0908/v2_frame4.jpg",
+        "caption": "Lori unfolds the hidden paternity document, unraveling years of mother-in-law deception before the adoption hearing."
+      }
+    ]
+  },
+  {
+    "id": "story-20260907-v5-lunchbox-secret-note",
+    "title": "THE LUNCHBOX NOTE: SHE OPENED HER 6-YEAR-OLD'S SCHOOL TOTE AND FOUND A FOLDED CARD FROM HER HUSBAND'S NEW CLIENT",
+    "slug": "the-lunchbox-note-you-can-call-me-mommy-too",
+    "category": "Marital Betrayal & Motherhood",
+    "subcategory": "Secret Mistress & Family Sabotage",
+    "tags": [
+      "Motherhood Betrayal",
+      "Secret Note",
+      "Marriage Drama",
+      "American Drama",
+      "Trending"
+    ],
+    "author": "Eleanor Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-07T13:56:02.439Z",
+    "status": "published",
+    "partNumber": 1,
+    "seriesId": "series-lunchbox-note-nia",
+    "nextPartSlug": "the-best-mom-ribbon-badge-corinne",
+    "nextPartHook": "🔥 Read Next: She Broke Down At The Kitchen Sink When Her 7-Year-Old Pinned His Ribbon To Her Braids!",
+    "views": 0,
+    "uniqueVisitors": 0,
+    "avgReadTimeSeconds": 0,
+    "trendingScore": 99.9,
+    "readTime": "12 min read",
+    "coverImage": "/images/uploads_batch_0907_new/v5_frame4.jpg",
+    "socialImage": "/images/uploads_batch_0907_new/v5_frame4.jpg",
+    "hookSummary": "While unpacking her six-year-old son Trey's backpack after kindergarten, thirty-four-year-old Nia found an unfamiliar folded ivory note tucked between his turkey sandwich and apple slices. In neat purple gel pen, it read: 'You don't have to keep secrets from me, sweetheart. You can call me mommy, too.'",
+    "paragraphs": [
+      "[ SUBURBAN TOWNHOME KITCHEN, CHARLOTTE SUBURBS — 05:40 PM ]",
+      "The quiet evening hum of the refrigerator and the gentle bubbling of vegetable soup on the gas burner was suddenly broken by the sharp snap of plastic clips.",
+      "Thirty-four-year-old Nia stood beside the marble island in her draped olive-green knit top and dark jeans, her braided hair swept up into an elegant low bun as she routinely reached into her six-year-old son's backpack.",
+      "She unzipped the royal blue insulated lunch tote to empty the leftover crusts from kindergarten.",
+      "Trey sat perched on the wooden barstool beside her in his grey heather hoodie, swinging his small sneakers rhythmically against the cabinet.",
+      "Resting directly on top of the half-eaten sandwich was a folded 3x5 heavy linen cardstock note, sealed with a glittery pink heart sticker that Nia had never bought.",
+      "Nia carefully peeled back the adhesive with her thumb, expecting a reminder from Ms. Jenkins about Friday's school picture day.",
+      "Instead, written in elegant, rounded purple cursive, were three chilling lines:",
+      "‘Thank you for picking the blue flowers for my car dashboard today, Trey. Next weekend at the lake cabin will be our little secret. And remember—you can call me mommy, too.’",
+      "Nia’s entire body went ice-cold. The air seized in her throat as the room seemed to tilt beneath her feet.",
+      "Her husband of eight years, Derrick, was an independent general contractor who had claimed to be working seventy-hour weeks on a luxury home renovation in Lake Norman for a high-profile designer named Victoria.",
+      "For three weeks, Derrick had insisted on taking over Trey’s morning school drop-offs and afternoon carpool pick-ups, claiming he wanted to 'spend more quality father-son time before the big summer deadlines.'",
+      "Nia slowly turned around to face her son, keeping her voice completely calm, soft, and restrained so as not to alarm him.",
+      "'Trey, sweetie,' Nia asked, holding up the folded card gently. 'Who gave you this pretty card today?'",
+      "Trey smiled innocently, pointing his small finger straight at the note on the counter. 'Miss Victoria! She rode in Daddy’s truck after kindergarten, and she bought me cherry gelato!'",
+      "Nia's knuckles turned white against the kitchen countertop, but not a single tear fell. Her gaze hardened into a quiet, terrifying focus.",
+      "She knew Victoria had been texting Derrick at odd hours with invoices, but Nia had never imagined the woman was already riding in their family truck and telling her six-year-old child to erase his own mother.",
+      "Just then, the front door lock clicked, and Derrick’s heavy boots echoed across the hardwood foyer as he called out, 'Hey babe, what's for dinner?'",
+      "Nia calmly picked up the note, smoothed out the creases on the counter, and slid it directly on top of Derrick's dinner plate next to the soup bowl.",
+      "'Dinner is served, Derrick,' Nia whispered with lethal composure, stepping back from the island. 'Why don't you sit down and tell me all about the lake cabin?'"
+    ],
+    "scenes": [
+      {
+        "paragraphIndex": 8,
+        "imageUrl": "/images/uploads_batch_0907_new/v5_frame4.jpg",
+        "caption": "Trey points innocently to the folded card tucked inside his school lunchbox."
+      },
+      {
+        "paragraphIndex": 15,
+        "imageUrl": "/images/uploads_batch_0907_new/v5_frame6.jpg",
+        "caption": "Nia looks up in chilling realization as the full scope of the domestic betrayal becomes clear."
+      }
+    ]
+  },
+  {
+    "id": "story-20260907-v1-best-mom-rosette-ribbon",
+    "title": "THE \"BEST MOM\" BADGE: SHE BROKE DOWN AT THE KITCHEN SINK WHEN HER 7-YEAR-OLD PINNED HIS RIBBON TO HER BRAIDS",
+    "slug": "the-best-mom-ribbon-badge-corinne",
+    "category": "Family Sacrifice & Motherhood",
+    "subcategory": "Single Mother Strength & Custody Battle",
+    "tags": [
+      "Single Motherhood",
+      "Custody Fight",
+      "Son's Love",
+      "American Drama",
+      "Trending"
+    ],
+    "author": "Eleanor Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-07T13:56:02.440Z",
+    "status": "published",
+    "partNumber": 1,
+    "seriesId": "series-best-mom-corinne",
+    "nextPartSlug": "the-study-desk-invoice-receipt-confrontation-tamara",
+    "nextPartHook": "🔥 Read Next: She Confronted Her Husband With The $14,000 Wire Receipt Found In His Private Desk!",
+    "views": 0,
+    "uniqueVisitors": 0,
+    "avgReadTimeSeconds": 0,
+    "trendingScore": 99.8,
+    "readTime": "11 min read",
+    "coverImage": "/images/uploads_batch_0907_new/v1_frame6.jpg",
+    "socialImage": "/images/uploads_batch_0907_new/v1_frame6.jpg",
+    "hookSummary": "After working three consecutive twelve-hour night shifts at the pediatric trauma ward, thirty-three-year-old Corinne stood exhausted at her kitchen sink washing breakfast dishes. When her seven-year-old son Jordan walked up and pinned a handmade 'BEST MOM' yellow rosette badge onto her hair, she discovered why he had spent three hours making it.",
+    "paragraphs": [
+      "[ APARTMENT KITCHEN, EAST ATLANTA — 08:15 AM ]",
+      "The morning sun filtered weakly through the blinds above the stainless-steel sink, catching the steady trickle of warm water and the soapy white bubbles coating thirty-three-year-old Corinne’s worn hands.",
+      "She wore an oversized heather-grey cardigan over a faded taupe crewneck and blue jeans, her tight braided updo crowned with fatigue after a grueling 72-hour work week at the medical center.",
+      "Her feet throbbed, her shoulders were stiff, and her mind was consumed by the certified legal notice sitting on her dining table.",
+      "Her ex-husband, a high-earning corporate executive who had abandoned them four years ago without paying child support, had just hired a high-profile family attorney to petition for full custody—claiming Corinne was 'financially unfit and constantly absent.'",
+      "To afford Jordan’s specialized private tutoring and retain a defense lawyer, Corinne had secretly pawned her late grandmother's vintage 1968 sapphire heirloom ring only two days earlier.",
+      "She had cried alone in her car outside the pawn shop for forty minutes, feeling like the biggest failure in the world.",
+      "Suddenly, small sneakers padded across the linoleum flooring.",
+      "Seven-year-old Jordan stepped beside the counter in his favorite royal-blue zip-up hoodie, his neat cornrow braids bouncing as he held both hands behind his back.",
+      "'Mommy?' Jordan called softly, looking up with his wide, expressive dark eyes.",
+      "Corinne quickly blinked back her tears, turned off the faucet, and dried her hands on a dish towel with a tired, loving smile. 'Yes, baby? Are you ready for school?'",
+      "Instead of answering, Jordan brought his hands forward. In his small fingers was a handcrafted, scalloped yellow paper rosette badge trimmed with red ribbons, boldly lettered with colored markers: 'BEST MOM.'",
+      "Corinne knelt down onto the kitchen floor until she was at eye level with her son, her heart swelling with an ache so profound it took her breath away.",
+      "Jordan gently placed the ribbon badge against the top of her braids, smiling with fierce pride.",
+      "'Jordan, honey... did you make this at school yesterday?' Corinne asked, her voice cracking as a single tear escaped down her cheek.",
+      "'No, Mommy,' Jordan said softly, reaching out to wipe her tear with his small thumb. 'I heard Dad's lawyer on the speakerphone when you were sleeping. He said you couldn't take care of me.'",
+      "Jordan looked straight into her eyes with unwavering certainty. 'So I made you this medal. Because you work all night so I can learn, and you're the best mom in the whole world. I told Dad I’m never leaving you.'",
+      "Corinne pulled her son into a tight, desperate embrace on the kitchen floor, burying her face into his blue fleece hoodie.",
+      "In that quiet, sacred moment, every ounce of doubt vanished from her spirit.",
+      "She stood up, took a deep breath, adjusted the yellow 'BEST MOM' badge in her hair, and picked up her phone to call the county courthouse."
+    ],
+    "scenes": [
+      {
+        "paragraphIndex": 11,
+        "imageUrl": "/images/uploads_batch_0907_new/v1_frame2.jpg",
+        "caption": "Corinne fights back tears at the kitchen sink as Jordan reveals his handcrafted award."
+      },
+      {
+        "paragraphIndex": 14,
+        "imageUrl": "/images/uploads_batch_0907_new/v1_frame6.jpg",
+        "caption": "Jordan tenderly places the 'BEST MOM' ribbon on his mother's braids in an unforgettable moment of pure love."
+      }
+    ]
+  },
+  {
+    "id": "story-20260907-v2-study-desk-secret-invoice",
+    "title": "THE STUDY INVOICE: SHE CONFRONTED HER HUSBAND WITH THE $14,000 WIRE RECEIPT FOUND IN HIS PRIVATE DESK",
+    "slug": "the-study-desk-invoice-receipt-confrontation-tamara",
+    "category": "Marital Deception",
+    "subcategory": "Secret Accounts & Betrayal",
+    "tags": [
+      "Financial Betrayal",
+      "Secret Accounts",
+      "Husband Lies",
+      "American Drama",
+      "Trending"
+    ],
+    "author": "Eleanor Vance & Taleonix Editorial",
+    "publicationDate": "2026-09-07T13:56:02.440Z",
+    "status": "published",
+    "partNumber": 1,
+    "seriesId": "series-study-invoice-tamara",
+    "nextPartSlug": "the-lunchbox-note-you-can-call-me-mommy-too",
+    "nextPartHook": "🔥 Read Next: She Opened Her 6-Year-Old's School Tote And Found A Folded Card From Her Husband's New Client!",
+    "views": 0,
+    "uniqueVisitors": 0,
+    "avgReadTimeSeconds": 0,
+    "trendingScore": 99.7,
+    "readTime": "11 min read",
+    "coverImage": "/images/uploads_batch_0907_new/v2_frame4.jpg",
+    "socialImage": "/images/uploads_batch_0907_new/v2_frame4.jpg",
+    "hookSummary": "After their joint mortgage payment bounced for the first time in nine years, thirty-two-year-old forensic accountant Tamara searched their home office study. Tucked inside an unmarked leather ledger beneath stacked law volumes was a certified bank wire receipt showing $14,000 transferred to a luxury maternity wellness clinic.",
+    "paragraphs": [
+      "[ PRIVATE HOME STUDY, MEMPHIS SUBURBS — 03:20 PM ]",
+      "The quiet warmth of the afternoon sun fell across the executive mahogany desk, illuminating a stack of hardbound legal treatises and framed family portraits on the credenza.",
+      "Thirty-two-year-old Tamara stood rigid beside the leather desk chair, dressed in a tailored sage-green silk blouse and navy slacks, her waist-length micro-braids falling over one shoulder.",
+      "In her right hand, she held a single slip of crisp white thermal paper: an itemized wire confirmation stamped with today's date from Southern First National Bank.",
+      "The recipient: The St. Claire Private Maternity & Birthing Pavilion in Nashville.",
+      "The total amount: Fourteen thousand dollars even.",
+      "Standing across from her near the door was her thirty-five-year-old husband, Malcolm.",
+      "Malcolm wore a black crewneck t-shirt and dark cargo pants, his muscular arms crossed tightly across his chest and his jaw set in stubborn, defensive defiance.",
+      "For six months, Malcolm had insisted they cancel their family summer vacation and delay replacing Tamara's malfunctioning brake pads because 'his logistics company was experiencing severe corporate cash flow delays.'",
+      "Tamara, a certified senior accountant, had trusted him implicitly.",
+      "Until this morning, when their mortgage lender called to notify her that their primary checking account was overdrawn by $8,400.",
+      "'Explain this to me, Malcolm,' Tamara said, her voice eerily level, devoid of screaming, but packed with razor-sharp authority.",
+      "She extended the paper toward him. 'You told me our business tax escrow needed every spare dollar we had. So why did fourteen thousand dollars leave our joint equity line to pay the private suite deposit for a prenatal wing?'",
+      "Malcolm didn't step forward to take the paper. He shifted his weight, his eyes narrowing as he maintained his rigid stance.",
+      "'You shouldn't be snooping through my private desk drawers, Tamara,' Malcolm said coldly. 'That's a commercial investment in a medical startup portfolio my brother and I are backing.'",
+      "Tamara let out a short, incredulous laugh that cut like glass across the silent room.",
+      "'A medical startup portfolio?' Tamara repeated, flipping the paper over to point at line three. 'Then why is the named patient listed as your former administrative assistant, Brianna Davis?'",
+      "Malcolm's face tightened, the color draining from beneath his dark complexion as his crossed arms subtly dropped an inch.",
+      "'She had an emergency complication, Tamara... I couldn't just leave her stranded without coverage,' Malcolm stammered, his confident facade instantly crumbling.",
+      "Tamara placed the receipt squarely on top of the stacked books on his desk, straightened her collar, and looked him dead in the eye.",
+      "'You didn't leave her stranded, Malcolm. But you just left yourself with twenty-four hours to pack your bags before my divorce attorney files an emergency asset freeze.'"
+    ],
+    "scenes": [
+      {
+        "paragraphIndex": 3,
+        "imageUrl": "/images/uploads_batch_0907_new/v2_frame4.jpg",
+        "caption": "Tamara confronts Malcolm across the mahogany study desk with the incriminating receipt."
+      },
+      {
+        "paragraphIndex": 14,
+        "imageUrl": "/images/uploads_batch_0907_new/v2_frame5.jpg",
+        "caption": "Malcolm's defensive posture breaks down as Tamara reveals Brianna's name on the clinic record."
+      }
+    ]
+  },
+  {
     "id": "story-20260907-u16-garment-bag-stained-gown",
     "title": "THE GARMENT BAG: SHE UNZIPPED HER SISTER'S $4,800 GOWN 3 HOURS BEFORE THE CEREMONY",
     "slug": "the-garment-bag-stained-gown-chelsea",
