@@ -463,5 +463,15 @@
   <div id="pubToast" class="pub-toast"></div>
 
   <script src="/js/app.js?v=3.2.0"></script>
+  <!-- Monetag Push Notification Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(function(err) {
+          console.log('SW registration error:', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

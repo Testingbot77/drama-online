@@ -94,6 +94,16 @@ app.get(['/ads.txt', '/ads.txt/'], (req, res) => {
   res.send('google.com, pub-3806896432302528, DIRECT, f08c47fec0942fa0\n');
 });
 
+// Monetag / Web Push Service Worker
+app.get(['/sw.js', '/sw.js/'], (req, res) => {
+  res.set({
+    'Content-Type': 'application/javascript; charset=utf-8',
+    'Service-Worker-Allowed': '/',
+    'Cache-Control': 'no-cache, no-store, must-revalidate'
+  });
+  res.sendFile(path.join(__dirname, '..', 'public', 'sw.js'));
+});
+
 // Dynamic sitemap.xml
 app.get('/sitemap.xml', (req, res) => {
   const settings = db.getSettings();
