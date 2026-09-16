@@ -63,17 +63,34 @@ const upload = multer({ storage });
 
 // ======================== SEO & CRAWLER ROUTES ========================
 
-// Dynamic robots.txt
+// Dynamic robots.txt with Google AdSense crawler permissions
 app.get('/robots.txt', (req, res) => {
   const settings = db.getSettings();
   const domain = settings.domainUrl || `http://${req.headers.host}`;
-  res.type('text/plain');
-  res.send(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/admin\nSitemap: ${domain}/sitemap.xml`);
+  res.set({
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Cache-Control': 'public, max-age=3600'
+  });
+  res.send(`User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/admin
+Sitemap: ${domain}/sitemap.xml
+`);
 });
 
-// Google AdSense ads.txt
-app.get('/ads.txt', (req, res) => {
-  res.type('text/plain');
+// Google AdSense ads.txt (Compliant with Google AdSense verification crawler)
+app.get(['/ads.txt', '/ads.txt/'], (req, res) => {
+  res.set({
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Cache-Control': 'public, max-age=3600'
+  });
   res.send('google.com, pub-3806896432302528, DIRECT, f08c47fec0942fa0\n');
 });
 
@@ -728,7 +745,7 @@ app.get('/story/:slug', (req, res) => {
     const safeDesc = (story.hookSummary || story.seoDescription || '').replace(/"/g, '&quot;');
 
     const ogTags = `
-    <!-- Taleonix Dynamic OpenGraph Meta for Facebook -->
+    <!-- Taleonix Dynamic OpenGraph Meta for Facebook & AdSense Bots -->
     <title>${safeTitle} | Taleonix</title>
     <meta name="description" content="${safeDesc}">
     <link rel="canonical" href="${fullUrl}">
@@ -745,6 +762,20 @@ app.get('/story/:slug', (req, res) => {
     `;
 
     html = html.replace('<!-- DYNAMIC_META_TAGS -->', ogTags);
+
+    // SSR body content injection for AdSense automated crawlers & Googlebot
+    const paragraphsHtml = (story.paragraphs || []).map(p => {
+      if (p.startsWith('[') && p.endsWith(']')) {
+        return `<div class="story-location-tag"><i class="fa-solid fa-location-dot"></i> ${p.slice(1, -1)}</div>`;
+      }
+      return `<p>${p}</p>`;
+    }).join('\n');
+
+    html = html.replace('<h1 class="story-main-title" id="readerTitle">Story Title Loading...</h1>', `<h1 class="story-main-title" id="readerTitle">${safeTitle}</h1>`);
+    html = html.replace('<p class="story-lead-synopsis" id="readerSynopsis">Story synopsis loading...</p>', `<p class="story-lead-synopsis" id="readerSynopsis">${safeDesc}</p>`);
+    html = html.replace('<span class="badge-cat" id="readerCategory">Billionaire Drama</span>', `<span class="badge-cat" id="readerCategory">${story.category || 'Family Drama'}</span>`);
+    html = html.replace('<span class="byline-author" id="readerAuthor">Elena Vance</span>', `<span class="byline-author" id="readerAuthor">${story.author || 'Elena Vance & Taleonix Editorial'}</span>`);
+    html = html.replace('<!-- Paragraphs injected cleanly by JS -->', paragraphsHtml);
   }
 
   res.send(html);
