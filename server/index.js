@@ -223,8 +223,9 @@ app.get('/api/catalog', (req, res) => {
   res.json(catalogData);
 });
 
-// Official Facebook Page Attribution Map
-const FB_PAGE_MAP = {
+// Universal Traffic Channel & UTM Attribution Map
+const SOURCE_DISPLAY_MAP = {
+  // Facebook Core Tracked Pages & Aliases
   'solace_us': 'Solace us',
   'fb_page1': 'Solace us',
   'day_drama_house': 'Day Drama House',
@@ -237,8 +238,90 @@ const FB_PAGE_MAP = {
   'fb_page5': 'The Quick Update',
   'partner_drama_6': 'Partner Drama Page',
   'fb_page6': 'Partner Drama Page',
+
+  // Specified Channel Mappings
+  'web_stories': 'Web Stories',
+  'webstories': 'Web Stories',
+  'web-stories': 'Web Stories',
+  'web_story': 'Web Stories',
+  'pinterest': 'Pinterest',
+  'tiktok': 'TikTok',
+  'instagram_reels': 'Instagram Reels',
+  'instagram': 'Instagram Reels',
+  'ig_reels': 'Instagram Reels',
+  'ig': 'Instagram Reels',
+  'youtube_shorts': 'YouTube Shorts',
+  'youtube': 'YouTube Shorts',
+  'yt_shorts': 'YouTube Shorts',
+  'yt': 'YouTube Shorts',
+  'reddit': 'Reddit',
+  'quora': 'Quora',
+  'wattpad': 'Wattpad',
+  'push': 'Push Notifications',
+  'web_push': 'Push Notifications',
+  'notification': 'Push Notifications',
+  'notifications': 'Push Notifications',
+  'facebook': 'Facebook (Direct)',
+  'fb': 'Facebook (Direct)',
+  'google': 'Google Search (Organic)',
   'direct': 'Direct Readers / Organic'
 };
+
+const FB_PAGE_MAP = SOURCE_DISPLAY_MAP; // Backwards-compatibility alias
+
+// Case-insensitive, trimmed resolver with dynamic bucket creation for any new/unknown utm_source
+function resolveAnalyticsSource(rawSource, rawCampaign, rawReferrer) {
+  const s = String(rawSource || '').trim();
+  const c = String(rawCampaign || '').trim();
+  const r = String(rawReferrer || '').trim();
+
+  // 1. Match utm_source first
+  if (s && s.toLowerCase() !== 'direct' && s.toLowerCase() !== 'null' && s.toLowerCase() !== 'undefined') {
+    const lowerS = s.toLowerCase();
+    if (SOURCE_DISPLAY_MAP[lowerS]) {
+      return { sourceKey: lowerS, displayName: SOURCE_DISPLAY_MAP[lowerS] };
+    }
+    // Dynamic bucket creation: capitalize raw value (e.g. twitter_ads -> Twitter Ads)
+    const dynamicName = lowerS
+      .split(/[_\-\s]+/)
+      .filter(Boolean)
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    return { sourceKey: lowerS, displayName: dynamicName || s };
+  }
+
+  // 2. Match utm_campaign next
+  if (c && c.toLowerCase() !== 'direct' && c.toLowerCase() !== 'null' && c.toLowerCase() !== 'undefined') {
+    const lowerC = c.toLowerCase();
+    if (SOURCE_DISPLAY_MAP[lowerC]) {
+      return { sourceKey: lowerC, displayName: SOURCE_DISPLAY_MAP[lowerC] };
+    }
+    const dynamicName = lowerC
+      .split(/[_\-\s]+/)
+      .filter(Boolean)
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    return { sourceKey: lowerC, displayName: dynamicName || c };
+  }
+
+  // 3. Fallback to Referrer inspection
+  if (r) {
+    const lowerR = r.toLowerCase();
+    if (lowerR.includes('facebook.com') || lowerR.includes('fb.com')) return { sourceKey: 'facebook', displayName: 'Facebook (Direct)' };
+    if (lowerR.includes('pinterest.com')) return { sourceKey: 'pinterest', displayName: 'Pinterest' };
+    if (lowerR.includes('tiktok.com')) return { sourceKey: 'tiktok', displayName: 'TikTok' };
+    if (lowerR.includes('instagram.com')) return { sourceKey: 'instagram_reels', displayName: 'Instagram Reels' };
+    if (lowerR.includes('youtube.com') || lowerR.includes('youtu.be')) return { sourceKey: 'youtube_shorts', displayName: 'YouTube Shorts' };
+    if (lowerR.includes('reddit.com')) return { sourceKey: 'reddit', displayName: 'Reddit' };
+    if (lowerR.includes('quora.com')) return { sourceKey: 'quora', displayName: 'Quora' };
+    if (lowerR.includes('wattpad.com')) return { sourceKey: 'wattpad', displayName: 'Wattpad' };
+    if (lowerR.includes('google.com') || lowerR.includes('bing.com')) return { sourceKey: 'search', displayName: 'Google Search (Organic)' };
+  }
+
+  // 4. Truly sourceless visits
+  return { sourceKey: 'direct', displayName: 'Direct Readers / Organic' };
+}
+
 
 // 1. Get all published stories (Filters out future scheduled stories for public readers)
 app.get('/api/stories', (req, res) => {
@@ -359,74 +442,76 @@ app.post('/api/stories/:slug/comments', (req, res) => {
   res.json({ success: true, comment: newComment });
 });
 
-// 3. Record story read with Facebook UTM campaign attribution
-app.post('/api/stories/:slug/view', (req, res) => {
+// Centralized Story Traffic & UTM Attribution Recorder
+function recordStoryView(story, utmSource, utmCampaign, utmMedium, rawReferrer, req) {
+  if (!story) return;
+
   const stories = db.getStories();
-  const story = stories.find(s => s.slug === req.params.slug);
-  if (story) {
-    story.views = (story.views || 0) + 1;
-    story.uniqueVisitors = (story.uniqueVisitors || 0) + 1;
+  const storyIdx = stories.findIndex(s => s.slug === story.slug || s.id === story.id);
+  if (storyIdx !== -1) {
+    stories[storyIdx].views = (stories[storyIdx].views || 0) + 1;
+    stories[storyIdx].uniqueVisitors = (stories[storyIdx].uniqueVisitors || 0) + 1;
     db.saveStories(stories);
+  }
 
-    // Update global analytics & UTM campaign
-    const analytics = db.getAnalytics();
-    analytics.overview.totalPageviews = (analytics.overview.totalPageviews || 0) + 1;
-    analytics.overview.uniqueVisitors = (analytics.overview.uniqueVisitors || 0) + 1;
-    analytics.overview.adImpressions = (analytics.overview.adImpressions || 0) + 4;
+  const analytics = db.getAnalytics();
+  if (!analytics.overview) analytics.overview = {};
+  analytics.overview.totalPageviews = (analytics.overview.totalPageviews || 0) + 1;
+  analytics.overview.uniqueVisitors = (analytics.overview.uniqueVisitors || 0) + 1;
+  analytics.overview.adImpressions = (analytics.overview.adImpressions || 0) + 4;
 
-    const campaign = req.body.utm_campaign || 'direct';
-    const sourceKey = req.body.utm_source || campaign;
-    const resolvedPageName = FB_PAGE_MAP[sourceKey] || FB_PAGE_MAP[campaign] || (sourceKey.startsWith('fb_') ? sourceKey.replace('_', ' ').toUpperCase() : 'Direct Feed');
-    const cfCountry = req.headers['cf-ipcountry'] || req.headers['x-country-code'] || req.headers['x-appengine-country'];
-    const country = cfCountry ? `${cfCountry.toUpperCase()} 🌐` : (req.body.referrer?.includes('facebook') ? 'United States 🇺🇸' : 'United States 🇺🇸');
-    const referrer = req.body.referrer || `Facebook (${resolvedPageName})`;
+  const { sourceKey, displayName } = resolveAnalyticsSource(utmSource, utmCampaign, rawReferrer);
 
-    if (!analytics.facebookCampaigns) analytics.facebookCampaigns = [];
-    let matchedCamp = analytics.facebookCampaigns.find(c => c.campaign === sourceKey || c.campaign === campaign || c.pageName === resolvedPageName);
-    if (!matchedCamp) {
-      matchedCamp = {
-        campaign: sourceKey,
-        pageId: sourceKey,
-        pageName: resolvedPageName,
-        visitors: 0,
-        pageviews: 0,
-        topStory: story.title,
-        estimatedRevenueUsd: 0
-      };
-      analytics.facebookCampaigns.push(matchedCamp);
-    }
+  const cfCountry = req?.headers ? (req.headers['cf-ipcountry'] || req.headers['x-country-code'] || req.headers['x-appengine-country']) : null;
+  const country = cfCountry ? `${cfCountry.toUpperCase()} 🌐` : 'United States 🇺🇸';
+  const displayReferrer = rawReferrer || displayName;
+  const device = req?.body?.device || (req?.headers?.['user-agent']?.includes('Mobile') ? 'Mobile (iOS/Android)' : 'Desktop');
 
-    if (matchedCamp) {
-      matchedCamp.visitors = (matchedCamp.visitors || 0) + 1;
-      matchedCamp.pageviews = (matchedCamp.pageviews || 0) + 1;
-      matchedCamp.topStory = story.title;
-      matchedCamp.lastActive = new Date().toISOString();
-      matchedCamp.estimatedRevenueUsd = Number(((matchedCamp.estimatedRevenueUsd || 0) + 0.0285).toFixed(2));
-    }
+  if (!analytics.facebookCampaigns) analytics.facebookCampaigns = [];
+  let matchedCamp = analytics.facebookCampaigns.find(c => c.campaign === sourceKey || c.pageName === displayName || c.pageId === sourceKey);
+  if (!matchedCamp) {
+    matchedCamp = {
+      campaign: sourceKey,
+      pageId: sourceKey,
+      pageName: displayName,
+      visitors: 0,
+      pageviews: 0,
+      topStory: story.title,
+      estimatedRevenueUsd: 0,
+      lastActive: new Date().toISOString()
+    };
+    analytics.facebookCampaigns.push(matchedCamp);
+  }
 
-    analytics.recentVisitors.unshift({
-      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
-      drama: story.title,
-      country: country,
-      device: req.body.device || 'Mobile (iOS/Android)',
-      referrer: referrer,
-      campaign: resolvedPageName
-    });
+  matchedCamp.visitors = (matchedCamp.visitors || 0) + 1;
+  matchedCamp.pageviews = (matchedCamp.pageviews || 0) + 1;
+  matchedCamp.topStory = story.title;
+  matchedCamp.lastActive = new Date().toISOString();
+  matchedCamp.estimatedRevenueUsd = Number(((matchedCamp.estimatedRevenueUsd || 0) + 0.0285).toFixed(2));
 
-    if (analytics.recentVisitors.length > 50) {
-      analytics.recentVisitors.pop();
-    }
+  if (!analytics.recentVisitors) analytics.recentVisitors = [];
+  analytics.recentVisitors.unshift({
+    time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+    drama: story.title,
+    country: country,
+    device: device,
+    referrer: displayReferrer,
+    campaign: displayName
+  });
 
-    // Standard Tier-1 estimated CPM calculation ($28.50 RPM)
-    const incRev = 0.0285;
-    analytics.overview.estimatedAdSenseRevenueUsd = Number(((analytics.overview.estimatedAdSenseRevenueUsd || 0) + incRev).toFixed(4));
+  if (analytics.recentVisitors.length > 50) {
+    analytics.recentVisitors.pop();
+  }
 
-    db.saveAnalytics(analytics);
+  const incRev = 0.0285;
+  analytics.overview.estimatedAdSenseRevenueUsd = Number(((analytics.overview.estimatedAdSenseRevenueUsd || 0) + incRev).toFixed(4));
+  db.saveAnalytics(analytics);
 
-    // Update dedicated Link Tracker entries
+  // Update dedicated Link Tracker entries
+  if (utmCampaign && utmCampaign !== 'direct') {
     try {
       const trackingLinks = db.getTrackingLinks();
-      const matchedTrack = trackingLinks.find(tl => tl.campaign === campaign || tl.storySlug === req.params.slug);
+      const matchedTrack = trackingLinks.find(tl => tl.campaign === utmCampaign || tl.storySlug === story.slug);
       if (matchedTrack) {
         matchedTrack.clicks = (matchedTrack.clicks || 0) + 1;
         matchedTrack.uniqueReaders = (matchedTrack.uniqueReaders || 0) + 1;
@@ -436,6 +521,19 @@ app.post('/api/stories/:slug/view', (req, res) => {
     } catch(err) {
       console.warn('Tracking link record error:', err.message);
     }
+  }
+}
+
+// 3. Record story read with Universal UTM campaign attribution
+app.post('/api/stories/:slug/view', (req, res) => {
+  const stories = db.getStories();
+  const story = stories.find(s => s.slug === req.params.slug);
+  if (story) {
+    const utmCampaign = req.body.utm_campaign;
+    const utmSource = req.body.utm_source;
+    const utmMedium = req.body.utm_medium;
+    const referrer = req.body.referrer;
+    recordStoryView(story, utmSource, utmCampaign, utmMedium, referrer, req);
   }
   res.json({ success: true });
 });
@@ -626,12 +724,30 @@ app.get('/api/admin/overview', requireAdminAuth, (req, res) => {
 app.get('/api/admin/analytics/sources', requireAdminAuth, (req, res) => {
   const analytics = db.getAnalytics();
   const stories = db.getStories();
-  
-  // Aggregate stats per mapped page
+
+  // Aggregate stats per mapped channel / page
   const pageStats = {};
-  const corePages = ['Solace us', 'Day Drama House', 'Heartline Dramas', 'All Night Drama', 'The Quick Update', 'Partner Drama Page'];
-  
-  corePages.forEach(pName => {
+
+  // Standard tracked baseline channels
+  const baselineChannels = [
+    'Solace us',
+    'Day Drama House',
+    'Heartline Dramas',
+    'All Night Drama',
+    'The Quick Update',
+    'Partner Drama Page',
+    'Web Stories',
+    'Pinterest',
+    'TikTok',
+    'Instagram Reels',
+    'YouTube Shorts',
+    'Reddit',
+    'Quora',
+    'Wattpad',
+    'Push Notifications'
+  ];
+
+  baselineChannels.forEach(pName => {
     pageStats[pName] = {
       pageName: pName,
       visitors: 0,
@@ -644,14 +760,23 @@ app.get('/api/admin/analytics/sources', requireAdminAuth, (req, res) => {
 
   const campaigns = analytics.facebookCampaigns || [];
   campaigns.forEach(c => {
-    const pName = FB_PAGE_MAP[c.campaign] || FB_PAGE_MAP[c.pageId] || c.pageName || c.campaign;
+    const resolved = resolveAnalyticsSource(c.campaign || c.pageId, c.campaign, c.pageName);
+    const pName = c.pageName || resolved.displayName || c.campaign;
+
     if (!pageStats[pName]) {
-      pageStats[pName] = { pageName: pName, visitors: 0, pageviews: 0, topStory: 'None', estimatedRevenueUsd: 0, lastActive: null };
+      pageStats[pName] = {
+        pageName: pName,
+        visitors: 0,
+        pageviews: 0,
+        topStory: 'None',
+        estimatedRevenueUsd: 0,
+        lastActive: null
+      };
     }
     pageStats[pName].visitors += (c.visitors || 0);
     pageStats[pName].pageviews += (c.pageviews || 0);
     pageStats[pName].estimatedRevenueUsd = Number(((pageStats[pName].estimatedRevenueUsd || 0) + (c.estimatedRevenueUsd || 0)).toFixed(2));
-    if (c.topStory) pageStats[pName].topStory = c.topStory;
+    if (c.topStory && c.topStory !== 'None') pageStats[pName].topStory = c.topStory;
     if (c.lastActive) pageStats[pName].lastActive = c.lastActive;
   });
 
@@ -1270,6 +1395,16 @@ app.get('/web-stories/:slug', (req, res) => {
     return res.status(404).send(get404Html());
   }
 
+  // Record analytics attribution for Web Story visit
+  try {
+    const utmSource = req.query.utm_source || 'web_stories';
+    const utmCampaign = req.query.utm_campaign || 'web_stories';
+    const utmMedium = req.query.utm_medium || 'story';
+    const referrer = req.headers.referer || req.headers.referrer || 'Google Discover (Web Stories)';
+    const storyObj = story || { title: slugParam, slug: slugParam };
+    recordStoryView(storyObj, utmSource, utmCampaign, utmMedium, referrer, req);
+  } catch (err) {}
+
   // Serve byte-identical with exact UTF-8 HTML headers (No scripts, wrappers or ads injected)
   res.set({
     'Content-Type': 'text/html; charset=utf-8',
@@ -1299,6 +1434,17 @@ app.get('/story/:slug', (req, res) => {
   // Proper HTTP 404 for deleted or non-existent stories (Prevents Google Soft 404 Penalty)
   if (!story) {
     return res.status(404).send(get404Html());
+  }
+
+  // Record incoming traffic attribution if UTM params or Referrer present
+  const utmSource = req.query.utm_source;
+  const utmCampaign = req.query.utm_campaign;
+  const utmMedium = req.query.utm_medium;
+  const referrer = req.headers.referer || req.headers.referrer;
+  if (utmSource || utmCampaign || referrer) {
+    try {
+      recordStoryView(story, utmSource, utmCampaign, utmMedium, referrer, req);
+    } catch (err) {}
   }
 
   const settings = db.getSettings();
