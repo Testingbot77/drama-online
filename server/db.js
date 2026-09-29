@@ -5932,21 +5932,48 @@ async function initPostgres() {
     return;
   }
 
+  const { Pool } = require('pg');
+  const isLocalhost = dbUrl.includes('localhost') || dbUrl.includes('127.0.0.1');
+  const isRenderInternal = dbUrl.includes('dpg-') && !dbUrl.includes('.render.com');
+
+  const configs = [
+    { connectionString: dbUrl, ssl: isLocalhost ? false : (isRenderInternal ? false : { rejectUnauthorized: false }) },
+    { connectionString: dbUrl, ssl: { rejectUnauthorized: false } },
+    { connectionString: dbUrl, ssl: false }
+  ];
+
+  let client = null;
+  let lastErr = null;
+
+  for (const cfg of configs) {
+    try {
+      pgPool = new Pool({
+        ...cfg,
+        max: 10,
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 10000
+      });
+      client = await pgPool.connect();
+      isPgConnected = true;
+      pgConnectionError = null;
+      console.log('✅ [Database] Successfully connected to PostgreSQL / Render Postgres!');
+      break;
+    } catch (err) {
+      lastErr = err;
+      if (pgPool) {
+        try { await pgPool.end(); } catch (e) {}
+      }
+    }
+  }
+
+  if (!isPgConnected || !client) {
+    console.error('❌ [Database] PostgreSQL connection failed:', lastErr ? lastErr.message : 'Unknown error');
+    isPgConnected = false;
+    pgConnectionError = lastErr ? lastErr.message : 'Connection failed';
+    return;
+  }
+
   try {
-    const { Pool } = require('pg');
-    const isLocalhost = dbUrl.includes('localhost') || dbUrl.includes('127.0.0.1');
-    pgPool = new Pool({
-      connectionString: dbUrl,
-      ssl: isLocalhost ? false : { rejectUnauthorized: false },
-      max: 10,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000
-    });
-
-    const client = await pgPool.connect();
-    console.log('✅ [Database] Successfully connected to PostgreSQL / Render Postgres!');
-    isPgConnected = true;
-
     // Create durable schema tables
     await client.query(`
       CREATE TABLE IF NOT EXISTS kv_store (
