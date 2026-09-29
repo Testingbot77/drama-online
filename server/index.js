@@ -698,6 +698,21 @@ app.post('/api/admin/stories/bulk-import', requireAdminAuth, (req, res) => {
     addedCount,
     updatedCount
   });
+// 3b. DB Status & Health (PostgreSQL / File persistence check)
+app.get('/api/admin/db-status', requireAdminAuth, (req, res) => {
+  const status = db.getDbStatus();
+  res.json({
+    success: true,
+    status
+  });
+});
+
+// 3c. Full JSON Export / Backup Endpoint (1-Click Download)
+app.get('/api/admin/stories/export-json', requireAdminAuth, (req, res) => {
+  const stories = db.getStories();
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', `attachment; filename="taleonix_stories_backup_${Date.now()}.json"`);
+  res.send(JSON.stringify(stories, null, 2));
 });
 
 // 4. Create Single Story

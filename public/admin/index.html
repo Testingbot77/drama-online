@@ -324,12 +324,15 @@
               <h3><i class="fa-solid fa-book"></i> Taleonix Story Library</h3>
               <p class="panel-sub" style="margin-bottom:0;">Edit story text, add Editor's Notes for AdSense, or bulk-import expanded JSON collections.</p>
             </div>
-            <div style="display:flex; gap:10px; align-items:center;">
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
               <span class="count-badge" id="storyCountBadge">6 Stories</span>
-              <button class="btn-action-accent" onclick="openBulkImportModal()" style="padding:8px 16px; font-size:0.88rem;">
+              <button class="btn-action-primary" id="btnExportJsonBackup" onclick="downloadStoriesBackup()" style="padding:8px 14px; font-size:0.85rem; display:inline-flex; align-items:center; gap:6px;">
+                <i class="fa-solid fa-download"></i> Backup All (JSON)
+              </button>
+              <button class="btn-action-accent" onclick="openBulkImportModal()" style="padding:8px 14px; font-size:0.85rem;">
                 <i class="fa-solid fa-file-import"></i> Bulk Import JSON
               </button>
-              <button class="btn-action-primary" onclick="openStoryEditModal(null)" style="padding:8px 16px; font-size:0.88rem;">
+              <button class="btn-action-primary" onclick="openStoryEditModal(null)" style="padding:8px 14px; font-size:0.85rem;">
                 <i class="fa-solid fa-plus"></i> Add New Story
               </button>
             </div>
@@ -532,6 +535,22 @@
           
           <form onsubmit="saveAdminSettings(event)" class="settings-form">
             
+            <!-- Durable Database & Persistence Card -->
+            <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <h4 style="color:#60a5fa; margin:0 0 6px 0;"><i class="fa-solid fa-database"></i> Durable Database Persistence</h4>
+                  <p style="font-size:0.85rem; color:var(--text-secondary); margin:0;">PostgreSQL persistence ensures all 84+ stories, analytics, and settings survive Render redeploys and container restarts.</p>
+                </div>
+                <div id="dbStatusBadge" style="padding:6px 14px; border-radius:999px; font-size:0.82rem; font-weight:700; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted);">
+                  <i class="fa-solid fa-spinner fa-spin"></i> Checking Database...
+                </div>
+              </div>
+              <div style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.82rem; color:var(--text-muted);" id="dbStatusDetails">
+                To connect Render Postgres: Go to Render Dashboard → Environment Variables → Add <code>DATABASE_URL</code> with your Postgres connection string.
+              </div>
+            </div>
+
             <!-- REST API Access Card -->
             <div style="background: rgba(229,169,60,0.08); border: 1.5px solid var(--accent-gold); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
               <h4 style="color:var(--accent-gold); margin-top:0;"><i class="fa-solid fa-key"></i> Master REST API Key (Write Access)</h4>

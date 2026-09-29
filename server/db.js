@@ -5918,8 +5918,90 @@ let memoryMarketing = null;
 let memoryAnalytics = null;
 let memorySettings = null;
 let memorySubscribers = null;
-
 let memoryTrackingLinks = null;
+
+let pgPool = null;
+let isPgConnected = false;
+let pgConnectionError = null;
+
+const dbUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PG_CONNECTION_STRING || process.env.RENDER_POSTGRES_URL;
+
+async function initPostgres() {
+  if (!dbUrl) {
+    console.log('ℹ️ [Database] Running in Local / File System Mode (No DATABASE_URL set).');
+    return;
+  }
+
+  try {
+    const { Pool } = require('pg');
+    const isLocalhost = dbUrl.includes('localhost') || dbUrl.includes('127.0.0.1');
+    pgPool = new Pool({
+      connectionString: dbUrl,
+      ssl: isLocalhost ? false : { rejectUnauthorized: false },
+      max: 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000
+    });
+
+    const client = await pgPool.connect();
+    console.log('✅ [Database] Successfully connected to PostgreSQL / Render Postgres!');
+    isPgConnected = true;
+
+    // Create durable schema tables
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS kv_store (
+        key VARCHAR(128) PRIMARY KEY,
+        data JSONB NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Load initial data from Postgres into memory
+    const keys = [
+      { key: 'stories', file: STORIES_FILE, initial: INITIAL_STORIES, setMem: (val) => { memoryStories = val; } },
+      { key: 'settings', file: SETTINGS_FILE, initial: INITIAL_SETTINGS, setMem: (val) => { memorySettings = val; } },
+      { key: 'analytics', file: ANALYTICS_FILE, initial: INITIAL_ANALYTICS, setMem: (val) => { memoryAnalytics = val; } },
+      { key: 'marketing', file: MARKETING_FILE, initial: INITIAL_MARKETING, setMem: (val) => { memoryMarketing = val; } },
+      { key: 'subscribers', file: SUBSCRIBERS_FILE, initial: INITIAL_SUBSCRIBERS, setMem: (val) => { memorySubscribers = val; } },
+      { key: 'tracking_links', file: TRACKING_LINKS_FILE, initial: INITIAL_TRACKING_LINKS, setMem: (val) => { memoryTrackingLinks = val; } }
+    ];
+
+    for (const item of keys) {
+      const res = await client.query('SELECT data FROM kv_store WHERE key = $1', [item.key]);
+      if (res.rows.length > 0 && res.rows[0].data) {
+        item.setMem(res.rows[0].data);
+        writeJSON(item.file, res.rows[0].data);
+        console.log(`[Database] Hydrated '${item.key}' from PostgreSQL (${Array.isArray(res.rows[0].data) ? res.rows[0].data.length + ' items' : 'object loaded'}).`);
+      } else {
+        // Seed Postgres from existing JSON file or initial constant
+        const seedData = readJSON(item.file, item.initial);
+        item.setMem(seedData);
+        await client.query(
+          'INSERT INTO kv_store (key, data, updated_at) VALUES ($1, $2, NOW()) ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = NOW()',
+          [item.key, JSON.stringify(seedData)]
+        );
+        console.log(`[Database] Seeded PostgreSQL '${item.key}' table with initial dataset.`);
+      }
+    }
+
+    client.release();
+  } catch (err) {
+    console.error('❌ [Database] PostgreSQL connection / init error:', err.message);
+    isPgConnected = false;
+    pgConnectionError = err.message;
+  }
+}
+
+// Fire async Postgres init on module load
+initPostgres().catch(err => console.error('[Database] Async init failed:', err));
+
+function persistToPostgres(key, data) {
+  if (!pgPool || !isPgConnected) return;
+  pgPool.query(
+    'INSERT INTO kv_store (key, data, updated_at) VALUES ($1, $2, NOW()) ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = NOW()',
+    [key, JSON.stringify(data)]
+  ).catch(err => console.error(`[Database] Error persisting '${key}' to PostgreSQL:`, err.message));
+}
 
 const INITIAL_TRACKING_LINKS = [
   {
@@ -5962,6 +6044,7 @@ module.exports = {
   saveStories: (data) => {
     memoryStories = data;
     writeJSON(STORIES_FILE, data);
+    persistToPostgres('stories', data);
   },
   getMarketingItems: () => {
     if (!memoryMarketing) memoryMarketing = readJSON(MARKETING_FILE, INITIAL_MARKETING);
@@ -5970,6 +6053,7 @@ module.exports = {
   saveMarketingItems: (data) => {
     memoryMarketing = data;
     writeJSON(MARKETING_FILE, data);
+    persistToPostgres('marketing', data);
   },
   getAnalytics: () => {
     if (!memoryAnalytics) memoryAnalytics = readJSON(ANALYTICS_FILE, INITIAL_ANALYTICS);
@@ -5978,6 +6062,7 @@ module.exports = {
   saveAnalytics: (data) => {
     memoryAnalytics = data;
     writeJSON(ANALYTICS_FILE, data);
+    persistToPostgres('analytics', data);
   },
   getSettings: () => {
     if (!memorySettings) memorySettings = readJSON(SETTINGS_FILE, INITIAL_SETTINGS);
@@ -5986,6 +6071,7 @@ module.exports = {
   saveSettings: (data) => {
     memorySettings = data;
     writeJSON(SETTINGS_FILE, data);
+    persistToPostgres('settings', data);
   },
   getSubscribers: () => {
     if (!memorySubscribers) memorySubscribers = readJSON(SUBSCRIBERS_FILE, INITIAL_SUBSCRIBERS);
@@ -5994,6 +6080,7 @@ module.exports = {
   saveSubscribers: (data) => {
     memorySubscribers = data;
     writeJSON(SUBSCRIBERS_FILE, data);
+    persistToPostgres('subscribers', data);
   },
   getTrackingLinks: () => {
     if (!memoryTrackingLinks) memoryTrackingLinks = readJSON(TRACKING_LINKS_FILE, INITIAL_TRACKING_LINKS);
@@ -6002,5 +6089,15 @@ module.exports = {
   saveTrackingLinks: (data) => {
     memoryTrackingLinks = data;
     writeJSON(TRACKING_LINKS_FILE, data);
+    persistToPostgres('tracking_links', data);
+  },
+  getDbStatus: () => {
+    return {
+      type: isPgConnected ? 'postgresql' : 'file_memory',
+      connected: isPgConnected,
+      hasDatabaseUrl: Boolean(dbUrl),
+      error: pgConnectionError,
+      storiesCount: (memoryStories || []).length
+    };
   }
 };

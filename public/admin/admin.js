@@ -635,6 +635,28 @@ function copyMasterApiKey() {
   }
 }
 
+async function downloadStoriesBackup() {
+  try {
+    showToast('⏳ Generating complete stories JSON backup...');
+    const res = await fetch('/api/admin/stories/export-json', {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (!res.ok) throw new Error('Failed to fetch backup: HTTP ' + res.status);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `taleonix_stories_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    showToast('✅ Backup downloaded successfully!');
+  } catch (err) {
+    showToast('Backup error: ' + err.message);
+  }
+}
+
 function populateStorySelect(stories) {
   const sel = document.getElementById('fbStorySelect');
   sel.innerHTML = '';
@@ -784,7 +806,44 @@ function setStepCompleted(stepId) {
   }
 }
 
-// ================= SETTINGS =================
+// ================= SETTINGS & DB STATUS =================
+async function checkDbStatus() {
+  const badge = document.getElementById('dbStatusBadge');
+  const details = document.getElementById('dbStatusDetails');
+  if (!badge) return;
+
+  try {
+    const res = await fetch('/api/admin/db-status', {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const data = await res.json();
+    if (data.success && data.status) {
+      const st = data.status;
+      if (st.type === 'postgresql' && st.connected) {
+        badge.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#22c55e;"></i> PostgreSQL Connected (Durable Persistence Active)';
+        badge.style.background = 'rgba(34, 197, 94, 0.15)';
+        badge.style.borderColor = 'rgba(34, 197, 94, 0.4)';
+        badge.style.color = '#4ade80';
+        if (details) details.innerHTML = '✅ <strong>Durable Persistence Active:</strong> All 84+ stories, chapters, and edits are automatically saved into PostgreSQL table <code>kv_store</code>.';
+      } else if (st.hasDatabaseUrl && !st.connected) {
+        badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i> PostgreSQL Connection Error';
+        badge.style.background = 'rgba(239, 68, 68, 0.15)';
+        badge.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+        badge.style.color = '#f87171';
+        if (details) details.innerHTML = `⚠️ Connection error with DATABASE_URL: <code>${st.error || 'Check connection string'}</code>. Falling back to local storage.`;
+      } else {
+        badge.innerHTML = '<i class="fa-solid fa-hard-drive" style="color:#f59e0b;"></i> Local Memory / File Mode';
+        badge.style.background = 'rgba(245, 158, 11, 0.15)';
+        badge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+        badge.style.color = '#fbbf24';
+        if (details) details.innerHTML = 'ℹ️ <strong>To Enable Permanent Cloud Persistence on Render:</strong> Add <code>DATABASE_URL</code> to Render Environment Variables (from Render PostgreSQL or Supabase/Neon).';
+      }
+    }
+  } catch (err) {
+    console.error('Error checking DB status:', err);
+  }
+}
+
 function renderSettings(s) {
   if (!s) return;
   document.getElementById('setGeminiKey').value = s.maskedKey || '';
@@ -793,6 +852,7 @@ function renderSettings(s) {
   document.getElementById('setWpUrl').value = s.wpUrl || '';
   document.getElementById('setWpUser').value = s.wpUsername || '';
   document.getElementById('setWpPass').value = s.wpAppPassword || '';
+  checkDbStatus();
 }
 
 async function saveAdminSettings(e) {
