@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Performance Resource Hints for Sub-2s Mobile Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://quge5.com">
+
   <!-- Google tag (gtag.js) - Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FQV5H2R6H1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-FQV5H2R6H1');
   </script>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   
   <!-- DYNAMIC_META_TAGS -->
   <title>Taleonix • Viral US Drama Stories & Serialized Fiction</title>
   <meta name="description" content="Read full episodes and captivating serialized stories of billionaire drama, revenge, marriage scandals, and undercover suspense on Taleonix.">
   
   <!-- Google Fonts: Outfit (Headings) + Lora & Merriweather (Ultra-readable body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:wght@300;400;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- FontAwesome -->
@@ -30,7 +34,7 @@
   <meta name="google-adsense-account" content="ca-pub-3806896432302528">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806896432302528" crossorigin="anonymous"></script>
   
-  <link rel="stylesheet" href="/css/style.css?v=3.1.0">
+  <link rel="stylesheet" href="/css/style.css?v=3.3.0">
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="RHbt1e6o47jBfS6m0_9f2yBAWe_DBOMv2Gaxdmt2jdA" />
   
@@ -38,6 +42,21 @@
   <script src="https://quge5.com/88/tag.min.js" data-zone="281600" async data-cfasync="false"></script>
 </head>
 <body class="theme-dark">
+
+  <!-- ================= GENTLE POLITE ADBLOCK NOTICE ================= -->
+  <div id="gentleAdblockNotice" class="adblock-banner" style="display: none;">
+    <div class="adblock-inner">
+      <span class="adblock-icon">🙏</span>
+      <span class="adblock-text"><strong>Enjoying the drama?</strong> Non-intrusive ads keep all multi-part novel chapters 100% free to read without subscriptions. Thank you for supporting our independent writers!</span>
+      <button class="btn-dismiss-adblock" onclick="dismissAdblockNotice()">Dismiss ✕</button>
+    </div>
+  </div>
+
+  <!-- ================= FLOATING PUSH NOTIFICATION BUTTON ================= -->
+  <button id="floatingPushBtn" class="floating-push-pill" onclick="triggerPushSubscribe()" aria-label="Subscribe to daily plot twists">
+    <span class="bell-icon"><i class="fa-solid fa-bell"></i></span>
+    <span class="push-pill-text">🔔 Daily Twists</span>
+  </button>
 
   <!-- ================= READING PROGRESS BAR ================= -->
   <div id="readingProgressBar"></div>
@@ -313,14 +332,28 @@
             </div>
           </div>
 
-          <!-- PART 2 / CONTINUATION SYSTEM -->
+          <!-- PUSH NOTIFICATION VISIBLE TRIGGER CARD -->
+          <div class="push-subscribe-card" id="pushSubscribeCard">
+            <div class="push-card-inner">
+              <div class="push-card-icon"><i class="fa-solid fa-bell"></i></div>
+              <div class="push-card-text">
+                <h4>🔔 Never Miss a Plot Twist!</h4>
+                <p>Get instant 1-tap alerts on your phone when new episodes & Grand Finales release.</p>
+              </div>
+              <button class="btn-enable-push" onclick="triggerPushSubscribe()">
+                <i class="fa-solid fa-bolt"></i> Get Free Alerts
+              </button>
+            </div>
+          </div>
+
+          <!-- PART CONTINUATION / NEXT EPISODE SYSTEM -->
           <div class="part-continuation-card" id="partContinuationCard">
-            <div class="part-card-badge" id="partCardBadge">🔥 PART 2 AVAILABLE</div>
+            <div class="part-card-badge" id="partCardBadge">⚡ UP NEXT • NEXT CHAPTER</div>
             <h3 class="part-card-title" id="nextPartHook">What happened after the confrontation was even more shocking...</h3>
-            <p class="part-card-desc" id="partCardDesc">Continue the story right now in Chapter 2 without interruption.</p>
+            <p class="part-card-desc" id="partCardDesc">Continue the story right now in the next chapter without interruption.</p>
             <div class="part-actions-row">
               <a href="#" id="btnReadPrevPart" class="btn-prev-part-bottom" style="display: none;"><i class="fa-solid fa-arrow-left"></i> ← PREVIOUS CHAPTER</a>
-              <a href="#" id="btnReadPart2" class="btn-read-part2">READ CHAPTER 2 →</a>
+              <a href="#" id="btnReadPart2" class="btn-read-part2">⚡ READ NEXT CHAPTER (FREE) →</a>
             </div>
           </div>
 

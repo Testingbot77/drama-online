@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupReadingProgress();
   handleClientRouting();
   loadPublicStories();
+  checkAdblock();
   window.addEventListener('popstate', handleClientRouting);
 });
 
@@ -953,4 +954,66 @@ async function handleContactSubmit(e) {
     }
   }
 }
+
+// ================= PUSH NOTIFICATIONS SUBSCRIBER =================
+async function triggerPushSubscribe() {
+  if (!('Notification' in window)) {
+    showToast('Push notifications not supported on this device.');
+    return;
+  }
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      showToast('🎉 Subscribed! You will receive instant plot twist alerts.');
+      const floatingBtn = document.getElementById('floatingPushBtn');
+      if (floatingBtn) {
+        floatingBtn.innerHTML = '<span class="bell-icon"><i class="fa-solid fa-check"></i></span> <span class="push-pill-text">Alerts Active</span>';
+      }
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      }
+      fetch('/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: `push_subscriber_${Date.now()}@browser.push`,
+          type: 'push_web',
+          storySlug: currentViewingStory ? currentViewingStory.slug : 'general'
+        })
+      }).catch(() => {});
+    } else {
+      showToast('Notifications blocked in browser settings.');
+    }
+  } catch(e) {
+    showToast('Alerts enabled! 🎉');
+  }
+}
+
+// ================= GENTLE POLITE ADBLOCK CHECKER =================
+function checkAdblock() {
+  if (localStorage.getItem('taleonix_adblock_dismissed')) return;
+  setTimeout(() => {
+    const testAd = document.createElement('div');
+    testAd.innerHTML = '&nbsp;';
+    testAd.className = 'adsbox pub_300x250 pub_728x90 text-ad text_ad text-ads';
+    testAd.style.position = 'absolute';
+    testAd.style.left = '-9999px';
+    document.body.appendChild(testAd);
+    setTimeout(() => {
+      const isBlocked = testAd.offsetHeight === 0 || !window.adsbygoogle;
+      testAd.remove();
+      if (isBlocked) {
+        const banner = document.getElementById('gentleAdblockNotice');
+        if (banner) banner.style.display = 'block';
+      }
+    }, 150);
+  }, 2500);
+}
+
+function dismissAdblockNotice() {
+  const banner = document.getElementById('gentleAdblockNotice');
+  if (banner) banner.style.display = 'none';
+  localStorage.setItem('taleonix_adblock_dismissed', 'true');
+}
+
 

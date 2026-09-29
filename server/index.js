@@ -256,14 +256,33 @@ app.post('/api/stories/:slug/view', (req, res) => {
     analytics.overview.adImpressions = (analytics.overview.adImpressions || 0) + 4;
 
     const campaign = req.body.utm_campaign || 'direct';
+    const sourceKey = req.body.utm_source || campaign;
     const cfCountry = req.headers['cf-ipcountry'] || req.headers['x-country-code'] || req.headers['x-appengine-country'];
     const country = cfCountry ? `${cfCountry.toUpperCase()} 🌐` : (req.body.referrer?.includes('facebook') ? 'United States 🇺🇸' : 'United States 🇺🇸');
-    const referrer = req.body.referrer || 'Facebook Feed / Direct Link';
+    const referrer = req.body.referrer || (sourceKey.startsWith('fb_') ? `Facebook (${sourceKey})` : 'Facebook Feed / Direct Link');
 
-    const matchedCamp = (analytics.facebookCampaigns || []).find(c => c.campaign === campaign);
+    if (!analytics.facebookCampaigns) analytics.facebookCampaigns = [];
+    let matchedCamp = analytics.facebookCampaigns.find(c => c.campaign === sourceKey || c.campaign === campaign || c.pageId === sourceKey);
+    if (!matchedCamp && (sourceKey.startsWith('fb_') || sourceKey.includes('facebook') || campaign.startsWith('fb_'))) {
+      const pName = sourceKey.replace('_', ' ').toUpperCase();
+      matchedCamp = {
+        campaign: sourceKey,
+        pageId: sourceKey,
+        pageName: pName,
+        visitors: 0,
+        pageviews: 0,
+        topStory: story.title,
+        estimatedRevenueUsd: 0
+      };
+      analytics.facebookCampaigns.push(matchedCamp);
+    }
+
     if (matchedCamp) {
       matchedCamp.visitors = (matchedCamp.visitors || 0) + 1;
       matchedCamp.pageviews = (matchedCamp.pageviews || 0) + 1;
+      matchedCamp.topStory = story.title;
+      matchedCamp.lastActive = new Date().toISOString();
+      matchedCamp.estimatedRevenueUsd = Number(((matchedCamp.estimatedRevenueUsd || 0) + 0.0285).toFixed(2));
     }
 
     analytics.recentVisitors.unshift({
