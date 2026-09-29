@@ -698,6 +698,8 @@ app.post('/api/admin/stories/bulk-import', requireAdminAuth, (req, res) => {
     addedCount,
     updatedCount
   });
+});
+
 // 3b. DB Status & Health (PostgreSQL / File persistence check)
 app.get('/api/admin/db-status', requireAdminAuth, (req, res) => {
   const status = db.getDbStatus();

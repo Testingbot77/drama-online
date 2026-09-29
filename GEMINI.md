@@ -58,3 +58,24 @@ Analyze reel video frame by frame:
 - **Evidence Object**: Physical token fought over and changing hands.
 - **Content Boundaries**: No graphic harm, strict protection around child/grief dynamics, no melodrama/caricatures. Authentic, restrained Black American family realism.
 
+---
+
+# 4. MASTER 30-SECOND COMBINED AI VIDEO GENERATION PROMPT SPECIFICATION
+
+*Use this standard single continuous prompt structure for AI Video Generation tools (Kling, Runway Gen-3, Sora, Hailuo, Luma, Pika, Minimax) that generate complete 30s dramatic reels in one shot:*
+
+### 🎬 The 30s Single-Prompt Formula:
+```text
+[STYLE & CAMERA]: Cinematic photorealistic 8K drama, shot on 35mm Arri Alexa lens, shallow depth of field, dramatic evening golden-hour rim lighting, smooth steadycam tracking shot, Hollywood family drama aesthetic.
+
+[CHARACTERS & WARDROBE]: {PROTAGONIST: Age, Black American woman/man, exact hairstyle, authentic refined wardrobe} facing {ANTAGONIST: Age, Black American man/woman, tailored/arrogant clothing} in {SETTING: Front porch/suburban kitchen/auditorium doorway, practical authentic US details}.
+
+[0:00-0:06 HOOK OPENING]: Camera slowly glides forward into the tense confrontation. The protagonist stands with rigid, composed posture, glaring with calm defiance while the antagonist gestures aggressively, demanding control.
+
+[0:06-0:14 THE EVIDENCE REVEAL]: The protagonist slowly reveals {THE EVIDENCE OBJECT: unzipped heavy duffel bag filled with certified checks / tearing open wax-sealed envelope / dropping the notarized deed / sliding a secret folded lunchbox note}. Extreme close-up on the physical object and the antagonist's face suddenly freezing in guilty realization.
+
+[0:15-0:23 THE CONFRONTATION & SHOCK]: The antagonist stumbles back half a step, hands trembling, mouth slightly agape as their smug confidence shatters. The protagonist speaks with calm, razor-sharp authority, locking direct eye contact with unflinching resolve.
+
+[0:23-0:30 CLIFFHANGER RESOLUTION]: The protagonist takes a decisive step back, turns around without flinching, and firmly closes the solid front door / walks away into the evening light, leaving the antagonist completely isolated and disgraced on the walkway. Masterpiece, ultra-realistic facial micro-expressions, fluid continuous motion, no distortion, no text, no watermark.
+```
+
