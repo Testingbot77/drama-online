@@ -513,11 +513,14 @@ app.get('/api/admin/marketing', requireAdminAuth, (req, res) => {
 app.get('/api/admin/settings', requireAdminAuth, (req, res) => {
   const settings = db.getSettings();
   const maskedKey = settings.geminiApiKey ? `${settings.geminiApiKey.slice(0, 4)}...${settings.geminiApiKey.slice(-4)}` : '';
+  const { MASTER_API_KEY } = require('./auth');
   res.json({
     success: true,
     settings: {
       ...settings,
-      maskedKey
+      maskedKey,
+      adminPin: settings.adminPin || '1234',
+      apiKey: settings.apiKey || MASTER_API_KEY
     }
   });
 });
@@ -528,8 +531,249 @@ app.post('/api/admin/settings', requireAdminAuth, (req, res) => {
   if (req.body.geminiApiKey && !req.body.geminiApiKey.includes('...')) {
     updated.geminiApiKey = req.body.geminiApiKey.trim();
   }
+  if (req.body.adminPin) {
+    updated.adminPin = String(req.body.adminPin).trim();
+  }
   db.saveSettings(updated);
   res.json({ success: true, message: 'Settings saved successfully' });
+});
+
+// ======================== STORY CRUD & BULK WRITE API ========================
+
+// 1. Get Single Story for Editing
+app.get('/api/admin/stories/:slug', requireAdminAuth, (req, res) => {
+  const stories = db.getStories();
+  const story = stories.find(s => s.slug === req.params.slug);
+  if (!story) {
+    return res.status(404).json({ success: false, error: 'Story not found' });
+  }
+  res.json({ success: true, story });
+});
+
+// 2. Update Single Story (Title, Hook, Paragraphs, Editors Note, Category, etc.)
+app.post('/api/admin/stories/update', requireAdminAuth, (req, res) => {
+  const { slug, title, category, hookSummary, editorsNote, paragraphs, readTime, coverImage, status, publishAt } = req.body;
+  if (!slug) {
+    return res.status(400).json({ success: false, error: 'Story slug is required' });
+  }
+
+  const stories = db.getStories();
+  const index = stories.findIndex(s => s.slug === slug);
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: 'Story not found' });
+  }
+
+  const existing = stories[index];
+  
+  // Format paragraphs from string or array
+  let parsedParagraphs = existing.paragraphs;
+  if (Array.isArray(paragraphs)) {
+    parsedParagraphs = paragraphs;
+  } else if (typeof paragraphs === 'string') {
+    parsedParagraphs = paragraphs.split('\n\n').map(p => p.trim()).filter(Boolean);
+  }
+
+  stories[index] = {
+    ...existing,
+    title: title || existing.title,
+    category: category || existing.category,
+    hookSummary: hookSummary !== undefined ? hookSummary : existing.hookSummary,
+    editorsNote: editorsNote !== undefined ? editorsNote : (existing.editorsNote || ''),
+    paragraphs: parsedParagraphs,
+    readTime: readTime || existing.readTime,
+    coverImage: coverImage || existing.coverImage,
+    status: status || existing.status || 'published',
+    publishAt: publishAt || existing.publishAt || null,
+    updatedAt: new Date().toISOString()
+  };
+
+  db.saveStories(stories);
+  console.log(`[Admin] Story updated successfully: ${slug}`);
+  res.json({ success: true, message: 'Story updated and live instantly!', story: stories[index] });
+});
+
+app.put('/api/admin/stories/:slug', requireAdminAuth, (req, res) => {
+  req.body.slug = req.params.slug;
+  const { slug, title, category, hookSummary, editorsNote, paragraphs, readTime, coverImage, status, publishAt } = req.body;
+  const stories = db.getStories();
+  const index = stories.findIndex(s => s.slug === slug);
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: 'Story not found' });
+  }
+
+  let parsedParagraphs = stories[index].paragraphs;
+  if (Array.isArray(paragraphs)) {
+    parsedParagraphs = paragraphs;
+  } else if (typeof paragraphs === 'string') {
+    parsedParagraphs = paragraphs.split('\n\n').map(p => p.trim()).filter(Boolean);
+  }
+
+  stories[index] = {
+    ...stories[index],
+    title: title || stories[index].title,
+    category: category || stories[index].category,
+    hookSummary: hookSummary !== undefined ? hookSummary : stories[index].hookSummary,
+    editorsNote: editorsNote !== undefined ? editorsNote : (stories[index].editorsNote || ''),
+    paragraphs: parsedParagraphs,
+    readTime: readTime || stories[index].readTime,
+    coverImage: coverImage || stories[index].coverImage,
+    status: status || stories[index].status || 'published',
+    publishAt: publishAt || stories[index].publishAt || null,
+    updatedAt: new Date().toISOString()
+  };
+
+  db.saveStories(stories);
+  res.json({ success: true, message: 'Story updated successfully!', story: stories[index] });
+});
+
+// 3. Bulk JSON Import API (Accepts array of stories or object with stories array)
+app.post('/api/admin/stories/bulk-import', requireAdminAuth, (req, res) => {
+  let importList = req.body;
+  if (req.body && Array.isArray(req.body.stories)) {
+    importList = req.body.stories;
+  } else if (!Array.isArray(importList)) {
+    if (typeof req.body === 'object' && req.body.title) {
+      importList = [req.body];
+    } else {
+      return res.status(400).json({ success: false, error: 'Expected JSON array of stories or object with { stories: [...] }' });
+    }
+  }
+
+  if (importList.length === 0) {
+    return res.status(400).json({ success: false, error: 'No stories found in import list' });
+  }
+
+  const stories = db.getStories();
+  let updatedCount = 0;
+  let addedCount = 0;
+
+  importList.forEach(item => {
+    if (!item.title) return;
+    const slug = item.slug || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const existingIdx = stories.findIndex(s => s.slug === slug || (item.id && s.id === item.id));
+
+    let parsedParagraphs = item.paragraphs;
+    if (typeof parsedParagraphs === 'string') {
+      parsedParagraphs = parsedParagraphs.split('\n\n').map(p => p.trim()).filter(Boolean);
+    } else if (!Array.isArray(parsedParagraphs)) {
+      parsedParagraphs = [item.content || item.body || item.hookSummary || 'Story content pending.'];
+    }
+
+    const storyObj = {
+      id: item.id || (existingIdx !== -1 ? stories[existingIdx].id : 'story-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6)),
+      title: item.title,
+      slug: slug,
+      category: item.category || 'Family Secrets',
+      partNumber: Number(item.partNumber) || 1,
+      totalChapters: Number(item.totalChapters) || 6,
+      readTime: item.readTime || `${Math.max(5, Math.ceil(parsedParagraphs.join(' ').split(' ').length / 220))} min read`,
+      hookSummary: item.hookSummary || item.synopsis || '',
+      editorsNote: item.editorsNote || item.editorNote || '',
+      paragraphs: parsedParagraphs,
+      coverImage: item.coverImage || (existingIdx !== -1 ? stories[existingIdx].coverImage : '/images/the-graduation-envelope-mother-in-green-cover.jpg'),
+      author: item.author || 'Elena Vance',
+      status: item.status || 'published',
+      publishAt: item.publishAt || null,
+      views: existingIdx !== -1 ? (stories[existingIdx].views || 0) : 0,
+      uniqueVisitors: existingIdx !== -1 ? (stories[existingIdx].uniqueVisitors || 0) : 0,
+      publicationDate: item.publicationDate || (existingIdx !== -1 ? stories[existingIdx].publicationDate : new Date().toISOString())
+    };
+
+    if (existingIdx !== -1) {
+      stories[existingIdx] = { ...stories[existingIdx], ...storyObj };
+      updatedCount++;
+    } else {
+      stories.unshift(storyObj);
+      addedCount++;
+    }
+  });
+
+  db.saveStories(stories);
+  console.log(`[Admin] Bulk import completed: ${addedCount} added, ${updatedCount} updated (Total: ${stories.length})`);
+  res.json({
+    success: true,
+    message: `Bulk import successful! ${addedCount} added, ${updatedCount} updated.`,
+    totalStories: stories.length,
+    addedCount,
+    updatedCount
+  });
+});
+
+// 4. Create Single Story
+app.post('/api/admin/stories', requireAdminAuth, (req, res) => {
+  const { title, slug, category, hookSummary, editorsNote, paragraphs, readTime, coverImage, status, publishAt } = req.body;
+  if (!title) {
+    return res.status(400).json({ success: false, error: 'Title is required' });
+  }
+
+  const stories = db.getStories();
+  const safeSlug = slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  if (stories.some(s => s.slug === safeSlug)) {
+    return res.status(400).json({ success: false, error: 'A story with this slug already exists. Use update instead.' });
+  }
+
+  let parsedParagraphs = paragraphs;
+  if (typeof parsedParagraphs === 'string') {
+    parsedParagraphs = parsedParagraphs.split('\n\n').map(p => p.trim()).filter(Boolean);
+  } else if (!Array.isArray(parsedParagraphs)) {
+    parsedParagraphs = [hookSummary || 'Chapter draft.'];
+  }
+
+  const newStory = {
+    id: 'story-' + Date.now(),
+    title,
+    slug: safeSlug,
+    category: category || 'Family Secrets',
+    partNumber: 1,
+    totalChapters: 6,
+    readTime: readTime || `${Math.max(5, Math.ceil(parsedParagraphs.join(' ').split(' ').length / 220))} min read`,
+    hookSummary: hookSummary || '',
+    editorsNote: editorsNote || '',
+    paragraphs: parsedParagraphs,
+    coverImage: coverImage || '/images/the-graduation-envelope-mother-in-green-cover.jpg',
+    author: 'Elena Vance',
+    status: status || 'published',
+    publishAt: publishAt || null,
+    views: 0,
+    uniqueVisitors: 0,
+    publicationDate: new Date().toISOString()
+  };
+
+  stories.unshift(newStory);
+  db.saveStories(stories);
+  res.json({ success: true, message: 'Story created successfully!', story: newStory });
+});
+
+// 5. Delete Single Story
+app.delete('/api/admin/stories/:slug', requireAdminAuth, (req, res) => {
+  const stories = db.getStories();
+  const filtered = stories.filter(s => s.slug !== req.params.slug);
+  if (filtered.length === stories.length) {
+    return res.status(404).json({ success: false, error: 'Story not found' });
+  }
+  db.saveStories(filtered);
+  res.json({ success: true, message: 'Story deleted successfully', remainingStories: filtered.length });
+});
+
+// 6. Drip Publishing Engine (Auto-releases scheduled stories)
+app.post('/api/admin/drip-publish', requireAdminAuth, (req, res) => {
+  const stories = db.getStories();
+  const now = new Date();
+  let publishedNow = 0;
+
+  stories.forEach(s => {
+    if (s.status === 'scheduled' && s.publishAt && new Date(s.publishAt) <= now) {
+      s.status = 'published';
+      s.publicationDate = now.toISOString();
+      publishedNow++;
+    }
+  });
+
+  if (publishedNow > 0) {
+    db.saveStories(stories);
+  }
+  res.json({ success: true, publishedNow, totalStories: stories.length });
 });
 
 // Admin On-Demand Google Imagen 3 Photorealistic Story Cover Generation

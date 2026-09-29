@@ -333,6 +333,19 @@ async function showStoryReader(slug) {
       bodyEl.appendChild(p);
     });
 
+    // Curatorial Editor's Note (AdSense High-Value Content Compliance)
+    if (story.editorsNote && story.editorsNote.trim()) {
+      const noteEl = document.createElement('div');
+      noteEl.className = 'editors-note-box';
+      noteEl.innerHTML = `
+        <div class="editors-note-header">
+          <i class="fa-solid fa-feather-pointed"></i> Curatorial & Editorial Note
+        </div>
+        <p>${story.editorsNote.trim()}</p>
+      `;
+      bodyEl.appendChild(noteEl);
+    }
+
     // PART CONTINUATION & PREVIOUS EPISODE SYSTEM
     const part2Box = document.getElementById('partContinuationCard');
     const partBadge = document.getElementById('partCardBadge') || part2Box.querySelector('.part-card-badge');

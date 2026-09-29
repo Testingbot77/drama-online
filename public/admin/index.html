@@ -319,9 +319,20 @@
       <!-- TAB 3: STORY LIBRARY -->
       <section id="tab-stories" class="admin-section">
         <div class="panel-card">
-          <div class="panel-header">
-            <h3><i class="fa-solid fa-book"></i> Taleonix Story Library</h3>
-            <span class="count-badge" id="storyCountBadge">6 Stories</span>
+          <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <h3><i class="fa-solid fa-book"></i> Taleonix Story Library</h3>
+              <p class="panel-sub" style="margin-bottom:0;">Edit story text, add Editor's Notes for AdSense, or bulk-import expanded JSON collections.</p>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <span class="count-badge" id="storyCountBadge">6 Stories</span>
+              <button class="btn-action-accent" onclick="openBulkImportModal()" style="padding:8px 16px; font-size:0.88rem;">
+                <i class="fa-solid fa-file-import"></i> Bulk Import JSON
+              </button>
+              <button class="btn-action-primary" onclick="openStoryEditModal(null)" style="padding:8px 16px; font-size:0.88rem;">
+                <i class="fa-solid fa-plus"></i> Add New Story
+              </button>
+            </div>
           </div>
           <div class="table-container">
             <table class="admin-table">
@@ -331,8 +342,8 @@
                   <th>Title & Slug</th>
                   <th>Category</th>
                   <th>Part</th>
-                  <th>Reads</th>
                   <th>Status</th>
+                  <th>Editor's Note</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -514,12 +525,33 @@
         </div>
       </section>
 
-      <!-- TAB 6: SETTINGS -->
+      <!-- TAB 6: SETTINGS & REST API ACCESS -->
       <section id="tab-settings" class="admin-section">
         <div class="panel-card">
           <h3><i class="fa-solid fa-sliders"></i> Platform & Monetization Configuration</h3>
           
           <form onsubmit="saveAdminSettings(event)" class="settings-form">
+            
+            <!-- REST API Access Card -->
+            <div style="background: rgba(229,169,60,0.08); border: 1.5px solid var(--accent-gold); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+              <h4 style="color:var(--accent-gold); margin-top:0;"><i class="fa-solid fa-key"></i> Master REST API Key (Write Access)</h4>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">Use this API Key to bulk update stories, upload chapters, or sync automated storytelling pipelines via external Python/Node scripts.</p>
+              
+              <div style="display:flex; gap:10px; align-items:center;">
+                <input type="text" id="setMasterApiKey" readonly class="admin-input" style="font-family:monospace; font-weight:700; color:var(--accent-gold); background:#090b12;" value="taleonix_live_master_key_2026_us">
+                <button type="button" class="btn-action-accent" onclick="copyMasterApiKey()" style="white-space:nowrap; padding:10px 18px;">
+                  <i class="fa-solid fa-copy"></i> Copy Key
+                </button>
+              </div>
+              <span class="input-hint" style="margin-top:8px; display:block;">Endpoint: <code>POST /api/admin/stories/bulk-import</code> with header <code>Authorization: Bearer [KEY]</code></span>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fa-solid fa-shield-halved"></i> Admin Master Access PIN</label>
+              <input type="text" id="setAdminPin" class="admin-input" placeholder="Current PIN: 1234">
+              <span class="input-hint">Use this 4-digit PIN (default: <strong>1234</strong>) to log in to this Cockpit.</span>
+            </div>
+
             <div class="form-group">
               <label><i class="fa-solid fa-key"></i> Google Gemini API Key</label>
               <input type="password" id="setGeminiKey" class="admin-input" placeholder="AIzaSy...">
@@ -528,7 +560,7 @@
 
             <div class="form-group">
               <label><i class="fa-brands fa-google"></i> Google AdSense Publisher ID</label>
-              <input type="text" id="setAdsenseId" class="admin-input" placeholder="ca-pub-XXXXXXXXXXXXXXXX">
+              <input type="text" id="setAdsenseId" class="admin-input" placeholder="ca-pub-3806896432302528">
               <span class="input-hint">Your approved Google AdSense Client ID.</span>
             </div>
 
@@ -536,11 +568,6 @@
               <label><i class="fa-solid fa-globe"></i> Live Publication Domain URL</label>
               <input type="text" id="setDomainUrl" class="admin-input" placeholder="https://drama-online.onrender.com">
               <span class="input-hint">Base URL used for generating Facebook tracked story links.</span>
-            </div>
-
-            <div class="form-group">
-              <label><i class="fa-solid fa-shield-halved"></i> Change Admin Master PIN</label>
-              <input type="password" id="setAdminPin" class="admin-input" placeholder="Enter new PIN">
             </div>
 
             <div class="divider"></div>
@@ -568,8 +595,122 @@
     </main>
   </div>
 
+  <!-- ================= EDIT STORY MODAL ================= -->
+  <div id="storyEditModal" class="admin-modal-backdrop" style="display:none;">
+    <div class="admin-modal-card large" style="max-width:850px; max-height:90vh; overflow-y:auto;">
+      <div class="modal-header">
+        <h3 id="editModalTitle"><i class="fa-solid fa-pen-to-square"></i> Edit Story Chapter</h3>
+        <button type="button" class="btn-modal-close" onclick="closeStoryEditModal()">✕</button>
+      </div>
+      <form onsubmit="handleSaveStoryEdit(event)" class="modal-body-form" style="padding:20px 24px;">
+        <input type="hidden" id="editStorySlugHidden">
+        
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Story Title *</label>
+            <input type="text" id="editStoryTitle" class="admin-input" required>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="editStoryCategory" class="admin-select">
+              <option value="Family Secrets">Family Secrets</option>
+              <option value="Billionaire Drama">Billionaire Drama</option>
+              <option value="Inheritance & Wills">Inheritance & Wills</option>
+              <option value="Revenge & Retribution">Revenge & Retribution</option>
+              <option value="Marriage & Betrayal">Marriage & Betrayal</option>
+              <option value="Undercover & Power">Undercover & Power</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Read Time</label>
+            <input type="text" id="editStoryReadTime" class="admin-input" placeholder="8 min read">
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="editStoryStatus" class="admin-select">
+              <option value="published">Published (Live)</option>
+              <option value="scheduled">Scheduled (Drip Release)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Publish Date / Schedule</label>
+            <input type="datetime-local" id="editStoryPublishAt" class="admin-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Cover Image URL / Path</label>
+          <input type="text" id="editStoryCover" class="admin-input" placeholder="/images/the-two-mothers-at-graduation-cover.jpg">
+        </div>
+
+        <div class="form-group">
+          <label>Hook Summary (2–3 Lines for Facebook & Google Meta) *</label>
+          <textarea id="editStoryHook" rows="2" class="admin-input" required></textarea>
+        </div>
+
+        <!-- Editor's Note (AdSense Content Value Booster) -->
+        <div class="form-group" style="background:rgba(229,169,60,0.08); border:1px solid rgba(229,169,60,0.3); border-radius:8px; padding:14px; margin-bottom:18px;">
+          <label style="color:var(--accent-gold); font-weight:700;"><i class="fa-solid fa-feather-pointed"></i> Editor's Note & Literary Commentary (100–150 Words for AdSense Fix)</label>
+          <textarea id="editStoryEditorsNote" rows="3" class="admin-input" placeholder="Add editorial commentary on the character motives, moral dilemma, and societal themes..."></textarea>
+          <span class="input-hint" style="color:var(--accent-gold);">This commentary displays on the story page to satisfy Google AdSense High-Value Content policies.</span>
+        </div>
+
+        <div class="form-group">
+          <label>Full Story Text / Paragraphs (Separate paragraphs with blank lines) *</label>
+          <textarea id="editStoryParagraphs" rows="12" class="admin-input" style="font-family:Georgia, serif; font-size:0.95rem; line-height:1.6;" required></textarea>
+        </div>
+
+        <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+          <button type="button" class="btn-action-secondary" onclick="closeStoryEditModal()">Cancel</button>
+          <button type="submit" class="btn-action-accent" id="btnSaveStoryEdit">
+            <i class="fa-solid fa-floppy-disk"></i> Save & Publish Live
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= BULK IMPORT JSON MODAL ================= -->
+  <div id="bulkImportModal" class="admin-modal-backdrop" style="display:none;">
+    <div class="admin-modal-card" style="max-width:700px; max-height:85vh; overflow-y:auto;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-file-import"></i> Bulk Import Stories JSON</h3>
+        <button type="button" class="btn-modal-close" onclick="closeBulkImportModal()">✕</button>
+      </div>
+      <div class="modal-body-form" style="padding:20px 24px;">
+        <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:14px;">
+          Upload a <code>.json</code> file or paste a JSON array of stories. Each story object should contain <code>title</code>, <code>slug</code>, <code>paragraphs</code> (array or text), <code>hookSummary</code>, and optional <code>editorsNote</code>.
+        </p>
+
+        <div class="form-group">
+          <label>Select JSON File from Computer</label>
+          <input type="file" id="bulkJsonFileInput" accept=".json,application/json" class="admin-input" onchange="handleBulkJsonFileSelect(this)">
+        </div>
+
+        <div class="form-group">
+          <label>Or Paste Raw JSON Data</label>
+          <textarea id="bulkJsonTextarea" rows="8" class="admin-input" placeholder='[ { "title": "...", "paragraphs": ["..."], "hookSummary": "...", "editorsNote": "..." } ]' style="font-family:monospace; font-size:0.8rem;" oninput="previewPastedJson(this)"></textarea>
+        </div>
+
+        <div id="bulkImportPreview" style="display:none; padding:10px 14px; background:rgba(0,210,106,0.1); border:1px solid rgba(0,210,106,0.3); border-radius:6px; font-size:0.88rem; color:#00d26a; margin-bottom:14px;">
+          <i class="fa-solid fa-circle-check"></i> <span id="bulkImportCount">0</span> stories ready to import.
+        </div>
+
+        <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+          <button type="button" class="btn-action-secondary" onclick="closeBulkImportModal()">Cancel</button>
+          <button type="button" class="btn-action-accent" id="btnExecuteBulkImport" onclick="executeBulkImport()">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Execute Bulk Import
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="adminToast" class="admin-toast"></div>
 
-  <script src="/admin/admin.js?v=3.0.0"></script>
+  <script src="/admin/admin.js?v=3.5.0"></script>
 </body>
 </html>

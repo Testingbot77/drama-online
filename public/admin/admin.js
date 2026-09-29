@@ -345,7 +345,7 @@ function renderStoryLibrary(stories) {
   const table = document.getElementById('storyLibraryTable');
   if (!table) return;
   table.innerHTML = '';
-  document.getElementById('storyCountBadge').innerText = `${stories.length} Chapters Published`;
+  document.getElementById('storyCountBadge').innerText = `${stories.length} Chapters in Database`;
 
   const domain = getProductionDomain();
 
@@ -353,30 +353,286 @@ function renderStoryLibrary(stories) {
     const cleanCode = (s.slug.replace(/[^a-zA-Z0-9]/g, '').slice(0, 6).toLowerCase() || ('s' + (s.partNumber || 1)));
     const shortUrl = `${domain}/s/${cleanCode}`;
     const fbCaption = `${s.title} — Full Chapter Available Now!\n\n🔥 Read Full Story Free 👉 ${shortUrl}\n\n#drama #viral #taleonix`;
+    const hasNote = Boolean(s.editorsNote && s.editorsNote.trim().length > 10);
+    const isScheduled = s.status === 'scheduled';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><img src="${s.coverImage || '/images/the-graduation-envelope-mother-in-green-cover.jpg'}" class="table-thumb" alt="Cover" style="width:70px; aspect-ratio:16/9; object-fit:cover; border-radius:6px;"></td>
       <td>
-        <strong style="font-size:0.92rem;">${s.title}</strong><br>
+        <strong style="font-size:0.92rem; color:#fff;">${s.title}</strong><br>
         <span style="font-size:0.75rem; color: var(--text-dim); font-family: monospace;">/story/${s.slug}</span>
       </td>
       <td><span class="badge-cat" style="font-size:0.75rem;">${s.category || 'Drama'}</span></td>
       <td><strong style="color:var(--accent-gold);">Part ${s.partNumber || 1}</strong></td>
+      <td>
+        ${isScheduled 
+          ? '<span style="background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid #3b82f6; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;"><i class="fa-solid fa-clock"></i> Scheduled</span>'
+          : '<span style="background:rgba(0,210,106,0.15); color:#00d26a; border:1px solid rgba(0,210,106,0.3); padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;"><i class="fa-solid fa-circle-check"></i> Live</span>'
+        }
+      </td>
+      <td>
+        ${hasNote 
+          ? '<span style="color:#00d26a; font-size:0.8rem; font-weight:600;"><i class="fa-solid fa-check"></i> 100+ Words</span>'
+          : '<button onclick="openStoryEditModal(\'' + escapeAdminStr(s.slug) + '\')" style="background:rgba(229,169,60,0.15); color:var(--accent-gold); border:1px solid var(--accent-gold); padding:2px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;"><i class="fa-solid fa-plus"></i> Add Note</button>'
+        }
+      </td>
       <td style="white-space:nowrap;">
-        <button class="btn-action-accent" onclick="copyTrackingLinkUrl('${escapeAdminStr(shortUrl)}', '⚡ Short link copied! Ready to post in bio/captions')" title="Copy Short Link" style="padding:6px 12px; font-size:0.8rem; margin-right:4px;">
-          <i class="fa-solid fa-copy"></i> Copy Link
+        <button class="btn-action-accent" onclick="openStoryEditModal('${escapeAdminStr(s.slug)}')" title="Edit Story Text & Notes" style="padding:6px 12px; font-size:0.8rem; margin-right:4px;">
+          <i class="fa-solid fa-pen-to-square"></i> Edit
         </button>
-        <button class="btn-action-primary" onclick="copyTrackingLinkUrl('${escapeAdminStr(fbCaption)}', '📝 Facebook caption with link copied!')" title="Copy Ready Facebook Caption" style="padding:6px 10px; font-size:0.8rem; margin-right:4px;">
-          <i class="fa-brands fa-facebook"></i> Caption
+        <button class="btn-action-primary" onclick="copyTrackingLinkUrl('${escapeAdminStr(shortUrl)}', '⚡ Short link copied!')" title="Copy Short Link" style="padding:6px 10px; font-size:0.8rem; margin-right:4px;">
+          <i class="fa-solid fa-copy"></i>
         </button>
-        <a href="/story/${s.slug}" target="_blank" class="btn-action-secondary" style="padding:6px 10px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i> Read
+        <a href="/story/${s.slug}" target="_blank" class="btn-action-secondary" style="padding:6px 10px; font-size:0.8rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px; margin-right:4px;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
+        <button onclick="handleDeleteStory('${escapeAdminStr(s.slug)}')" title="Delete Story" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#ef4444; padding:6px 8px; border-radius:6px; cursor:pointer;">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </td>
     `;
     table.appendChild(tr);
   });
+}
+
+// ================= STORY EDITING & MODAL LOGIC =================
+function openStoryEditModal(slug) {
+  const modal = document.getElementById('storyEditModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+
+  if (!slug) {
+    // Create new story
+    document.getElementById('editModalTitle').innerHTML = '<i class="fa-solid fa-plus"></i> Add New Story Chapter';
+    document.getElementById('editStorySlugHidden').value = '';
+    document.getElementById('editStoryTitle').value = '';
+    document.getElementById('editStoryCategory').value = 'Family Secrets';
+    document.getElementById('editStoryReadTime').value = '8 min read';
+    document.getElementById('editStoryStatus').value = 'published';
+    document.getElementById('editStoryPublishAt').value = '';
+    document.getElementById('editStoryCover').value = '/images/the-two-mothers-at-graduation-cover.jpg';
+    document.getElementById('editStoryHook').value = '';
+    document.getElementById('editStoryEditorsNote').value = '';
+    document.getElementById('editStoryParagraphs').value = '';
+    return;
+  }
+
+  const story = allAdminStories.find(s => s.slug === slug);
+  if (!story) return;
+
+  document.getElementById('editModalTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Edit: ${story.title.slice(0, 40)}...`;
+  document.getElementById('editStorySlugHidden').value = story.slug;
+  document.getElementById('editStoryTitle').value = story.title || '';
+  document.getElementById('editStoryCategory').value = story.category || 'Family Secrets';
+  document.getElementById('editStoryReadTime').value = story.readTime || '8 min read';
+  document.getElementById('editStoryStatus').value = story.status || 'published';
+  document.getElementById('editStoryPublishAt').value = story.publishAt ? story.publishAt.slice(0, 16) : '';
+  document.getElementById('editStoryCover').value = story.coverImage || '';
+  document.getElementById('editStoryHook').value = story.hookSummary || '';
+  document.getElementById('editStoryEditorsNote').value = story.editorsNote || '';
+  document.getElementById('editStoryParagraphs').value = Array.isArray(story.paragraphs) ? story.paragraphs.join('\n\n') : (story.paragraphs || '');
+}
+
+function closeStoryEditModal() {
+  const modal = document.getElementById('storyEditModal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function handleSaveStoryEdit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveStoryEdit');
+  const slug = document.getElementById('editStorySlugHidden').value;
+  const title = document.getElementById('editStoryTitle').value;
+  const category = document.getElementById('editStoryCategory').value;
+  const readTime = document.getElementById('editStoryReadTime').value;
+  const status = document.getElementById('editStoryStatus').value;
+  const publishAt = document.getElementById('editStoryPublishAt').value;
+  const coverImage = document.getElementById('editStoryCover').value;
+  const hookSummary = document.getElementById('editStoryHook').value;
+  const editorsNote = document.getElementById('editStoryEditorsNote').value;
+  const paragraphsText = document.getElementById('editStoryParagraphs').value;
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+  }
+
+  const payload = {
+    slug,
+    title,
+    category,
+    readTime,
+    status,
+    publishAt: publishAt ? new Date(publishAt).toISOString() : null,
+    coverImage,
+    hookSummary,
+    editorsNote,
+    paragraphs: paragraphsText.split('\n\n').map(p => p.trim()).filter(Boolean)
+  };
+
+  try {
+    const url = slug ? '/api/admin/stories/update' : '/api/admin/stories';
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${adminToken}`
+      },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('🎉 Story saved and updated live on website!');
+      closeStoryEditModal();
+      // Reload stories
+      const storiesRes = await fetch('/api/stories');
+      const sData = await storiesRes.json();
+      if (sData.success) {
+        allAdminStories = sData.stories;
+        renderStoryLibrary(allAdminStories);
+        populateStorySelect(allAdminStories);
+      }
+    } else {
+      showToast('Error saving: ' + (data.error || 'Server error'));
+    }
+  } catch (err) {
+    showToast('Failed to save story: ' + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save & Publish Live';
+    }
+  }
+}
+
+async function handleDeleteStory(slug) {
+  if (!confirm(`Are you sure you want to delete story: ${slug}?`)) return;
+
+  try {
+    const res = await fetch(`/api/admin/stories/${slug}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Story deleted.');
+      allAdminStories = allAdminStories.filter(s => s.slug !== slug);
+      renderStoryLibrary(allAdminStories);
+      populateStorySelect(allAdminStories);
+    }
+  } catch (err) {
+    showToast('Delete failed: ' + err.message);
+  }
+}
+
+// ================= BULK IMPORT JSON MODAL LOGIC =================
+function openBulkImportModal() {
+  const modal = document.getElementById('bulkImportModal');
+  if (modal) modal.style.display = 'flex';
+  document.getElementById('bulkJsonTextarea').value = '';
+  document.getElementById('bulkImportPreview').style.display = 'none';
+}
+
+function closeBulkImportModal() {
+  const modal = document.getElementById('bulkImportModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function handleBulkJsonFileSelect(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    document.getElementById('bulkJsonTextarea').value = text;
+    previewPastedJson({ value: text });
+  };
+  reader.readAsText(file);
+}
+
+function previewPastedJson(textarea) {
+  const val = textarea.value.trim();
+  const preview = document.getElementById('bulkImportPreview');
+  const countSpan = document.getElementById('bulkImportCount');
+  if (!val) {
+    preview.style.display = 'none';
+    return;
+  }
+  try {
+    const parsed = JSON.parse(val);
+    const list = Array.isArray(parsed) ? parsed : (parsed.stories || [parsed]);
+    countSpan.innerText = list.length;
+    preview.style.display = 'block';
+  } catch(e) {
+    preview.style.display = 'none';
+  }
+}
+
+async function executeBulkImport() {
+  const textarea = document.getElementById('bulkJsonTextarea');
+  const btn = document.getElementById('btnExecuteBulkImport');
+  const val = textarea.value.trim();
+
+  if (!val) {
+    showToast('Please upload a JSON file or paste JSON data.');
+    return;
+  }
+
+  let parsedList;
+  try {
+    parsedList = JSON.parse(val);
+  } catch(err) {
+    showToast('Invalid JSON syntax: ' + err.message);
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Importing...';
+  }
+
+  try {
+    const res = await fetch('/api/admin/stories/bulk-import', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${adminToken}`
+      },
+      body: JSON.stringify(parsedList)
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`🎉 Bulk import success! ${data.addedCount} added, ${data.updatedCount} updated.`);
+      closeBulkImportModal();
+      // Refresh stories
+      const storiesRes = await fetch('/api/stories');
+      const sData = await storiesRes.json();
+      if (sData.success) {
+        allAdminStories = sData.stories;
+        renderStoryLibrary(allAdminStories);
+        populateStorySelect(allAdminStories);
+      }
+    } else {
+      showToast('Bulk import error: ' + (data.error || 'Unknown error'));
+    }
+  } catch (err) {
+    showToast('Import request failed: ' + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Execute Bulk Import';
+    }
+  }
+}
+
+function copyMasterApiKey() {
+  const input = document.getElementById('setMasterApiKey');
+  if (input) {
+    input.select();
+    navigator.clipboard.writeText(input.value);
+    showToast('🔑 Master REST API Key copied to clipboard!');
+  }
 }
 
 function populateStorySelect(stories) {

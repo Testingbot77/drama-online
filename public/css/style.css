@@ -2089,4 +2089,37 @@ body.theme-light .adsense-clean-slot {
   50% { box-shadow: 0 12px 36px rgba(245, 158, 11, 0.7); }
 }
 
+/* ================= EDITORS NOTE / CURATORIAL VALUE (ADSENSE FIX) ================= */
+.editors-note-box {
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-left: 4px solid var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  margin: 28px 0 32px 0;
+  color: var(--text-secondary);
+}
+
+.editors-note-header {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editors-note-box p {
+  font-size: 0.96rem !important;
+  line-height: 1.65 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-style: italic;
+  margin: 0 !important;
+}
+
+
 
