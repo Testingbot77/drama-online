@@ -1181,66 +1181,113 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'admin', 'index.html'));
 });
 
-// ======================== HTML ROUTING & OPENGRAPH INJECTION ========================
+// ======================== HTML ROUTING, 404 HANDLING & OPENGRAPH INJECTION ========================
+
+function get404Html() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Page Not Found | Taleonix</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body { background: #07090e; color: #fff; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: 'Outfit', sans-serif; text-align: center; }
+    .not-found-box { max-width: 550px; padding: 40px 24px; }
+    .not-found-code { font-size: 5rem; font-weight: 900; color: #f59e0b; margin: 0; line-height: 1; }
+    .not-found-title { font-size: 1.8rem; font-weight: 800; margin: 16px 0 10px 0; color: #fff; }
+    .not-found-desc { color: #94a3b8; font-size: 1rem; line-height: 1.6; margin-bottom: 28px; }
+    .btn-home { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s; }
+    .btn-home:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="not-found-box">
+    <div class="not-found-code">404</div>
+    <h1 class="not-found-title">Story or Page Not Found</h1>
+    <p class="not-found-desc">The chapter or page you are looking for may have been removed, deleted, or does not exist. Explore our latest trending serialized sagas instead.</p>
+    <a href="/" class="btn-home"><i class="fa-solid fa-house"></i> Return to Homepage</a>
+  </div>
+</body>
+</html>`;
+}
 
 // Server-rendered OpenGraph HTML for Facebook sharing on /story/:slug
 app.get('/story/:slug', (req, res) => {
   const stories = db.getStories();
-  const story = stories.find(s => s.slug === req.params.slug);
+  const slugParam = req.params.slug;
+  let story = stories.find(s => s.slug === slugParam);
+
+  if (!story) {
+    const aliasMap = {
+      'the-grandmothers-secret-quilt': 'the-grandmothers-handwritten-ledger-inheritance',
+      'the-grandmothers-secret-quilt-part-2-the-48-million-retribution': 'the-grandmothers-handwritten-ledger-part-2-grand-finale',
+      'the-forgotten-portrait-family-will': 'the-gold-framed-deed-refused-to-pack',
+      'the-forgotten-portrait-part-2-grand-finale': 'the-gold-framed-deed-chapter-6-grand-finale',
+      'the-two-mothers-at-graduation-part-2-the-50-million-legacy': 'the-two-mothers-at-graduation-chapter-6-grand-finale'
+    };
+    const targetSlug = aliasMap[slugParam] || slugParam;
+    story = stories.find(s => s.slug === targetSlug);
+  }
+
+  // Proper HTTP 404 for deleted or non-existent stories (Prevents Google Soft 404 Penalty)
+  if (!story) {
+    return res.status(404).send(get404Html());
+  }
+
   const settings = db.getSettings();
   const domain = settings.domainUrl || `http://${req.headers.host}`;
-
   const indexPath = path.join(__dirname, '..', 'public', 'index.html');
   let html = fs.readFileSync(indexPath, 'utf8');
 
-  if (story) {
-    const fullUrl = `${domain}/story/${story.slug}`;
-    const fullImg = story.coverImage?.startsWith('http') ? story.coverImage : `${domain}${story.coverImage || '/images/story1_cover.svg'}`;
-    const safeTitle = story.title.replace(/"/g, '&quot;');
-    const safeDesc = (story.hookSummary || story.seoDescription || '').replace(/"/g, '&quot;');
+  const fullUrl = `${domain}/story/${story.slug}`;
+  const fullImg = story.coverImage?.startsWith('http') ? story.coverImage : `${domain}${story.coverImage || '/images/story1_cover.svg'}`;
+  const safeTitle = story.title.replace(/"/g, '&quot;');
+  const safeDesc = (story.hookSummary || story.seoDescription || '').replace(/"/g, '&quot;');
 
-    const ogTags = `
-    <!-- Taleonix Dynamic OpenGraph Meta for Facebook & AdSense Bots -->
-    <title>${safeTitle} | Taleonix</title>
-    <meta name="description" content="${safeDesc}">
-    <link rel="canonical" href="${fullUrl}">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="Taleonix">
-    <meta property="og:title" content="${safeTitle}">
-    <meta property="og:description" content="${safeDesc}">
-    <meta property="og:image" content="${fullImg}">
-    <meta property="og:url" content="${fullUrl}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="${safeTitle}">
-    <meta name="twitter:description" content="${safeDesc}">
-    <meta name="twitter:image" content="${fullImg}">
-    `;
+  const ogTags = `
+  <!-- Taleonix Dynamic OpenGraph Meta for Facebook & AdSense Bots -->
+  <title>${safeTitle} | Taleonix</title>
+  <meta name="description" content="${safeDesc}">
+  <link rel="canonical" href="${fullUrl}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Taleonix">
+  <meta property="og:title" content="${safeTitle}">
+  <meta property="og:description" content="${safeDesc}">
+  <meta property="og:image" content="${fullImg}">
+  <meta property="og:url" content="${fullUrl}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${safeTitle}">
+  <meta name="twitter:description" content="${safeDesc}">
+  <meta name="twitter:image" content="${fullImg}">
+  `;
 
-    html = html.replace('<!-- DYNAMIC_META_TAGS -->', ogTags);
+  html = html.replace('<!-- DYNAMIC_META_TAGS -->', ogTags);
 
-    // SSR body content injection for AdSense automated crawlers & Googlebot
-    const isScheduledFuture = story.status === 'scheduled' && new Date(story.publishAt || story.publicationDate) > new Date();
-    const pubDateStr = new Date(story.publishAt || story.publicationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  // SSR body content injection for AdSense automated crawlers & Googlebot
+  const isScheduledFuture = story.status === 'scheduled' && new Date(story.publishAt || story.publicationDate) > new Date();
+  const pubDateStr = new Date(story.publishAt || story.publicationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-    const paragraphsHtml = isScheduledFuture
-      ? `<div class="scheduled-premiere-notice" style="text-align:center; padding:50px 20px; background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.3); border-radius:12px; margin:30px 0;">
-          <div style="font-size:2.5rem; margin-bottom:12px;">⏳</div>
-          <h2 style="font-size:1.6rem; color:#fff; margin-bottom:10px;">Episode Premiere Locked</h2>
-          <p style="color:#d1d5db; font-size:1rem; max-width:540px; margin:0 auto 20px auto;">This chapter is scheduled to premiere on <strong>${pubDateStr}</strong>. Subscribe below to get an instant notification alert the moment it goes live.</p>
-        </div>`
-      : (story.paragraphs || []).map(p => {
-          if (p.startsWith('[') && p.endsWith(']')) {
-            return `<div class="story-location-tag"><i class="fa-solid fa-location-dot"></i> ${p.slice(1, -1)}</div>`;
-          }
-          return `<p>${p}</p>`;
-        }).join('\n');
+  const paragraphsHtml = isScheduledFuture
+    ? `<div class="scheduled-premiere-notice" style="text-align:center; padding:50px 20px; background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.3); border-radius:12px; margin:30px 0;">
+        <div style="font-size:2.5rem; margin-bottom:12px;">⏳</div>
+        <h2 style="font-size:1.6rem; color:#fff; margin-bottom:10px;">Episode Premiere Locked</h2>
+        <p style="color:#d1d5db; font-size:1rem; max-width:540px; margin:0 auto 20px auto;">This chapter is scheduled to premiere on <strong>${pubDateStr}</strong>. Subscribe below to get an instant notification alert the moment it goes live.</p>
+      </div>`
+    : (story.paragraphs || []).map(p => {
+        if (p.startsWith('[') && p.endsWith(']')) {
+          return `<div class="story-location-tag"><i class="fa-solid fa-location-dot"></i> ${p.slice(1, -1)}</div>`;
+        }
+        return `<p>${p}</p>`;
+      }).join('\n');
 
-    html = html.replace('<h1 class="story-main-title" id="readerTitle">Story Title Loading...</h1>', `<h1 class="story-main-title" id="readerTitle">${safeTitle}</h1>`);
-    html = html.replace('<p class="story-lead-synopsis" id="readerSynopsis">Story synopsis loading...</p>', `<p class="story-lead-synopsis" id="readerSynopsis">${safeDesc}</p>`);
-    html = html.replace('<span class="badge-cat" id="readerCategory">Billionaire Drama</span>', `<span class="badge-cat" id="readerCategory">${story.category || 'Family Drama'}</span>`);
-    html = html.replace('<span class="byline-author" id="readerAuthor">Elena Vance</span>', `<span class="byline-author" id="readerAuthor">${story.author || 'Elena Vance & Taleonix Editorial'}</span>`);
-    html = html.replace('<!-- Paragraphs injected cleanly by JS -->', paragraphsHtml);
-  }
+  html = html.replace('<h1 class="story-main-title" id="readerTitle">Story Title Loading...</h1>', `<h1 class="story-main-title" id="readerTitle">${safeTitle}</h1>`);
+  html = html.replace('<p class="story-lead-synopsis" id="readerSynopsis">Story synopsis loading...</p>', `<p class="story-lead-synopsis" id="readerSynopsis">${safeDesc}</p>`);
+  html = html.replace('<span class="badge-cat" id="readerCategory">Billionaire Drama</span>', `<span class="badge-cat" id="readerCategory">${story.category || 'Family Drama'}</span>`);
+  html = html.replace('<span class="byline-author" id="readerAuthor">Elena Vance</span>', `<span class="byline-author" id="readerAuthor">${story.author || 'Elena Vance & Taleonix Editorial'}</span>`);
+  html = html.replace('<!-- Paragraphs injected cleanly by JS -->', paragraphsHtml);
 
   res.send(html);
 });
@@ -1288,9 +1335,16 @@ Object.entries(legalMetaMap).forEach(([routePath, meta]) => {
   });
 });
 
-// Fallback to Public SPA index.html for all other reader routes
+// Fallback: Valid frontend paths get index.html, invalid paths get true HTTP 404
+const VALID_FRONTEND_PREFIXES = ['/category/', '/trending', '/about', '/contact', '/privacy-policy', '/terms', '/disclaimer'];
+
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  const reqPath = req.path;
+  if (reqPath === '/' || VALID_FRONTEND_PREFIXES.some(prefix => reqPath.startsWith(prefix) || reqPath === prefix)) {
+    return res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  }
+  // True 404 HTTP status for Googlebot & SEO Crawlers
+  res.status(404).send(get404Html());
 });
 
 // Start Server and Folder Watcher

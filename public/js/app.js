@@ -1200,4 +1200,91 @@ function dismissAdblockNotice() {
   localStorage.setItem('taleonix_adblock_dismissed', 'true');
 }
 
+// ================= LIVE SITE SEARCH ENGINE (102+ STORIES) =================
+let searchDebounceTimer = null;
+
+function handleSiteSearch(rawQuery) {
+  clearTimeout(searchDebounceTimer);
+  const query = (rawQuery || '').trim().toLowerCase();
+  const dropdown = document.getElementById('searchResultsDropdown');
+  const clearBtn = document.getElementById('clearSearchBtn');
+
+  if (clearBtn) {
+    clearBtn.style.display = query ? 'inline-block' : 'none';
+  }
+
+  if (!dropdown) return;
+
+  if (!query || query.length < 2) {
+    dropdown.style.display = 'none';
+    dropdown.innerHTML = '';
+    return;
+  }
+
+  searchDebounceTimer = setTimeout(() => {
+    // Search across all published stories in memory
+    const matches = allPubStories.filter(s => {
+      const titleMatch = (s.title || '').toLowerCase().includes(query);
+      const catMatch = (s.category || '').toLowerCase().includes(query);
+      const hookMatch = (s.hookSummary || '').toLowerCase().includes(query);
+      const tagMatch = (s.tags || []).some(t => t.toLowerCase().includes(query));
+      return titleMatch || catMatch || hookMatch || tagMatch;
+    }).slice(0, 7);
+
+    if (matches.length === 0) {
+      dropdown.innerHTML = `
+        <div style="padding:18px; text-align:center; color:var(--text-muted); font-size:0.88rem;">
+          No stories found matching "<strong>${escapePublicHtml(query)}</strong>".
+        </div>
+      `;
+      dropdown.style.display = 'flex';
+      return;
+    }
+
+    dropdown.innerHTML = matches.map(m => `
+      <a href="/story/${m.slug}" class="search-result-item" onclick="selectSearchResult(event, '/story/${m.slug}')">
+        <img src="${m.coverImage || '/images/the-graduation-envelope-mother-in-green-cover.jpg'}" alt="${escapePublicHtml(m.title)}" class="search-result-thumb">
+        <div class="search-result-info">
+          <div class="search-result-title">${escapePublicHtml(m.title)}</div>
+          <div class="search-result-meta">
+            <span><i class="fa-solid fa-folder-open"></i> ${m.category || 'Drama'}</span>
+            <span><i class="fa-regular fa-clock"></i> ${m.readTime || '8 min'}</span>
+          </div>
+        </div>
+      </a>
+    `).join('');
+
+    dropdown.style.display = 'flex';
+  }, 120);
+}
+
+function selectSearchResult(e, path) {
+  clearSiteSearch();
+  handleNavClick(e, path);
+}
+
+function clearSiteSearch() {
+  const desktopInput = document.getElementById('siteSearchInput');
+  const mobileInput = document.getElementById('mobileSearchInput');
+  const dropdown = document.getElementById('searchResultsDropdown');
+  const clearBtn = document.getElementById('clearSearchBtn');
+
+  if (desktopInput) desktopInput.value = '';
+  if (mobileInput) mobileInput.value = '';
+  if (dropdown) {
+    dropdown.style.display = 'none';
+    dropdown.innerHTML = '';
+  }
+  if (clearBtn) clearBtn.style.display = 'none';
+}
+
+// Close search dropdown on click outside
+document.addEventListener('click', (e) => {
+  const container = document.querySelector('.nav-search-container');
+  const dropdown = document.getElementById('searchResultsDropdown');
+  if (dropdown && container && !container.contains(e.target)) {
+    dropdown.style.display = 'none';
+  }
+});
+
 

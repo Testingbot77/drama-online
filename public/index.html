@@ -86,12 +86,29 @@
         <a href="/category/family" class="nav-item" onclick="handleNavClick(event, '/category/family')">Family Secrets</a>
         <a href="/category/billionaire" class="nav-item" onclick="handleNavClick(event, '/category/billionaire')">Billionaire</a>
         <a href="/category/inheritance" class="nav-item" onclick="handleNavClick(event, '/category/inheritance')">Inheritance</a>
-        <a href="/category/revenge" class="nav-item" onclick="handleNavClick(event, '/category/revenge')">Revenge</a>
       </nav>
+
+      <!-- Live Site Search Bar -->
+      <div class="nav-search-container">
+        <div class="search-bar-inner">
+          <i class="fa-solid fa-magnifying-glass search-bar-icon"></i>
+          <input type="text" id="siteSearchInput" placeholder="Search 102+ stories, plots, betrayals..." oninput="handleSiteSearch(this.value)" autocomplete="off">
+          <button id="clearSearchBtn" onclick="clearSiteSearch()" class="btn-clear-search" style="display:none;" aria-label="Clear search">✕</button>
+        </div>
+        <!-- Live Instant Search Dropdown -->
+        <div class="search-dropdown-results" id="searchResultsDropdown" style="display: none;"></div>
+      </div>
     </div>
 
     <!-- Mobile Drawer Nav -->
     <div class="mobile-drawer" id="mobileDrawer">
+      <!-- Mobile Search Input -->
+      <div style="padding: 10px 14px; margin-bottom: 8px;">
+        <div class="search-bar-inner" style="width: 100%;">
+          <i class="fa-solid fa-magnifying-glass search-bar-icon"></i>
+          <input type="text" id="mobileSearchInput" placeholder="Search stories..." oninput="handleSiteSearch(this.value)" autocomplete="off">
+        </div>
+      </div>
       <a href="/" class="mobile-item" onclick="handleNavClick(event, '/')"><i class="fa-solid fa-house"></i> Home</a>
       <a href="/trending" class="mobile-item" onclick="handleNavClick(event, '/trending')"><i class="fa-solid fa-fire"></i> Trending</a>
       <a href="/category/family" class="mobile-item" onclick="handleNavClick(event, '/category/family')"><i class="fa-solid fa-people-roof"></i> Family Secrets</a>
