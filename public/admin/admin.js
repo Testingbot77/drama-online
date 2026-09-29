@@ -1083,3 +1083,17 @@ function escapeAdminStr(str) {
 function waitMs(ms) {
   return new Promise(res => setTimeout(res, ms));
 }
+
+function toggleFieldVisibility(fieldId, btn) {
+  const input = document.getElementById(fieldId);
+  if (!input) return;
+  const isPass = input.type === 'password';
+  input.type = isPass ? 'text' : 'password';
+  if (btn) {
+    const icon = btn.querySelector('i');
+    if (icon) {
+      icon.className = isPass ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+    }
+  }
+}
+

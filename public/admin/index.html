@@ -557,7 +557,10 @@
               <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">Use this API Key to bulk update stories, upload chapters, or sync automated storytelling pipelines via external Python/Node scripts.</p>
               
               <div style="display:flex; gap:10px; align-items:center;">
-                <input type="text" id="setMasterApiKey" readonly class="admin-input" style="font-family:monospace; font-weight:700; color:var(--accent-gold); background:#090b12;" value="taleonix_live_master_key_2026_us">
+                <input type="password" id="setMasterApiKey" readonly class="admin-input" style="font-family:monospace; font-weight:700; color:var(--accent-gold); background:#090b12;" value="taleonix_live_master_key_2026_us">
+                <button type="button" class="btn-action-accent" onclick="toggleFieldVisibility('setMasterApiKey', this)" title="Show/Hide API Key" style="white-space:nowrap; padding:10px 14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff;">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
                 <button type="button" class="btn-action-accent" onclick="copyMasterApiKey()" style="white-space:nowrap; padding:10px 18px;">
                   <i class="fa-solid fa-copy"></i> Copy Key
                 </button>
@@ -567,13 +570,23 @@
 
             <div class="form-group">
               <label><i class="fa-solid fa-shield-halved"></i> Admin Master Access PIN</label>
-              <input type="text" id="setAdminPin" class="admin-input" placeholder="Current PIN: 1234">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <input type="password" id="setAdminPin" class="admin-input" placeholder="•••• (Default: 1234)">
+                <button type="button" class="btn-action-accent" onclick="toggleFieldVisibility('setAdminPin', this)" title="Show/Hide PIN" style="white-space:nowrap; padding:10px 14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff;">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
               <span class="input-hint">Use this 4-digit PIN (default: <strong>1234</strong>) to log in to this Cockpit.</span>
             </div>
 
             <div class="form-group">
               <label><i class="fa-solid fa-key"></i> Google Gemini API Key</label>
-              <input type="password" id="setGeminiKey" class="admin-input" placeholder="AIzaSy...">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <input type="password" id="setGeminiKey" class="admin-input" placeholder="AIzaSy...">
+                <button type="button" class="btn-action-accent" onclick="toggleFieldVisibility('setGeminiKey', this)" title="Show/Hide API Key" style="white-space:nowrap; padding:10px 14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff;">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
               <span class="input-hint">Used by the 4-pass AI Refinement Agent for automated story generation.</span>
             </div>
 
@@ -601,7 +614,12 @@
             </div>
             <div class="form-group">
               <label>WordPress Application Password</label>
-              <input type="password" id="setWpPass" class="admin-input" placeholder="xxxx xxxx xxxx xxxx">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <input type="password" id="setWpPass" class="admin-input" placeholder="xxxx xxxx xxxx xxxx">
+                <button type="button" class="btn-action-accent" onclick="toggleFieldVisibility('setWpPass', this)" title="Show/Hide Password" style="white-space:nowrap; padding:10px 14px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff;">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
             </div>
 
             <button type="submit" class="btn-action-accent">

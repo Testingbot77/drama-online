@@ -190,8 +190,8 @@ const INITIAL_STORIES = [
     "avgReadTimeSeconds": 0,
     "trendingScore": 99.9,
     "readTime": "12 min read",
-    "coverImage": "/images/uploads_batch_0907_new/v5_frame4.jpg",
-    "socialImage": "/images/uploads_batch_0907_new/v5_frame4.jpg",
+    "coverImage": "/images/uploads_batch_0908/v5_frame4.jpg",
+    "socialImage": "/images/uploads_batch_0908/v5_frame4.jpg",
     "hookSummary": "While unpacking her six-year-old son Trey's backpack after kindergarten, thirty-four-year-old Nia found an unfamiliar folded ivory note tucked between his turkey sandwich and apple slices. In neat purple gel pen, it read: 'You don't have to keep secrets from me, sweetheart. You can call me mommy, too.'",
     "paragraphs": [
       "[ SUBURBAN TOWNHOME KITCHEN, CHARLOTTE SUBURBS — 05:40 PM ]",
@@ -218,12 +218,12 @@ const INITIAL_STORIES = [
     "scenes": [
       {
         "paragraphIndex": 8,
-        "imageUrl": "/images/uploads_batch_0907_new/v5_frame4.jpg",
+        "imageUrl": "/images/uploads_batch_0908/v5_frame4.jpg",
         "caption": "Trey points innocently to the folded card tucked inside his school lunchbox."
       },
       {
         "paragraphIndex": 15,
-        "imageUrl": "/images/uploads_batch_0907_new/v5_frame6.jpg",
+        "imageUrl": "/images/uploads_batch_0908/v5_frame6.jpg",
         "caption": "Nia looks up in chilling realization as the full scope of the domestic betrayal becomes clear."
       }
     ]
@@ -253,8 +253,8 @@ const INITIAL_STORIES = [
     "avgReadTimeSeconds": 0,
     "trendingScore": 99.8,
     "readTime": "11 min read",
-    "coverImage": "/images/uploads_batch_0907_new/v1_frame6.jpg",
-    "socialImage": "/images/uploads_batch_0907_new/v1_frame6.jpg",
+    "coverImage": "/images/uploads_batch_0908/v1_frame6.jpg",
+    "socialImage": "/images/uploads_batch_0908/v1_frame6.jpg",
     "hookSummary": "After working three consecutive twelve-hour night shifts at the pediatric trauma ward, thirty-three-year-old Corinne stood exhausted at her kitchen sink washing breakfast dishes. When her seven-year-old son Jordan walked up and pinned a handmade 'BEST MOM' yellow rosette badge onto her hair, she discovered why he had spent three hours making it.",
     "paragraphs": [
       "[ APARTMENT KITCHEN, EAST ATLANTA — 08:15 AM ]",
@@ -281,12 +281,12 @@ const INITIAL_STORIES = [
     "scenes": [
       {
         "paragraphIndex": 11,
-        "imageUrl": "/images/uploads_batch_0907_new/v1_frame2.jpg",
+        "imageUrl": "/images/uploads_batch_0908/v1_frame2.jpg",
         "caption": "Corinne fights back tears at the kitchen sink as Jordan reveals his handcrafted award."
       },
       {
         "paragraphIndex": 14,
-        "imageUrl": "/images/uploads_batch_0907_new/v1_frame6.jpg",
+        "imageUrl": "/images/uploads_batch_0908/v1_frame6.jpg",
         "caption": "Jordan tenderly places the 'BEST MOM' ribbon on his mother's braids in an unforgettable moment of pure love."
       }
     ]
@@ -316,8 +316,8 @@ const INITIAL_STORIES = [
     "avgReadTimeSeconds": 0,
     "trendingScore": 99.7,
     "readTime": "11 min read",
-    "coverImage": "/images/uploads_batch_0907_new/v2_frame4.jpg",
-    "socialImage": "/images/uploads_batch_0907_new/v2_frame4.jpg",
+    "coverImage": "/images/uploads_batch_0908/v2_frame4.jpg",
+    "socialImage": "/images/uploads_batch_0908/v2_frame4.jpg",
     "hookSummary": "After their joint mortgage payment bounced for the first time in nine years, thirty-two-year-old forensic accountant Tamara searched their home office study. Tucked inside an unmarked leather ledger beneath stacked law volumes was a certified bank wire receipt showing $14,000 transferred to a luxury maternity wellness clinic.",
     "paragraphs": [
       "[ PRIVATE HOME STUDY, MEMPHIS SUBURBS — 03:20 PM ]",
@@ -345,12 +345,12 @@ const INITIAL_STORIES = [
     "scenes": [
       {
         "paragraphIndex": 3,
-        "imageUrl": "/images/uploads_batch_0907_new/v2_frame4.jpg",
+        "imageUrl": "/images/uploads_batch_0908/v2_frame4.jpg",
         "caption": "Tamara confronts Malcolm across the mahogany study desk with the incriminating receipt."
       },
       {
         "paragraphIndex": 14,
-        "imageUrl": "/images/uploads_batch_0907_new/v2_frame5.jpg",
+        "imageUrl": "/images/uploads_batch_0908/v2_frame5.jpg",
         "caption": "Malcolm's defensive posture breaks down as Tamara reveals Brianna's name on the clinic record."
       }
     ]

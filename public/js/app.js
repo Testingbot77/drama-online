@@ -11,6 +11,7 @@ let isNarrating = false;
 document.addEventListener('DOMContentLoaded', () => {
   initPubPreferences();
   setupReadingProgress();
+  checkCookieConsent();
   handleClientRouting();
   loadPublicStories();
   checkAdblock();
@@ -93,7 +94,7 @@ async function loadPublicStories() {
     const data = await res.json();
     if (data.success && data.stories) {
       allPubStories = data.stories;
-      renderHomePage(allPubStories);
+      handleClientRouting();
     }
   } catch (err) {
     console.error('Error loading stories:', err);
@@ -391,17 +392,22 @@ async function showStoryReader(slug) {
     const btnReadPart2 = document.getElementById('btnReadPart2');
     const btnReadPrevPart = document.getElementById('btnReadPrevPart');
 
+    // Helper functions for precise part numbering
+    const currentPartNum = getStoryPartNumber(story);
+    const prevNum = getPrevPartNumber(story, currentPartNum);
+    const nextPartNum = getNextPartNumber(story, currentPartNum);
+
     // Top Quick Access Previous Episode Banner
     const prevBanner = document.getElementById('prevEpisodeTopBanner');
     const btnTopReadPrev = document.getElementById('btnTopReadPrev');
     const prevChapterNum = document.getElementById('prevChapterNum');
 
     if (story.previousPartSlug) {
-      const prevNum = Math.max(1, (story.partNumber || 2) - 1);
       if (prevBanner) {
         prevBanner.style.display = 'flex';
         if (prevChapterNum) prevChapterNum.innerText = prevNum;
         if (btnTopReadPrev) {
+          btnTopReadPrev.innerHTML = `← Read Chapter ${prevNum} First`;
           btnTopReadPrev.href = `/story/${story.previousPartSlug}`;
           btnTopReadPrev.onclick = (e) => handleNavClick(e, `/story/${story.previousPartSlug}`);
         }
@@ -419,9 +425,7 @@ async function showStoryReader(slug) {
 
     if (story.nextPartSlug) {
       part2Box.style.display = 'block';
-      const currentPartNum = story.partNumber || 1;
-      const nextPartNum = currentPartNum + 1;
-      const isGrandFinale = story.nextPartSlug.includes('grand-finale') || story.nextPartSlug.includes('final');
+      const isGrandFinale = story.nextPartSlug.includes('grand-finale') || story.nextPartSlug.includes('final') || (story.totalChapters && nextPartNum >= story.totalChapters);
 
       if (partBadge) {
         partBadge.innerHTML = isGrandFinale
@@ -429,7 +433,10 @@ async function showStoryReader(slug) {
           : `<i class="fa-solid fa-fire"></i> CHAPTER ${nextPartNum} READY`;
       }
 
-      nextPartHook.innerText = story.nextPartHook || `What happened in Chapter ${nextPartNum} shook the entire family...`;
+      let rawHook = story.nextPartHook || `What happened in Chapter ${nextPartNum} shook the entire family...`;
+      // Clean up any contradictory chapter numbers in rawHook
+      rawHook = rawHook.replace(/Chapter\s+\d+/gi, `Chapter ${nextPartNum}`);
+      nextPartHook.innerText = rawHook;
 
       if (partDesc) {
         partDesc.innerText = isGrandFinale
@@ -634,24 +641,97 @@ function escapePublicHtml(str) {
   })[m]);
 }
 
+function getStoryPartNumber(story) {
+  if (typeof story.partNumber === 'number' && story.partNumber > 0) return story.partNumber;
+  const matchSlug = (story.slug || '').match(/-(?:chapter|part)-(\d+)/i);
+  if (matchSlug) return parseInt(matchSlug[1]);
+  const matchTitle = (story.title || '').match(/(?:chapter|part)\s*(\d+)/i);
+  if (matchTitle) return parseInt(matchTitle[1]);
+  return 1;
+}
+
+function getNextPartNumber(story, currentPartNum) {
+  if (story.nextPartSlug) {
+    const match = story.nextPartSlug.match(/-(?:chapter|part)-(\d+)/i);
+    if (match) return parseInt(match[1]);
+  }
+  return currentPartNum + 1;
+}
+
+function getPrevPartNumber(story, currentPartNum) {
+  if (story.previousPartSlug) {
+    const match = story.previousPartSlug.match(/-(?:chapter|part)-(\d+)/i);
+    if (match) return parseInt(match[1]);
+  }
+  return Math.max(1, currentPartNum - 1);
+}
+
+// ================= COOKIE CONSENT BANNER =================
+function checkCookieConsent() {
+  const consent = localStorage.getItem('taleonix_cookie_consent');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (!consent && banner) {
+    banner.style.display = 'block';
+  }
+}
+
+function acceptCookieConsent() {
+  localStorage.setItem('taleonix_cookie_consent', 'accepted_all');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (banner) banner.style.display = 'none';
+  showToast('Cookie preferences saved. Enjoy reading!');
+}
+
+function dismissCookieConsent() {
+  localStorage.setItem('taleonix_cookie_consent', 'essential_only');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (banner) banner.style.display = 'none';
+}
+
 // ================= CATEGORY ARCHIVE =================
 function showCategoryArchive(category) {
   document.querySelectorAll('.pub-view').forEach(v => v.classList.remove('active'));
-  document.getElementById('page-category').classList.add('active');
+  const catView = document.getElementById('page-category');
+  if (catView) catView.classList.add('active');
 
   const titleEl = document.getElementById('archiveTitle');
   const badgeEl = document.getElementById('archiveCatBadge');
   const descEl = document.getElementById('archiveDesc');
+  const grid = document.getElementById('archiveGrid');
 
-  badgeEl.innerText = category.toUpperCase();
-  titleEl.innerText = category === 'trending' ? '🔥 Top Trending Sagas' : `${category.charAt(0).toUpperCase() + category.slice(1)} Drama Series`;
-  descEl.innerText = `Binge all serialized episodes in this collection. Completely free for US readers.`;
+  const catLower = (category || '').toLowerCase();
 
-  let filtered = allPubStories;
-  if (category !== 'trending') {
-    filtered = allPubStories.filter(s => matchCat(s, category));
+  if (badgeEl) badgeEl.innerText = catLower.toUpperCase();
+  if (titleEl) {
+    titleEl.innerText = catLower === 'trending'
+      ? '🔥 Top Trending Sagas'
+      : `${catLower.charAt(0).toUpperCase() + catLower.slice(1)} Drama Series`;
   }
-  renderCardGrid('archiveGrid', filtered.length ? filtered : allPubStories);
+  if (descEl) descEl.innerText = 'Binge all serialized episodes in this collection. Completely free for US readers.';
+
+  if (!allPubStories || allPubStories.length === 0) {
+    if (grid) {
+      grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align:center; padding: 60px 20px; color:var(--text-muted);">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size:2rem; margin-bottom:14px; color:var(--accent-gold);"></i>
+          <p style="font-size:1.05rem;">Loading stories...</p>
+        </div>
+      `;
+    }
+    return;
+  }
+
+  let filtered = [];
+  if (catLower === 'trending') {
+    filtered = [...allPubStories].sort((a, b) => (b.trendingScore || b.views || 0) - (a.trendingScore || a.views || 0));
+  } else {
+    filtered = allPubStories.filter(s => matchCat(s, catLower));
+    if (filtered.length === 0) {
+      filtered = allPubStories;
+    }
+  }
+
+  renderCardGrid('archiveGrid', filtered);
 }
 
 function showHomePage() {
