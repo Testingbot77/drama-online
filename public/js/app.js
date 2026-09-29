@@ -305,6 +305,43 @@ async function showStoryReader(slug) {
     const bodyEl = document.getElementById('readerBody');
     bodyEl.innerHTML = '';
 
+    // Scheduled Drip Premiere Lock: Protect story paragraphs until release time
+    if (data.isScheduled || (story.status === 'scheduled' && new Date(story.publishAt || story.publicationDate) > new Date())) {
+      const pubDate = new Date(story.publishAt || story.publicationDate);
+      const dateFormatted = pubDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      const timeFormatted = pubDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+      bodyEl.innerHTML = `
+        <div class="premiere-locked-card" style="text-align:center; padding:50px 24px; background:linear-gradient(180deg, rgba(245,158,11,0.08), rgba(15,18,28,0.9)); border:1.5px solid var(--accent-gold); border-radius:16px; margin:30px 0;">
+          <div style="font-size:3rem; margin-bottom:14px;"><i class="fa-solid fa-clock-rotate-left" style="color:var(--accent-gold);"></i></div>
+          <span class="badge-gold" style="font-size:0.85rem; padding:6px 16px; margin-bottom:16px; display:inline-block;">🔒 EPISODE PREMIERE LOCKED</span>
+          <h2 style="font-family:var(--font-heading); font-size:1.8rem; color:#fff; margin-bottom:12px; font-weight:900;">Chapter Coming Soon</h2>
+          <p style="color:var(--text-secondary); font-size:1.05rem; max-width:560px; margin:0 auto 24px auto; line-height:1.6;">
+            This chapter is currently scheduled to premiere on <strong style="color:#fff;">${dateFormatted}</strong> at <strong style="color:var(--accent-gold);">${timeFormatted}</strong>.
+          </p>
+          <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+            <button class="btn-hero-primary" onclick="triggerPushSubscribe()" style="padding:14px 28px; font-size:1rem;">
+              <i class="fa-solid fa-bell"></i> Notify Me on Release
+            </button>
+            ${story.previousPartSlug ? `
+              <a href="/story/${story.previousPartSlug}" class="btn-prev-part-bottom" onclick="handleNavClick(event, '/story/${story.previousPartSlug}')" style="padding:14px 24px;">
+                <i class="fa-solid fa-arrow-left"></i> Read Chapter ${Math.max(1, (story.partNumber || 2) - 1)}
+              </a>
+            ` : `
+              <a href="/trending" class="btn-prev-part-bottom" onclick="handleNavClick(event, '/trending')" style="padding:14px 24px;">
+                Explore Trending Sagas →
+              </a>
+            `}
+          </div>
+        </div>
+      `;
+
+      // Hide continuation card when episode is locked
+      const part2Box = document.getElementById('partContinuationCard');
+      if (part2Box) part2Box.style.display = 'none';
+      return;
+    }
+
     const paragraphs = story.paragraphs || [];
     let isFirstParagraph = true;
 

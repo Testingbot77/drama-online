@@ -256,6 +256,32 @@ app.get('/api/stories/:slug', (req, res) => {
     return res.status(404).json({ success: false, error: 'Story not found' });
   }
 
+  // Scheduled Drip Protection: Check if story is scheduled for future premiere
+  const isScheduledFuture = story.status === 'scheduled' && new Date(story.publishAt || story.publicationDate) > new Date();
+  if (isScheduledFuture) {
+    const pubTime = new Date(story.publishAt || story.publicationDate);
+    return res.json({
+      success: true,
+      isScheduled: true,
+      story: {
+        id: story.id,
+        title: story.title,
+        slug: story.slug,
+        category: story.category,
+        hookSummary: story.hookSummary || 'This anticipated episode is scheduled for premiere.',
+        coverImage: story.coverImage,
+        partNumber: story.partNumber || 1,
+        previousPartSlug: story.previousPartSlug || null,
+        publicationDate: story.publicationDate,
+        publishAt: story.publishAt || story.publicationDate,
+        status: 'scheduled',
+        paragraphs: [] // Full story text is strictly hidden until scheduled date/time!
+      },
+      releaseDate: pubTime.toISOString(),
+      message: `This chapter is scheduled to release on ${pubTime.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} at ${pubTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}.`
+    });
+  }
+
   // Related Stories Algorithm
   const related = stories
     .filter(s => s.id !== story.id && (s.status !== 'scheduled' || new Date(s.publishAt || s.publicationDate) <= new Date()))
@@ -1193,12 +1219,21 @@ app.get('/story/:slug', (req, res) => {
     html = html.replace('<!-- DYNAMIC_META_TAGS -->', ogTags);
 
     // SSR body content injection for AdSense automated crawlers & Googlebot
-    const paragraphsHtml = (story.paragraphs || []).map(p => {
-      if (p.startsWith('[') && p.endsWith(']')) {
-        return `<div class="story-location-tag"><i class="fa-solid fa-location-dot"></i> ${p.slice(1, -1)}</div>`;
-      }
-      return `<p>${p}</p>`;
-    }).join('\n');
+    const isScheduledFuture = story.status === 'scheduled' && new Date(story.publishAt || story.publicationDate) > new Date();
+    const pubDateStr = new Date(story.publishAt || story.publicationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+    const paragraphsHtml = isScheduledFuture
+      ? `<div class="scheduled-premiere-notice" style="text-align:center; padding:50px 20px; background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.3); border-radius:12px; margin:30px 0;">
+          <div style="font-size:2.5rem; margin-bottom:12px;">⏳</div>
+          <h2 style="font-size:1.6rem; color:#fff; margin-bottom:10px;">Episode Premiere Locked</h2>
+          <p style="color:#d1d5db; font-size:1rem; max-width:540px; margin:0 auto 20px auto;">This chapter is scheduled to premiere on <strong>${pubDateStr}</strong>. Subscribe below to get an instant notification alert the moment it goes live.</p>
+        </div>`
+      : (story.paragraphs || []).map(p => {
+          if (p.startsWith('[') && p.endsWith(']')) {
+            return `<div class="story-location-tag"><i class="fa-solid fa-location-dot"></i> ${p.slice(1, -1)}</div>`;
+          }
+          return `<p>${p}</p>`;
+        }).join('\n');
 
     html = html.replace('<h1 class="story-main-title" id="readerTitle">Story Title Loading...</h1>', `<h1 class="story-main-title" id="readerTitle">${safeTitle}</h1>`);
     html = html.replace('<p class="story-lead-synopsis" id="readerSynopsis">Story synopsis loading...</p>', `<p class="story-lead-synopsis" id="readerSynopsis">${safeDesc}</p>`);
