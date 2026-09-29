@@ -458,9 +458,143 @@ async function showStoryReader(slug) {
       });
     }
 
+    // Load and render community comments
+    loadStoryComments(story.slug);
+
   } catch (err) {
     console.error('Error loading story:', err);
   }
+}
+
+// ================= STORY COMMENTS & COMMUNITY DEBATE =================
+async function loadStoryComments(slug) {
+  const container = document.getElementById('storyCommentsList');
+  const countBadge = document.getElementById('commentsCountBadge');
+  if (!container) return;
+
+  try {
+    const res = await fetch(`/api/stories/${slug}/comments`);
+    const data = await res.json();
+    const comments = (data.success && data.comments) ? data.comments : [];
+    
+    if (countBadge) {
+      countBadge.innerText = `${comments.length} Comment${comments.length === 1 ? '' : 's'}`;
+    }
+
+    if (comments.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.9rem;">Be the first to share your reaction to this story!</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    comments.forEach(c => {
+      const timeAgo = formatTimeAgo(c.createdAt);
+      const div = document.createElement('div');
+      div.className = 'comment-card';
+      div.innerHTML = `
+        <img src="${c.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + encodeURIComponent(c.authorName)}" alt="${c.authorName}" class="comment-avatar">
+        <div class="comment-content">
+          <div class="comment-author-row">
+            <span class="comment-author-name">${c.authorName}</span>
+            ${c.authorLocation ? `<span style="font-size:0.75rem; color:var(--text-muted);">• ${c.authorLocation}</span>` : ''}
+            <span class="comment-author-badge">${c.badge || 'Verified Reader'}</span>
+            <span class="comment-time">${timeAgo}</span>
+          </div>
+          <div class="comment-text">${escapePublicHtml(c.text)}</div>
+          <div class="comment-likes-row" onclick="likeStoryComment(this)">
+            <i class="fa-regular fa-thumbs-up"></i> <span>${c.likes || 1}</span>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  } catch (err) {
+    console.warn('Error loading comments:', err.message);
+  }
+}
+
+async function handlePostComment(e) {
+  e.preventDefault();
+  if (!currentViewingStory) return;
+
+  const nameInput = document.getElementById('inputCommentAuthor');
+  const locInput = document.getElementById('inputCommentLocation');
+  const textInput = document.getElementById('inputCommentText');
+  const btn = document.getElementById('btnPostComment');
+
+  const text = textInput.value.trim();
+  const name = nameInput.value.trim();
+  const location = locInput ? locInput.value.trim() : '';
+
+  if (!text) return;
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Posting...';
+  }
+
+  try {
+    const res = await fetch(`/api/stories/${currentViewingStory.slug}/comments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        authorName: name || 'Loyal Reader',
+        authorLocation: location || 'United States',
+        text: text
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('🎉 Reaction posted!');
+      textInput.value = '';
+      loadStoryComments(currentViewingStory.slug);
+    } else {
+      showToast('Could not post comment: ' + (data.error || ''));
+    }
+  } catch (err) {
+    showToast('Failed to post comment.');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Post Reaction';
+    }
+  }
+}
+
+function likeStoryComment(el) {
+  const span = el.querySelector('span');
+  const icon = el.querySelector('i');
+  if (span && !el.classList.contains('liked')) {
+    let count = parseInt(span.innerText) || 0;
+    span.innerText = count + 1;
+    el.classList.add('liked');
+    el.style.color = 'var(--accent-gold)';
+    if (icon) {
+      icon.className = 'fa-solid fa-thumbs-up';
+    }
+  }
+}
+
+function formatTimeAgo(isoString) {
+  if (!isoString) return 'Just now';
+  const diff = Date.now() - new Date(isoString).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
+function escapePublicHtml(str) {
+  return (str || '').replace(/[&<>"']/g, m => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[m]);
 }
 
 // ================= CATEGORY ARCHIVE =================

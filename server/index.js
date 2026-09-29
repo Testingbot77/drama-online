@@ -190,15 +190,43 @@ app.get('/api/catalog', (req, res) => {
   res.json(catalogData);
 });
 
-// 1. Get all stories (Supports category filtering)
+// Official Facebook Page Attribution Map
+const FB_PAGE_MAP = {
+  'solace_us': 'Solace us',
+  'fb_page1': 'Solace us',
+  'day_drama_house': 'Day Drama House',
+  'fb_page2': 'Day Drama House',
+  'heartline_dramas': 'Heartline Dramas',
+  'fb_page3': 'Heartline Dramas',
+  'all_night_drama': 'All Night Drama',
+  'fb_page4': 'All Night Drama',
+  'the_quick_update': 'The Quick Update',
+  'fb_page5': 'The Quick Update',
+  'partner_drama_6': 'Partner Drama Page',
+  'fb_page6': 'Partner Drama Page',
+  'direct': 'Direct Readers / Organic'
+};
+
+// 1. Get all published stories (Filters out future scheduled stories for public readers)
 app.get('/api/stories', (req, res) => {
   const stories = db.getStories();
+  const now = new Date();
+
+  // Drip Scheduling Filter: only return stories whose publish date has arrived
+  const publishedStories = stories.filter(s => {
+    if (s.status === 'scheduled') {
+      const pubDate = new Date(s.publishAt || s.publicationDate);
+      return pubDate <= now;
+    }
+    return s.status !== 'draft';
+  });
+
   const category = req.query.category;
   if (category && category !== 'all') {
-    const filtered = stories.filter(s => s.category?.toLowerCase().includes(category.toLowerCase()) || s.tags?.some(t => t.toLowerCase().includes(category.toLowerCase())));
+    const filtered = publishedStories.filter(s => s.category?.toLowerCase().includes(category.toLowerCase()) || s.tags?.some(t => t.toLowerCase().includes(category.toLowerCase())));
     return res.json({ success: true, stories: filtered });
   }
-  res.json({ success: true, stories });
+  res.json({ success: true, stories: publishedStories });
 });
 
 // 2. Get single story by slug + automatically fetch 4-6 related stories
@@ -230,7 +258,7 @@ app.get('/api/stories/:slug', (req, res) => {
 
   // Related Stories Algorithm
   const related = stories
-    .filter(s => s.id !== story.id)
+    .filter(s => s.id !== story.id && (s.status !== 'scheduled' || new Date(s.publishAt || s.publicationDate) <= new Date()))
     .sort((a, b) => {
       const matchA = (a.category === story.category ? 2 : 0) + (a.tags?.some(t => story.tags?.includes(t)) ? 1 : 0);
       const matchB = (b.category === story.category ? 2 : 0) + (b.tags?.some(t => story.tags?.includes(t)) ? 1 : 0);
@@ -239,6 +267,37 @@ app.get('/api/stories/:slug', (req, res) => {
     .slice(0, 6);
 
   res.json({ success: true, story, relatedStories: related });
+});
+
+// 2b. Story Comments Endpoints (Genuine Reader Community Engagement)
+app.get('/api/stories/:slug/comments', (req, res) => {
+  const allComments = db.getComments();
+  const storyComments = allComments.filter(c => c.storySlug === req.params.slug);
+  res.json({ success: true, comments: storyComments });
+});
+
+app.post('/api/stories/:slug/comments', (req, res) => {
+  const { authorName, text, authorLocation } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ success: false, error: 'Comment text is required' });
+  }
+
+  const allComments = db.getComments();
+  const newComment = {
+    id: 'cmt-' + Date.now(),
+    storySlug: req.params.slug,
+    authorName: (authorName && authorName.trim()) ? authorName.trim() : 'Reader ' + Math.floor(1000 + Math.random() * 9000),
+    authorLocation: (authorLocation && authorLocation.trim()) ? authorLocation.trim() : 'United States',
+    badge: 'Verified Reader',
+    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(authorName || 'reader' + Date.now())}`,
+    text: text.trim(),
+    likes: 1,
+    createdAt: new Date().toISOString()
+  };
+
+  allComments.unshift(newComment);
+  db.saveComments(allComments);
+  res.json({ success: true, comment: newComment });
 });
 
 // 3. Record story read with Facebook UTM campaign attribution
@@ -258,18 +317,18 @@ app.post('/api/stories/:slug/view', (req, res) => {
 
     const campaign = req.body.utm_campaign || 'direct';
     const sourceKey = req.body.utm_source || campaign;
+    const resolvedPageName = FB_PAGE_MAP[sourceKey] || FB_PAGE_MAP[campaign] || (sourceKey.startsWith('fb_') ? sourceKey.replace('_', ' ').toUpperCase() : 'Direct Feed');
     const cfCountry = req.headers['cf-ipcountry'] || req.headers['x-country-code'] || req.headers['x-appengine-country'];
     const country = cfCountry ? `${cfCountry.toUpperCase()} 🌐` : (req.body.referrer?.includes('facebook') ? 'United States 🇺🇸' : 'United States 🇺🇸');
-    const referrer = req.body.referrer || (sourceKey.startsWith('fb_') ? `Facebook (${sourceKey})` : 'Facebook Feed / Direct Link');
+    const referrer = req.body.referrer || `Facebook (${resolvedPageName})`;
 
     if (!analytics.facebookCampaigns) analytics.facebookCampaigns = [];
-    let matchedCamp = analytics.facebookCampaigns.find(c => c.campaign === sourceKey || c.campaign === campaign || c.pageId === sourceKey);
-    if (!matchedCamp && (sourceKey.startsWith('fb_') || sourceKey.includes('facebook') || campaign.startsWith('fb_'))) {
-      const pName = sourceKey.replace('_', ' ').toUpperCase();
+    let matchedCamp = analytics.facebookCampaigns.find(c => c.campaign === sourceKey || c.campaign === campaign || c.pageName === resolvedPageName);
+    if (!matchedCamp) {
       matchedCamp = {
         campaign: sourceKey,
         pageId: sourceKey,
-        pageName: pName,
+        pageName: resolvedPageName,
         visitors: 0,
         pageviews: 0,
         topStory: story.title,
@@ -292,7 +351,7 @@ app.post('/api/stories/:slug/view', (req, res) => {
       country: country,
       device: req.body.device || 'Mobile (iOS/Android)',
       referrer: referrer,
-      campaign: campaign
+      campaign: resolvedPageName
     });
 
     if (analytics.recentVisitors.length > 50) {
@@ -504,6 +563,78 @@ app.get('/api/admin/overview', requireAdminAuth, (req, res) => {
   });
 });
 
+// Analytics Read API (for automated Monday traffic review & reporting scripts)
+app.get('/api/admin/analytics/sources', requireAdminAuth, (req, res) => {
+  const analytics = db.getAnalytics();
+  const stories = db.getStories();
+  
+  // Aggregate stats per mapped page
+  const pageStats = {};
+  const corePages = ['Solace us', 'Day Drama House', 'Heartline Dramas', 'All Night Drama', 'The Quick Update', 'Partner Drama Page'];
+  
+  corePages.forEach(pName => {
+    pageStats[pName] = {
+      pageName: pName,
+      visitors: 0,
+      pageviews: 0,
+      topStory: 'None recorded yet',
+      estimatedRevenueUsd: 0,
+      lastActive: null
+    };
+  });
+
+  const campaigns = analytics.facebookCampaigns || [];
+  campaigns.forEach(c => {
+    const pName = FB_PAGE_MAP[c.campaign] || FB_PAGE_MAP[c.pageId] || c.pageName || c.campaign;
+    if (!pageStats[pName]) {
+      pageStats[pName] = { pageName: pName, visitors: 0, pageviews: 0, topStory: 'None', estimatedRevenueUsd: 0, lastActive: null };
+    }
+    pageStats[pName].visitors += (c.visitors || 0);
+    pageStats[pName].pageviews += (c.pageviews || 0);
+    pageStats[pName].estimatedRevenueUsd = Number(((pageStats[pName].estimatedRevenueUsd || 0) + (c.estimatedRevenueUsd || 0)).toFixed(2));
+    if (c.topStory) pageStats[pName].topStory = c.topStory;
+    if (c.lastActive) pageStats[pName].lastActive = c.lastActive;
+  });
+
+  const topStories = [...stories]
+    .sort((a, b) => (b.views || 0) - (a.views || 0))
+    .slice(0, 15)
+    .map(s => ({
+      title: s.title,
+      slug: s.slug,
+      category: s.category,
+      views: s.views || 0,
+      uniqueVisitors: s.uniqueVisitors || 0,
+      status: s.status || 'published',
+      publicationDate: s.publicationDate,
+      publishAt: s.publishAt || null
+    }));
+
+  res.json({
+    success: true,
+    timestamp: new Date().toISOString(),
+    overview: {
+      ...analytics.overview,
+      totalStories: stories.length,
+      publishedStories: stories.filter(s => s.status !== 'scheduled' || new Date(s.publishAt || s.publicationDate) <= new Date()).length,
+      scheduledStories: stories.filter(s => s.status === 'scheduled' && new Date(s.publishAt || s.publicationDate) > new Date()).length
+    },
+    pageBreakdown: Object.values(pageStats),
+    topStories,
+    recentTrafficLog: (analytics.recentVisitors || []).slice(0, 30)
+  });
+});
+
+app.get('/api/admin/analytics/summary', requireAdminAuth, (req, res) => {
+  const analytics = db.getAnalytics();
+  res.json({
+    success: true,
+    overview: analytics.overview,
+    facebookCampaigns: analytics.facebookCampaigns || [],
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Admin Marketing / Social Kit
 app.get('/api/admin/marketing', requireAdminAuth, (req, res) => {
   const marketing = db.getMarketingItems();
@@ -660,6 +791,13 @@ app.post('/api/admin/stories/bulk-import', requireAdminAuth, (req, res) => {
       parsedParagraphs = [item.content || item.body || item.hookSummary || 'Story content pending.'];
     }
 
+    // Drip scheduling resolution
+    let storyStatus = item.status || 'published';
+    const pubDate = item.publicationDate || item.publishAt;
+    if (storyStatus === 'scheduled' || (pubDate && new Date(pubDate) > new Date())) {
+      storyStatus = 'scheduled';
+    }
+
     const storyObj = {
       id: item.id || (existingIdx !== -1 ? stories[existingIdx].id : 'story-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6)),
       title: item.title,
@@ -673,11 +811,11 @@ app.post('/api/admin/stories/bulk-import', requireAdminAuth, (req, res) => {
       paragraphs: parsedParagraphs,
       coverImage: item.coverImage || (existingIdx !== -1 ? stories[existingIdx].coverImage : '/images/the-graduation-envelope-mother-in-green-cover.jpg'),
       author: item.author || 'Elena Vance',
-      status: item.status || 'published',
-      publishAt: item.publishAt || null,
+      status: storyStatus,
+      publishAt: item.publishAt || (storyStatus === 'scheduled' ? pubDate : null),
       views: existingIdx !== -1 ? (stories[existingIdx].views || 0) : 0,
       uniqueVisitors: existingIdx !== -1 ? (stories[existingIdx].uniqueVisitors || 0) : 0,
-      publicationDate: item.publicationDate || (existingIdx !== -1 ? stories[existingIdx].publicationDate : new Date().toISOString())
+      publicationDate: pubDate || (existingIdx !== -1 ? stories[existingIdx].publicationDate : new Date().toISOString())
     };
 
     if (existingIdx !== -1) {

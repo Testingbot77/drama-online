@@ -372,6 +372,37 @@
             </div>
           </div>
 
+          <!-- READER DISCUSSION & COMMUNITY COMMENTS (AdSense High Engagement) -->
+          <div class="reader-comments-section" id="readerCommentsSection">
+            <div class="comments-header">
+              <div class="comments-title-wrap">
+                <span class="badge-cat" style="color:var(--accent-gold);"><i class="fa-solid fa-comments"></i> Reader Reactions</span>
+                <h3 class="comments-title">Community Discussion & Debate</h3>
+                <p class="comments-sub">What would you have done in this situation? Join the debate below.</p>
+              </div>
+              <span class="comments-count-badge" id="commentsCountBadge">3 Comments</span>
+            </div>
+
+            <!-- New Comment Box -->
+            <form class="comment-input-form" onsubmit="handlePostComment(event)">
+              <div class="comment-input-row">
+                <input type="text" id="inputCommentAuthor" placeholder="Your Name (e.g. Sarah M.)" class="comment-name-input" required>
+                <input type="text" id="inputCommentLocation" placeholder="State/City (e.g. Atlanta, GA)" class="comment-location-input">
+              </div>
+              <textarea id="inputCommentText" placeholder="Share your honest reaction... Who was in the wrong?" rows="3" class="comment-textarea" required></textarea>
+              <div class="comment-form-actions">
+                <button type="submit" class="btn-post-comment" id="btnPostComment">
+                  <i class="fa-solid fa-paper-plane"></i> Post Reaction
+                </button>
+              </div>
+            </form>
+
+            <!-- Comments List -->
+            <div class="comments-list" id="storyCommentsList">
+              <!-- Dynamically injected by JS -->
+            </div>
+          </div>
+
           <!-- "YOU MIGHT ALSO LIKE" (4-6 Algorithmic Related Stories) -->
           <div class="related-stories-section">
             <h3 class="related-section-title"><i class="fa-solid fa-book-bookmark"></i> You Might Also Like</h3>

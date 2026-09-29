@@ -2117,9 +2117,204 @@ body.theme-light .adsense-clean-slot {
   font-size: 0.96rem !important;
   line-height: 1.65 !important;
   color: rgba(255, 255, 255, 0.85) !important;
-  font-style: italic;
-  margin: 0 !important;
+/* ================= READER COMMENTS & COMMUNITY DEBATE ================= */
+.reader-comments-section {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin: 40px 0;
 }
+
+.comments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 18px;
+}
+
+.comments-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 6px 0 4px 0;
+}
+
+.comments-sub {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.comments-count-badge {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.82rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.comment-input-form {
+  background: #090b12;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.comment-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .comment-input-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comment-name-input, .comment-location-input, .comment-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+}
+
+.comment-name-input:focus, .comment-location-input:focus, .comment-textarea:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.comment-textarea {
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.comment-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-post-comment {
+  background: linear-gradient(135deg, var(--accent-gold), #b8791c);
+  color: #000;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 10px 22px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-post-comment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment-card {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease;
+}
+
+.comment-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.comment-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-author-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.comment-author-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.comment-author-badge {
+  font-size: 0.72rem;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-gold);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.comment-time {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.comment-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 8px;
+}
+
+.comment-likes-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: fit-content;
+}
+
+.comment-likes-row:hover {
+  color: var(--accent-gold);
+}
+
 
 
 

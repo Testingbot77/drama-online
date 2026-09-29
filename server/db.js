@@ -6063,6 +6063,46 @@ const INITIAL_TRACKING_LINKS = [
   }
 ];
 
+const COMMENTS_FILE = path.join(DATA_DIR, 'comments.json');
+
+const INITIAL_COMMENTS = [
+  {
+    id: "cmt-1",
+    storySlug: "the-empty-duffel-bag-custody-porch-showdown",
+    authorName: "Patricia Jenkins",
+    authorLocation: "Atlanta, GA",
+    badge: "Top Contributor",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Patricia",
+    text: "She handled that with so much grace and poise! Bringing those receipts right to his face on the porch is the only language people like Marcus understand. Good for her!",
+    likes: 42,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString()
+  },
+  {
+    id: "cmt-2",
+    storySlug: "the-empty-duffel-bag-custody-porch-showdown",
+    authorName: "Marcus Washington",
+    authorLocation: "Charlotte, NC",
+    badge: "Verified Reader",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MarcusW",
+    text: "As a father, this breaks my heart for the little boy. But Kendra did the right thing legally and morally.",
+    likes: 29,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 7).toISOString()
+  },
+  {
+    id: "cmt-3",
+    storySlug: "the-graduation-envelope-mother-in-green",
+    authorName: "Brenda Holloway",
+    authorLocation: "Dallas, TX",
+    badge: "Top Fan",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Brenda",
+    text: "I gasped when she opened the envelope! The audacity of some in-laws is beyond comprehension. Cannot wait for Chapter 2!",
+    likes: 58,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString()
+  }
+];
+
+let memoryComments = null;
+
 module.exports = {
   getStories: () => {
     if (!memoryStories) memoryStories = readJSON(STORIES_FILE, INITIAL_STORIES);
@@ -6117,6 +6157,15 @@ module.exports = {
     memoryTrackingLinks = data;
     writeJSON(TRACKING_LINKS_FILE, data);
     persistToPostgres('tracking_links', data);
+  },
+  getComments: () => {
+    if (!memoryComments) memoryComments = readJSON(COMMENTS_FILE, INITIAL_COMMENTS);
+    return memoryComments;
+  },
+  saveComments: (data) => {
+    memoryComments = data;
+    writeJSON(COMMENTS_FILE, data);
+    persistToPostgres('comments', data);
   },
   getDbStatus: () => {
     return {
