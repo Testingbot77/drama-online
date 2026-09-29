@@ -124,8 +124,41 @@ app.get('/sitemap.xml', (req, res) => {
   xml += `  <url><loc>${domain}/terms</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
   xml += `  <url><loc>${domain}/disclaimer</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
 
+  // Standard Story Canonicals
   stories.forEach(s => {
+    if (s.status === 'scheduled' && new Date(s.publishAt || s.publicationDate) > new Date()) return;
     xml += `  <url>\n    <loc>${domain}/story/${s.slug}</loc>\n    <lastmod>${new Date(s.publicationDate || Date.now()).toISOString().split('T')[0]}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
+  });
+
+  // Google Web Stories (AMP) Discover Canonicals
+  const webStoryDirs = [
+    path.join(__dirname, '..', 'web-stories'),
+    path.join(__dirname, '..', 'public', 'web-stories')
+  ];
+  const seenWebStories = new Set();
+
+  webStoryDirs.forEach(dir => {
+    if (fs.existsSync(dir)) {
+      const files = fs.readdirSync(dir);
+      files.forEach(f => {
+        if (f.endsWith('.html')) {
+          const slug = f.replace('.html', '');
+          if (!seenWebStories.has(slug)) {
+            seenWebStories.add(slug);
+            const matchedStory = stories.find(s => s.slug === slug);
+            if (matchedStory && matchedStory.status === 'scheduled' && new Date(matchedStory.publishAt || matchedStory.publicationDate) > new Date()) {
+              return; // Skip unreleased chapters
+            }
+            try {
+              const filePath = path.join(dir, f);
+              const stat = fs.statSync(filePath);
+              const lastmod = (stat && stat.mtime ? stat.mtime : new Date()).toISOString().split('T')[0];
+              xml += `  <url>\n    <loc>${domain}/web-stories/${slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
+            } catch (err) {}
+          }
+        }
+      });
+    }
   });
 
   xml += `</urlset>`;
@@ -1213,6 +1246,37 @@ function get404Html() {
 </body>
 </html>`;
 }
+
+// ======================== GOOGLE WEB STORIES (AMP) DISCOVER ENDPOINT ========================
+app.get('/web-stories/:slug', (req, res) => {
+  const slugParam = req.params.slug;
+  const stories = db.getStories();
+  const story = stories.find(s => s.slug === slugParam);
+
+  // Scheduled unreleased chapters must return 404 until publication date
+  if (story && story.status === 'scheduled' && new Date(story.publishAt || story.publicationDate) > new Date()) {
+    return res.status(404).send(get404Html());
+  }
+
+  // Look for matching AMP HTML story file in web-stories or public/web-stories
+  const candidatePaths = [
+    path.join(__dirname, '..', 'web-stories', `${slugParam}.html`),
+    path.join(__dirname, '..', 'public', 'web-stories', `${slugParam}.html`)
+  ];
+
+  const matchedPath = candidatePaths.find(p => fs.existsSync(p));
+
+  if (!matchedPath) {
+    return res.status(404).send(get404Html());
+  }
+
+  // Serve byte-identical with exact UTF-8 HTML headers (No scripts, wrappers or ads injected)
+  res.set({
+    'Content-Type': 'text/html; charset=utf-8',
+    'Cache-Control': 'public, max-age=3600'
+  });
+  return res.sendFile(matchedPath);
+});
 
 // Server-rendered OpenGraph HTML for Facebook sharing on /story/:slug
 app.get('/story/:slug', (req, res) => {
