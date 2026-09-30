@@ -1545,12 +1545,42 @@ Object.entries(legalMetaMap).forEach(([routePath, meta]) => {
   });
 });
 
-// Fallback: Valid frontend paths get index.html, invalid paths get true HTTP 404
-const VALID_FRONTEND_PREFIXES = ['/category/', '/trending', '/about', '/contact', '/privacy-policy', '/terms', '/disclaimer'];
+// Category Archive Routing with Strict 404 Validation (Prevents Google Soft 404 Penalty)
+app.get('/category/:cat', (req, res) => {
+  const catParam = (req.params.cat || '').toLowerCase().trim();
+  const stories = db.getStories();
+  
+  const knownCategories = new Set([
+    'family', 'billionaire', 'inheritance', 'revenge', 'in-laws', 'in-law',
+    'secret-child', 'motherhood', 'cheating-betrayal', 'custody-battle', 'courtroom',
+    'redemption', 'trending', 'money', 'secrets', 'deception', 'betrayal'
+  ]);
+  
+  stories.forEach(s => {
+    if (s.category) {
+      const slug = s.category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      knownCategories.add(slug);
+    }
+  });
+
+  const isKnown = knownCategories.has(catParam) || stories.some(s => {
+    const catLower = (s.category || '').toLowerCase();
+    return catLower.includes(catParam.replace(/-/g, ' ')) || catLower.includes(catParam);
+  });
+
+  if (!isKnown) {
+    return res.status(404).send(get404Html());
+  }
+
+  return res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
+
+// Fallback: Valid frontend paths get index.html, all unknown paths get true HTTP 404
+const VALID_FRONTEND_PATHS = ['/', '/trending'];
 
 app.use((req, res) => {
   const reqPath = req.path;
-  if (reqPath === '/' || VALID_FRONTEND_PREFIXES.some(prefix => reqPath.startsWith(prefix) || reqPath === prefix)) {
+  if (VALID_FRONTEND_PATHS.includes(reqPath)) {
     return res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
   }
   // True 404 HTTP status for Googlebot & SEO Crawlers
