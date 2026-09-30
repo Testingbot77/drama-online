@@ -131,33 +131,47 @@ app.get('/sitemap.xml', (req, res) => {
   });
 
   // Google Web Stories (AMP) Discover Canonicals
+  const seenWebStories = new Set();
+  const dbWebStories = db.getWebStories ? db.getWebStories() : {};
+
+  // 1. Stories from persistent DB
+  Object.entries(dbWebStories).forEach(([slug, storyObj]) => {
+    if (!seenWebStories.has(slug)) {
+      seenWebStories.add(slug);
+      const lastmod = (storyObj && storyObj.updatedAt ? new Date(storyObj.updatedAt) : new Date()).toISOString().split('T')[0];
+      xml += `  <url>\n    <loc>${domain}/web-stories/${slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
+    }
+  });
+
+  // 2. Stories on disk
   const webStoryDirs = [
     path.join(__dirname, '..', 'web-stories'),
     path.join(__dirname, '..', 'public', 'web-stories')
   ];
-  const seenWebStories = new Set();
 
   webStoryDirs.forEach(dir => {
     if (fs.existsSync(dir)) {
-      const files = fs.readdirSync(dir);
-      files.forEach(f => {
-        if (f.endsWith('.html')) {
-          const slug = f.replace('.html', '');
-          if (!seenWebStories.has(slug)) {
-            seenWebStories.add(slug);
-            const matchedStory = stories.find(s => s.slug === slug);
-            if (matchedStory && matchedStory.status === 'scheduled' && new Date(matchedStory.publishAt || matchedStory.publicationDate) > new Date()) {
-              return; // Skip unreleased chapters
+      try {
+        const files = fs.readdirSync(dir);
+        files.forEach(f => {
+          if (f.endsWith('.html')) {
+            const slug = f.replace('.html', '');
+            if (!seenWebStories.has(slug)) {
+              seenWebStories.add(slug);
+              const matchedStory = stories.find(s => s.slug === slug);
+              if (matchedStory && matchedStory.status === 'scheduled' && new Date(matchedStory.publishAt || matchedStory.publicationDate) > new Date()) {
+                return; // Skip unreleased chapters
+              }
+              try {
+                const filePath = path.join(dir, f);
+                const stat = fs.statSync(filePath);
+                const lastmod = (stat && stat.mtime ? stat.mtime : new Date()).toISOString().split('T')[0];
+                xml += `  <url>\n    <loc>${domain}/web-stories/${slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
+              } catch (err) {}
             }
-            try {
-              const filePath = path.join(dir, f);
-              const stat = fs.statSync(filePath);
-              const lastmod = (stat && stat.mtime ? stat.mtime : new Date()).toISOString().split('T')[0];
-              xml += `  <url>\n    <loc>${domain}/web-stories/${slug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
-            } catch (err) {}
           }
-        }
-      });
+        });
+      } catch (e) {}
     }
   });
 
@@ -1116,6 +1130,114 @@ app.post('/api/admin/drip-publish', requireAdminAuth, (req, res) => {
   res.json({ success: true, publishedNow, totalStories: stories.length });
 });
 
+// ======================== GOOGLE WEB STORIES SELF-SERVE ADMIN API ========================
+
+// 1. Publish / Update a Web Story
+app.post('/api/admin/web-stories/publish', requireAdminAuth, (req, res) => {
+  const { slug, html } = req.body || {};
+
+  // Validate slug: ^[a-z0-9-]{1,100}$
+  if (!slug || typeof slug !== 'string' || !/^[a-z0-9-]{1,100}$/.test(slug.trim())) {
+    return res.status(400).json({
+      ok: false,
+      error: 'Invalid slug format. Slug must match ^[a-z0-9-]{1,100}$'
+    });
+  }
+
+  const cleanSlug = slug.trim();
+
+  // Validate HTML string
+  if (!html || typeof html !== 'string') {
+    return res.status(400).json({
+      ok: false,
+      error: 'Story html is required and must be a valid string.'
+    });
+  }
+
+  // Max HTML size: 500 KB (512,000 bytes)
+  const byteLength = Buffer.byteLength(html, 'utf8');
+  if (byteLength > 500 * 1024) {
+    return res.status(400).json({
+      ok: false,
+      error: `HTML payload exceeds maximum allowed size of 500 KB (current size: ${(byteLength / 1024).toFixed(1)} KB)`
+    });
+  }
+
+  // Check AMP marker (<html amp or <html ⚡ or <html \u26a1 or <html ... amp>)
+  const hasAmpMarker = /<html[^>]*\b(amp|⚡)\b/i.test(html) || html.includes('<html amp') || html.includes('<html ⚡') || html.includes('<html \u26a1');
+  if (!hasAmpMarker) {
+    return res.status(400).json({
+      ok: false,
+      error: 'Invalid HTML: Must contain AMP markup marker (<html amp or <html ⚡)'
+    });
+  }
+
+  // Save to persistent storage and write byte-identical HTML to disk
+  db.saveWebStory(cleanSlug, html);
+
+  const settings = db.getSettings();
+  const domain = settings.domainUrl || 'https://drama-online.onrender.com';
+  const canonicalUrl = `${domain}/web-stories/${cleanSlug}`;
+
+  console.log(`[WebStory Published] Slug: ${cleanSlug} | Size: ${byteLength} bytes | URL: ${canonicalUrl}`);
+
+  return res.json({
+    ok: true,
+    url: canonicalUrl
+  });
+});
+
+// 2. List published Web Stories
+app.get('/api/admin/web-stories', requireAdminAuth, (req, res) => {
+  const dbStories = db.getWebStories ? db.getWebStories() : {};
+  const slugsSet = new Set(Object.keys(dbStories));
+
+  // Also collect any files on disk
+  const webStoryDirs = [
+    path.join(__dirname, '..', 'web-stories'),
+    path.join(__dirname, '..', 'public', 'web-stories')
+  ];
+
+  webStoryDirs.forEach(dir => {
+    if (fs.existsSync(dir)) {
+      try {
+        const files = fs.readdirSync(dir);
+        files.forEach(f => {
+          if (f.endsWith('.html')) {
+            slugsSet.add(f.replace('.html', ''));
+          }
+        });
+      } catch (e) {}
+    }
+  });
+
+  const stories = Array.from(slugsSet).sort();
+  return res.json({
+    stories
+  });
+});
+
+// 3. Delete a Web Story
+app.delete('/api/admin/web-stories/:slug', requireAdminAuth, (req, res) => {
+  const slugParam = req.params.slug;
+
+  if (!slugParam || !/^[a-z0-9-]{1,100}$/.test(slugParam.trim())) {
+    return res.status(400).json({
+      ok: false,
+      error: 'Invalid slug format. Slug must match ^[a-z0-9-]{1,100}$'
+    });
+  }
+
+  const cleanSlug = slugParam.trim();
+  db.deleteWebStory(cleanSlug);
+
+  console.log(`[WebStory Deleted] Slug: ${cleanSlug}`);
+
+  return res.json({
+    ok: true
+  });
+});
+
 // Admin On-Demand Google Imagen 3 Photorealistic Story Cover Generation
 app.post('/api/admin/stories/:slug/generate-ai-image', requireAdminAuth, async (req, res) => {
   const stories = db.getStories();
@@ -1389,7 +1511,19 @@ app.get('/web-stories/:slug', (req, res) => {
     path.join(__dirname, '..', 'public', 'web-stories', `${slugParam}.html`)
   ];
 
-  const matchedPath = candidatePaths.find(p => fs.existsSync(p));
+  let matchedPath = candidatePaths.find(p => fs.existsSync(p));
+
+  // If not on disk yet (e.g. fresh ephemeral container after restart), check persistent db
+  if (!matchedPath) {
+    const dbWebStories = db.getWebStories ? db.getWebStories() : {};
+    if (dbWebStories[slugParam] && dbWebStories[slugParam].html) {
+      const wsDir = path.join(__dirname, '..', 'web-stories');
+      if (!fs.existsSync(wsDir)) fs.mkdirSync(wsDir, { recursive: true });
+      const targetFile = path.join(wsDir, `${slugParam}.html`);
+      fs.writeFileSync(targetFile, dbWebStories[slugParam].html, 'utf8');
+      matchedPath = targetFile;
+    }
+  }
 
   if (!matchedPath) {
     return res.status(404).send(get404Html());

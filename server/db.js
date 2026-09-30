@@ -11,6 +11,7 @@ const MARKETING_FILE = path.join(DATA_DIR, 'marketing.json');
 const ANALYTICS_FILE = path.join(DATA_DIR, 'analytics.json');
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 const TRACKING_LINKS_FILE = path.join(DATA_DIR, 'tracking_links.json');
+const WEB_STORIES_FILE = path.join(DATA_DIR, 'web_stories.json');
 
 // Helper to safely read JSON
 function readJSON(filePath, defaultData) {
@@ -5990,7 +5991,8 @@ async function initPostgres() {
       { key: 'analytics', file: ANALYTICS_FILE, initial: INITIAL_ANALYTICS, setMem: (val) => { memoryAnalytics = val; } },
       { key: 'marketing', file: MARKETING_FILE, initial: INITIAL_MARKETING, setMem: (val) => { memoryMarketing = val; } },
       { key: 'subscribers', file: SUBSCRIBERS_FILE, initial: INITIAL_SUBSCRIBERS, setMem: (val) => { memorySubscribers = val; } },
-      { key: 'tracking_links', file: TRACKING_LINKS_FILE, initial: INITIAL_TRACKING_LINKS, setMem: (val) => { memoryTrackingLinks = val; } }
+      { key: 'tracking_links', file: TRACKING_LINKS_FILE, initial: INITIAL_TRACKING_LINKS, setMem: (val) => { memoryTrackingLinks = val; } },
+      { key: 'web_stories', file: WEB_STORIES_FILE, initial: INITIAL_WEB_STORIES, setMem: (val) => { memoryWebStories = val; restoreWebStoriesToDisk(val); } }
     ];
 
     for (const item of keys) {
@@ -6101,7 +6103,30 @@ const INITIAL_COMMENTS = [
   }
 ];
 
-let memoryComments = null;
+const INITIAL_WEB_STORIES = {};
+let memoryWebStories = null;
+
+function restoreWebStoriesToDisk(storiesMap) {
+  if (!storiesMap || typeof storiesMap !== 'object') return;
+  const webStoryDir = path.join(__dirname, '..', 'web-stories');
+  const pubWebStoryDir = path.join(__dirname, '..', 'public', 'web-stories');
+  try {
+    if (!fs.existsSync(webStoryDir)) fs.mkdirSync(webStoryDir, { recursive: true });
+    if (!fs.existsSync(pubWebStoryDir)) fs.mkdirSync(pubWebStoryDir, { recursive: true });
+  } catch (e) {}
+
+  Object.entries(storiesMap).forEach(([slug, storyObj]) => {
+    if (!slug || !storyObj) return;
+    const htmlContent = typeof storyObj === 'string' ? storyObj : storyObj.html;
+    if (!htmlContent) return;
+    try {
+      fs.writeFileSync(path.join(webStoryDir, `${slug}.html`), htmlContent, 'utf8');
+      fs.writeFileSync(path.join(pubWebStoryDir, `${slug}.html`), htmlContent, 'utf8');
+    } catch (err) {
+      console.warn(`[WebStories] Error syncing ${slug}.html to disk:`, err.message);
+    }
+  });
+}
 
 module.exports = {
   getStories: () => {
@@ -6166,6 +6191,51 @@ module.exports = {
     memoryComments = data;
     writeJSON(COMMENTS_FILE, data);
     persistToPostgres('comments', data);
+  },
+  getWebStories: () => {
+    if (!memoryWebStories) {
+      memoryWebStories = readJSON(WEB_STORIES_FILE, INITIAL_WEB_STORIES);
+      restoreWebStoriesToDisk(memoryWebStories);
+    }
+    return memoryWebStories;
+  },
+  saveWebStory: (slug, html) => {
+    if (!memoryWebStories) {
+      memoryWebStories = readJSON(WEB_STORIES_FILE, INITIAL_WEB_STORIES);
+    }
+    const now = new Date().toISOString();
+    const existing = memoryWebStories[slug] || {};
+    memoryWebStories[slug] = {
+      slug,
+      html,
+      createdAt: existing.createdAt || now,
+      updatedAt: now
+    };
+    writeJSON(WEB_STORIES_FILE, memoryWebStories);
+    persistToPostgres('web_stories', memoryWebStories);
+    restoreWebStoriesToDisk({ [slug]: memoryWebStories[slug] });
+    return memoryWebStories[slug];
+  },
+  deleteWebStory: (slug) => {
+    if (!memoryWebStories) {
+      memoryWebStories = readJSON(WEB_STORIES_FILE, INITIAL_WEB_STORIES);
+    }
+    if (memoryWebStories[slug]) {
+      delete memoryWebStories[slug];
+      writeJSON(WEB_STORIES_FILE, memoryWebStories);
+      persistToPostgres('web_stories', memoryWebStories);
+    }
+    // Delete files from disk
+    const paths = [
+      path.join(__dirname, '..', 'web-stories', `${slug}.html`),
+      path.join(__dirname, '..', 'public', 'web-stories', `${slug}.html`)
+    ];
+    paths.forEach(p => {
+      try {
+        if (fs.existsSync(p)) fs.unlinkSync(p);
+      } catch (err) {}
+    });
+    return true;
   },
   getDbStatus: () => {
     return {
