@@ -62,8 +62,10 @@ function handleClientRouting() {
     showCategoryArchive(cat);
   } else if (path === '/trending') {
     showCategoryArchive('trending');
-  } else if (['/about', '/contact', '/privacy-policy', '/terms', '/disclaimer'].includes(path)) {
-    showLegalPage(path.replace('/', ''));
+  } else if (['/about', '/contact', '/privacy', '/privacy-policy', '/terms', '/disclaimer'].includes(path)) {
+    const rawKey = path.replace('/', '').split('#')[0];
+    const pageKey = (rawKey === 'privacy-policy') ? 'privacy' : rawKey;
+    showLegalPage(pageKey);
   } else {
     showHomePage();
   }
@@ -913,6 +915,8 @@ function handleEmailSubscription(e) {
 
 // ================= LEGAL & TRUST PAGES RENDERER =================
 function showLegalPage(pageKey) {
+  if (pageKey === 'privacy-policy') pageKey = 'privacy';
+
   // Hide all views, activate #page-legal
   document.querySelectorAll('.pub-view').forEach(v => v.classList.remove('active'));
   const legalView = document.getElementById('page-legal');
@@ -922,7 +926,7 @@ function showLegalPage(pageKey) {
   document.querySelectorAll('.legal-nav-item').forEach(item => {
     item.classList.remove('active');
   });
-  const activeNav = document.getElementById(`nav-${pageKey}`);
+  const activeNav = document.getElementById(`nav-${pageKey}`) || document.getElementById('nav-privacy');
   if (activeNav) activeNav.classList.add('active');
 
   const container = document.getElementById('legalArticleContent');
@@ -933,60 +937,52 @@ function showLegalPage(pageKey) {
   isNarrating = false;
 
   const pages = {
-    'privacy-policy': {
-      title: 'Privacy Policy',
-      badge: 'Data Protection & Cookies',
-      meta: 'Last Updated: September 2026 • Compliant with Google AdSense, GDPR & CCPA',
+    'privacy': {
+      title: 'Privacy Policy — Taleonix',
+      badge: 'Data Protection & Legal Policy',
+      meta: 'Effective Date: October 8, 2026 • Google AdSense Verified & Compliant',
       content: `
         <div class="legal-body-content">
-          <p>At <strong>Taleonix</strong> (accessible from <a href="/">taleonix.com</a> or our affiliated network domains), the privacy of our visitors is of paramount importance to us. This Privacy Policy document outlines the types of personal information that is collected and recorded by Taleonix and how we utilize and protect it.</p>
+          <p><strong>Taleonix</strong> ("we", "our") operates <a href="https://drama-online.onrender.com">https://drama-online.onrender.com</a>. This policy explains what data we collect and how we use it.</p>
 
           <div class="legal-highlight-box">
-            <strong>Key Summary:</strong> We respect your digital privacy. We do not sell your personal data. We use standard web analytics and industry-standard third-party advertising partners (such as Google AdSense) to keep our serialized stories 100% free to read.
+            <strong>Key Summary:</strong> We respect your digital privacy. We do not sell your personal information. We use standard web analytics and trusted third-party advertising partners (such as Google AdSense) to keep our serialized dramatic stories 100% free to read.
           </div>
 
           <h2>1. Information We Collect</h2>
-          <p>Like most modern websites, Taleonix follows standard procedures for utilizing log files and basic telemetry. The information collected includes:</p>
           <ul>
-            <li>Internet Protocol (IP) addresses and geographic country estimates</li>
-            <li>Browser type, device classification (iOS, Android, Desktop), and Operating System</li>
-            <li>Internet Service Provider (ISP)</li>
-            <li>Date and time stamps of page visits</li>
-            <li>Referring/exit pages and reader navigation progression</li>
-            <li>Voluntarily submitted contact details (e.g., email addresses for chapter release alerts)</li>
+            <li><strong>Usage data:</strong> Pages visited, time spent, device and browser type, approximate location (country/city level) — collected via our analytics to understand readership.</li>
+            <li><strong>Push notification subscriptions:</strong> If you opt in to push notifications, your browser's push subscription is stored so we can send you story updates. You can unsubscribe anytime from your browser settings.</li>
+            <li><strong>Contact messages:</strong> If you contact us, we receive the details you provide (e.g. your email address) and use them only to reply.</li>
           </ul>
 
-          <h2 id="cookies">2. Google AdSense & Cookies Policy</h2>
-          <p>Taleonix utilizes cookies to store information about visitors' preferences, to record user-specific information on which pages the reader accesses, and to customize web page content based on visitors' browser type or other information that the visitor sends via their browser.</p>
+          <h2 id="cookies">2. Cookies</h2>
+          <p>We use a minimal set of cookies/local storage for site functionality (e.g. remembering preferences, reading theme, and font size). Analytics and advertising partners may set their own cookies — see below.</p>
 
-          <h3>Google DoubleClick DART Cookie</h3>
-          <p>Google is one of our third-party vendors on our site. It also uses cookies, known as <strong>DART cookies</strong>, to serve ads to our site visitors based upon their visit to Taleonix and other sites on the internet.</p>
-          <p>Visitors may choose to opt out of the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">https://policies.google.com/technologies/ads</a></p>
+          <h2>3. Advertising</h2>
+          <p>We use third-party advertising partners, including <strong>Google AdSense (Publisher ID: pub-3806896432302528)</strong>. Google uses cookies (including the DoubleClick cookie) to serve ads based on your prior visits to this and other sites. You may opt out of personalized advertising by visiting Google's Ads Settings (<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">https://www.google.com/settings/ads</a>). Our advertising partners may also use web beacons to collect non-personally-identifiable information.</p>
 
-          <h3>Our Advertising Partners</h3>
-          <p>Some of our advertisers on our site may use cookies and web beacons. Our primary advertising partner is <strong>Google AdSense (Publisher ID: pub-3806896432302528)</strong>. Third-party ad servers or ad networks use technology in their respective advertisements and links that appear on Taleonix, which are sent directly to your browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see.</p>
-
-          <h2>3. CCPA Privacy Rights (Do Not Sell My Personal Information)</h2>
-          <p>Under the California Consumer Privacy Act (CCPA), California consumers have the right to:</p>
+          <h2>4. Third-Party Services</h2>
           <ul>
-            <li>Request that a business disclose the categories and specific pieces of personal data collected about consumers.</li>
-            <li>Request that a business delete any personal data about the consumer that a business collected.</li>
-            <li>Request that a business that sells a consumer's personal data, not sell the consumer's personal data (Taleonix does not sell user data).</li>
+            <li><strong>Analytics:</strong> Self-hosted analytics for aggregated readership stats.</li>
+            <li><strong>Push notifications:</strong> Delivered via our notification service provider.</li>
+            <li><strong>Embedded media:</strong> Story pages may embed images served from our CDN.</li>
           </ul>
 
-          <h2>4. GDPR Data Protection Rights</h2>
-          <p>We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:</p>
-          <ul>
-            <li><strong>The right to access</strong> – You have the right to request copies of your personal data.</li>
-            <li><strong>The right to rectification</strong> – You have the right to request that we correct any information you believe is inaccurate.</li>
-            <li><strong>The right to erasure</strong> – You have the right to request that we erase your personal data under certain conditions.</li>
-          </ul>
+          <h2>5. Data Sharing</h2>
+          <p>We do not sell your personal information. We share data only with the service providers above, as needed to operate the site, or when required by law.</p>
 
-          <h2>5. Children's Online Privacy Protection (COPPA)</h2>
-          <p>Another part of our priority is adding protection for children while using the internet. Taleonix is an editorial fiction platform designed for general audiences and adult readers (aged 18+). We do not knowingly collect any Personal Identifiable Information from children under the age of 13. If you believe that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will promptly remove such information.</p>
+          <h2>6. Children's Privacy</h2>
+          <p>Taleonix is intended for a general audience ages 13+. We do not knowingly collect personal information from children under 13. If you believe that your child provided personal information on our website, please contact us immediately and we will promptly remove it.</p>
 
-          <h2>6. Contact Our Data Protection Officer</h2>
-          <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us at <a href="mailto:privacy@taleonix.com">privacy@taleonix.com</a> or via our <a href="/contact" onclick="handleNavClick(event, '/contact')">Contact Page</a>.</p>
+          <h2>7. Your Rights (CCPA & GDPR)</h2>
+          <p>You may request access to, correction of, or deletion of your personal data by contacting us (see our <a href="/contact" onclick="handleNavClick(event, '/contact')">Contact page</a>). Push subscriptions can be removed anytime via your browser settings.</p>
+
+          <h2>8. Changes to This Policy</h2>
+          <p>We may update this policy; the effective date at the top will reflect the latest version.</p>
+
+          <h2>9. Contact Us</h2>
+          <p>If you have questions about this policy, please reach out to us at <a href="mailto:privacy@taleonix.com">privacy@taleonix.com</a> or use our <a href="/contact" onclick="handleNavClick(event, '/contact')">Contact page</a>.</p>
         </div>
       `
     },
@@ -1162,7 +1158,8 @@ function showLegalPage(pageKey) {
     }
   };
 
-  const page = pages[pageKey] || pages['privacy-policy'];
+  pages['privacy-policy'] = pages['privacy'];
+  const page = pages[pageKey] || pages['privacy'];
 
   container.innerHTML = `
     <header class="legal-header">
@@ -1175,7 +1172,13 @@ function showLegalPage(pageKey) {
     ${page.content}
   `;
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.location.hash) {
+    const hashEl = document.querySelector(window.location.hash);
+    if (hashEl) hashEl.scrollIntoView({ behavior: 'smooth' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 // ================= CONTACT FORM SUBMIT HANDLER =================

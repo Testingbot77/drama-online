@@ -120,7 +120,7 @@ app.get('/sitemap.xml', (req, res) => {
   xml += `  <url><loc>${domain}/category/revenge</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
   xml += `  <url><loc>${domain}/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
   xml += `  <url><loc>${domain}/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
-  xml += `  <url><loc>${domain}/privacy-policy</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
+  xml += `  <url><loc>${domain}/privacy</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>\n`;
   xml += `  <url><loc>${domain}/terms</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
   xml += `  <url><loc>${domain}/disclaimer</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>\n`;
 
@@ -1636,31 +1636,281 @@ app.get('/story/:slug', (req, res) => {
   res.send(html);
 });
 
-// Server-rendered Meta for Legal & Trust Pages (AdSense Crawlers)
-const legalMetaMap = {
-  '/privacy-policy': {
-    title: 'Privacy Policy | Taleonix',
-    desc: 'Official Taleonix Privacy Policy, Google AdSense cookies disclosure, CCPA, and GDPR data protection rights.'
+// HTML Templates for Server-Rendered Legal & Trust Pages (AdSense & Crawler Compliance)
+const PRIVACY_POLICY_HTML = (domain) => `
+  <header class="legal-header">
+    <span class="legal-badge"><i class="fa-solid fa-file-lines"></i> Data Protection & Legal Policy</span>
+    <h1 style="margin-top: 14px;">Privacy Policy — Taleonix</h1>
+    <div class="legal-meta-row">
+      <span><i class="fa-regular fa-clock"></i> Effective Date: October 8, 2026 • Google AdSense Verified & Compliant</span>
+    </div>
+  </header>
+  <div class="legal-body-content">
+    <p><strong>Taleonix</strong> ("we", "our") operates <a href="${domain}">${domain}</a>. This policy explains what data we collect and how we use it.</p>
+
+    <div class="legal-highlight-box">
+      <strong>Key Summary:</strong> We respect your digital privacy. We do not sell your personal information. We use standard web analytics and trusted third-party advertising partners (such as Google AdSense) to keep our serialized dramatic stories 100% free to read.
+    </div>
+
+    <h2>1. Information We Collect</h2>
+    <ul>
+      <li><strong>Usage data:</strong> Pages visited, time spent, device and browser type, and approximate location (country/city level) — collected via our analytics to understand readership.</li>
+      <li><strong>Push notification subscriptions:</strong> If you opt in to push notifications, your browser's push subscription is stored so we can send you story updates. You can unsubscribe anytime from your browser settings.</li>
+      <li><strong>Contact messages:</strong> If you contact us, we receive the details you provide (e.g. your email address) and use them only to reply.</li>
+    </ul>
+
+    <h2 id="cookies">2. Cookies</h2>
+    <p>We use a minimal set of cookies and local storage for site functionality (e.g. remembering reading preferences, dark mode, and font size). Analytics and advertising partners may set their own cookies — see below.</p>
+
+    <h2>3. Advertising</h2>
+    <p>We use third-party advertising partners, including <strong>Google AdSense (Publisher ID: pub-3806896432302528)</strong>. Google uses cookies (including the DoubleClick cookie) to serve ads based on your prior visits to this and other sites. You may opt out of personalized advertising by visiting Google's Ads Settings (<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">https://www.google.com/settings/ads</a>). Our advertising partners may also use web beacons to collect non-personally-identifiable information.</p>
+
+    <h2>4. Third-Party Services</h2>
+    <ul>
+      <li><strong>Analytics:</strong> Self-hosted analytics for aggregated readership stats.</li>
+      <li><strong>Push notifications:</strong> Delivered via our notification service provider.</li>
+      <li><strong>Embedded media:</strong> Story pages may embed images served from our CDN.</li>
+    </ul>
+
+    <h2>5. Data Sharing</h2>
+    <p>We do not sell your personal information. We share data only with the service providers above, as needed to operate the site, or when required by law.</p>
+
+    <h2>6. Children's Privacy</h2>
+    <p>Taleonix is intended for a general audience ages 13+. We do not knowingly collect personal information from children under 13. If you believe that your child provided personal information on our website, please contact us immediately and we will promptly remove it.</p>
+
+    <h2>7. Your Rights (CCPA & GDPR)</h2>
+    <p>You may request access to, correction of, or deletion of your personal data by contacting us (see our <a href="/contact">Contact page</a>). Push subscriptions can be removed anytime via your browser settings.</p>
+
+    <h2>8. Changes to This Policy</h2>
+    <p>We may update this policy; the effective date at the top will reflect the latest version.</p>
+
+    <h2>9. Contact Us</h2>
+    <p>If you have questions about this policy, please reach out to us at <a href="mailto:privacy@taleonix.com">privacy@taleonix.com</a> or use our <a href="/contact">Contact page</a>.</p>
+  </div>
+`;
+
+const TERMS_HTML = `
+  <header class="legal-header">
+    <span class="legal-badge"><i class="fa-solid fa-file-lines"></i> Legal Terms</span>
+    <h1 style="margin-top: 14px;">Terms of Service</h1>
+    <div class="legal-meta-row">
+      <span><i class="fa-regular fa-clock"></i> Effective Date: October 8, 2026 • Please read carefully</span>
+    </div>
+  </header>
+  <div class="legal-body-content">
+    <p>Welcome to <strong>Taleonix</strong>. By accessing or using our website, reading serialized chapters, or subscribing to notification services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
+
+    <h2>1. Intellectual Property & Copyright</h2>
+    <p>All content published on Taleonix — including but not limited to serialized story chapters, characters, dialogues, titles, cover illustrations, graphical assets, and software code — is the exclusive intellectual property of Taleonix Media Network and its contributing authors, protected by United States and international copyright laws.</p>
+    <p>You may read, share links to, and discuss our stories for personal, non-commercial entertainment. You may not republish, reproduce, scrape, modify, or distribute full chapters or text without prior written permission from Taleonix.</p>
+
+    <h2>2. User Conduct & Reader Discussions</h2>
+    <p>When participating in discussions, polls, or sharing feedback, you agree not to:</p>
+    <ul>
+      <li>Submit defamatory, harassing, abusive, or discriminatory comments.</li>
+      <li>Attempt to disrupt website operations, spam comment feeds, or bypass security features.</li>
+      <li>Transmit harmful code, automated scraping bots, or malware.</li>
+    </ul>
+
+    <h2>3. Advertisements & Third-Party Links</h2>
+    <p>Taleonix displays advertisements served by third parties, including Google AdSense. We do not endorse or assume liability for third-party products, services, or websites advertised on our platform. Your interactions with advertisers are solely between you and the respective third party.</p>
+
+    <h2>4. Disclaimer of Warranties & Limitation of Liability</h2>
+    <p>Taleonix provides all content and services on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. In no event shall Taleonix Media Network, its editors, or authors be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use our platform.</p>
+
+    <h2>5. Governing Law</h2>
+    <p>These terms shall be governed by and construed in accordance with the laws of the United States. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the competent courts.</p>
+  </div>
+`;
+
+const ABOUT_HTML = `
+  <header class="legal-header">
+    <span class="legal-badge"><i class="fa-solid fa-file-lines"></i> Editorial & Mission</span>
+    <h1 style="margin-top: 14px;">About Taleonix</h1>
+    <div class="legal-meta-row">
+      <span><i class="fa-regular fa-clock"></i> Published by Taleonix Media Network • US Serial Fiction</span>
+    </div>
+  </header>
+  <div class="legal-body-content">
+    <p><strong>Taleonix</strong> is a premier American digital publishing platform dedicated to serialized fiction, high-stakes family dramas, billionaire romance, and viral cliffhanger storytelling.</p>
+    
+    <div class="legal-highlight-box">
+      <strong>Our Mission:</strong> To revive the golden era of episodic storytelling for the digital age — providing deep, character-driven narratives with unforgettable moral questions, emotional depth, and high-retention reading experiences.
+    </div>
+
+    <h2>Our Editorial Philosophy</h2>
+    <p>Every story published on Taleonix is crafted with meticulous attention to pacing, character psychology, and cinematic realism. We believe that great drama is not just about shock value — it is about the choices human beings make when pressed by loyalty, betrayal, family secrets, and retribution.</p>
+    <p>Our multi-chapter sagas feature extensive world-building, authentic dialogue, and multi-part continuations that allow readers to binge uninterrupted without subscription paywalls.</p>
+
+    <h2 id="editorial-team">The Taleonix Storytelling Collective</h2>
+    <p>Our editorial board and contributing authors bring decades of combined experience in screenwriting, novel writing, and contemporary American drama:</p>
+
+    <div class="legal-authors-grid">
+      <div class="author-profile-box">
+        <div class="author-profile-avatar"><i class="fa-solid fa-pen-nib"></i></div>
+        <div class="author-profile-info">
+          <h4>Elena Vance</h4>
+          <span class="author-role">Lead Drama & Family Fiction Editor</span>
+          <p>Specializes in domestic realism, in-law confrontations, and multi-generational inheritance sagas.</p>
+        </div>
+      </div>
+
+      <div class="author-profile-box">
+        <div class="author-profile-avatar" style="background:linear-gradient(135deg,#f59e0b,#b45309);"><i class="fa-solid fa-feather"></i></div>
+        <div class="author-profile-info">
+          <h4>Marcus Sterling</h4>
+          <span class="author-role">Senior Suspense & Revenge Author</span>
+          <p>Focuses on billionaire undercover founders, boardroom betrayals, and high-society justice.</p>
+        </div>
+      </div>
+
+      <div class="author-profile-box">
+        <div class="author-profile-avatar" style="background:linear-gradient(135deg,#10b981,#047857);"><i class="fa-solid fa-book-open"></i></div>
+        <div class="author-profile-info">
+          <h4>Diana Ross-Cross</h4>
+          <span class="author-role">Senior Narrative Director</span>
+          <p>Oversees episodic story arcs, character bibles, and cliffhanger continuity across all series.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Commitment to Free Access</h2>
+    <p>Taleonix is funded through non-intrusive, privacy-compliant digital advertising. We never charge readers per chapter, and we never hide our Grand Finales behind mandatory coin systems. All chapters are freely accessible to our readers worldwide.</p>
+  </div>
+`;
+
+const CONTACT_HTML = `
+  <header class="legal-header">
+    <span class="legal-badge"><i class="fa-solid fa-file-lines"></i> Editorial & Reader Support</span>
+    <h1 style="margin-top: 14px;">Contact Us</h1>
+    <div class="legal-meta-row">
+      <span><i class="fa-regular fa-clock"></i> Response Time: Within 24-48 Hours • Available Mon-Fri</span>
+    </div>
+  </header>
+  <div class="legal-body-content">
+    <p>Have a question about one of our serialized sagas, an editorial suggestion, press inquiry, or technical feedback? We would love to hear from you. Please use the form below or contact our team directly.</p>
+
+    <form class="contact-form-card" onsubmit="handleContactSubmit(event)" style="margin: 28px 0; background: var(--bg-surface-elevated); padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+      <div class="contact-form-grid">
+        <div class="form-group">
+          <label for="contactName">Your Name *</label>
+          <input type="text" id="contactName" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+        </div>
+        <div class="form-group">
+          <label for="contactEmail">Your Email Address *</label>
+          <input type="email" id="contactEmail" class="form-control" placeholder="e.g. sarah@example.com" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contactTopic">Inquiry Topic *</label>
+        <select id="contactTopic" class="form-control" required>
+          <option value="story-feedback">Story Feedback & Suggestions</option>
+          <option value="licensing">Licensing, Adaptation & Press</option>
+          <option value="advertising">Advertising & Google AdSense Inquiries</option>
+          <option value="dmca">DMCA & Copyright Clearance</option>
+          <option value="technical">Technical Support / Bug Report</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="contactMessage">Your Message *</label>
+        <textarea id="contactMessage" rows="5" class="form-control" placeholder="Write your message here..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-contact-submit" id="btnSubmitContact">
+        <i class="fa-solid fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+
+    <h2>Direct Department Inquiries</h2>
+    <ul>
+      <li><strong>General & Reader Support:</strong> <a href="mailto:contact@taleonix.com">contact@taleonix.com</a></li>
+      <li><strong>Editorial Board & Story Submissions:</strong> <a href="mailto:editorial@taleonix.com">editorial@taleonix.com</a></li>
+      <li><strong>Copyright & DMCA Agent:</strong> <a href="mailto:dmca@taleonix.com">dmca@taleonix.com</a></li>
+      <li><strong>Advertising & Partnerships:</strong> <a href="mailto:ads@taleonix.com">ads@taleonix.com</a></li>
+    </ul>
+  </div>
+`;
+
+const DISCLAIMER_HTML = `
+  <header class="legal-header">
+    <span class="legal-badge"><i class="fa-solid fa-file-lines"></i> Copyright & Content Notice</span>
+    <h1 style="margin-top: 14px;">Disclaimer & DMCA Policy</h1>
+    <div class="legal-meta-row">
+      <span><i class="fa-regular fa-clock"></i> Official Content Notice & Copyright Policy</span>
+    </div>
+  </header>
+  <div class="legal-body-content">
+    <div class="legal-highlight-box">
+      <strong>Work of Fiction Notice:</strong> All stories, characters, dialogues, and events depicted on Taleonix are entirely works of fiction. Any resemblance to real persons, living or dead, or actual events is purely coincidental.
+    </div>
+
+    <h2>1. General Entertainment Disclaimer</h2>
+    <p>The stories published on Taleonix are produced for entertainment and literary appreciation. Opinions, moral dilemmas, and actions expressed by characters in our stories do not reflect the personal views of Taleonix Media Network or its management.</p>
+
+    <h2>2. DMCA Copyright Notice & Takedown Policy</h2>
+    <p>Taleonix respects the intellectual property rights of others and complies with the provisions of the Digital Millennium Copyright Act (DMCA). If you believe in good faith that any content or media appearing on our website infringes upon your copyrighted work, you or your designated agent may send us a formal DMCA takedown notification containing the following information:</p>
+    <ol>
+      <li>A physical or electronic signature of a person authorized to act on behalf of the copyright owner.</li>
+      <li>Identification of the copyrighted work claimed to have been infringed.</li>
+      <li>Identification of the material that is claimed to be infringing and information reasonably sufficient to permit us to locate the material (e.g., exact URL).</li>
+      <li>Your contact information, including full name, physical address, telephone number, and email address.</li>
+      <li>A statement that you have a good-faith belief that use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law.</li>
+      <li>A statement that the information in the notification is accurate, and under penalty of perjury, that you are authorized to act on behalf of the copyright owner.</li>
+    </ol>
+
+    <h2>3. Submitting a DMCA Notice</h2>
+    <p>Please send all formal copyright notices and DMCA communications to our designated Copyright Agent:</p>
+    <p>
+      <strong>Taleonix Media Network — DMCA Agent</strong><br>
+      Email: <a href="mailto:dmca@taleonix.com">dmca@taleonix.com</a><br>
+      Address: Taleonix Digital Media Network, Legal & Compliance Dept.
+    </p>
+    <p>Upon receiving a valid and complete notification, we will review the matter expeditiously and take appropriate action, including the prompt removal of the disputed content where justified.</p>
+  </div>
+`;
+
+// Server-rendered Meta & SSR for Legal & Trust Pages (AdSense & Crawler Compliance)
+const legalPagesConfig = {
+  '/privacy': {
+    pageKey: 'privacy',
+    title: 'Privacy Policy — Taleonix',
+    desc: 'Official Taleonix Privacy Policy, Google AdSense cookies and advertising disclosures, CCPA, and GDPR rights.',
+    getContent: (domain) => PRIVACY_POLICY_HTML(domain)
   },
   '/terms': {
+    pageKey: 'terms',
     title: 'Terms of Service | Taleonix',
-    desc: 'Terms of Service, user conduct, intellectual property, and content guidelines for Taleonix serialized fiction.'
+    desc: 'Terms of Service, user conduct, intellectual property, and content guidelines for Taleonix serialized fiction.',
+    getContent: () => TERMS_HTML
   },
   '/about': {
+    pageKey: 'about',
     title: 'About Us & Editorial Collective | Taleonix',
-    desc: 'Meet the Taleonix editorial team and learn about our mission to publish premier episodic US drama and serialized fiction.'
+    desc: 'Meet the Taleonix editorial team and learn about our mission to publish premier episodic US drama and serialized fiction.',
+    getContent: () => ABOUT_HTML
   },
   '/contact': {
+    pageKey: 'contact',
     title: 'Contact Support & Editorial | Taleonix',
-    desc: 'Contact the Taleonix editorial board, reader support, licensing inquiries, and Google AdSense compliance desk.'
+    desc: 'Contact the Taleonix editorial board, reader support, licensing inquiries, and Google AdSense compliance desk.',
+    getContent: () => CONTACT_HTML
   },
   '/disclaimer': {
+    pageKey: 'disclaimer',
     title: 'Disclaimer & DMCA Policy | Taleonix',
-    desc: 'Official Work of Fiction notice, monetization disclosures, and DMCA copyright takedown procedure for Taleonix.'
+    desc: 'Official Work of Fiction notice, monetization disclosures, and DMCA copyright takedown procedure for Taleonix.',
+    getContent: () => DISCLAIMER_HTML
   }
 };
 
-Object.entries(legalMetaMap).forEach(([routePath, meta]) => {
+// 301 Permanent Redirect for legacy /privacy-policy to canonical /privacy
+app.get('/privacy-policy', (req, res) => {
+  res.redirect(301, '/privacy');
+});
+
+Object.entries(legalPagesConfig).forEach(([routePath, cfg]) => {
   app.get(routePath, (req, res) => {
     const indexPath = path.join(__dirname, '..', 'public', 'index.html');
     let html = fs.readFileSync(indexPath, 'utf8');
@@ -1668,13 +1918,33 @@ Object.entries(legalMetaMap).forEach(([routePath, meta]) => {
     const domain = settings.domainUrl || `http://${req.headers.host}`;
 
     const tags = `
-    <title>${meta.title}</title>
-    <meta name="description" content="${meta.desc}">
+    <title>${cfg.title}</title>
+    <meta name="description" content="${cfg.desc}">
     <link rel="canonical" href="${domain}${routePath}">
-    <meta property="og:title" content="${meta.title}">
-    <meta property="og:description" content="${meta.desc}">
+    <meta property="og:title" content="${cfg.title}">
+    <meta property="og:description" content="${cfg.desc}">
+    <meta property="og:url" content="${domain}${routePath}">
+    <meta name="robots" content="index, follow">
     `;
     html = html.replace('<!-- DYNAMIC_META_TAGS -->', tags);
+
+    // Switch view: activate #page-legal and deactivate #page-home
+    html = html.replace('id="page-home" class="pub-view active"', 'id="page-home" class="pub-view"');
+    html = html.replace('id="page-legal" class="pub-view"', 'id="page-legal" class="pub-view active"');
+
+    // Activate the corresponding sidebar nav item
+    html = html.replace(
+      new RegExp(`class="legal-nav-item" id="nav-${cfg.pageKey}"`),
+      `class="legal-nav-item active" id="nav-${cfg.pageKey}"`
+    );
+
+    // Server-render the article body
+    const articleBody = cfg.getContent(domain);
+    html = html.replace(
+      /(<article class="legal-article-card" id="legalArticleContent">)[\s\S]*?(<\/article>)/,
+      `$1\n${articleBody}\n$2`
+    );
+
     res.send(html);
   });
 });
@@ -1710,7 +1980,7 @@ app.get('/category/:cat', (req, res) => {
 });
 
 // Fallback: Valid frontend paths get index.html, all unknown paths get true HTTP 404
-const VALID_FRONTEND_PATHS = ['/', '/trending'];
+const VALID_FRONTEND_PATHS = ['/', '/trending', '/privacy', '/terms', '/about', '/contact', '/disclaimer'];
 
 app.use((req, res) => {
   const reqPath = req.path;
