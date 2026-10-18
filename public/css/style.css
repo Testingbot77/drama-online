@@ -2603,6 +2603,25 @@ body.theme-light .adsense-clean-slot {
   }
 }
 
+/* ================= ADSTERRA NATIVE BANNER RESPONSIVE ================= */
+.adsterra-native-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 28px 0;
+  text-align: center;
+  clear: both;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#container-b6bb156ca9b853461f8ef911071da2b5 {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 
 
 

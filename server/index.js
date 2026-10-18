@@ -1633,6 +1633,15 @@ app.get('/story/:slug', (req, res) => {
   html = html.replace('<span class="byline-author" id="readerAuthor">Elena Vance</span>', `<span class="byline-author" id="readerAuthor">${story.author || 'Elena Vance & Taleonix Editorial'}</span>`);
   html = html.replace('<!-- Paragraphs injected cleanly by JS -->', paragraphsHtml);
 
+  // Adsterra Native Banner (Story Pages Only - immediately after story content)
+  const adsterraNativeBannerHtml = `
+          <!-- Adsterra Native Banner (Story Pages Only) -->
+          <div class="adsterra-native-container" id="adsterraNativeWrapper" style="margin: 28px 0; min-height: 80px; text-align: center; clear: both;">
+            <div id="container-b6bb156ca9b853461f8ef911071da2b5"></div>
+            <script async="async" data-cfasync="false" src="https://bauval.org/21/b6bb156ca9b853461f8ef911071da2b5"></script>
+          </div>`;
+  html = html.replace('<!-- ADSTERRA_NATIVE_BANNER_SLOT -->', adsterraNativeBannerHtml);
+
   res.send(html);
 });
 
@@ -1664,6 +1673,7 @@ const PRIVACY_POLICY_HTML = (domain) => `
 
     <h2>3. Advertising</h2>
     <p>We use third-party advertising partners, including <strong>Google AdSense (Publisher ID: pub-3806896432302528)</strong>. Google uses cookies (including the DoubleClick cookie) to serve ads based on your prior visits to this and other sites. You may opt out of personalized advertising by visiting Google's Ads Settings (<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">https://www.google.com/settings/ads</a>). Our advertising partners may also use web beacons to collect non-personally-identifiable information.</p>
+    <p>We also use Adsterra (<a href="https://adsterra.com" target="_blank" rel="noopener">https://adsterra.com</a>) as an advertising partner. Adsterra may use cookies and similar technologies to serve ads and measure their performance.</p>
 
     <h2>4. Third-Party Services</h2>
     <ul>

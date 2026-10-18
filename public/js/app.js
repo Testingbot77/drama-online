@@ -507,8 +507,44 @@ async function showStoryReader(slug) {
     // Load and render community comments
     loadStoryComments(story.slug);
 
+    // Ensure Adsterra Native Banner (Story Pages Only)
+    ensureAdsterraNativeBanner();
+
   } catch (err) {
     console.error('Error loading story:', err);
+  }
+}
+
+// ================= ADSTERRA NATIVE BANNER (STORY PAGES ONLY) =================
+function ensureAdsterraNativeBanner() {
+  if (document.getElementById('container-b6bb156ca9b853461f8ef911071da2b5')) return;
+  const readerBody = document.getElementById('readerBody');
+  if (!readerBody || !readerBody.parentNode) return;
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'adsterraNativeWrapper';
+  wrapper.className = 'adsterra-native-container';
+  wrapper.style.cssText = 'margin: 28px 0; min-height: 80px; text-align: center; clear: both;';
+
+  const containerDiv = document.createElement('div');
+  containerDiv.id = 'container-b6bb156ca9b853461f8ef911071da2b5';
+  wrapper.appendChild(containerDiv);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.setAttribute('data-cfasync', 'false');
+  script.src = 'https://bauval.org/21/b6bb156ca9b853461f8ef911071da2b5';
+  wrapper.appendChild(script);
+
+  readerBody.parentNode.insertBefore(wrapper, readerBody.nextSibling);
+}
+
+function removeAdsterraNativeBanner() {
+  const container = document.getElementById('container-b6bb156ca9b853461f8ef911071da2b5');
+  if (container) {
+    const wrapper = document.getElementById('adsterraNativeWrapper') || container.closest('.adsterra-native-container');
+    if (wrapper) wrapper.remove();
+    else container.remove();
   }
 }
 
@@ -695,6 +731,7 @@ function showCategoryArchive(category) {
   document.querySelectorAll('.pub-view').forEach(v => v.classList.remove('active'));
   const catView = document.getElementById('page-category');
   if (catView) catView.classList.add('active');
+  removeAdsterraNativeBanner();
 
   const titleEl = document.getElementById('archiveTitle');
   const badgeEl = document.getElementById('archiveCatBadge');
@@ -739,6 +776,7 @@ function showCategoryArchive(category) {
 function showHomePage() {
   document.querySelectorAll('.pub-view').forEach(v => v.classList.remove('active'));
   document.getElementById('page-home').classList.add('active');
+  removeAdsterraNativeBanner();
   if (allPubStories.length > 0) renderHomePage(allPubStories);
 }
 
@@ -921,6 +959,7 @@ function showLegalPage(pageKey) {
   document.querySelectorAll('.pub-view').forEach(v => v.classList.remove('active'));
   const legalView = document.getElementById('page-legal');
   if (legalView) legalView.classList.add('active');
+  removeAdsterraNativeBanner();
 
   // Update active state in sidebar
   document.querySelectorAll('.legal-nav-item').forEach(item => {
@@ -961,6 +1000,7 @@ function showLegalPage(pageKey) {
 
           <h2>3. Advertising</h2>
           <p>We use third-party advertising partners, including <strong>Google AdSense (Publisher ID: pub-3806896432302528)</strong>. Google uses cookies (including the DoubleClick cookie) to serve ads based on your prior visits to this and other sites. You may opt out of personalized advertising by visiting Google's Ads Settings (<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">https://www.google.com/settings/ads</a>). Our advertising partners may also use web beacons to collect non-personally-identifiable information.</p>
+          <p>We also use Adsterra (<a href="https://adsterra.com" target="_blank" rel="noopener">https://adsterra.com</a>) as an advertising partner. Adsterra may use cookies and similar technologies to serve ads and measure their performance.</p>
 
           <h2>4. Third-Party Services</h2>
           <ul>
